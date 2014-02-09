@@ -22,8 +22,11 @@
         
         /* Setup your scene here */
         self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+        //initialize target
         self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
+        //set properties of target
         [self displayTarget];
+        //add target to screen
         [self addChild:self.target];
     }
     return self;
@@ -31,6 +34,7 @@
 
 -(void)displayTarget
 {
+    //set target to middle of screen
     self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     self.target.xScale = .42;
     self.target.yScale = .42;
@@ -39,7 +43,8 @@
     /* Called when a touch begins */
     UITouch *touch = [touches anyObject];
     CGPoint positionInScene = [touch locationInNode:self];
-    [self selectNodeForTouch:positionInScene];
+    //test whether the target has been touched
+    [self targetTouch:positionInScene];
     //    for (UITouch *touch in touches)
     //    {
     //        CGPoint location = [touch locationInNode:self];
@@ -52,23 +57,26 @@
     //    }
 }
 
--(void)selectNodeForTouch:(CGPoint)touchLocation
+-(void)targetTouch:(CGPoint)touchLocation
 {
     SKSpriteNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
     _totalTouches++;
     if([_target isEqual:touchedNode])
     {
         _correctTouches++;
+        //make a "delete" target action
         SKAction *deleteTarget = [SKAction runBlock:^{
             self.target.position = CGPointMake(-100,-100);
         }];
+        //make a wait action
         SKAction *wait = [SKAction waitForDuration:3];
+        //make a "add" target action
         SKAction *addTarget = [SKAction runBlock:^{
             [self displayTarget];
         }];
-        
+        //combine all the actions into a sequence
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
-        //        [self runAction:[SKAction repeatAction:deleteTarget count:1]];
+        //run the actions in sequential order
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
     }
     NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
