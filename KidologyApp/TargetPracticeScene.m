@@ -9,7 +9,9 @@
 #import "TargetPracticeScene.h"
 #import "MainMenuScene.h"
 @interface TargetPracticeScene()
-    @property (nonatomic) SKSpriteNode * target;
+@property (nonatomic) SKSpriteNode * target;
+@property (nonatomic) int totalTouches;
+@property (nonatomic) int correctTouches;
 @end
 
 @implementation TargetPracticeScene
@@ -32,8 +34,6 @@
     self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     self.target.xScale = .42;
     self.target.yScale = .42;
-    
-    NSLog(@"in display target");
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
@@ -55,9 +55,10 @@
 -(void)selectNodeForTouch:(CGPoint)touchLocation
 {
     SKSpriteNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
-    
+    _totalTouches++;
     if([_target isEqual:touchedNode])
     {
+        _correctTouches++;
         SKAction *deleteTarget = [SKAction runBlock:^{
             self.target.position = CGPointMake(-100,-100);
         }];
@@ -69,8 +70,8 @@
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
         //        [self runAction:[SKAction repeatAction:deleteTarget count:1]];
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
-        NSLog(@"deleted target, calling displaytarget");
     }
+    NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
 }
 
 -(void)update:(CFTimeInterval)currentTime {
