@@ -16,7 +16,7 @@
 		B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAAD18A7ED7700D5C20C /* AppDelegate.m */; };
 		B96CAAB118A7ED7700D5C20C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B96CAAAF18A7ED7700D5C20C /* Main.storyboard */; };
 		B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB318A7ED7700D5C20C /* ViewController.m */; };
-		B96CAAB718A7ED7700D5C20C /* MyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB618A7ED7700D5C20C /* MyScene.m */; };
+		B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */; };
 		B96CAAB918A7ED7700D5C20C /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = B96CAAB818A7ED7700D5C20C /* Spaceship.png */; };
 		B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B96CAABA18A7ED7700D5C20C /* Images.xcassets */; };
 		B96CAAC218A7ED7700D5C20C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAAC118A7ED7700D5C20C /* XCTest.framework */; };
@@ -24,6 +24,8 @@
 		B96CAAC418A7ED7700D5C20C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9F18A7ED7700D5C20C /* UIKit.framework */; };
 		B96CAACC18A7ED7700D5C20C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B96CAACA18A7ED7700D5C20C /* InfoPlist.strings */; };
 		B96CAACE18A7ED7700D5C20C /* KidologyAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAACD18A7ED7700D5C20C /* KidologyAppTests.m */; };
+		B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */; };
+		B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */ = {isa = PBXBuildFile; fileRef = B96CAAE118A81D6B00D5C20C /* green_target.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,8 +53,8 @@
 		B96CAAB018A7ED7700D5C20C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B96CAAB218A7ED7700D5C20C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		B96CAAB318A7ED7700D5C20C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		B96CAAB518A7ED7700D5C20C /* MyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScene.h; sourceTree = "<group>"; };
-		B96CAAB618A7ED7700D5C20C /* MyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScene.m; sourceTree = "<group>"; };
+		B96CAAB518A7ED7700D5C20C /* MainMenuScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
+		B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainMenuScene.m; sourceTree = "<group>"; };
 		B96CAAB818A7ED7700D5C20C /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		B96CAABA18A7ED7700D5C20C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B96CAAC018A7ED7700D5C20C /* KidologyAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KidologyAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +62,9 @@
 		B96CAAC918A7ED7700D5C20C /* KidologyAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KidologyAppTests-Info.plist"; sourceTree = "<group>"; };
 		B96CAACB18A7ED7700D5C20C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B96CAACD18A7ED7700D5C20C /* KidologyAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KidologyAppTests.m; sourceTree = "<group>"; };
+		B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetPracticeScene.h; sourceTree = "<group>"; };
+		B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetPracticeScene.m; sourceTree = "<group>"; };
+		B96CAAE118A81D6B00D5C20C /* green_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +95,7 @@
 		B96CAA8F18A7ED7700D5C20C = {
 			isa = PBXGroup;
 			children = (
+				B96CAAE118A81D6B00D5C20C /* green_target.png */,
 				B96CAAA318A7ED7700D5C20C /* KidologyApp */,
 				B96CAAC718A7ED7700D5C20C /* KidologyAppTests */,
 				B96CAA9A18A7ED7700D5C20C /* Frameworks */,
@@ -121,15 +127,18 @@
 		B96CAAA318A7ED7700D5C20C /* KidologyApp */ = {
 			isa = PBXGroup;
 			children = (
+				B96CAAD718A7ED8400D5C20C /* iPad */,
 				B96CAAAC18A7ED7700D5C20C /* AppDelegate.h */,
 				B96CAAAD18A7ED7700D5C20C /* AppDelegate.m */,
 				B96CAAAF18A7ED7700D5C20C /* Main.storyboard */,
 				B96CAAB218A7ED7700D5C20C /* ViewController.h */,
 				B96CAAB318A7ED7700D5C20C /* ViewController.m */,
-				B96CAAB518A7ED7700D5C20C /* MyScene.h */,
-				B96CAAB618A7ED7700D5C20C /* MyScene.m */,
-				B96CAAB818A7ED7700D5C20C /* Spaceship.png */,
+				B96CAAB518A7ED7700D5C20C /* MainMenuScene.h */,
+				B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */,
+				B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */,
+				B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */,
 				B96CAABA18A7ED7700D5C20C /* Images.xcassets */,
+				B96CAAB818A7ED7700D5C20C /* Spaceship.png */,
 				B96CAAA418A7ED7700D5C20C /* Supporting Files */,
 			);
 			path = KidologyApp;
@@ -162,6 +171,13 @@
 				B96CAACA18A7ED7700D5C20C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B96CAAD718A7ED8400D5C20C /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,6 +256,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */,
 				B96CAAA818A7ED7700D5C20C /* InfoPlist.strings in Resources */,
 				B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */,
 				B96CAAB918A7ED7700D5C20C /* Spaceship.png in Resources */,
@@ -262,7 +279,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B96CAAB718A7ED7700D5C20C /* MyScene.m in Sources */,
+				B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */,
+				B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */,
 				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
 				B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */,
 				B96CAAAA18A7ED7700D5C20C /* main.m in Sources */,
@@ -395,8 +413,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KidologyApp/KidologyApp-Prefix.pch";
 				INFOPLIST_FILE = "KidologyApp/KidologyApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -409,8 +429,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KidologyApp/KidologyApp-Prefix.pch";
 				INFOPLIST_FILE = "KidologyApp/KidologyApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
