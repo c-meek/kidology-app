@@ -8,6 +8,8 @@
 
 #import "TargetPracticeScene.h"
 #import "MainMenuScene.h"
+#import "math.h"
+
 @interface TargetPracticeScene()
 @property (nonatomic) SKSpriteNode * target;
 @property (nonatomic) int totalTouches;
@@ -34,10 +36,16 @@
 
 -(void)displayTarget
 {
+
     //set target to middle of screen
     self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-    self.target.xScale = .42;
-    self.target.yScale = .42;
+    self.target.xScale = .67;
+    self.target.yScale = .67;
+    NSLog(@"x is %f", self.target.position.x);
+    NSLog(@"y is %f", self.target.position.y);
+
+
+
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
@@ -59,9 +67,15 @@
 
 -(void)targetTouch:(CGPoint)touchLocation
 {
-    SKSpriteNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:touchLocation];
     _totalTouches++;
-    if([_target isEqual:touchedNode])
+    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
+    double xDifference = touchLocation.x - self.target.position.x;
+    double yDifference = touchLocation.y - self.target.position.y;
+    double radius = self.target.size.width / 2;
+    double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
+    double rightHandSide = pow(radius, 2);
+    
+    if(leftHandSide <= rightHandSide)
     {
         _correctTouches++;
         //make a "delete" target action

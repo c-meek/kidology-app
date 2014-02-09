@@ -498,6 +498,7 @@
 				B96CAAD318A7ED7700D5C20C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B96CAAD418A7ED7700D5C20C /* Build configuration list for PBXNativeTarget "KidologyAppTests" */ = {
 			isa = XCConfigurationList;
@@ -506,6 +507,7 @@
 				B96CAAD618A7ED7700D5C20C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
