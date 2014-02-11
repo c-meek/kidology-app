@@ -26,6 +26,7 @@
 		B96CAACE18A7ED7700D5C20C /* KidologyAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAACD18A7ED7700D5C20C /* KidologyAppTests.m */; };
 		B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */; };
 		B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */ = {isa = PBXBuildFile; fileRef = B96CAAE118A81D6B00D5C20C /* green_target.png */; };
+		B9938EBF18A9A5C40004890B /* TargetPracticeGameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetPracticeScene.h; sourceTree = "<group>"; };
 		B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetPracticeScene.m; sourceTree = "<group>"; };
 		B96CAAE118A81D6B00D5C20C /* green_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target.png; sourceTree = "<group>"; };
+		B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetPracticeGameOver.h; sourceTree = "<group>"; };
+		B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetPracticeGameOver.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +140,8 @@
 				B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */,
 				B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */,
 				B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */,
+				B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */,
+				B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */,
 				B96CAABA18A7ED7700D5C20C /* Images.xcassets */,
 				B96CAAB818A7ED7700D5C20C /* Spaceship.png */,
 				B96CAAA418A7ED7700D5C20C /* Supporting Files */,
@@ -282,6 +287,7 @@
 				B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */,
 				B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */,
 				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
+				B9938EBF18A9A5C40004890B /* TargetPracticeGameOver.m in Sources */,
 				B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */,
 				B96CAAAA18A7ED7700D5C20C /* main.m in Sources */,
 			);

@@ -9,5 +9,8 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface TargetPracticeScene : SKScene
-
+    @property (nonatomic) SKSpriteNode * target;
+    @property (nonatomic) int totalTouches;
+    @property (nonatomic) int correctTouches;
+    @property (nonatomic) int totalTargets;
 @end
