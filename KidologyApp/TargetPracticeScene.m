@@ -14,6 +14,7 @@
 @property (nonatomic) SKSpriteNode * target;
 @property (nonatomic) int totalTouches;
 @property (nonatomic) int correctTouches;
+@property (nonatomic) int totalTargets;
 @end
 
 @implementation TargetPracticeScene
@@ -26,6 +27,8 @@
         self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
         //initialize target
         self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
+        //set the total number of targets for this session
+        self.totalTargets = 5;
         //set properties of target
         [self displayTarget];
         //add target to screen
@@ -68,7 +71,7 @@
 -(void)targetTouch:(CGPoint)touchLocation
 {
     _totalTouches++;
-    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
+//    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
     double xDifference = touchLocation.x - self.target.position.x;
     double yDifference = touchLocation.y - self.target.position.y;
     double radius = self.target.size.width / 2;
@@ -88,6 +91,13 @@
         SKAction *addTarget = [SKAction runBlock:^{
             [self displayTarget];
         }];
+        //check to see if the total number of targets have been touched, then show the ending screen
+        if(self.totalTargets <= self.correctTouches)
+        {
+            SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
+            SKScene * gameOverScene = [[TargetPracticeGameOverScene alloc] initWithSize:self.size];
+            [self.view presentScene:gameOverScene transition:reveal];
+        }
         //combine all the actions into a sequence
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
         //run the actions in sequential order
