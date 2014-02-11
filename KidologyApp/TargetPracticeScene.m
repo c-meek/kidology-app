@@ -28,6 +28,7 @@
         [self displayTarget];
         //add target to screen
         [self addChild:self.target];
+        
     }
     return self;
 }
