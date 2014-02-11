@@ -7,15 +7,10 @@
 //
 
 #import "TargetPracticeScene.h"
+#import "TargetPracticeGameOver.h"
 #import "MainMenuScene.h"
 #import "math.h"
 
-@interface TargetPracticeScene()
-@property (nonatomic) SKSpriteNode * target;
-@property (nonatomic) int totalTouches;
-@property (nonatomic) int correctTouches;
-@property (nonatomic) int totalTargets;
-@end
 
 @implementation TargetPracticeScene
 
@@ -28,7 +23,7 @@
         //initialize target
         self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         //set the total number of targets for this session
-        self.totalTargets = 5;
+        self.totalTargets = 3;
         //set properties of target
         [self displayTarget];
         //add target to screen
@@ -95,7 +90,10 @@
         if(self.totalTargets <= self.correctTouches)
         {
             SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
-            SKScene * gameOverScene = [[TargetPracticeGameOverScene alloc] initWithSize:self.size];
+            SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size];
+            gameOverScene.userData = [ NSMutableDictionary dictionary];
+            NSString * totalTargetsString = [NSString stringWithFormat:@"%d", self.totalTargets];
+            [gameOverScene.userData setObject:totalTargetsString forKey:@"numberTouched"];
             [self.view presentScene:gameOverScene transition:reveal];
         }
         //combine all the actions into a sequence
