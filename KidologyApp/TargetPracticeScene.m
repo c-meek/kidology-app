@@ -10,12 +10,6 @@
 #import "MainMenuScene.h"
 #import "math.h"
 
-@interface TargetPracticeScene()
-@property (nonatomic) SKSpriteNode * target;
-@property (nonatomic) int totalTouches;
-@property (nonatomic) int correctTouches;
-@end
-
 @implementation TargetPracticeScene
 
 -(id)initWithSize:(CGSize)size {
