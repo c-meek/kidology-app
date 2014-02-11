@@ -9,7 +9,5 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface TargetPracticeGameOver : SKScene
-    @property (nonatomic) SKLabelNode * message;
-    @property (nonatomic) int numberTouched;
-    @property (nonatomic) int timeTaken;
+    
 @end

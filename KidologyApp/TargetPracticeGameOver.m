@@ -15,9 +15,6 @@
     if (self = [super initWithSize:size])
     {
         self.backgroundColor = [SKColor grayColor];
-        NSString *textBuffer = [NSString stringWithFormat:@"Complete! You touched %d targets in %d seconds.", _numberTouched, _timeTaken];
-        _message.text = textBuffer;
-        [self addChild:_message];
         
     }
     return self;
