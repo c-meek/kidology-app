@@ -12,9 +12,7 @@
 #import "math.h"
 
 @interface TargetPracticeScene()
-@property (nonatomic) SKSpriteNode * target;
-@property (nonatomic) int totalTouches;
-@property (nonatomic) int correctTouches;
+// move these properties to the .h file at a later time!
 @property (nonatomic) float time;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
