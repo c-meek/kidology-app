@@ -14,6 +14,9 @@
 @property (nonatomic) SKSpriteNode * target;
 @property (nonatomic) int totalTouches;
 @property (nonatomic) int correctTouches;
+@property (nonatomic) float time;
+@property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
+@property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 @end
 
 @implementation TargetPracticeScene
@@ -30,6 +33,8 @@
         [self displayTarget];
         //add target to screen
         [self addChild:self.target];
+        
+        self.time = 0; //tien was here
     }
     return self;
 }
@@ -94,10 +99,42 @@
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
     }
     NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
+    
 }
+
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
+    CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
+    self.lastUpdateTimeInterval = currentTime;
+    [self updateWithTimeSinceLastUpdate:timeSinceLast];
+
+}
+
+- (void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
+    
+    self.lastSpawnTimeInterval += timeSinceLast;
+    if (self.lastSpawnTimeInterval > .1) {
+        self.lastSpawnTimeInterval = 0;
+        self.time +=.1;
+    }
+    SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    timeLabel.fontSize = 20;
+    timeLabel.verticalAlignmentMode = 2;
+    timeLabel.horizontalAlignmentMode = 1;
+    timeLabel.fontColor = [SKColor grayColor];
+    timeLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+
+    float r_time = roundf(self.time *100)/100.0;
+    NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
+    timeLabel.text = s_time;
+//    timeLabel.text = @"fkajsdfadsf";
+    [self addChild: timeLabel];
+
+    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
+    SKAction * actionMoveDone = [SKAction removeFromParent];
+    SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.075];
+    [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
 }
 
 // ---- previous code from Chris ----------------------
