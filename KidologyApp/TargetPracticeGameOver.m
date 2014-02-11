@@ -24,8 +24,7 @@
         [self addChild:message];
         
         SKSpriteNode *backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
-        backButton.position = CGPointMake(CGRectGetMidX(self.frame),
-                                                    CGRectGetMidY(self.frame) - 50);
+        backButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
         backButton.name = @"backButton";
         [self addChild:backButton];
         
