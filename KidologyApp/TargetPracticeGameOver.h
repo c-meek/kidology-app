@@ -9,5 +9,5 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface TargetPracticeGameOver : SKScene
-    
+-(id)initWithSize:(CGSize)size targets:(int)targets;
 @end

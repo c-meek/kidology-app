@@ -89,12 +89,9 @@
         //check to see if the total number of targets have been touched, then show the ending screen
         if(self.totalTargets <= self.correctTouches)
         {
-            //SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
-            SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size];
-            gameOverScene.userData = [ NSMutableDictionary dictionary];
-            //NSString * totalTargetsString = [NSString stringWithFormat:@"%d", self.totalTargets];
-            //[gameOverScene.userData setObject:totalTargetsString forKey:@"numberTouched"];
-            [self.view presentScene:gameOverScene];
+            SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
+            SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targets:self.totalTargets];
+            [self.view presentScene:gameOverScene transition: reveal];
         }
         //combine all the actions into a sequence
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
