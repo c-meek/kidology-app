@@ -8,6 +8,11 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+typedef enum {
+    CENTER,
+    RANDOM
+} Mode;
+
 @interface TargetPracticeScene : SKScene
     @property (nonatomic) SKSpriteNode * target;
     @property (nonatomic) int totalTouches;
@@ -17,4 +22,5 @@
     @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
     @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
     @property (nonatomic) SKLabelNode *targetsLabel;
+    @property (nonatomic) Mode gameMode;
 @end

@@ -19,22 +19,19 @@
         
         // target practice button
         SKSpriteNode *targetPracticeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
-        targetPracticeButton.position = CGPointMake(CGRectGetMidX(self.frame),
-                                       CGRectGetMidY(self.frame) - 50);
+        targetPracticeButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
         targetPracticeButton.name = @"targetPracticeButton";
         
         [self addChild:targetPracticeButton];
         // fetch game button
         SKSpriteNode *fetchGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor grayColor] size:CGSizeMake(200, 40)];
-        fetchGameButton.position = CGPointMake(CGRectGetMidX(self.frame),
-                                                    CGRectGetMidY(self.frame));
+        fetchGameButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
         fetchGameButton.name = @"fetchGameButton";
         
         [self addChild:fetchGameButton];
         // puzzle game button
         SKSpriteNode *puzzleGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor grayColor] size:CGSizeMake(200, 40)];
-        puzzleGameButton.position = CGPointMake(CGRectGetMidX(self.frame),
-                                                    CGRectGetMidY(self.frame) + 50);
+        puzzleGameButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 50);
         puzzleGameButton.name = @"puzzleGameButton";
         
         [self addChild:puzzleGameButton];
