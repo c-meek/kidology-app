@@ -11,6 +11,7 @@
 #import "MainMenuScene.h"
 #import "math.h"
 
+
 @implementation TargetPracticeScene
 
 -(id)initWithSize:(CGSize)size {
@@ -27,6 +28,15 @@
         [self displayTarget];
         //add target to screen
         [self addChild:self.target];
+        // initialize the target counter
+        _targetsLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        _targetsLabel.fontSize = 20;
+        _targetsLabel.verticalAlignmentMode = 2;
+        _targetsLabel.horizontalAlignmentMode = 1;
+        _targetsLabel.fontColor = [SKColor grayColor];
+        _targetsLabel.position = CGPointMake(CGRectGetMidX(self.frame)+230, CGRectGetMidY(self.frame)+220);
+        _targetsLabel.text = [NSString stringWithFormat:@"Touched: %i/%i", _correctTouches, _totalTargets];
+        [self addChild:_targetsLabel];
         
         self.time = 0; //tien was here
     }
@@ -35,10 +45,40 @@
 
 -(void)displayTarget
 {
-    //set target to middle of screen
-    self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-    self.target.xScale = .67;
-    self.target.yScale = .67;
+//    if (_gameMode == CENTER)
+//    {
+//        //set target to middle of screen
+        self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+        self.target.xScale = .67;
+        self.target.yScale = .67;
+//    }
+//    else if (_gameMode == RANDOM)
+//    {
+        //set the target to appear at random locations
+//        int x_pos = (rand() % (int)self.size.width)*.8;
+//    int x_pos = ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
+//    int pos_neg = (rand() % 1);
+//    if (pos_neg == 0)
+//    {
+//        x_pos = self.frame.size.width/2 + x_pos;
+//    }
+//    else
+//    {
+//        x_pos = self.frame.size.width/2 - x_pos;
+//    }
+//    int y_pos = ((rand() % (int)self.size.height)/2)-(_target.size.height/2);
+//    pos_neg = (rand() % 1);
+//    if (pos_neg == 0)
+//    {
+//        y_pos = self.frame.size.height/2 + y_pos;
+//    }
+//    else
+//    {
+//        y_pos = self.frame.size.height/2 - y_pos;
+//    }
+//
+//        self.target.position = CGPointMake(x_pos, y_pos);
+//    }
     NSLog(@"x is %f", self.target.position.x);
     NSLog(@"y is %f", self.target.position.y);
 }
@@ -63,7 +103,7 @@
 -(void)targetTouch:(CGPoint)touchLocation
 {
     _totalTouches++;
-//    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
+    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
     double xDifference = touchLocation.x - self.target.position.x;
     double yDifference = touchLocation.y - self.target.position.y;
     double radius = self.target.size.width / 2;
@@ -94,6 +134,11 @@
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
         //run the actions in sequential order
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
+        // reflect the touched target by updating the label
+        [_targetsLabel removeFromParent];
+        _targetsLabel.text = [NSString stringWithFormat:@"Touched: %i/%i", _correctTouches, _totalTargets];
+        [self addChild:_targetsLabel];
+
     }
     NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
     
@@ -116,21 +161,23 @@
         self.time +=.1;
     }
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    
     timeLabel.fontSize = 20;
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 1;
     timeLabel.fontColor = [SKColor grayColor];
-    timeLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-
+    timeLabel.position = CGPointMake(CGRectGetMidX(self.frame)+230, CGRectGetMidY(self.frame)+250);
+    
     float r_time = roundf(self.time *100)/100.0;
-    NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
+    NSString *s_time = [NSString stringWithFormat: @"Time: %.1f", r_time];
     timeLabel.text = s_time;
     [self addChild: timeLabel];
 
-    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
+//    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.075];
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
+    
 }
 
 @end
