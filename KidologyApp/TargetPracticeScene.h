@@ -13,4 +13,7 @@
     @property (nonatomic) int totalTouches;
     @property (nonatomic) int correctTouches;
     @property (nonatomic) int totalTargets;
+    @property (nonatomic) float time;
+    @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
+    @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 @end

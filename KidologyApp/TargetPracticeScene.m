@@ -11,13 +11,6 @@
 #import "MainMenuScene.h"
 #import "math.h"
 
-@interface TargetPracticeScene()
-// move these properties to the .h file at a later time!
-@property (nonatomic) float time;
-@property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
-@property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
-@end
-
 @implementation TargetPracticeScene
 
 -(id)initWithSize:(CGSize)size {
@@ -42,16 +35,12 @@
 
 -(void)displayTarget
 {
-
     //set target to middle of screen
     self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     self.target.xScale = .67;
     self.target.yScale = .67;
     NSLog(@"x is %f", self.target.position.x);
     NSLog(@"y is %f", self.target.position.y);
-
-
-
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
@@ -136,7 +125,6 @@
     float r_time = roundf(self.time *100)/100.0;
     NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
     timeLabel.text = s_time;
-//    timeLabel.text = @"fkajsdfadsf";
     [self addChild: timeLabel];
 
     NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
@@ -144,43 +132,5 @@
     SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.075];
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
 }
-
-// ---- previous code from Chris ----------------------
-
-
-//    -(id)initWithSize:(CGSize)size {
-//        if (self = [super initWithSize:size]) {
-//            /* Setup your scene here */
-//            
-//            self.backgroundColor = [SKColor blackColor];
-//            
-//            SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-//            
-//            myLabel.text = @"Hello, World!";
-//            myLabel.fontSize = 30;
-//            myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-//                                           CGRectGetMidY(self.frame));
-//            
-//            [self addChild:myLabel];
-//            
-//        }
-//        return self;
-//    }
-//
-//    -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//        /* Called when a touch begins */
-//        // Create and configure the scene.
-//        SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
-//        mainMenu.scaleMode = SKSceneScaleModeAspectFill;
-//        
-//        // Present the scene.
-//        [self.view presentScene:mainMenu];
-//    }
-//
-//    -(void)update:(CFTimeInterval)currentTime {
-//        /* Called before each frame is rendered */
-//    }
-
-
 
 @end
