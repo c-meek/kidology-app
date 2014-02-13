@@ -27,6 +27,7 @@
 		B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */; };
 		B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */ = {isa = PBXBuildFile; fileRef = B96CAAE118A81D6B00D5C20C /* green_target.png */; };
 		B9938EBF18A9A5C40004890B /* TargetPracticeGameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */; };
+		E8D5E14D18AD50C40061ED91 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = E8D5E14C18AD50C40061ED91 /* background.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		B96CAAE118A81D6B00D5C20C /* green_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target.png; sourceTree = "<group>"; };
 		B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetPracticeGameOver.h; sourceTree = "<group>"; };
 		B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetPracticeGameOver.m; sourceTree = "<group>"; };
+		E8D5E14C18AD50C40061ED91 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */,
 				B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */,
 				B96CAABA18A7ED7700D5C20C /* Images.xcassets */,
+				E8D5E14C18AD50C40061ED91 /* background.png */,
 				B96CAAB818A7ED7700D5C20C /* Spaceship.png */,
 				B96CAAA418A7ED7700D5C20C /* Supporting Files */,
 			);
@@ -262,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */,
+				E8D5E14D18AD50C40061ED91 /* background.png in Resources */,
 				B96CAAA818A7ED7700D5C20C /* InfoPlist.strings in Resources */,
 				B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */,
 				B96CAAB918A7ED7700D5C20C /* Spaceship.png in Resources */,
