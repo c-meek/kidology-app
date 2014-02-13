@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "KidologyApp/TargetPracticeScene.m"
-            timestampString = "414005967.660964"
+            timestampString = "414007127.190252"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "-targetTouch:"
             landmarkType = "5">
          </BreakpointContent>

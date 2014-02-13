@@ -27,6 +27,15 @@
         [self displayTarget];
         //add target to screen
         [self addChild:self.target];
+        // initialize the target counter
+        _targetsLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        _targetsLabel.fontSize = 20;
+        _targetsLabel.verticalAlignmentMode = 2;
+        _targetsLabel.horizontalAlignmentMode = 1;
+        _targetsLabel.fontColor = [SKColor grayColor];
+        _targetsLabel.position = CGPointMake(CGRectGetMidX(self.frame)+230, CGRectGetMidY(self.frame)+220);
+        _targetsLabel.text = [NSString stringWithFormat:@"Touched: %i/%i", _correctTouches, _totalTargets];
+        [self addChild:_targetsLabel];
         
         self.time = 0; //tien was here
     }
@@ -94,6 +103,11 @@
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
         //run the actions in sequential order
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
+        // reflect the touched target by updating the label
+        [_targetsLabel removeFromParent];
+        _targetsLabel.text = [NSString stringWithFormat:@"Touched: %i/%i", _correctTouches, _totalTargets];
+        [self addChild:_targetsLabel];
+
     }
     NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
     
@@ -116,14 +130,15 @@
         self.time +=.1;
     }
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    
     timeLabel.fontSize = 20;
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 1;
     timeLabel.fontColor = [SKColor grayColor];
-    timeLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-
+    timeLabel.position = CGPointMake(CGRectGetMidX(self.frame)+230, CGRectGetMidY(self.frame)+250);
+    
     float r_time = roundf(self.time *100)/100.0;
-    NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
+    NSString *s_time = [NSString stringWithFormat: @"Time: %.1f", r_time];
     timeLabel.text = s_time;
     [self addChild: timeLabel];
 
@@ -131,6 +146,7 @@
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.075];
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
+    
 }
 
 @end

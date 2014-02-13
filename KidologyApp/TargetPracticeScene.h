@@ -16,4 +16,5 @@
     @property (nonatomic) float time;
     @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
     @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
+    @property (nonatomic) SKLabelNode *targetsLabel;
 @end
