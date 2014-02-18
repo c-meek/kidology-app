@@ -8,6 +8,7 @@
 
 #import "MainMenuScene.h"
 #import "TargetPracticeScene.h"
+#import "FetchScene.h"
 
 @implementation MainMenuScene
 
@@ -58,7 +59,10 @@
     else if ([node.name isEqualToString:@"fetchGameButton"])
     {
         // Create and configure the "fetch" scene.
+        SKScene * fetch = [[FetchScene alloc] initWithSize:self.size];
+        fetch.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
+        [self.view presentScene:fetch];
     }
     else if ([node.name isEqualToString:@"puzzleGameButton"])
     {

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F423CAB18AD5D2200EE5F4E /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F423CAA18AD5D2200EE5F4E /* dog.png */; };
+		0F423CAF18AD61EC00EE5F4E /* tennis.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F423CAE18AD61EC00EE5F4E /* tennis.png */; };
+		0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D547A18AD4EBA00F9593D /* purple_target.png */; };
+		0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D548018AD54DF00F9593D /* FetchScene.m */; };
 		B96CAA9C18A7ED7700D5C20C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9B18A7ED7700D5C20C /* Foundation.framework */; };
 		B96CAA9E18A7ED7700D5C20C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9D18A7ED7700D5C20C /* CoreGraphics.framework */; };
 		B96CAAA018A7ED7700D5C20C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9F18A7ED7700D5C20C /* UIKit.framework */; };
@@ -40,6 +44,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F423CAA18AD5D2200EE5F4E /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
+		0F423CAE18AD61EC00EE5F4E /* tennis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tennis.png; sourceTree = "<group>"; };
+		0F7D547A18AD4EBA00F9593D /* purple_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple_target.png; sourceTree = "<group>"; };
+		0F7D547F18AD54DF00F9593D /* FetchScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchScene.h; sourceTree = "<group>"; };
+		0F7D548018AD54DF00F9593D /* FetchScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchScene.m; sourceTree = "<group>"; };
 		B96CAA9818A7ED7700D5C20C /* KidologyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidologyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96CAA9B18A7ED7700D5C20C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B96CAA9D18A7ED7700D5C20C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -98,6 +107,9 @@
 		B96CAA8F18A7ED7700D5C20C = {
 			isa = PBXGroup;
 			children = (
+				0F423CAE18AD61EC00EE5F4E /* tennis.png */,
+				0F423CAA18AD5D2200EE5F4E /* dog.png */,
+				0F7D547A18AD4EBA00F9593D /* purple_target.png */,
 				B96CAAE118A81D6B00D5C20C /* green_target.png */,
 				B96CAAA318A7ED7700D5C20C /* KidologyApp */,
 				B96CAAC718A7ED7700D5C20C /* KidologyAppTests */,
@@ -131,6 +143,8 @@
 			isa = PBXGroup;
 			children = (
 				B96CAAD718A7ED8400D5C20C /* iPad */,
+				0F7D547F18AD54DF00F9593D /* FetchScene.h */,
+				0F7D548018AD54DF00F9593D /* FetchScene.m */,
 				B96CAAAC18A7ED7700D5C20C /* AppDelegate.h */,
 				B96CAAAD18A7ED7700D5C20C /* AppDelegate.m */,
 				B96CAAAF18A7ED7700D5C20C /* Main.storyboard */,
@@ -261,10 +275,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F423CAB18AD5D2200EE5F4E /* dog.png in Resources */,
 				B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */,
 				B96CAAA818A7ED7700D5C20C /* InfoPlist.strings in Resources */,
 				B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */,
 				B96CAAB918A7ED7700D5C20C /* Spaceship.png in Resources */,
+				0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */,
+				0F423CAF18AD61EC00EE5F4E /* tennis.png in Resources */,
 				B96CAAB118A7ED7700D5C20C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */,
 				B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */,
 				B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */,
 				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
