@@ -20,6 +20,10 @@
         
         /* Setup your scene here */
         self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+        //initialize anchor panel
+         self.anchorPanel = [SKSpriteNode spriteNodeWithColor:[SKColor orangeColor] size:CGSizeMake(200, self.frame.size.height)];
+        _anchorPanel.position = CGPointMake(0, CGRectGetMidY(self.frame));
+        [self addChild:_anchorPanel];
         //initialize target
         self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         //set the total number of targets for this session
@@ -83,11 +87,15 @@
     NSLog(@"y is %f", self.target.position.y);
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
-    UITouch *touch = [touches anyObject];
-    CGPoint positionInScene = [touch locationInNode:self];
-    //test whether the target has been touched
-    [self targetTouch:positionInScene];
+    
+    for (UITouch *touch in [touches allObjects]) {
+        /* Called when a touch begins */
+        CGPoint positionInScene = [touch locationInNode:self];
+        //test whether the target has been touched
+        [self targetTouch:positionInScene];
+        [self anchorTouch:positionInScene];
+        
+    }
     //    for (UITouch *touch in touches)
     //    {
     //        CGPoint location = [touch locationInNode:self];
@@ -143,9 +151,22 @@
     NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
     
 }
+-(void)anchorTouch:(CGPoint)touchLocation
+{
+    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
+    if (touchLocation.x <= 100)
+    {
+        NSLog(@"anchor panel is being touched.");
+    }
+    else
+    {
+        NSLog(@"anchor panel is not being touched.");
+    }
+}
 
 
 -(void)update:(CFTimeInterval)currentTime {
+    //TODO: put something in here that checks if anchor is being touched - if not trigger some sort of timer to alert the user after 4 seconds (?)
     /* Called before each frame is rendered */
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
@@ -154,7 +175,6 @@
 }
 
 - (void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
-    
     self.lastSpawnTimeInterval += timeSinceLast;
     if (self.lastSpawnTimeInterval > .1) {
         self.lastSpawnTimeInterval = 0;

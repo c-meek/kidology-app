@@ -14,13 +14,14 @@ typedef enum {
 } Mode;
 
 @interface TargetPracticeScene : SKScene
+    @property (nonatomic) SKSpriteNode * anchorPanel;
     @property (nonatomic) SKSpriteNode * target;
+    @property (nonatomic) SKLabelNode *targetsLabel;
     @property (nonatomic) int totalTouches;
     @property (nonatomic) int correctTouches;
     @property (nonatomic) int totalTargets;
     @property (nonatomic) float time;
     @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
     @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
-    @property (nonatomic) SKLabelNode *targetsLabel;
     @property (nonatomic) Mode gameMode;
 @end
