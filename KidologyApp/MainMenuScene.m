@@ -49,11 +49,18 @@
 
         
         // fetch game button
-        SKSpriteNode *fetchGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor grayColor] size:CGSizeMake(200, 40)];
+        SKSpriteNode *fetchGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
         fetchGameButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
                                                     CGRectGetMidY(self.frame) - 200);
         fetchGameButton.name = @"fetchGameButton";
+        NSString * fetchLabel = [NSString stringWithFormat:@"Fetch Game"];
+        SKLabelNode *fetchButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        fetchButtonLabel.name = @"fetchButtonLabel";
+        fetchButtonLabel.text = fetchLabel;
+        fetchButtonLabel.fontSize = 24;
+        fetchButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225, CGRectGetMidY(self.frame)-210);
         [self addChild:fetchGameButton];
+        [self addChild:fetchButtonLabel];
         
         // puzzle game button
         SKSpriteNode *puzzleGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor grayColor] size:CGSizeMake(200, 40)];
@@ -83,7 +90,8 @@
         // Present the scene.
         [self.view presentScene:targetPractice];
     }
-    else if ([node.name isEqualToString:@"fetchGameButton"])
+    else if ([node.name isEqualToString:@"fetchGameButton"] ||
+              [node.name isEqualToString:@"fetchButtonLabel"])
     {
         // Create and configure the "fetch" scene.
         SKScene * fetch = [[FetchScene alloc] initWithSize:self.size];
