@@ -17,7 +17,7 @@
         NSLog(@"Size: %@", NSStringFromCGSize(size));
         
         //setup scene
-        self.backgroundColor = [SKColor colorWithRed:0.078 green:.314 blue:0.0 alpha:1.0];
+        self.backgroundColor = [SKColor colorWithRed:0.2 green:.6 blue:0.0 alpha:1.0];
         
         self.ball = [SKSpriteNode spriteNodeWithImageNamed:@"tennis"];
         self.dog = [SKSpriteNode spriteNodeWithImageNamed:@"dog"];
@@ -27,9 +27,6 @@
         [self addChild:self.ball];
         
         [self displayBackButton];
-        
-        self.totalTargets = 5;
-        
     }
     return self;
 }
@@ -51,21 +48,19 @@
 
 -(void)displayBackButton
 {
-    //add button
+    //add button with attributes
     _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(100, 40)];
     _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
     _backButton.name = @"backButton";
     [self addChild:_backButton];
-    //add label
+    //add label with attributes
     NSString * labelText = [NSString stringWithFormat:@"Back"];
     _backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     _backButtonLabel.name = @"backButtonLabel";
     _backButtonLabel.text = labelText;
     _backButtonLabel.fontSize = 24;
     _backButtonLabel.position = CGPointMake(self.frame.size.width-55, self.frame.size.height/2 + 240);
-    [self addChild:_backButtonLabel];
-    NSLog(@"here");
-    
+    [self addChild:_backButtonLabel];    
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -140,12 +135,11 @@
     SKAction * wait2 = [SKAction waitForDuration:1.0];
     //move back dog
     SKAction * moveDog = [SKAction moveTo:CGPointMake(self.frame.size.width/2 - 200, self.frame.size.height/2-170) duration:1];
+    //replace ball
     SKAction * ballReappear = [SKAction runBlock:^{ [self displayBall]; }];
     
     SKAction * sequ = [SKAction sequence:@[wait, moveDog, wait2, ballReappear]];
     [_dog runAction:sequ];
-    //replace ball
-    [self displayBall];
 }
 
 -(void)goToMainScreen
