@@ -9,5 +9,11 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface TargetPracticeMenuScene : SKScene
+@property (nonatomic) SKSpriteNode *backButton;
+@property (nonatomic) SKLabelNode *backButtonLabel;
+@property (nonatomic) SKSpriteNode *centerModeButton;
+@property (nonatomic) SKLabelNode *centerModeButtonLabel;
+@property (nonatomic) SKSpriteNode *randomModeButton;
+@property (nonatomic) SKLabelNode *randomModeButtonLabel;
 
 @end
