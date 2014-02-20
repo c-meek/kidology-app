@@ -13,6 +13,7 @@
 		0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D548018AD54DF00F9593D /* FetchScene.m */; };
 		0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */; };
 		7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */; };
+		7CB76CC718B692CB0003A622 /* hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB76CC618B692CB0003A622 /* hand.png */; };
 		B96CAA9C18A7ED7700D5C20C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9B18A7ED7700D5C20C /* Foundation.framework */; };
 		B96CAA9E18A7ED7700D5C20C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9D18A7ED7700D5C20C /* CoreGraphics.framework */; };
 		B96CAAA018A7ED7700D5C20C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9F18A7ED7700D5C20C /* UIKit.framework */; };
@@ -56,6 +57,7 @@
 		0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchInstructionScene.m; sourceTree = "<group>"; };
 		7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetPracticeMenuScene.h; sourceTree = "<group>"; };
 		7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetPracticeMenuScene.m; sourceTree = "<group>"; };
+		7CB76CC618B692CB0003A622 /* hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand.png; sourceTree = "<group>"; };
 		B96CAA9818A7ED7700D5C20C /* KidologyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidologyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96CAA9B18A7ED7700D5C20C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B96CAA9D18A7ED7700D5C20C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -115,6 +117,7 @@
 		B96CAA8F18A7ED7700D5C20C = {
 			isa = PBXGroup;
 			children = (
+				7CB76CC618B692CB0003A622 /* hand.png */,
 				0F423CAE18AD61EC00EE5F4E /* tennis.png */,
 				0F423CAA18AD5D2200EE5F4E /* dog.png */,
 				0F7D547A18AD4EBA00F9593D /* purple_target.png */,
@@ -294,6 +297,7 @@
 				B96CAAA818A7ED7700D5C20C /* InfoPlist.strings in Resources */,
 				B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */,
 				B96CAAB918A7ED7700D5C20C /* Spaceship.png in Resources */,
+				7CB76CC718B692CB0003A622 /* hand.png in Resources */,
 				0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */,
 				0F423CAF18AD61EC00EE5F4E /* tennis.png in Resources */,
 				B96CAAB118A7ED7700D5C20C /* Main.storyboard in Resources */,

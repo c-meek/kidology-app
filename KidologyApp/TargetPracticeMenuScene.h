@@ -15,5 +15,6 @@
 @property (nonatomic) SKLabelNode *centerModeButtonLabel;
 @property (nonatomic) SKSpriteNode *randomModeButton;
 @property (nonatomic) SKLabelNode *randomModeButtonLabel;
+@property (nonatomic) SKSpriteNode * target;
 
 @end
