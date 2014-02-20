@@ -8,7 +8,7 @@
 
 #import "MainMenuScene.h"
 #import "TargetPracticeScene.h"
-#import "FetchScene.h"
+#import "FetchInstructionScene.h"
 
 @implementation MainMenuScene
 
@@ -94,7 +94,7 @@
               [node.name isEqualToString:@"fetchButtonLabel"])
     {
         // Create and configure the "fetch" scene.
-        SKScene * fetch = [[FetchScene alloc] initWithSize:self.size];
+        SKScene * fetch = [[FetchInstructionScene alloc] initWithSize:self.size];
         fetch.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
         [self.view presentScene:fetch];
