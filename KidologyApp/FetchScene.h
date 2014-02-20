@@ -14,5 +14,6 @@
 @property (nonatomic) int totalTargets;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
-@property (nonatomic) SKLabelNode *targetsLabel;
+@property (nonatomic) SKSpriteNode *backButton;
+@property (nonatomic) SKLabelNode * backButtonLabel;
 @end
