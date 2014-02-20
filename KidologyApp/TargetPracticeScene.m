@@ -99,20 +99,12 @@ NSMutableArray *touchLog;
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
-    UITouch *touch = [touches anyObject];
-    CGPoint positionInScene = [touch locationInNode:self];
     //test whether the target has been touched
-    [self targetTouch:positionInScene];
-    //    for (UITouch *touch in touches)
-    //    {
-    //        CGPoint location = [touch locationInNode:self];
-    //
-    
     for (UITouch *touch in [touches allObjects]) {
         /* Called when a touch begins */
         CGPoint positionInScene = [touch locationInNode:self];
         //test whether the target has been touched
-       if (! [self isAnchorTouch:positionInScene]) // If the touch isn't going to be logged in the isAnchorTouch function,
+       if ([self isAnchorTouch:positionInScene] == false) // If the touch isn't going to be logged in the isAnchorTouch function,
        {
             [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
        }
