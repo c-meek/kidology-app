@@ -11,4 +11,6 @@
 @interface FetchInstructionScene : SKScene
 @property (nonatomic) SKSpriteNode *playButton;
 @property (nonatomic) SKLabelNode * playLabel;
+@property (nonatomic) SKSpriteNode *backButton;
+@property (nonatomic) SKLabelNode * backButtonLabel;
 @end

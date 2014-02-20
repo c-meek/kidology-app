@@ -8,6 +8,7 @@
 
 #import "FetchInstructionScene.h"
 #import "FetchScene.h"
+#import "MainMenuScene.h"
 
 @implementation FetchInstructionScene
 -(id)initWithSize:(CGSize)size
@@ -19,6 +20,8 @@
         [self addInstructionLabel];
         //add the game 'play' button
         [self addGameButton];
+        //add back button to main menu
+        [self addBackButton];
     }
     return self;
 }
@@ -64,6 +67,22 @@
     [self addChild:_playLabel];
 }
 
+-(void)addBackButton
+{
+    //add button with attributes
+    _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(100, 40)];
+    _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
+    _backButton.name = @"backButton";
+    [self addChild:_backButton];
+    //add label with attributes
+    NSString * labelText = [NSString stringWithFormat:@"Back"];
+    _backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    _backButtonLabel.name = @"backButtonLabel";
+    _backButtonLabel.text = labelText;
+    _backButtonLabel.fontSize = 24;
+    _backButtonLabel.position = CGPointMake(self.frame.size.width-55, self.frame.size.height/2 + 240);
+    [self addChild:_backButtonLabel];
+}
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     for(UITouch * touch in touches)
@@ -75,6 +94,12 @@
             SKScene * fetchScene = [[FetchScene alloc] initWithSize:self.size];
             fetchScene.scaleMode = SKSceneScaleModeAspectFill;
             [self.view presentScene:fetchScene];
+        }
+        else if([_backButton isEqual:touchedNode] || [_backButtonLabel isEqual:touchedNode]) //go back to main menu
+        {
+            SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
+            mainMenu.scaleMode = SKSceneScaleModeAspectFill;
+            [self.view presentScene:mainMenu];
         }
     }
 }
