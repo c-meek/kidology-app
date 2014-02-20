@@ -10,6 +10,7 @@
 #import "TargetPracticeScene.h"
 #import "FetchScene.h"
 #import "TargetPracticeMenuScene.h"
+#import "FetchInstructionScene.h"
 
 
 @implementation MainMenuScene

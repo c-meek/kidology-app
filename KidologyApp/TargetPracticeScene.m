@@ -11,7 +11,6 @@
 #import "MainMenuScene.h"
 #import "math.h"
 
-
 @implementation TargetPracticeScene
 
 NSMutableArray *touchLog;
@@ -22,10 +21,6 @@ NSMutableArray *touchLog;
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         /* Setup your scene here */
         self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
-        //initialize anchor panel
-         self.anchorPanel = [SKSpriteNode spriteNodeWithColor:[SKColor orangeColor] size:CGSizeMake(200, self.frame.size.height)];
-        _anchorPanel.position = CGPointMake(0, CGRectGetMidY(self.frame));
-        [self addChild:_anchorPanel];
         //initialize target
         self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         //set the total number of targets for this session
@@ -34,15 +29,6 @@ NSMutableArray *touchLog;
         [self displayTarget];
         //add target to screen
         [self addChild:self.target];
-        // initialize the target counter
-        _targetsLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-        _targetsLabel.fontSize = 20;
-        _targetsLabel.verticalAlignmentMode = 2;
-        _targetsLabel.horizontalAlignmentMode = 1;
-        _targetsLabel.fontColor = [SKColor grayColor];
-        _targetsLabel.position = CGPointMake(CGRectGetMidX(self.frame)+230, CGRectGetMidY(self.frame)+220);
-        _targetsLabel.text = [NSString stringWithFormat:@"Touched: %i/%i", _correctTouches, _totalTargets];
-        [self addChild:_targetsLabel];
         
         self.time = 0; //tien was here
     }
@@ -108,6 +94,15 @@ NSMutableArray *touchLog;
     return result;
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    /* Called when a touch begins */
+    UITouch *touch = [touches anyObject];
+    CGPoint positionInScene = [touch locationInNode:self];
+    //test whether the target has been touched
+    [self targetTouch:positionInScene];
+    //    for (UITouch *touch in touches)
+    //    {
+    //        CGPoint location = [touch locationInNode:self];
+    //
     
     for (UITouch *touch in [touches allObjects]) {
         /* Called when a touch begins */
@@ -163,11 +158,6 @@ NSMutableArray *touchLog;
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
         //run the actions in sequential order
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
-        // reflect the touched target by updating the label
-        [_targetsLabel removeFromParent];
-        _targetsLabel.text = [NSString stringWithFormat:@"Touched: %i/%i", _correctTouches, _totalTargets];
-        [self addChild:_targetsLabel];
-
     }
     else
     {
@@ -185,7 +175,6 @@ NSMutableArray *touchLog;
 
 
 -(void)update:(CFTimeInterval)currentTime {
-    //TODO: put something in here that checks if anchor is being touched - if not trigger some sort of timer to alert the user after 4 seconds (?)
     /* Called before each frame is rendered */
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
@@ -195,29 +184,28 @@ NSMutableArray *touchLog;
 }
 
 - (void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
+    
     self.lastSpawnTimeInterval += timeSinceLast;
     if (self.lastSpawnTimeInterval > .1) {
         self.lastSpawnTimeInterval = 0;
         self.time +=.1;
     }
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    
     timeLabel.fontSize = 20;
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 1;
     timeLabel.fontColor = [SKColor grayColor];
-    timeLabel.position = CGPointMake(CGRectGetMidX(self.frame)+230, CGRectGetMidY(self.frame)+250);
-    
+    timeLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+
     float r_time = roundf(self.time *100)/100.0;
-    NSString *s_time = [NSString stringWithFormat: @"Time: %.1f", r_time];
+    NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
     timeLabel.text = s_time;
     [self addChild: timeLabel];
 
-//    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
+    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.075];
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
-    
 }
 
 @end
