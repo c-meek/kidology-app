@@ -23,8 +23,21 @@
         instructionLabel.text = @"Instructions:";
         [self addChild:instructionLabel];
         
+        SKSpriteNode *backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
+        backButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
+                                                CGRectGetMidY(self.frame) + 250);
+
+        backButton.name = @"backButton";
+        [self addChild:backButton];
         
-        
+        SKLabelNode *backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
+        backButtonLabel.fontSize = 35;
+        backButtonLabel.color = [SKColor grayColor];
+        backButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame)+255, CGRectGetMidY(self.frame)+250);
+        backButtonLabel.text = @"Back";
+        backButtonLabel.verticalAlignmentMode = 2;
+        backButtonLabel.horizontalAlignmentMode = 2;
+        [self addChild:backButtonLabel];
         
 //        SKShapeNode *OptionButtion
         
