@@ -106,7 +106,7 @@
 {
     //TODO play ball sound
     //scale ball to smaller size
-    SKAction * scale = [SKAction scaleBy:.005 duration:1.0];
+    SKAction * scale = [SKAction scaleBy:.005 duration:1.25];
     //move ball offscreen
     SKAction * actionMove = [SKAction moveTo:CGPointMake(-200, self.frame.size.height/2+100) duration:1];
     
@@ -144,11 +144,15 @@
 
 -(void)goToMainScreen
 {
+    //weak self to deallocate the scene
+    __weak typeof(self) weakSelf = self;
     //create the scene
-    SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
+    SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:weakSelf.size];
+    //transition
+    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
     mainMenu.scaleMode = SKSceneScaleModeAspectFill;
     //present the scene
-    [self.view presentScene:mainMenu];
+    [weakSelf.view presentScene:mainMenu transition:reveal];
 }
 
 @end

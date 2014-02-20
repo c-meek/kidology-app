@@ -89,17 +89,21 @@
     {
         CGPoint loc = [touch locationInNode:self];
         SKSpriteNode * touchedNode = (SKSpriteNode *)[self nodeAtPoint:loc];
+        //transition
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+        //weakself for deallocated scenes
+        __weak typeof(self) weakSelf = self;
         if([_playButton isEqual:touchedNode] || [_playLabel isEqual:touchedNode]) //if play button is pressed, show the fetch game
         {
-            SKScene * fetchScene = [[FetchScene alloc] initWithSize:self.size];
+            SKScene * fetchScene = [[FetchScene alloc] initWithSize:weakSelf.size];
             fetchScene.scaleMode = SKSceneScaleModeAspectFill;
-            [self.view presentScene:fetchScene];
+            [weakSelf.view presentScene:fetchScene transition:reveal];
         }
         else if([_backButton isEqual:touchedNode] || [_backButtonLabel isEqual:touchedNode]) //go back to main menu
         {
-            SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
+            SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:weakSelf.size];
             mainMenu.scaleMode = SKSceneScaleModeAspectFill;
-            [self.view presentScene:mainMenu];
+            [weakSelf.view presentScene:mainMenu transition:reveal];
         }
     }
 }
