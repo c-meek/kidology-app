@@ -8,7 +8,10 @@
 
 #import "MainMenuScene.h"
 #import "TargetPracticeScene.h"
+#import "FetchScene.h"
+#import "TargetPracticeMenuScene.h"
 #import "FetchInstructionScene.h"
+
 
 @implementation MainMenuScene
 
@@ -83,12 +86,19 @@
     if ([node.name isEqualToString:@"targetPracticeButton"] ||
         [node.name isEqualToString:@"targetPracticeButtonLabel"])
     {
-        // Create and configure the "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size];
-        targetPractice.scaleMode = SKSceneScaleModeAspectFill;
+//        // Create and configure the "target practice" scene.
+//        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size];
+//        targetPractice.scaleMode = SKSceneScaleModeAspectFill;
+//        
+//        // Present the scene.
+//        [self.view presentScene:targetPractice];
+        
+        SKScene * targetPracticeMenu = [[TargetPracticeMenuScene alloc] initWithSize:self.size];
+        targetPracticeMenu.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
-        [self.view presentScene:targetPractice];
+        [self.view presentScene:targetPracticeMenu];
+        
     }
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
               [node.name isEqualToString:@"fetchButtonLabel"])
