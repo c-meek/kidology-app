@@ -11,6 +11,7 @@
 		0F423CAF18AD61EC00EE5F4E /* tennis.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F423CAE18AD61EC00EE5F4E /* tennis.png */; };
 		0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D547A18AD4EBA00F9593D /* purple_target.png */; };
 		0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D548018AD54DF00F9593D /* FetchScene.m */; };
+		0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */; };
 		B96CAA9C18A7ED7700D5C20C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9B18A7ED7700D5C20C /* Foundation.framework */; };
 		B96CAA9E18A7ED7700D5C20C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9D18A7ED7700D5C20C /* CoreGraphics.framework */; };
 		B96CAAA018A7ED7700D5C20C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9F18A7ED7700D5C20C /* UIKit.framework */; };
@@ -50,6 +51,8 @@
 		0F7D547A18AD4EBA00F9593D /* purple_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple_target.png; sourceTree = "<group>"; };
 		0F7D547F18AD54DF00F9593D /* FetchScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchScene.h; sourceTree = "<group>"; };
 		0F7D548018AD54DF00F9593D /* FetchScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchScene.m; sourceTree = "<group>"; };
+		0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchInstructionScene.h; sourceTree = "<group>"; };
+		0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchInstructionScene.m; sourceTree = "<group>"; };
 		B96CAA9818A7ED7700D5C20C /* KidologyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidologyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96CAA9B18A7ED7700D5C20C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B96CAA9D18A7ED7700D5C20C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -162,6 +165,8 @@
 				E8D5E14C18AD50C40061ED91 /* background.png */,
 				B96CAAB818A7ED7700D5C20C /* Spaceship.png */,
 				B96CAAA418A7ED7700D5C20C /* Supporting Files */,
+				0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */,
+				0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */,
 			);
 			path = KidologyApp;
 			sourceTree = "<group>";
@@ -309,6 +314,7 @@
 				B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */,
 				B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */,
 				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
+				0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */,
 				B9938EBF18A9A5C40004890B /* TargetPracticeGameOver.m in Sources */,
 				B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */,
 				B96CAAAA18A7ED7700D5C20C /* main.m in Sources */,
