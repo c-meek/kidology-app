@@ -15,12 +15,15 @@ typedef enum {
 
 typedef enum {
     INCORRECT,
-    CORRECT
-} Touch_Type;
+    CORRECT,
+    PANEL
+} TouchType;
+
 
 typedef struct {
-    
-} Log_Entry;
+    TouchType type;
+    float time;
+} LogEntry;
 
 @interface TargetPracticeScene : SKScene
     @property (nonatomic) SKSpriteNode * anchorPanel;

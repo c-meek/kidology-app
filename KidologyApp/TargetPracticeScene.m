@@ -14,10 +14,12 @@
 
 @implementation TargetPracticeScene
 
+NSMutableArray *touchLog;
+
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
-        NSLog(@"Size: %@", NSStringFromCGSize(size));
-        
+//        NSLog(@"Size: %@", NSStringFromCGSize(size));
+        touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         /* Setup your scene here */
         self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
         //initialize anchor panel
@@ -83,8 +85,27 @@
 //
 //        self.target.position = CGPointMake(x_pos, y_pos);
 //    }
-    NSLog(@"x is %f", self.target.position.x);
-    NSLog(@"y is %f", self.target.position.y);
+//    NSLog(@"x is %f", self.target.position.x);
+//    NSLog(@"y is %f", self.target.position.y);
+}
+
+-(Boolean)isAnchorTouch:(CGPoint)touchLocation
+{
+    Boolean result;
+//    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
+    if (touchLocation.x <= 100)
+    {
+        LogEntry currentTouch = {PANEL, self.time};
+        [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
+        NSLog(@"anchor panel is being touched.");
+        result = true;
+    }
+    else
+    {
+        NSLog(@"anchor panel is not being touched.");
+        result = false;
+    }
+    return result;
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
@@ -92,34 +113,29 @@
         /* Called when a touch begins */
         CGPoint positionInScene = [touch locationInNode:self];
         //test whether the target has been touched
-        [self targetTouch:positionInScene];
-        [self anchorTouch:positionInScene];
-        
+       if (! [self isAnchorTouch:positionInScene]) // If the touch isn't going to be logged in the isAnchorTouch function,
+       {
+            [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
+       }
     }
-    //    for (UITouch *touch in touches)
-    //    {
-    //        CGPoint location = [touch locationInNode:self];
-    //
-    
-    
-    //        [sprite runAction:[SKAction repeatActionForever:action]];
-    
-    //        [self addChild:sprite];
-    //    }
 }
 
 -(void)targetTouch:(CGPoint)touchLocation
 {
     _totalTouches++;
-    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
+//    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
     double xDifference = touchLocation.x - self.target.position.x;
     double yDifference = touchLocation.y - self.target.position.y;
     double radius = self.target.size.width / 2;
     double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
     double rightHandSide = pow(radius, 2);
+    LogEntry currentTouch;
     
     if(leftHandSide <= rightHandSide)
     {
+        currentTouch.type = CORRECT;
+        currentTouch.time = self.time;
+        [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
         _correctTouches++;
         //make a "delete" target action
         SKAction *deleteTarget = [SKAction runBlock:^{
@@ -148,21 +164,16 @@
         [self addChild:_targetsLabel];
 
     }
-    NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
-    
-}
--(void)anchorTouch:(CGPoint)touchLocation
-{
-    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
-    if (touchLocation.x <= 100)
-    {
-        NSLog(@"anchor panel is being touched.");
-    }
     else
     {
-        NSLog(@"anchor panel is not being touched.");
+        currentTouch.type = INCORRECT;
+        currentTouch.time = self.time;
+        [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
     }
+//    NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
+    
 }
+
 
 
 -(void)update:(CFTimeInterval)currentTime {
@@ -171,6 +182,7 @@
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     [self updateWithTimeSinceLastUpdate:timeSinceLast];
+    NSLog(@"%@", touchLog);
 
 }
 
