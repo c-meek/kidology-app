@@ -15,6 +15,7 @@
 {
     if (self = [super initWithSize:size])
     {
+        self.userData = [NSMutableDictionary dictionary];
         self.backgroundColor = [SKColor grayColor];
         NSString * messageText = [NSString stringWithFormat:@"Complete! You touched %d targets.", targets];
         SKLabelNode * message = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -27,7 +28,6 @@
         backButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
         backButton.name = @"backButton";
         [self addChild:backButton];
-        
     }
     return self;
 }
