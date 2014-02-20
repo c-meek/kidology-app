@@ -82,6 +82,7 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
+    __weak typeof(self) weakSelf = self;
     // Check which button was pressed
     if ([node.name isEqualToString:@"targetPracticeButton"] ||
         [node.name isEqualToString:@"targetPracticeButtonLabel"])
@@ -104,10 +105,12 @@
               [node.name isEqualToString:@"fetchButtonLabel"])
     {
         // Create and configure the "fetch" scene.
-        SKScene * fetch = [[FetchInstructionScene alloc] initWithSize:self.size];
+        SKScene * fetch = [[FetchInstructionScene alloc] initWithSize:weakSelf.size];
+        //transition
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         fetch.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
-        [self.view presentScene:fetch];
+        [weakSelf.view presentScene:fetch transition:reveal];
     }
     else if ([node.name isEqualToString:@"puzzleGameButton"])
     {
