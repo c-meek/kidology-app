@@ -28,7 +28,7 @@
         backButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
         backButton.name = @"backButton";
         [self addChild:backButton];
-        NSLog(@"%@", )
+        NSLog(@"%@", [self.userData objectForKey:@"touchLog"]);
         
     }
     return self;

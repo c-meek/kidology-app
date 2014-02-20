@@ -21,6 +21,10 @@ NSMutableArray *touchLog;
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         /* Setup your scene here */
         self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+        //initialize panel
+        self.anchorPanel = [SKSpriteNode spriteNodeWithColor:[SKColor orangeColor] size:CGSizeMake(200, self.size.height)];
+        self.anchorPanel.position = CGPointMake(0, self.size.height/2);
+        [self addChild:self.anchorPanel];
         //initialize target
         self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         //set the total number of targets for this session
@@ -202,7 +206,7 @@ NSMutableArray *touchLog;
     timeLabel.text = s_time;
     [self addChild: timeLabel];
 
-    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
+//    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.075];
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];

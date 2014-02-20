@@ -93,7 +93,8 @@
 //        // Present the scene.
 //        [self.view presentScene:targetPractice];
         
-        SKScene * targetPracticeMenu = [[TargetPracticeMenuScene alloc] initWithSize:self.size];
+        //remember to change this back to allocating the target practice menu scene!!!
+        SKScene * targetPracticeMenu = [[TargetPracticeScene alloc] initWithSize:self.size];
         targetPracticeMenu.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
