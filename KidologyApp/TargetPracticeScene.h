@@ -13,6 +13,18 @@ typedef enum {
     RANDOM
 } Mode;
 
+typedef enum {
+    INCORRECT,
+    CORRECT,
+    PANEL
+} TouchType;
+
+
+typedef struct {
+    TouchType type;
+    float time;
+} LogEntry;
+
 @interface TargetPracticeScene : SKScene
     @property (nonatomic) SKSpriteNode * anchorPanel;
     @property (nonatomic) SKSpriteNode * target;
@@ -21,6 +33,7 @@ typedef enum {
     @property (nonatomic) int correctTouches;
     @property (nonatomic) int totalTargets;
     @property (nonatomic) float time;
+    @property (nonatomic) float time_not_anchored;
     @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
     @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
     @property (nonatomic) Mode gameMode;
