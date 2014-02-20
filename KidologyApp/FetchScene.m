@@ -89,12 +89,68 @@
 
 -(void)ballTouch
 {
+    // generate pseudo-random x and y positions to move towards
+    int positions[2];
+    [self getRandomMovement:positions];
+    
     //move ball offscreen
-    [self moveBallOffScreen];
+    [self moveBallOffScreen:positions[0] withYPosition:positions[1]];
     //move dog offscreen
-    [self moveDogOffScreen];
+    [self moveDogOffScreen:positions[0] withYPosition:positions[1]];
     //move both onscreen
     [self moveBackDogAndBall];
+    
+    // deallocate positions array from memory
+    free(positions);
+}
+
+// generate random direction to move the dog and ball along
+-(void) getRandomMovement: (int *)positions
+{
+    // (0 = left, 1 = up, 2 = right, 3 = down, 4 = upper-left
+    //  5 = upper-right, 6 = lower-right, 7 = lower-left)
+    // NOTE: will edit this to be a bit more dynamic e.g. can move in all 360 degrees
+    int direction = rand() % 8;
+    
+    int x_pos;
+    int y_pos;
+    switch (direction)
+    {
+        case 0:
+            x_pos = -5000;
+            y_pos = self.frame.size.height/2;
+            break;
+        case 1:
+            x_pos = self.frame.size.width/2;
+            y_pos = 5000;
+            break;
+        case 2:
+            x_pos = 5000;
+            y_pos = self.frame.size.height/2;
+            break;
+        case 3:
+            x_pos = self.frame.size.width/2;
+            y_pos = -5000;
+            break;
+        case 4:
+            x_pos = -5000;
+            y_pos = 5000;
+            break;
+        case 5:
+            x_pos = 5000;
+            y_pos = 5000;
+            break;
+        case 6:
+            x_pos = 5000;
+            y_pos = -5000;
+            break;
+        default: // case 7:
+            x_pos = -5000;
+            y_pos = -5000;
+            break;
+    }
+    positions[0] = x_pos;
+    positions[1] = y_pos;
 }
 
 -(void)dogTouch
@@ -102,26 +158,28 @@
     //TODO play dog sound
 }
 
--(void)moveBallOffScreen
+-(void)moveBallOffScreen: (CGFloat)x_pos withYPosition:(CGFloat) y_pos
 {
     //TODO play ball sound
     //scale ball to smaller size
     SKAction * scale = [SKAction scaleBy:.005 duration:1.25];
     //move ball offscreen
-    SKAction * actionMove = [SKAction moveTo:CGPointMake(-200, self.frame.size.height/2+100) duration:1];
+    //SKAction * actionMove = [SKAction moveTo:CGPointMake(-200, self.frame.size.height/2+100) duration:1];
+    SKAction * actionMove = [SKAction moveTo:CGPointMake(x_pos, y_pos) duration:1];
     
     SKAction * moveSequence = [SKAction sequence:@[actionMove]];
     [_ball runAction:scale];
     [_ball runAction:moveSequence];
 }
 
--(void)moveDogOffScreen
+-(void)moveDogOffScreen: (CGFloat)x_pos withYPosition:(CGFloat) y_pos
 {
     //wait for ball to move offscreen
     SKAction *wait = [SKAction waitForDuration:1.5];
     //TODO play dog sound
     //move dog offscreen
-    SKAction *move = [SKAction moveTo:CGPointMake(-500, _dog.size.height) duration:.5];
+    // SKAction *move = [SKAction moveTo:CGPointMake(-500, _dog.size.height) duration:.5];
+     SKAction *move = [SKAction moveTo:CGPointMake(x_pos, y_pos) duration:1.5];
     
     SKAction * seq = [SKAction sequence:@[wait, move]];
     [_dog runAction:seq];
