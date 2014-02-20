@@ -53,12 +53,24 @@
         selectModeLabel.text = @"Select Your Game Mode:";
         [self addChild:selectModeLabel];
         
-//READ ->     //adds target and touch animation?
+//READ! ->     //adds target and touch animation?
         _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
-        _target.position = (CGPointMake(self.frame.size.width/2-50, self.frame.size.height/2-22));
+        _target.position = (CGPointMake(self.frame.size.width/2-50, self.frame.size.height/2-82));
         _target.xScale = .4;
-        _target.yScale = .4;
+        _target.yScale = .15;
         [self addChild:_target];
+        
+        _hand = [SKSpriteNode spriteNodeWithImageNamed:@"hand"];
+        _hand.position = (CGPointMake(self.frame.size.width/2+150+(self.hand.size.width/2), self.frame.size.height/2-62+(self.hand.size.height/2)));
+        [self addChild:_hand];
+        SKAction * moveHandOver = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-50+(self.hand.size.width/2), self.frame.size.height/2-72+(self.hand.size.height/2))) duration:2];
+        SKAction * pressButton = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-50+(self.hand.size.width/2), self.frame.size.height/2-82+(self.hand.size.height/2))) duration:.5];
+        SKAction *wait = [SKAction waitForDuration:3];
+        SKAction * actionMoveDone = [SKAction removeFromParent];
+
+        [_hand runAction: [SKAction sequence:@[moveHandOver, pressButton, wait, actionMoveDone]]];
+        
+        
         
         _centerModeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
         _centerModeButton.position = CGPointMake(self.frame.size.width/4, self.frame.size.height/2-250);
@@ -107,11 +119,21 @@
             [self.view presentScene:backToMain];
         }
     
-    if ([node.name isEqualToString:@"targetPracticeButton"] ||
-        [node.name isEqualToString:@"targetPracticeButtonLabel"])
+    if ([node.name isEqualToString:@"centerLabel"] ||
+        [node.name isEqualToString:@"centerButton"])
     {
         // Create and configure the "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size];
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1];
+        targetPractice.scaleMode = SKSceneScaleModeAspectFill;
+        // Present the scene.
+        [self.view presentScene:targetPractice];
+    }
+    
+    if ([node.name isEqualToString:@"randomLabel"] ||
+        [node.name isEqualToString:@"randomButton"])
+    {
+        // Create and configure the "target practice" scene.
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:2];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
         [self.view presentScene:targetPractice];

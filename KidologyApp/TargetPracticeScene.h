@@ -40,4 +40,6 @@ typedef struct {
     @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
     @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
     @property (nonatomic) Mode gameMode;
+
+-(id)initWithSize:(CGSize)size game_mode:(int)game_mode;
 @end
