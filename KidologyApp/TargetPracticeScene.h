@@ -23,6 +23,9 @@ typedef enum {
 typedef struct {
     TouchType type;
     float time;
+    CGPoint touchLocation;
+    CGPoint targetLocation;
+    float targetRadius;
 } LogEntry;
 
 @interface TargetPracticeScene : SKScene

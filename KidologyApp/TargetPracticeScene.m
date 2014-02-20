@@ -95,7 +95,7 @@ NSMutableArray *touchLog;
 //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
     if (touchLocation.x <= 100)
     {
-        LogEntry currentTouch = {PANEL, self.time};
+        LogEntry currentTouch = {PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
         [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
         NSLog(@"anchor panel is being touched.");
         result = true;
@@ -135,6 +135,9 @@ NSMutableArray *touchLog;
     {
         currentTouch.type = CORRECT;
         currentTouch.time = self.time;
+        currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
+        currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
+        currentTouch.targetRadius = radius;
         [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
         _correctTouches++;
         //make a "delete" target action
@@ -152,6 +155,8 @@ NSMutableArray *touchLog;
         {
             SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
             SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targets:self.totalTargets];
+            // TODO: add the passing of the array like this:
+            // [newScene.userData setObject:[currentScene.userData objectForKey:@"score"] forKey:@"score"];
             [self.view presentScene:gameOverScene transition: reveal];
         }
         //combine all the actions into a sequence
@@ -168,6 +173,9 @@ NSMutableArray *touchLog;
     {
         currentTouch.type = INCORRECT;
         currentTouch.time = self.time;
+        currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
+        currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
+        currentTouch.targetRadius = self.target.size.width / 2;
         [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
     }
 //    NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
