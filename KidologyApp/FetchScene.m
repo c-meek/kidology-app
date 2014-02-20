@@ -144,13 +144,15 @@
 
 -(void)goToMainScreen
 {
+    //weak self to deallocate the scene
+    __weak typeof(self) weakSelf = self;
     //create the scene
-    SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
+    SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:weakSelf.size];
     //transition
     SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
     mainMenu.scaleMode = SKSceneScaleModeAspectFill;
     //present the scene
-    [self.view presentScene:mainMenu transition:reveal];
+    [weakSelf.view presentScene:mainMenu transition:reveal];
 }
 
 @end
