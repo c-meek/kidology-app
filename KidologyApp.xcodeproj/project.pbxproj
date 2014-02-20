@@ -167,6 +167,8 @@
 				E8D5E14C18AD50C40061ED91 /* background.png */,
 				B96CAAB818A7ED7700D5C20C /* Spaceship.png */,
 				B96CAAA418A7ED7700D5C20C /* Supporting Files */,
+				0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */,
+				0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */,
 			);
 			path = KidologyApp;
 			sourceTree = "<group>";
@@ -315,6 +317,7 @@
 				B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */,
 				B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */,
 				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
+				0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */,
 				B9938EBF18A9A5C40004890B /* TargetPracticeGameOver.m in Sources */,
 				B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */,
 				B96CAAAA18A7ED7700D5C20C /* main.m in Sources */,
