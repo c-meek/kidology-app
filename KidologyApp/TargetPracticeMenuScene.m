@@ -18,12 +18,20 @@
         
         SKLabelNode *instructionLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
         instructionLabel.fontSize = 40;
-        instructionLabel.fontColor = [SKColor blackColor];
+        instructionLabel.fontColor = [SKColor grayColor];
         instructionLabel.position = CGPointMake(CGRectGetMidX(self.frame)-100, CGRectGetMidY(self.frame)+100);
         instructionLabel.text = @"Instructions:";
         [self addChild:instructionLabel];
         
-        SKSpriteNode *backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
+        SKLabelNode *instructionContentLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
+        instructionContentLabel.fontSize = 20;
+        instructionContentLabel.fontColor = [SKColor grayColor];
+        instructionContentLabel.position = CGPointMake(CGRectGetMidX(self.frame)-250, CGRectGetMidY(self.frame)+60);
+        instructionLabel.text = @"Click on the center of the target when they appears.";
+        [self addChild:instructionContentLabel];
+        
+        
+        SKSpriteNode *backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(150, 40)];
         backButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
                                                 CGRectGetMidY(self.frame) + 250);
 
@@ -32,12 +40,14 @@
         
         SKLabelNode *backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
         backButtonLabel.fontSize = 35;
-        backButtonLabel.color = [SKColor grayColor];
+        backButtonLabel.fontColor = [SKColor grayColor];
         backButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame)+255, CGRectGetMidY(self.frame)+250);
         backButtonLabel.text = @"Back";
-        backButtonLabel.verticalAlignmentMode = 2;
+        backButtonLabel.verticalAlignmentMode = 1;
         backButtonLabel.horizontalAlignmentMode = 2;
         [self addChild:backButtonLabel];
+        
+        
         
 //        SKShapeNode *OptionButtion
         
