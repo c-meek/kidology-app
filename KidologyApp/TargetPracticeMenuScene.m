@@ -63,8 +63,8 @@
         _hand = [SKSpriteNode spriteNodeWithImageNamed:@"hand"];
         _hand.position = (CGPointMake(self.frame.size.width/2+150+(self.hand.size.width/2), self.frame.size.height/2-62+(self.hand.size.height/2)));
         [self addChild:_hand];
-        SKAction * moveHandOver = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-50+(self.hand.size.width/2), self.frame.size.height/2-72+(self.hand.size.height/2))) duration:2];
-        SKAction * pressButton = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-50+(self.hand.size.width/2), self.frame.size.height/2-82+(self.hand.size.height/2))) duration:.5];
+        SKAction * moveHandOver = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-57+(self.hand.size.width/2), self.frame.size.height/2-72+(self.hand.size.height/2))) duration:2];
+        SKAction * pressButton = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-57+(self.hand.size.width/2), self.frame.size.height/2-85+(self.hand.size.height/2))) duration:.5];
         SKAction *wait = [SKAction waitForDuration:3];
         SKAction * actionMoveDone = [SKAction removeFromParent];
 

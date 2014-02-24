@@ -90,7 +90,7 @@
 -(void)ballTouch
 {
     // generate pseudo-random x and y positions to move towards
-    int positions[2];
+    int positions[2] = {0,0};
     [self getRandomMovement:positions];
     
     //move ball offscreen
@@ -101,7 +101,7 @@
     [self moveBackDogAndBall];
     
     // deallocate positions array from memory
-    free(positions);
+//    free(positions);  // this line was producing the error "Pointer being freed was not allocated", so it is commented out.
 }
 
 // generate random direction to move the dog and ball along

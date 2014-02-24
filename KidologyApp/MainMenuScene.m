@@ -70,8 +70,14 @@
         puzzleGameButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
                                                     CGRectGetMidY(self.frame) - 250);
         puzzleGameButton.name = @"puzzleGameButton";
-        
+        NSString *puzzleLabel = [NSString stringWithFormat:@"Puzzle Game"];
+        SKLabelNode *puzzleButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        puzzleButtonLabel.name = @"puzzleButtonLabel";
+        puzzleButtonLabel.text = puzzleLabel;
+        puzzleButtonLabel.fontSize = 24;
+        puzzleButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225, CGRectGetMidY(self.frame) - 260);
         [self addChild:puzzleGameButton];
+        [self addChild:puzzleButtonLabel];
         
     }
     return self;
