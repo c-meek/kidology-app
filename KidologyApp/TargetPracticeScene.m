@@ -198,7 +198,8 @@ NSMutableArray *touchLog;
     NSString * text = [NSString stringWithFormat:@"%d/%d", _correctTouches, _totalTargets];
     trackerLabel.text = text;
     trackerLabel.fontColor = [SKColor grayColor];
-    trackerLabel.position = CGPointMake(self.frame.size.width - 37, self.frame.size.height/2+220);
+    trackerLabel.horizontalAlignmentMode = 0; // text is center-aligned
+    trackerLabel.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2+220);
     [self addChild:trackerLabel];
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:trackerLabel.position duration:.0075];
@@ -215,9 +216,9 @@ NSMutableArray *touchLog;
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     timeLabel.fontSize = 20;
     timeLabel.verticalAlignmentMode = 2;
-    timeLabel.horizontalAlignmentMode = 1;
+    timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
     timeLabel.fontColor = [SKColor grayColor];
-    timeLabel.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+265);
+    timeLabel.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2+265);
 
     //label for ratio of touched/total targets
     [self trackerLabel];

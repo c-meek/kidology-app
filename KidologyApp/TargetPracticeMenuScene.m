@@ -29,7 +29,7 @@
         instructionContentLabel.fontColor = [SKColor grayColor];
         instructionContentLabel.position = CGPointMake(CGRectGetMidX(self.frame)-150, CGRectGetMidY(self.frame)+110);
         instructionContentLabel.horizontalAlignmentMode = 1;
-        instructionContentLabel.text = @"Click on the center of the target when they appears.";
+        instructionContentLabel.text = @"Touch the center of the target when it appears.";
         [self addChild:instructionContentLabel];
         
         
