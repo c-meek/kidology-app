@@ -68,7 +68,7 @@
         // puzzle game button
         SKSpriteNode *puzzleGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor grayColor] size:CGSizeMake(200, 40)];
         puzzleGameButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
-                                                    CGRectGetMidY(self.frame) - 250);
+                                                     CGRectGetMidY(self.frame) - 250);
         puzzleGameButton.name = @"puzzleGameButton";
         NSString *puzzleLabel = [NSString stringWithFormat:@"Puzzle Game"];
         SKLabelNode *puzzleButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
