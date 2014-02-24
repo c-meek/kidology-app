@@ -39,6 +39,8 @@ NSMutableArray *touchLog;
         //set the total number of targets for this session
         self.totalTargets = 3;
         self.correctTouches = 0;
+        // initialize the anchor to "not being touched" state
+        self.anchored = NOT_TOUCHING;
         //set properties of target
         [self displayTarget];
         //add target to screen
@@ -116,10 +118,23 @@ NSMutableArray *touchLog;
         /* Called when a touch begins */
         CGPoint positionInScene = [touch locationInNode:self];
         //test whether the target has been touched
-       if ([self isAnchorTouch:positionInScene] == false) // If the touch isn't going to be logged in the isAnchorTouch function,
+       if ([self isAnchorTouch:positionInScene] == false) // If the touch isn't on the anchor,
        {
             [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
        }
+       else{ // If it is on the anchor,
+           _anchored = TOUCHING; // make note of that.
+       }
+    }
+}
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    /* Called when a touch ends */
+    for (UITouch *touch in [touches allObjects]) {
+        CGPoint positionInScene = [touch locationInNode:self];
+        if ([self isAnchorTouch:positionInScene] == true) // If a touch on the anchor is ending,
+        {
+            _anchored = NOT_TOUCHING; // make note of that.
+        }
     }
 }
 
@@ -134,42 +149,49 @@ NSMutableArray *touchLog;
     double rightHandSide = pow(radius, 2);
     LogEntry currentTouch;
     
-    if(leftHandSide <= rightHandSide)
+    if(leftHandSide <= rightHandSide) // If the touch is on the target
     {
-        currentTouch.type = CORRECT;
         currentTouch.time = self.time;
         currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
         currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
         currentTouch.targetRadius = radius;
-        [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
-        _correctTouches++;
-        //make a "delete" target action
-        SKAction *deleteTarget = [SKAction runBlock:^{
-            self.target.position = CGPointMake(-100,-100);
-        }];
-        //make a wait action
-        SKAction *wait = [SKAction waitForDuration:3];
-        //make a "add" target action
-        SKAction *addTarget = [SKAction runBlock:^{
-            [self displayTarget];
-        }];
-        //check to see if the total number of targets have been touched, then show the ending screen
-        if(self.totalTargets <= self.correctTouches)
+        if (_anchored == TOUCHING) // the anchor is currently being touched
         {
-            SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
-            SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targets:self.totalTargets];
-            // TODO: add the passing of the array like this:
-            [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
-            [self.view presentScene:gameOverScene transition: reveal];
+            currentTouch.type = TARGET;
+            _correctTouches++;
+            //make a "delete" target action
+            SKAction *deleteTarget = [SKAction runBlock:^{
+                self.target.position = CGPointMake(-100,-100);
+            }];
+            //make a wait action
+            SKAction *wait = [SKAction waitForDuration:3];
+            //make a "add" target action
+            SKAction *addTarget = [SKAction runBlock:^{
+                [self displayTarget];
+            }];
+            //check to see if the total number of targets have been touched, then show the ending screen
+            if(self.totalTargets <= self.correctTouches)
+            {
+                SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
+                SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targets:self.totalTargets];
+                // TODO: add the passing of the array like this:
+                [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
+                [self.view presentScene:gameOverScene transition: reveal];
+            }
+            //combine all the actions into a sequence
+            SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
+            //run the actions in sequential order
+            [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
         }
-        //combine all the actions into a sequence
-        SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
-        //run the actions in sequential order
-        [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
+        else // the anchor is not currently being touched
+        {
+            currentTouch.type = UNANCHORED_TARGET;
+        }
+        [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]]; // log the touch
     }
     else
     {
-        currentTouch.type = INCORRECT;
+        currentTouch.type = WHITESPACE;
         currentTouch.time = self.time;
         currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
         currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);

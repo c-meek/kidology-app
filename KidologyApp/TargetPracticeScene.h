@@ -14,11 +14,16 @@ typedef enum {
 } Mode;
 
 typedef enum {
-    INCORRECT,
-    CORRECT,
-    PANEL
+    WHITESPACE,
+    UNANCHORED_TARGET,
+    PANEL,
+    TARGET
 } TouchType;
 
+typedef enum {
+    TOUCHING,
+    NOT_TOUCHING
+} AnchorStatus;
 
 typedef struct {
     TouchType type;
@@ -40,6 +45,7 @@ typedef struct {
     @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
     @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
     @property (nonatomic) Mode gameMode;
+    @property (nonatomic) AnchorStatus anchored;
 
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode;
 @end
