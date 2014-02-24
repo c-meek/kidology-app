@@ -46,7 +46,7 @@ NSMutableArray *touchLog;
         //add target to screen
         [self addChild:self.target];
         
-        self.time = 0; //tien was here
+        self.time = 0;
     }
     return self;
 }
