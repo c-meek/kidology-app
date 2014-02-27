@@ -1,13 +1,13 @@
 //
-//  BabyTargetPratice.h
+//  BabyTargetPracticeScene.m
 //  KidologyApp
 //
 //  Created by ngo, tien dong on 2/27/14.
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
+#import "BabyTargetPracticeScene.h"
 
-@interface BabyTargetPraticeScene : SKScene
+@implementation BabyTargetPracticeScene
 
 @end
