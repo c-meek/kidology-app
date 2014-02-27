@@ -9,7 +9,7 @@
 #import "GameMenuScene.h"
 #import "FetchInstructionScene.h"
 #import "TargetPracticeMenuScene.h"
-//#import "BabyTargetPracticeScene.h"
+#import "BabyTargetPracticeScene.h"
 
 @implementation GameMenuScene
 -(id)initWithSize:(CGSize)size
@@ -64,13 +64,13 @@
     }
     else if ([node.name isEqualToString:@"babyGameButton"] || [node.name isEqualToString:@"babyButtonLabel"])
     {
-//        // Create and configure the "fetch" scene.
-//        SKScene * baby = [[BabyTargetPracticeScene alloc] initWithSize:self.size];
-//        //transition
-//        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-//        fetch.scaleMode = SKSceneScaleModeAspectFill;
-//        // Present the scene.
-//        [self.view presentScene:baby transition:reveal];
+        // Create and configure the "fetch" scene.
+        SKScene * baby = [[BabyTargetPracticeScene alloc] initWithSize:self.size];
+        //transition
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+        baby.scaleMode = SKSceneScaleModeAspectFill;
+        // Present the scene.
+        [self.view presentScene:baby transition:reveal];
     }
 }
 
