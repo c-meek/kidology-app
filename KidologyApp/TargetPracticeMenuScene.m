@@ -15,8 +15,10 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         
+        //Background here!!!
         self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
         
+        //Instructions...
         SKLabelNode *instructionLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
         instructionLabel.fontSize = 40;
         instructionLabel.fontColor = [SKColor grayColor];
@@ -31,8 +33,16 @@
         instructionContentLabel.horizontalAlignmentMode = 1;
         instructionContentLabel.text = @"Touch the center of the target when it appears.";
         [self addChild:instructionContentLabel];
+
+        // "Select Your Game Mode:"
+        SKLabelNode *selectModeLabel= [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
+        selectModeLabel.fontSize = 35;
+        selectModeLabel.fontColor = [SKColor grayColor];
+        selectModeLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 210);
+        selectModeLabel.text = @"Select Your Game Mode:";
+        [self addChild:selectModeLabel];
         
-        
+        //Back Button!
         _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
         _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
         _backButton.name = @"backButton";
@@ -45,33 +55,8 @@
         _backButtonLabel.name = @"backLabel";
         _backButtonLabel.text = @"Back";
         [self addChild:_backButtonLabel];
-        
-        SKLabelNode *selectModeLabel= [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
-        selectModeLabel.fontSize = 35;
-        selectModeLabel.fontColor = [SKColor grayColor];
-        selectModeLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 210);
-        selectModeLabel.text = @"Select Your Game Mode:";
-        [self addChild:selectModeLabel];
-        
-//READ! ->     //adds target and touch animation?
-        _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
-        _target.position = (CGPointMake(self.frame.size.width/2-50, self.frame.size.height/2-82));
-        _target.xScale = .4;
-        _target.yScale = .15;
-        [self addChild:_target];
-        
-        _hand = [SKSpriteNode spriteNodeWithImageNamed:@"hand"];
-        _hand.position = (CGPointMake(self.frame.size.width/2+150+(self.hand.size.width/2), self.frame.size.height/2-62+(self.hand.size.height/2)));
-        [self addChild:_hand];
-        SKAction * moveHandOver = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-57+(self.hand.size.width/2), self.frame.size.height/2-72+(self.hand.size.height/2))) duration:2];
-        SKAction * pressButton = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-57+(self.hand.size.width/2), self.frame.size.height/2-85+(self.hand.size.height/2))) duration:.5];
-        SKAction *wait = [SKAction waitForDuration:3];
-        SKAction * actionMoveDone = [SKAction removeFromParent];
 
-        [_hand runAction: [SKAction sequence:@[moveHandOver, pressButton, wait, actionMoveDone]]];
-        
-        
-        
+        //Center Button!
         _centerModeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
         _centerModeButton.position = CGPointMake(self.frame.size.width/4, self.frame.size.height/2-250);
         _centerModeButton.name = @"centerButton";
@@ -86,6 +71,7 @@
         _centerModeButtonLabel.verticalAlignmentMode =1;
         [self addChild:_centerModeButtonLabel];
         
+        //Random Button!
         _randomModeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
         _randomModeButton.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2-250);
         _randomModeButton.name = @"randomButton";
@@ -100,6 +86,23 @@
         _randomModeButtonLabel.verticalAlignmentMode = 1;
         [self addChild:_randomModeButtonLabel];
         
+//READ! Do we want this? Animation!!!
+        _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
+        _target.position = (CGPointMake(self.frame.size.width/2-50, self.frame.size.height/2-82));
+        _target.xScale = .4;
+        _target.yScale = .15;
+        [self addChild:_target];
+        
+        _hand = [SKSpriteNode spriteNodeWithImageNamed:@"hand"];
+        _hand.position = (CGPointMake(self.frame.size.width/2+150+(self.hand.size.width/2), self.frame.size.height/2-62+(self.hand.size.height/2)));
+        [self addChild:_hand];
+        SKAction * moveHandOver = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-50+(self.hand.size.width/2), self.frame.size.height/2-72+(self.hand.size.height/2))) duration:2];
+        SKAction * pressButton = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-50+(self.hand.size.width/2), self.frame.size.height/2-82+(self.hand.size.height/2))) duration:.5];
+        SKAction *wait = [SKAction waitForDuration:3];
+        SKAction * actionMoveDone = [SKAction removeFromParent];
+        
+        [_hand runAction: [SKAction sequence:@[moveHandOver, pressButton, wait, actionMoveDone]]];
+        
     }
     return self;
 }
@@ -109,7 +112,7 @@
     UITouch *touch = [touches anyObject];
     CGPoint position = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:position];
-//    __weak typeof(self) weakSelf = self;
+    
     
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backLabel"])
         {
@@ -119,10 +122,11 @@
             [self.view presentScene:backToMain];
         }
     
+    //Added another variable for Target Pratice call.
     if ([node.name isEqualToString:@"centerLabel"] ||
         [node.name isEqualToString:@"centerButton"])
     {
-        // Create and configure the "target practice" scene.
+        // Create and configure the center "target practice" scene.
         SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
@@ -132,7 +136,7 @@
     if ([node.name isEqualToString:@"randomLabel"] ||
         [node.name isEqualToString:@"randomButton"])
     {
-        // Create and configure the "target practice" scene.
+        // Create and configure the random "target practice" scene.
         SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:2];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
