@@ -68,7 +68,7 @@
         SKScene * baby = [[BabyTargetPracticeScene alloc] initWithSize:self.size];
         //transition
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-        fetch.scaleMode = SKSceneScaleModeAspectFill;
+        baby.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
         [self.view presentScene:baby transition:reveal];
     }
