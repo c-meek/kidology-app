@@ -13,8 +13,8 @@
 		0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D548018AD54DF00F9593D /* FetchScene.m */; };
 		0F9462C718BFF4A100E9E3BD /* GameMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9462C618BFF4A100E9E3BD /* GameMenuScene.m */; };
 		0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */; };
-		7CB23C2C18BFFA24007F409F /* BabyTargetPraticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB23C2B18BFFA24007F409F /* BabyTargetPraticeScene.m */; };
 		7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */; };
+		7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */; };
 		7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */; };
 		7CB76CC718B692CB0003A622 /* hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB76CC618B692CB0003A622 /* hand.png */; };
 		B96CAA9C18A7ED7700D5C20C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9B18A7ED7700D5C20C /* Foundation.framework */; };
@@ -60,9 +60,9 @@
 		0F9462C618BFF4A100E9E3BD /* GameMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameMenuScene.m; sourceTree = "<group>"; };
 		0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchInstructionScene.h; sourceTree = "<group>"; };
 		0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchInstructionScene.m; sourceTree = "<group>"; };
-		7CB23C2A18BFFA24007F409F /* BabyTargetPraticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyTargetPraticeScene.h; sourceTree = "<group>"; };
-		7CB23C2B18BFFA24007F409F /* BabyTargetPraticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyTargetPraticeScene.m; sourceTree = "<group>"; };
 		7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Huge_Checkered_Background_[4096x3072].png"; sourceTree = "<group>"; };
+		7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyTargetPracticeScene.h; sourceTree = "<group>"; };
+		7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyTargetPracticeScene.m; sourceTree = "<group>"; };
 		7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetPracticeMenuScene.h; sourceTree = "<group>"; };
 		7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetPracticeMenuScene.m; sourceTree = "<group>"; };
 		7CB76CC618B692CB0003A622 /* hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand.png; sourceTree = "<group>"; };
@@ -174,9 +174,9 @@
 				B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */,
 				0F9462C518BFF4A100E9E3BD /* GameMenuScene.h */,
 				0F9462C618BFF4A100E9E3BD /* GameMenuScene.m */,
+				7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */,
+				7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */,
 				B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */,
-				7CB23C2A18BFFA24007F409F /* BabyTargetPraticeScene.h */,
-				7CB23C2B18BFFA24007F409F /* BabyTargetPraticeScene.m */,
 				B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */,
 				7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */,
 				7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */,
@@ -340,10 +340,10 @@
 				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
 				0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */,
 				B9938EBF18A9A5C40004890B /* TargetPracticeGameOver.m in Sources */,
+				7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */,
 				0F9462C718BFF4A100E9E3BD /* GameMenuScene.m in Sources */,
 				B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */,
 				B96CAAAA18A7ED7700D5C20C /* main.m in Sources */,
-				7CB23C2C18BFFA24007F409F /* BabyTargetPraticeScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
