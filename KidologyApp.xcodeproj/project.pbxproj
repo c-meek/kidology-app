@@ -11,6 +11,7 @@
 		0F423CAF18AD61EC00EE5F4E /* tennis.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F423CAE18AD61EC00EE5F4E /* tennis.png */; };
 		0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D547A18AD4EBA00F9593D /* purple_target.png */; };
 		0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D548018AD54DF00F9593D /* FetchScene.m */; };
+		0F9462C718BFF4A100E9E3BD /* GameMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9462C618BFF4A100E9E3BD /* GameMenuScene.m */; };
 		0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */; };
 		7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */; };
 		7CB76CC718B692CB0003A622 /* hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB76CC618B692CB0003A622 /* hand.png */; };
@@ -53,6 +54,8 @@
 		0F7D547A18AD4EBA00F9593D /* purple_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple_target.png; sourceTree = "<group>"; };
 		0F7D547F18AD54DF00F9593D /* FetchScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchScene.h; sourceTree = "<group>"; };
 		0F7D548018AD54DF00F9593D /* FetchScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchScene.m; sourceTree = "<group>"; };
+		0F9462C518BFF4A100E9E3BD /* GameMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameMenuScene.h; sourceTree = "<group>"; };
+		0F9462C618BFF4A100E9E3BD /* GameMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameMenuScene.m; sourceTree = "<group>"; };
 		0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchInstructionScene.h; sourceTree = "<group>"; };
 		0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchInstructionScene.m; sourceTree = "<group>"; };
 		7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetPracticeMenuScene.h; sourceTree = "<group>"; };
@@ -163,6 +166,8 @@
 				B96CAAB318A7ED7700D5C20C /* ViewController.m */,
 				B96CAAB518A7ED7700D5C20C /* MainMenuScene.h */,
 				B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */,
+				0F9462C518BFF4A100E9E3BD /* GameMenuScene.h */,
+				0F9462C618BFF4A100E9E3BD /* GameMenuScene.m */,
 				B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */,
 				B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */,
 				7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */,
@@ -326,6 +331,7 @@
 				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
 				0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */,
 				B9938EBF18A9A5C40004890B /* TargetPracticeGameOver.m in Sources */,
+				0F9462C718BFF4A100E9E3BD /* GameMenuScene.m in Sources */,
 				B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */,
 				B96CAAAA18A7ED7700D5C20C /* main.m in Sources */,
 			);
