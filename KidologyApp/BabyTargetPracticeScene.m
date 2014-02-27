@@ -10,4 +10,10 @@
 
 @implementation BabyTargetPracticeScene
 
+-(id)initWithSize:(CGSize)size
+{
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"Huge_Checkered_Background_[4096x3072]"];
+    [self addChild:bgImage];
+    return self;
+}
 @end
