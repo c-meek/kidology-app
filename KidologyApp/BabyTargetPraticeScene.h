@@ -8,6 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface BabyTargetPratice : SKScene
+@interface BabyTargetPraticeScene : SKScene
 
 @end

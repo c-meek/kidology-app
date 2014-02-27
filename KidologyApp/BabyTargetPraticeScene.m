@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
-#import "BabyTargetPratice.h"
+#import "BabyTargetPraticeScene.h"
 
 @implementation BabyTargetPratice
 
