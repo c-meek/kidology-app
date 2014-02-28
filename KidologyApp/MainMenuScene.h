@@ -9,5 +9,6 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface MainMenuScene : SKScene
-
+@property (nonatomic) SKSpriteNode *gameMenuButton;
+@property (nonatomic) SKSpriteNode *therapistButton;
 @end
