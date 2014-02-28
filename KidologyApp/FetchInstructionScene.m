@@ -83,7 +83,24 @@
     _backButtonLabel.position = CGPointMake(self.frame.size.width-55, self.frame.size.height/2 + 240);
     [self addChild:_backButtonLabel];
 }
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:location];
+    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonLabel"]
+        )
+    {
+        _backButton.color = [SKColor yellowColor];
+    }
+    else if ([node.name isEqualToString:@"playButton"] || [node.name isEqualToString:@"playLabel"])
+    {
+        _playButton.color = [SKColor yellowColor];
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     for(UITouch * touch in touches)
     {
@@ -104,6 +121,11 @@
             SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:weakSelf.size];
             mainMenu.scaleMode = SKSceneScaleModeAspectFill;
             [weakSelf.view presentScene:mainMenu transition:reveal];
+        }
+        else
+        {
+            _backButton.color = [SKColor redColor];
+            _playButton.color = [SKColor redColor];
         }
     }
 }

@@ -106,7 +106,34 @@
     return self;
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint position = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:position];
+    
+    
+    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backLabel"])
+    {
+        _backButton.color = [SKColor yellowColor];
+    }
+    
+    //Added another variable for Target Pratice call.
+    else if ([node.name isEqualToString:@"centerLabel"] ||
+             [node.name isEqualToString:@"centerButton"])
+    {
+        _centerModeButton.color = [SKColor yellowColor];
+    }
+    
+    else if ([node.name isEqualToString:@"randomLabel"] ||
+             [node.name isEqualToString:@"randomButton"])
+    {
+        _randomModeButton.color = [SKColor yellowColor];
+    }
+
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
     UITouch *touch = [touches anyObject];
     CGPoint position = [touch locationInNode:self];
@@ -122,7 +149,7 @@
         }
     
     //Added another variable for Target Pratice call.
-    if ([node.name isEqualToString:@"centerLabel"] ||
+    else if ([node.name isEqualToString:@"centerLabel"] ||
         [node.name isEqualToString:@"centerButton"])
     {
         // Create and configure the center "target practice" scene.
@@ -132,7 +159,7 @@
         [self.view presentScene:targetPractice];
     }
     
-    if ([node.name isEqualToString:@"randomLabel"] ||
+    else if ([node.name isEqualToString:@"randomLabel"] ||
         [node.name isEqualToString:@"randomButton"])
     {
         // Create and configure the random "target practice" scene.
@@ -140,6 +167,12 @@
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
         [self.view presentScene:targetPractice];
+    }
+    else
+    {
+        _backButton.color = [SKColor redColor];
+        _centerModeButton.color = [SKColor redColor];
+        _randomModeButton.color = [SKColor redColor];
     }
 
 }

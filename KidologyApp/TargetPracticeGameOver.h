@@ -10,4 +10,5 @@
 
 @interface TargetPracticeGameOver : SKScene
 -(id)initWithSize:(CGSize)size targets:(int)targets;
+@property (nonatomic) SKSpriteNode *backButton;
 @end

@@ -26,15 +26,26 @@
         message.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
         [self addChild:message];
         
-        SKSpriteNode *backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
-        backButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
-        backButton.name = @"backButton";
-        [self addChild:backButton];
+        _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
+        _backButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
+        _backButton.name = @"backButton";
+        [self addChild:_backButton];
     }
     return self;
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:location];
+    if ([node.name isEqualToString:@"backButton"])
+    {
+        _backButton.color = [SKColor yellowColor];
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
@@ -48,6 +59,10 @@
         
         // Present the scene.
         [self.view presentScene:mainMenu];
+    }
+    else
+    {
+        _backButton.color = [SKColor redColor];
     }
 }
 

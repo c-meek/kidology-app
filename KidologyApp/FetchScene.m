@@ -65,6 +65,19 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    for(UITouch *touch in touches)
+    {
+        CGPoint location = [touch locationInNode:self];
+        SKNode *node = [self nodeAtPoint:location];
+        if([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonLabel"])
+        {
+            _backButton.color = [SKColor yellowColor];
+        }
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
     for (UITouch * touch in touches)
     {
         //get a specific touch
@@ -83,6 +96,10 @@
         else if([_backButton isEqual:touchedNode] || [_backButtonLabel isEqual:touchedNode])
         {
             [self goToMainScreen];
+        }
+        else
+        {
+            _backButton.color = [SKColor redColor];
         }
     }
 }
