@@ -16,28 +16,27 @@
     if (self = [super initWithSize:size]) {
         
         //Background here!!!
-        self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
-        
+        [self addBackground]; 
         //Instructions...
-        SKLabelNode *instructionLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
+        SKLabelNode *instructionLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         instructionLabel.fontSize = 40;
-        instructionLabel.fontColor = [SKColor grayColor];
+        instructionLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
         instructionLabel.position = CGPointMake(CGRectGetMidX(self.frame)-150, CGRectGetMidY(self.frame)+150);
         instructionLabel.text = @"Instructions:";
         [self addChild:instructionLabel];
         
-        SKLabelNode *instructionContentLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
+        SKLabelNode *instructionContentLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         instructionContentLabel.fontSize = 20;
-        instructionContentLabel.fontColor = [SKColor grayColor];
-        instructionContentLabel.position = CGPointMake(CGRectGetMidX(self.frame)-150, CGRectGetMidY(self.frame)+110);
+        instructionContentLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+        instructionContentLabel.position = CGPointMake(CGRectGetMidX(self.frame)-200, CGRectGetMidY(self.frame)+110);
         instructionContentLabel.horizontalAlignmentMode = 1;
         instructionContentLabel.text = @"Touch the center of the target when it appears.";
         [self addChild:instructionContentLabel];
 
         // "Select Your Game Mode:"
-        SKLabelNode *selectModeLabel= [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
+        SKLabelNode *selectModeLabel= [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         selectModeLabel.fontSize = 35;
-        selectModeLabel.fontColor = [SKColor grayColor];
+        selectModeLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
         selectModeLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 210);
         selectModeLabel.text = @"Select Your Game Mode:";
         [self addChild:selectModeLabel];
@@ -143,6 +142,14 @@
         [self.view presentScene:targetPractice];
     }
 
+}
+-(void)addBackground
+{
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
+    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
+    bgImage.xScale = .4;
+    bgImage.yScale = .4;
+    [self addChild:bgImage];
 }
 
 @end
