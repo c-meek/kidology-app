@@ -9,5 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface BabyTargetPracticeScene : SKScene
+@property (nonatomic) SKSpriteNode * target;
+
 
 @end
