@@ -9,7 +9,7 @@
 #import "GameMenuScene.h"
 #import "FetchInstructionScene.h"
 #import "TargetPracticeMenuScene.h"
-#import "BabyTargetPracticeScene.h"
+#import "BabyMenuScene.h"
 #import "MainMenuScene.h"
 
 @implementation GameMenuScene
