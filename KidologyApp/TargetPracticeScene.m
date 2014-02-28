@@ -18,6 +18,7 @@ NSMutableArray *touchLog;
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode
 {
     if (self = [super initWithSize:size]) {
+        [self addBackground];
 //        NSLog(@"Size: %@", NSStringFromCGSize(size));
         if (game_mode == 1) {
             _gameMode = CENTER;
@@ -219,9 +220,9 @@ NSMutableArray *touchLog;
     trackerLabel.fontSize = 20;
     NSString * text = [NSString stringWithFormat:@"%d/%d", _correctTouches, _totalTargets];
     trackerLabel.text = text;
-    trackerLabel.fontColor = [SKColor grayColor];
+    trackerLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
     trackerLabel.horizontalAlignmentMode = 0; // text is center-aligned
-    trackerLabel.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2+220);
+    trackerLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
     [self addChild:trackerLabel];
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:trackerLabel.position duration:.0075];
@@ -237,10 +238,10 @@ NSMutableArray *touchLog;
     }
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     timeLabel.fontSize = 20;
+    timeLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
-    timeLabel.fontColor = [SKColor grayColor];
-    timeLabel.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2+265);
+    timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
 
     //label for ratio of touched/total targets
     [self trackerLabel];
@@ -255,6 +256,15 @@ NSMutableArray *touchLog;
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.0075];
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
+}
+
+-(void)addBackground
+{
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
+    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
+    bgImage.xScale = .4;
+    bgImage.yScale = .4;
+    [self addChild:bgImage];
 }
 
 @end
