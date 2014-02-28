@@ -10,6 +10,6 @@
 
 @interface BabyTargetPracticeScene : SKScene
 @property (nonatomic) SKSpriteNode * target;
-
+@property (nonatomic) int totalTouches;
 
 @end

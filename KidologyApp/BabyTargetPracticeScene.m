@@ -7,6 +7,7 @@
 //
 
 #import "BabyTargetPracticeScene.h"
+#import "MainMenuScene.h"
 
 @implementation BabyTargetPracticeScene
 
@@ -31,11 +32,11 @@ if (self = [super initWithSize:size])
 {
     self.target.position = CGPointMake(self.size.width/2, self.size.height/2);
 }
-//
-//-(void)hideTarget
-//{
-//    self.target.position = CGPointMake(self.size.width/2*(-1), self.size.height/2*(-1));
-//}
+
+-(void)hideTarget
+{
+    self.target.position = CGPointMake(self.size.width/2*(-1), self.size.height/2*(-1));
+}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
@@ -48,14 +49,14 @@ if (self = [super initWithSize:size])
     //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
     double xDifference = touchLocation.x - self.target.position.x;
     double yDifference = touchLocation.y - self.target.position.y;
-    double radius = self.target.size.width / 2*.8387; //<--- The percentage of the radius that is the circle
+    double radius = self.target.size.width / 2*.8385; //<--- The percentage of the radius that is the circle
     double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
     double rightHandSide = pow(radius, 2);
     
     if(leftHandSide <= rightHandSide) // If the touch is on the target
     {
         SKAction *deleteTarget = [SKAction runBlock:^{
-        self.target.position = CGPointMake(-100,-100);
+            [self hideTarget];
         }];
         //make a wait action
         SKAction *wait = [SKAction waitForDuration:1];
@@ -66,6 +67,15 @@ if (self = [super initWithSize:size])
 
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
+        _totalTouches++;
+        
+        if (_totalTouches > 5) {
+            SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
+            mainMenu.scaleMode = SKSceneScaleModeAspectFill;
+            
+            // Present the scene.
+            [self.view presentScene:mainMenu];
+        }
     }
 }
 
