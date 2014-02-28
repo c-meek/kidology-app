@@ -12,7 +12,6 @@
 		0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D547A18AD4EBA00F9593D /* purple_target.png */; };
 		0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D548018AD54DF00F9593D /* FetchScene.m */; };
 		0F9462C718BFF4A100E9E3BD /* GameMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F9462C618BFF4A100E9E3BD /* GameMenuScene.m */; };
-		0F9462C918BFFFC500E9E3BD /* targetPracticeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462C818BFFFC500E9E3BD /* targetPracticeBackground.png */; };
 		0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */; };
 		7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */; };
 		7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */; };
@@ -32,6 +31,7 @@
 		7CB23C4D18C0020D007F409F /* Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C3F18C0020D007F409F /* Yellow.png */; };
 		7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */; };
 		7CB76CC718B692CB0003A622 /* hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB76CC618B692CB0003A622 /* hand.png */; };
+		B94A54B118C00DC100E92932 /* BabyMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B94A54B018C00DC100E92932 /* BabyMenuScene.m */; };
 		B96CAA9C18A7ED7700D5C20C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9B18A7ED7700D5C20C /* Foundation.framework */; };
 		B96CAA9E18A7ED7700D5C20C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9D18A7ED7700D5C20C /* CoreGraphics.framework */; };
 		B96CAAA018A7ED7700D5C20C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9F18A7ED7700D5C20C /* UIKit.framework */; };
@@ -96,6 +96,8 @@
 		7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetPracticeMenuScene.h; sourceTree = "<group>"; };
 		7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetPracticeMenuScene.m; sourceTree = "<group>"; };
 		7CB76CC618B692CB0003A622 /* hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand.png; sourceTree = "<group>"; };
+		B94A54AF18C00DC100E92932 /* BabyMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyMenuScene.h; sourceTree = "<group>"; };
+		B94A54B018C00DC100E92932 /* BabyMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyMenuScene.m; sourceTree = "<group>"; };
 		B96CAA9818A7ED7700D5C20C /* KidologyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidologyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96CAA9B18A7ED7700D5C20C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B96CAA9D18A7ED7700D5C20C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -243,6 +245,8 @@
 				B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */,
 				0F9462C518BFF4A100E9E3BD /* GameMenuScene.h */,
 				0F9462C618BFF4A100E9E3BD /* GameMenuScene.m */,
+				B94A54AF18C00DC100E92932 /* BabyMenuScene.h */,
+				B94A54B018C00DC100E92932 /* BabyMenuScene.m */,
 				7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */,
 				7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */,
 				B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */,
@@ -419,6 +423,7 @@
 				0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */,
 				7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */,
 				B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */,
+				B94A54B118C00DC100E92932 /* BabyMenuScene.m in Sources */,
 				B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */,
 				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
 				0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */,

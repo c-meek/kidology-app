@@ -10,14 +10,14 @@
 
 @implementation BabyTargetPracticeScene
 
--(id)initWithSize:(CGSize)size
+-(id)initWithSize:(CGSize)size color:(NSString *)color
 {
 if (self = [super initWithSize:size])
     {
         SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"Huge_Checkered_Background_[4096x3072]"];
         [self addChild:bgImage];
         
-        _target = [SKSpriteNode spriteNodeWithImageNamed:@"green"];
+        _target = [SKSpriteNode spriteNodeWithImageNamed:color];
         _target.xScale = .70;
         _target.yScale = .70;
         _target.position = CGPointMake(self.size.width/2, self.size.height/2);
