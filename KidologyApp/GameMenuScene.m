@@ -10,6 +10,7 @@
 #import "FetchInstructionScene.h"
 #import "TargetPracticeMenuScene.h"
 #import "BabyTargetPracticeScene.h"
+#import "MainMenuScene.h"
 
 @implementation GameMenuScene
 -(id)initWithSize:(CGSize)size
@@ -25,11 +26,46 @@
         [self addPuzzleButton];
         //add babygame button and label
         [self addBabyGameButton];
+        //add backbutton
+        [self addBackButton];
     }
     return self;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch begins */
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:location];
+    // Check which button was pressed
+    if ([node.name isEqualToString:@"targetPracticeButton"] ||
+        [node.name isEqualToString:@"targetPracticeButtonLabel"])
+    {
+        _targetPracticeButton.color = [SKColor yellowColor];
+    }
+    else if ([node.name isEqualToString:@"fetchGameButton"] ||
+             [node.name isEqualToString:@"fetchButtonLabel"])
+    {
+        _fetchGameButton.color = [SKColor yellowColor];
+    }
+    else if ([node.name isEqualToString:@"puzzleGameButton"])
+    {
+        // Create and configure the "puzzle" scene.
+        // Present the scene.
+    }
+    else if ([node.name isEqualToString:@"babyGameButton"] || [node.name isEqualToString:@"babyButtonLabel"])
+    {
+         _babyGameButton.color = [SKColor yellowColor];
+    }
+    else if([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonLabel"])
+
+    {
+        _backButton.color = [SKColor yellowColor];
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     /* Called when a touch begins */
     UITouch *touch = [touches anyObject];
@@ -72,16 +108,32 @@
         // Present the scene.
         [self.view presentScene:baby transition:reveal];
     }
+    else if([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonLabel"]) //go back to main menu
+    {
+        SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
+        mainMenu.scaleMode = SKSceneScaleModeAspectFill;
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+        [self.view presentScene:mainMenu transition:reveal];
+    }
+
+    else
+    {
+        _fetchGameButton.color = [SKColor redColor];
+        _targetPracticeButton.color = [SKColor redColor];
+//        _puzzleGameButton.color = [SKColor redColor];
+        _babyGameButton.color = [SKColor redColor];
+        _backButton.color = [SKColor redColor];
+    }
 }
 
 -(void)addTargetPracticeButton
 {
     // target practice button
-    SKSpriteNode *targetPracticeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
-    targetPracticeButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
+    _targetPracticeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
+    _targetPracticeButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
                                                 CGRectGetMidY(self.frame) - 150);
-    targetPracticeButton.name = @"targetPracticeButton";
-    [self addChild:targetPracticeButton];
+    _targetPracticeButton.name = @"targetPracticeButton";
+    [self addChild:_targetPracticeButton];
     
     NSString * labelText = [NSString stringWithFormat:@"Target Game"];
     SKLabelNode *targetPracticeButtonLabel =[SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -96,50 +148,66 @@
 -(void)addFetchButton
 {
     // fetch game button
-    SKSpriteNode *fetchGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
-    fetchGameButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
+    _fetchGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
+    _fetchGameButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
                                            CGRectGetMidY(self.frame) - 200);
-    fetchGameButton.name = @"fetchGameButton";
+    _fetchGameButton.name = @"fetchGameButton";
     NSString * fetchLabel = [NSString stringWithFormat:@"Fetch Game"];
     SKLabelNode *fetchButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     fetchButtonLabel.name = @"fetchButtonLabel";
     fetchButtonLabel.text = fetchLabel;
     fetchButtonLabel.fontSize = 24;
     fetchButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225, CGRectGetMidY(self.frame)-210);
-    [self addChild:fetchGameButton];
+    [self addChild:_fetchGameButton];
     [self addChild:fetchButtonLabel];
 }
 
 -(void)addPuzzleButton
 {
     // puzzle game button
-    SKSpriteNode *puzzleGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor grayColor] size:CGSizeMake(200, 40)];
-    puzzleGameButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,CGRectGetMidY(self.frame) - 250);
-    puzzleGameButton.name = @"puzzleGameButton";
+    _puzzleGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor grayColor] size:CGSizeMake(200, 40)];
+    _puzzleGameButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,CGRectGetMidY(self.frame) - 250);
+    _puzzleGameButton.name = @"puzzleGameButton";
     NSString *puzzleLabel = [NSString stringWithFormat:@"Puzzle Game"];
     SKLabelNode *puzzleButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     puzzleButtonLabel.name = @"puzzleButtonLabel";
     puzzleButtonLabel.text = puzzleLabel;
     puzzleButtonLabel.fontSize = 24;
     puzzleButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225, CGRectGetMidY(self.frame) - 260);
-    [self addChild:puzzleGameButton];
+    [self addChild:_puzzleGameButton];
     [self addChild:puzzleButtonLabel];
 }
 
 -(void)addBabyGameButton
 {
     // baby game button
-    SKSpriteNode *babyGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
-    babyGameButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
+    _babyGameButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
+    _babyGameButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
                                            CGRectGetMidY(self.frame) - 100);
-    babyGameButton.name = @"babyGameButton";
+    _babyGameButton.name = @"babyGameButton";
     NSString * babyLabel = [NSString stringWithFormat:@"Baby Game"];
     SKLabelNode *babyButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     babyButtonLabel.name = @"babyButtonLabel";
     babyButtonLabel.text = babyLabel;
     babyButtonLabel.fontSize = 24;
     babyButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225, CGRectGetMidY(self.frame)-108);
-    [self addChild:babyGameButton];
+    [self addChild:_babyGameButton];
     [self addChild:babyButtonLabel];
+}
+-(void)addBackButton
+{
+    //add button with attributes
+    _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(100, 40)];
+    _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
+    _backButton.name = @"backButton";
+    [self addChild:_backButton];
+    //add label with attributes
+    NSString * labelText = [NSString stringWithFormat:@"Back"];
+    SKLabelNode *backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    backButtonLabel.name = @"backButtonLabel";
+    backButtonLabel.text = labelText;
+    backButtonLabel.fontSize = 24;
+    backButtonLabel.position = CGPointMake(self.frame.size.width-55, self.frame.size.height/2 + 240);
+    [self addChild:backButtonLabel];
 }
 @end
