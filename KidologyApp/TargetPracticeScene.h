@@ -46,6 +46,8 @@ typedef struct {
     @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
     @property (nonatomic) Mode gameMode;
     @property (nonatomic) AnchorStatus anchored;
+@property (nonatomic) SKSpriteNode *anchor;
+@property (nonatomic) SKSpriteNode *pressedAnchor;
 
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode;
 @end

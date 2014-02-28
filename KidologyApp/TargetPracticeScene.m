@@ -31,10 +31,12 @@ NSMutableArray *touchLog;
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         /* Setup your scene here */
         self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+        //initialize anchor
+        [self initializeAnchor];
         //initialize panel
-        self.anchorPanel = [SKSpriteNode spriteNodeWithColor:[SKColor orangeColor] size:CGSizeMake(200, self.size.height)];
-        self.anchorPanel.position = CGPointMake(0, self.size.height/2);
-        [self addChild:self.anchorPanel];
+//        self.anchorPanel = [SKSpriteNode spriteNodeWithColor:[SKColor orangeColor] size:CGSizeMake(200, self.size.height)];
+//        self.anchorPanel.position = CGPointMake(0, self.size.height/2);
+//        [self addChild:self.anchorPanel];
         //initialize target
         self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         //set the total number of targets for this session
@@ -98,7 +100,8 @@ NSMutableArray *touchLog;
 {
     Boolean result;
 //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
-    if (touchLocation.x <= 100)
+    SKNode *node = [self nodeAtPoint:touchLocation];
+    if ([node.name isEqualToString:@"pressedAnchor"] || [node.name isEqualToString:@"anchor"])
     {
         LogEntry currentTouch = {PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
         [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
@@ -125,6 +128,8 @@ NSMutableArray *touchLog;
        }
        else{ // If it is on the anchor,
            _anchored = TOUCHING; // make note of that.
+           _anchor.hidden = TRUE;
+           _pressedAnchor.hidden = FALSE;
        }
     }
 }
@@ -135,6 +140,11 @@ NSMutableArray *touchLog;
         if ([self isAnchorTouch:positionInScene] == true) // If a touch on the anchor is ending,
         {
             _anchored = NOT_TOUCHING; // make note of that.
+        }
+        else
+        {
+            _anchor.hidden = FALSE;
+            _pressedAnchor.hidden = TRUE;
         }
     }
 }
@@ -265,6 +275,32 @@ NSMutableArray *touchLog;
     bgImage.xScale = .4;
     bgImage.yScale = .4;
     [self addChild:bgImage];
+}
+
+-(void)initializeAnchor
+{
+//    if(hand = 'left')
+//    {
+    //initialize green anchor
+    _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
+    _pressedAnchor.xScale = .3;
+    _pressedAnchor.yScale = .3;
+    _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
+    _pressedAnchor.hidden = TRUE;
+    _pressedAnchor.name =@"pressedAnchor";
+    [self addChild:_pressedAnchor];
+        //initialize red anchor
+    _anchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_red_left"];
+    _anchor.xScale = .3;
+    _anchor.yScale = .3;
+    _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
+    _anchor.name = @"anchor";
+    [self addChild:_anchor];
+//    }
+//    else
+//    {
+//        
+//    }
 }
 
 @end
