@@ -42,7 +42,7 @@
     // Check which button was pressed
     if ([node.name isEqualToString:@"backButton"])
     {
-        // Create and configure the "target practice" scene.
+        // Create and configure the "main menu" scene.
         SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
         mainMenu.scaleMode = SKSceneScaleModeAspectFill;
         

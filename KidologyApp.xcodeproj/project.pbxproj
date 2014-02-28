@@ -377,6 +377,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F9462C918BFFFC500E9E3BD /* targetPracticeBackground.png in Resources */,
 				7CB23C4618C0020D007F409F /* Lime.png in Resources */,
 				7CB23C4818C0020D007F409F /* Orange.png in Resources */,
 				7CB23C4118C0020D007F409F /* Blue.png in Resources */,
