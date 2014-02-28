@@ -19,6 +19,7 @@
     {
         //add background
         //add target practice button and label
+        [self addPressedTargetButton];
         [self addTargetPracticeButton];
         //add fetch button and label
         [self addFetchButton];
@@ -42,7 +43,7 @@
     if ([node.name isEqualToString:@"targetPracticeButton"] ||
         [node.name isEqualToString:@"targetPracticeButtonLabel"])
     {
-        _targetPracticeButton.color = [SKColor yellowColor];
+        _targetPracticeButton.hidden = TRUE;
     }
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
              [node.name isEqualToString:@"fetchButtonLabel"])
@@ -115,34 +116,38 @@
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         [self.view presentScene:mainMenu transition:reveal];
     }
-
     else
     {
         _fetchGameButton.color = [SKColor redColor];
-        _targetPracticeButton.color = [SKColor redColor];
+        _targetPracticeButton.hidden = FALSE;
 //        _puzzleGameButton.color = [SKColor redColor];
         _babyGameButton.color = [SKColor redColor];
         _backButton.color = [SKColor redColor];
     }
 }
 
+-(void)addPressedTargetButton
+{
+    // target practice button
+    SKSpriteNode *targetPracticeButtonPressed = [SKSpriteNode spriteNodeWithImageNamed:@"target_menu_pressed"];
+    targetPracticeButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame),
+                                                 CGRectGetMidY(self.frame) + 150);
+    targetPracticeButtonPressed.name = @"targetPracticeButtonPressed";
+    targetPracticeButtonPressed.xScale = .3;
+    targetPracticeButtonPressed.yScale = .3;
+    [self addChild:targetPracticeButtonPressed];
+}
+
 -(void)addTargetPracticeButton
 {
     // target practice button
-    _targetPracticeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
-    _targetPracticeButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
-                                                CGRectGetMidY(self.frame) - 150);
+    _targetPracticeButton = [SKSpriteNode spriteNodeWithImageNamed:@"target_menu"];
+    _targetPracticeButton.position = CGPointMake(CGRectGetMidX(self.frame),
+                                                CGRectGetMidY(self.frame) + 150);
     _targetPracticeButton.name = @"targetPracticeButton";
+    _targetPracticeButton.xScale = .3;
+    _targetPracticeButton.yScale = .3;
     [self addChild:_targetPracticeButton];
-    
-    NSString * labelText = [NSString stringWithFormat:@"Target Game"];
-    SKLabelNode *targetPracticeButtonLabel =[SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    targetPracticeButtonLabel.name = @"targetPracticeButtonLabel";
-    targetPracticeButtonLabel.text = labelText;
-    targetPracticeButtonLabel.fontSize = 24;
-    targetPracticeButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
-                                                     CGRectGetMidY(self.frame) - 158);
-    [self addChild:targetPracticeButtonLabel];
 }
 
 -(void)addFetchButton
@@ -161,6 +166,7 @@
     [self addChild:_fetchGameButton];
     [self addChild:fetchButtonLabel];
 }
+
 
 -(void)addPuzzleButton
 {
