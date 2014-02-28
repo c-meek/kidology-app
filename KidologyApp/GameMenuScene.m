@@ -102,7 +102,7 @@
     else if ([node.name isEqualToString:@"babyGameButton"] || [node.name isEqualToString:@"babyButtonLabel"])
     {
         // Create and configure the "fetch" scene.
-        SKScene * baby = [[BabyTargetPracticeScene alloc] initWithSize:self.size];
+        SKScene * baby = [[BabyMenuScene alloc] initWithSize:self.size];
         //transition
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         baby.scaleMode = SKSceneScaleModeAspectFill;

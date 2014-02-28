@@ -10,6 +10,7 @@
 
 @interface BabyTargetPracticeScene : SKScene
 @property (nonatomic) SKSpriteNode * target;
+-(id)initWithSize:(CGSize)size color:(NSString *)color;
 
 
 @end
