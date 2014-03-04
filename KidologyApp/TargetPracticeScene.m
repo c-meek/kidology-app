@@ -70,7 +70,7 @@ NSMutableArray *touchLog;
     //randomize size of target
         int min = 30;
         int max = 67;
-        float randomScale = ((min + arc4random() % max-min)) * .01;
+        float randomScale = ((min + arc4random() % (max-min))) * .01;
         _target.xScale = randomScale;
         _target.yScale = randomScale;
     int x_pos = ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
