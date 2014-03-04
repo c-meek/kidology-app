@@ -67,8 +67,12 @@ NSMutableArray *touchLog;
     {
         //set the target to appear at random locations
 //        int x_pos = (rand() % (int)self.size.width)*.8;
-    self.target.xScale = .67;
-    self.target.yScale = .67;
+    //randomize size of target
+        int min = 30;
+        int max = 67;
+        float randomScale = ((min + arc4random() % max-min)) * .01;
+        _target.xScale = randomScale;
+        _target.yScale = randomScale;
     int x_pos = ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
     int pos_neg = (rand() % 1);
     if (pos_neg == 0)
@@ -92,8 +96,10 @@ NSMutableArray *touchLog;
 
         self.target.position = CGPointMake(x_pos, y_pos);
     }
+    
     NSLog(@"x is %f", self.target.position.x);
     NSLog(@"y is %f", self.target.position.y);
+    NSLog(@"scale is %f", self.target.xScale);
 }
 
 -(Boolean)isAnchorTouch:(CGPoint)touchLocation
@@ -105,12 +111,12 @@ NSMutableArray *touchLog;
     {
         LogEntry currentTouch = {PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
         [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
-        NSLog(@"anchor panel is being touched.");
+//        NSLog(@"anchor panel is being touched.");
         result = true;
     }
     else
     {
-        NSLog(@"anchor panel is not being touched.");
+//        NSLog(@"anchor panel is not being touched.");
         result = false;
     }
     return result;
@@ -220,7 +226,7 @@ NSMutableArray *touchLog;
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     [self updateWithTimeSinceLastUpdate:timeSinceLast];
-    NSLog(@"%@", touchLog);
+//    NSLog(@"%@", touchLog);
 
 }
 
