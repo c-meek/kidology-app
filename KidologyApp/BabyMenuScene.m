@@ -45,7 +45,6 @@
         [self addChild:title];
         //add back button to main menu
         [self addBackButton];
-
     }
     return self;
 }
@@ -124,6 +123,5 @@
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
 }
-
 
 @end
