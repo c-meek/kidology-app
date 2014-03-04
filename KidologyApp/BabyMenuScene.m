@@ -8,6 +8,7 @@
 
 #import "BabyMenuScene.h"
 #import "BabyTargetPracticeScene.h"
+#import "MainMenuScene.h"
 
 @implementation BabyMenuScene
 
@@ -42,7 +43,8 @@
         title.fontSize = 50;
         title.fontColor = [SKColor whiteColor];
         [self addChild:title];
-
+        //add back button to main menu
+        [self addBackButton];
     }
     return self;
 }
@@ -53,7 +55,7 @@
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
     // Check which button was pressed
-    if (node.name.length != 0)
+    if (!([_backButton isEqual:node] || [_backButtonLabel isEqual:node]) && node.name.length != 0)
     {
   
         // Create and configure the "target practice" scene.
@@ -63,7 +65,32 @@
         // Present the scene.
         [self.view presentScene:game];
     }
+    else if([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonLabel"])
+    {
+        _backButton.color = [SKColor yellowColor];
+    }
     
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for(UITouch *touch in touches)
+    {
+        CGPoint loc = [touch locationInNode:self];
+        SKSpriteNode * touchedNode = (SKSpriteNode *)[self nodeAtPoint:loc];
+        //transition
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+        if([_backButton isEqual:touchedNode] || [_backButtonLabel isEqual:touchedNode]) //go back to main menu
+        {
+            SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
+            mainMenu.scaleMode = SKSceneScaleModeAspectFill;
+            [self.view presentScene:mainMenu transition:reveal];
+        }
+        else
+        {
+            _backButton.color = [SKColor redColor];
+        }
+    }
 }
 
 -(void)addButton:(NSString *)color withPosition:(CGPoint)pos
@@ -76,9 +103,25 @@
     [self addChild:button];
 }
 
+-(void)addBackButton
+{
+    //add button with attributes
+    _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(100, 40)];
+    _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
+    _backButton.name = @"backButton";
+    [self addChild:_backButton];
+    //add label with attributes
+    NSString * labelText = [NSString stringWithFormat:@"Back"];
+    _backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    _backButtonLabel.name = @"backButtonLabel";
+    _backButtonLabel.text = labelText;
+    _backButtonLabel.fontSize = 24;
+    _backButtonLabel.position = CGPointMake(self.frame.size.width-55, self.frame.size.height/2 + 240);
+    [self addChild:_backButtonLabel];
+}
+
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
 }
-
 
 @end

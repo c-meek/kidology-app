@@ -67,9 +67,13 @@ NSMutableArray *touchLog;
     {
         //set the target to appear at random locations
 //        int x_pos = (rand() % (int)self.size.width)*.8;
-    self.target.xScale = .67;
-    self.target.yScale = .67;
-    int x_pos = ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
+    //randomize size of target
+        int min = 30;
+        int max = 67;
+        float randomScale = ((min + arc4random() % (max-min))) * .01;
+        _target.xScale = randomScale;
+        _target.yScale = randomScale;
+    int x_pos = .75 * ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
     int pos_neg = (rand() % 1);
     if (pos_neg == 0)
     {
@@ -79,7 +83,7 @@ NSMutableArray *touchLog;
     {
         x_pos = self.frame.size.width/2 - x_pos;
     }
-    int y_pos = ((rand() % (int)self.size.height)/2)-(_target.size.height/2);
+    int y_pos = .75 * ((rand() % (int)self.size.height)/2)-(_target.size.height/2);
     pos_neg = (rand() % 1);
     if (pos_neg == 0)
     {
@@ -92,8 +96,10 @@ NSMutableArray *touchLog;
 
         self.target.position = CGPointMake(x_pos, y_pos);
     }
+    
     NSLog(@"x is %f", self.target.position.x);
     NSLog(@"y is %f", self.target.position.y);
+    NSLog(@"scale is %f", self.target.xScale);
 }
 
 -(Boolean)isAnchorTouch:(CGPoint)touchLocation
@@ -105,12 +111,12 @@ NSMutableArray *touchLog;
     {
         LogEntry currentTouch = {PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
         [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
-        NSLog(@"anchor panel is being touched.");
+//        NSLog(@"anchor panel is being touched.");
         result = true;
     }
     else
     {
-        NSLog(@"anchor panel is not being touched.");
+//        NSLog(@"anchor panel is not being touched.");
         result = false;
     }
     return result;
@@ -140,6 +146,9 @@ NSMutableArray *touchLog;
         if ([self isAnchorTouch:positionInScene] == true) // If a touch on the anchor is ending,
         {
             _anchored = NOT_TOUCHING; // make note of that.
+            _anchor.hidden = FALSE;         // Tien was here and the next line
+            _pressedAnchor.hidden = TRUE;
+            
         }
         else
         {
@@ -175,7 +184,7 @@ NSMutableArray *touchLog;
                 self.target.position = CGPointMake(-100,-100);
             }];
             //make a wait action
-            SKAction *wait = [SKAction waitForDuration:3];
+            SKAction *wait = [SKAction waitForDuration:.314];
             //make a "add" target action
             SKAction *addTarget = [SKAction runBlock:^{
                 [self displayTarget];
@@ -220,7 +229,7 @@ NSMutableArray *touchLog;
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     [self updateWithTimeSinceLastUpdate:timeSinceLast];
-    NSLog(@"%@", touchLog);
+//    NSLog(@"%@", touchLog);
 
 }
 
@@ -279,28 +288,37 @@ NSMutableArray *touchLog;
 
 -(void)initializeAnchor
 {
-//    if(hand = 'left')
-//    {
+    NSString *hand = @"left";
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;
     _pressedAnchor.yScale = .3;
-    _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
     _pressedAnchor.hidden = TRUE;
-    _pressedAnchor.name =@"pressedAnchor";
-    [self addChild:_pressedAnchor];
-        //initialize red anchor
+    
+    
+    //initialize red anchor
     _anchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_red_left"];
     _anchor.xScale = .3;
     _anchor.yScale = .3;
-    _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
+    
+    if([hand isEqualToString:@"left"]) //if left hand
+    {
+        _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
+        
+        _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
+        
+    }
+    else    //if right hand (not left hand)
+    {
+        _pressedAnchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
+        
+        _anchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
+    }
+    _pressedAnchor.name =@"pressedAnchor";
+    [self addChild:_pressedAnchor];
+    
     _anchor.name = @"anchor";
     [self addChild:_anchor];
-//    }
-//    else
-//    {
-//        
-//    }
 }
 
 @end

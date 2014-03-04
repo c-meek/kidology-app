@@ -196,7 +196,6 @@
 		7CB23C4E18C00212007F409F /* BabyGameTargets */ = {
 			isa = PBXGroup;
 			children = (
-				0F9462C818BFFFC500E9E3BD /* targetPracticeBackground.png */,
 				7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */,
 				7CB23C3A18C0020D007F409F /* Orange.png */,
 				7CB23C3B18C0020D007F409F /* Pink.png */,
@@ -219,6 +218,7 @@
 		7CB23C4F18C00284007F409F /* TargetGame */ = {
 			isa = PBXGroup;
 			children = (
+				0F9462C818BFFFC500E9E3BD /* targetPracticeBackground.png */,
 				B96CAAE118A81D6B00D5C20C /* green_target.png */,
 				0F7D547A18AD4EBA00F9593D /* purple_target.png */,
 				7CB76CC618B692CB0003A622 /* hand.png */,

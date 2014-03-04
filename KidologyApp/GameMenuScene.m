@@ -11,6 +11,8 @@
 #import "TargetPracticeMenuScene.h"
 #import "BabyMenuScene.h"
 #import "MainMenuScene.h"
+#import "FetchScene.h"
+
 
 @implementation GameMenuScene
 -(id)initWithSize:(CGSize)size
@@ -72,6 +74,8 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
+    //transition
+    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
     // Check which button was pressed
     if ([node.name isEqualToString:@"targetPracticeButton"] ||
         [node.name isEqualToString:@"targetPracticeButtonLabel"])
@@ -80,7 +84,7 @@
         targetPracticeMenu.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
-        [self.view presentScene:targetPracticeMenu];
+        [self.view presentScene:targetPracticeMenu transition:reveal];
         
     }
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
@@ -88,8 +92,6 @@
     {
         // Create and configure the "fetch" scene.
         SKScene * fetch = [[FetchInstructionScene alloc] initWithSize:self.size];
-        //transition
-        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         fetch.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
         [self.view presentScene:fetch transition:reveal];
@@ -103,8 +105,6 @@
     {
         // Create and configure the "fetch" scene.
         SKScene * baby = [[BabyMenuScene alloc] initWithSize:self.size];
-        //transition
-        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         baby.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
         [self.view presentScene:baby transition:reveal];

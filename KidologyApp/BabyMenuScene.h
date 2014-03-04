@@ -9,5 +9,6 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface BabyMenuScene : SKScene
-
+@property (nonatomic) SKSpriteNode *backButton;
+@property (nonatomic) SKLabelNode * backButtonLabel;
 @end
