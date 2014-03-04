@@ -140,6 +140,7 @@ NSMutableArray *touchLog;
         if ([self isAnchorTouch:positionInScene] == true) // If a touch on the anchor is ending,
         {
             _anchored = NOT_TOUCHING; // make note of that.
+            
         }
         else
         {
@@ -279,28 +280,37 @@ NSMutableArray *touchLog;
 
 -(void)initializeAnchor
 {
-//    if(hand = 'left')
-//    {
+    NSString *hand = @"not_left";
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;
     _pressedAnchor.yScale = .3;
-    _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
     _pressedAnchor.hidden = TRUE;
-    _pressedAnchor.name =@"pressedAnchor";
-    [self addChild:_pressedAnchor];
-        //initialize red anchor
+    
+    
+    //initialize red anchor
     _anchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_red_left"];
     _anchor.xScale = .3;
     _anchor.yScale = .3;
-    _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
+    
+    if([hand isEqualToString:@"left"])
+    {
+        _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
+        
+        _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
+        
+    }
+    else
+    {
+        _pressedAnchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
+        
+        _anchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
+    }
+    _pressedAnchor.name =@"pressedAnchor";
+    [self addChild:_pressedAnchor];
+    
     _anchor.name = @"anchor";
     [self addChild:_anchor];
-//    }
-//    else
-//    {
-//        
-//    }
 }
 
 @end
