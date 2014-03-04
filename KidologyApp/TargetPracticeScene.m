@@ -69,7 +69,7 @@ NSMutableArray *touchLog;
 //        int x_pos = (rand() % (int)self.size.width)*.8;
     self.target.xScale = .67;
     self.target.yScale = .67;
-    int x_pos = ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
+    int x_pos = .75 * ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
     int pos_neg = (rand() % 1);
     if (pos_neg == 0)
     {
@@ -79,7 +79,7 @@ NSMutableArray *touchLog;
     {
         x_pos = self.frame.size.width/2 - x_pos;
     }
-    int y_pos = ((rand() % (int)self.size.height)/2)-(_target.size.height/2);
+    int y_pos = (.75*(rand() % (int)self.size.height)/2)-(_target.size.height/2);
     pos_neg = (rand() % 1);
     if (pos_neg == 0)
     {
@@ -178,7 +178,7 @@ NSMutableArray *touchLog;
                 self.target.position = CGPointMake(-100,-100);
             }];
             //make a wait action
-            SKAction *wait = [SKAction waitForDuration:3];
+            SKAction *wait = [SKAction waitForDuration:.314];
             //make a "add" target action
             SKAction *addTarget = [SKAction runBlock:^{
                 [self displayTarget];
