@@ -140,6 +140,8 @@ NSMutableArray *touchLog;
         if ([self isAnchorTouch:positionInScene] == true) // If a touch on the anchor is ending,
         {
             _anchored = NOT_TOUCHING; // make note of that.
+            _anchor.hidden = FALSE;         // Tien was here and the next line
+            _pressedAnchor.hidden = TRUE;
             
         }
         else
@@ -293,14 +295,14 @@ NSMutableArray *touchLog;
     _anchor.xScale = .3;
     _anchor.yScale = .3;
     
-    if([hand isEqualToString:@"left"])
+    if([hand isEqualToString:@"left"]) //if left hand
     {
         _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
         
         _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
         
     }
-    else
+    else    //if right hand (not left hand)
     {
         _pressedAnchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
         
