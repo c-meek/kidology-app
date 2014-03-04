@@ -25,7 +25,7 @@
         [self addChild:self.dog];
         [self displayBall];
         [self addChild:self.ball];
-        
+        [self addInstruction];
         [self displayBackButton];
     }
     return self;
@@ -228,6 +228,21 @@
     mainMenu.scaleMode = SKSceneScaleModeAspectFill;
     //present the scene
     [weakSelf.view presentScene:mainMenu transition:reveal];
+}
+
+-(void)addInstruction
+{
+    NSString * text2 = [NSString stringWithFormat:@"Touch the ball to throw it."];
+    SKLabelNode * instructionLabel2 = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    instructionLabel2.name = @"instructionLabel2";
+    instructionLabel2.text = text2;
+    instructionLabel2.fontSize = 36;
+    instructionLabel2.fontColor = [SKColor whiteColor];
+    instructionLabel2.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2+150);
+    [self addChild:instructionLabel2];
+    
+    SKAction *fadeAway = [SKAction fadeOutWithDuration:4];
+    [instructionLabel2 runAction:fadeAway];
 }
 
 @end
