@@ -73,7 +73,7 @@ NSMutableArray *touchLog;
         float randomScale = ((min + arc4random() % (max-min))) * .01;
         _target.xScale = randomScale;
         _target.yScale = randomScale;
-    int x_pos = ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
+    int x_pos = .75 * ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
     int pos_neg = (rand() % 1);
     if (pos_neg == 0)
     {
