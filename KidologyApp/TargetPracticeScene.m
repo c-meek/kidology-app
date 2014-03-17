@@ -288,7 +288,7 @@ NSMutableArray *touchLog;
 
 -(void)initializeAnchor
 {
-    NSString *hand = @"not_left";
+    NSString *hand = @"left";
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;

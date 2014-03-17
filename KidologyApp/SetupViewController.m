@@ -1,14 +1,14 @@
 //
-//  ViewController.m
+//  SetupViewController.m
 //  KidologyApp
 //
-//  Created by meek, christopher glenn on 2/9/14.
+//  Created by meek, christopher glenn on 3/4/14.
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "SetupViewController.h"
 
-@implementation ViewController
+@implementation SetupViewController : ViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,6 +31,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)returnToMain:(id)sender {
+    NSLog(@"This is where the values would be saved.");
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
 @end
-
-
