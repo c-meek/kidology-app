@@ -1,3 +1,8 @@
+#5 week left meeting
+* dashboard
+* custom target
+* writing stats to text file -> dumping into email
+
 kidology-app
 ============
 ##@target game TODO
@@ -27,7 +32,4 @@ xN yN scaleN
 * have number of targets touched correspond to the object
 * ~~I don't think having the targets timed as important, so default to 3 seconds (=target game)~~ We will take a value for this instead, where all targets appear after the custom time
 
-#5 week left meeting
-* dashboard
-* custom target
-* writing stats to text file -> dumping into email
+
