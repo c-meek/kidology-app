@@ -1,4 +1,5 @@
 #5 week left meeting
+* settings page (affected hand, e-mail, etc.)
 * dashboard
 * custom target
 * writing stats to text file -> dumping into email
