@@ -7,6 +7,7 @@
 //
 
 #import "TargetPracticeGameOver.h"
+#import "TargetPracticeScene.h"
 #import "MainMenuScene.h"
 
 @implementation TargetPracticeGameOver
@@ -43,6 +44,15 @@
     {
         _backButton.color = [SKColor yellowColor];
     }
+    NSMutableArray *log;
+    SKScene *scene = [self.view scene];
+    log = [scene.userData objectForKey:@"touchLog"];
+    NSLog(@"This is where the XML conversion would happen:");
+    for (id entry in log)
+    {
+        NSLog(@"%@", entry);
+    }
+
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {

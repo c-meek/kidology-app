@@ -195,6 +195,7 @@ NSMutableArray *touchLog;
                 SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
                 SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targets:self.totalTargets];
                 // TODO: add the passing of the array like this:
+                NSLog(@"log before passing:%@", touchLog);
                 [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
                 [self.view presentScene:gameOverScene transition: reveal];
             }
