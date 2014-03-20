@@ -16,15 +16,15 @@ NSMutableArray *touchLog;
     if(self = [super initWithSize:size])
     {
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
+        [self addBackground];
         //read input from custom.txt
         [self readInput];
         //assign total number of targets
-        _totalTargets = [_commandArray[0] integerValue];
+        _totalTargets = [_commandArray count] - 1;
         //assign delay duration between touched targets
-        _delayDuration = [_commandArray[1] floatValue];
-        NSLog(@"%f", _delayDuration);
+        _delayDuration = [_commandArray[0] floatValue];
         //initialize targetIterator to start reading from the correct part of array
-        _targetIterator = 2;
+        _targetIterator = 1;
         //initialize target with image
         _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         //display the first target
@@ -199,8 +199,6 @@ NSMutableArray *touchLog;
     
 }
 
-
-
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
@@ -262,7 +260,6 @@ NSMutableArray *touchLog;
     _pressedAnchor.xScale = .3;
     _pressedAnchor.yScale = .3;
     _pressedAnchor.hidden = TRUE;
-    
     
     //initialize red anchor
     _anchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_red_left"];
