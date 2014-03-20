@@ -18,9 +18,8 @@ kidology-app
 * better background
 
 ##@custom target game TODO
-* read in values (floats)
+* ~~read in values (floats)~~
 ```
-Number of targets
 Target delay after target touched
 x1 y1 scale1
 x2 y2 scale2
@@ -29,8 +28,7 @@ x2 y2 scale2
 .
 xN yN scaleN
 ```
-* put values into object (2d array?, map?)
-* have number of targets touched correspond to the object
-* ~~I don't think having the targets timed as important, so default to 3 seconds (=target game)~~ We will take a value for this instead, where all targets appear after the custom time
-
-
+* ~~put values into object (2d array?, map?)~~
+* ~~have number of targets touched correspond to the object~~
+* ~~I don't think having the targets timed as important, so default to 3 seconds (=target game) We will take a value for this instead, where all targets appear after the custom time~~
+* allow for player to select different custom games
