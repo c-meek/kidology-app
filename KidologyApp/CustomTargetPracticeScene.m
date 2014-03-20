@@ -115,6 +115,7 @@ NSMutableArray *touchLog;
         }
     }
 }
+
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch ends */
     for (UITouch *touch in [touches allObjects]) {
@@ -240,7 +241,6 @@ NSMutableArray *touchLog;
     //label for ratio of touched/total targets
     [self trackerLabel];
     
-    
     float r_time = roundf(self.time *100)/100.0;
     NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
     timeLabel.text = s_time;
@@ -254,7 +254,7 @@ NSMutableArray *touchLog;
 
 -(void)initializeAnchor
 {
-    NSString *hand = @"left";
+    NSString *hand = @"right";
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;
