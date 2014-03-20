@@ -20,7 +20,6 @@ kidology-app
 ##@custom target game TODO
 * ~~read in values (floats)~~
 ```
-Number of targets
 Target delay after target touched
 x1 y1 scale1
 x2 y2 scale2
