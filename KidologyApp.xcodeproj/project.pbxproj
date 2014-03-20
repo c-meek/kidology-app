@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F01046818DB627300D2378F /* README in Resources */ = {isa = PBXBuildFile; fileRef = 0F01046718DB627300D2378F /* README */; };
+		0F01046818DB627300D2378F /* customgame_README in Resources */ = {isa = PBXBuildFile; fileRef = 0F01046718DB627300D2378F /* customgame_README */; };
 		0F423CAB18AD5D2200EE5F4E /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F423CAA18AD5D2200EE5F4E /* dog.png */; };
 		0F423CAF18AD61EC00EE5F4E /* tennis.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F423CAE18AD61EC00EE5F4E /* tennis.png */; };
 		0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D547A18AD4EBA00F9593D /* purple_target.png */; };
@@ -80,7 +80,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0F01046718DB627300D2378F /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		0F01046718DB627300D2378F /* customgame_README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = customgame_README; sourceTree = "<group>"; };
 		0F423CAA18AD5D2200EE5F4E /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
 		0F423CAE18AD61EC00EE5F4E /* tennis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tennis.png; sourceTree = "<group>"; };
 		0F7D547A18AD4EBA00F9593D /* purple_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple_target.png; sourceTree = "<group>"; };
@@ -210,7 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				0FBA4C0718DB470200A9184D /* custom.txt */,
-				0F01046718DB627300D2378F /* README */,
+				0F01046718DB627300D2378F /* customgame_README */,
 			);
 			name = "custom games";
 			sourceTree = "<group>";
@@ -458,7 +458,7 @@
 				B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */,
 				0F9462CE18C01CE100E9E3BD /* target_menu.png in Resources */,
 				7CB23C4B18C0020D007F409F /* Red.png in Resources */,
-				0F01046818DB627300D2378F /* README in Resources */,
+				0F01046818DB627300D2378F /* customgame_README in Resources */,
 				7CB23C4D18C0020D007F409F /* Yellow.png in Resources */,
 				E8D5E14D18AD50C40061ED91 /* background.png in Resources */,
 				0F9462D418C0296A00E9E3BD /* anchor_red_left.png in Resources */,

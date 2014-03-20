@@ -16,15 +16,15 @@ NSMutableArray *touchLog;
     if(self = [super initWithSize:size])
     {
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
+        [self addBackground];
         //read input from custom.txt
         [self readInput];
         //assign total number of targets
-        _totalTargets = [_commandArray[0] integerValue];
+        _totalTargets = [_commandArray count] - 1;
         //assign delay duration between touched targets
-        _delayDuration = [_commandArray[1] floatValue];
-        NSLog(@"%f", _delayDuration);
+        _delayDuration = [_commandArray[0] floatValue];
         //initialize targetIterator to start reading from the correct part of array
-        _targetIterator = 2;
+        _targetIterator = 1;
         //initialize target with image
         _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         //display the first target
@@ -115,6 +115,7 @@ NSMutableArray *touchLog;
         }
     }
 }
+
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch ends */
     for (UITouch *touch in [touches allObjects]) {
@@ -199,8 +200,6 @@ NSMutableArray *touchLog;
     
 }
 
-
-
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
@@ -242,7 +241,6 @@ NSMutableArray *touchLog;
     //label for ratio of touched/total targets
     [self trackerLabel];
     
-    
     float r_time = roundf(self.time *100)/100.0;
     NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
     timeLabel.text = s_time;
@@ -256,13 +254,12 @@ NSMutableArray *touchLog;
 
 -(void)initializeAnchor
 {
-    NSString *hand = @"left";
+    NSString *hand = @"right";
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;
     _pressedAnchor.yScale = .3;
     _pressedAnchor.hidden = TRUE;
-    
     
     //initialize red anchor
     _anchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_red_left"];
