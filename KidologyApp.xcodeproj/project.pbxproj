@@ -40,6 +40,8 @@
 		7CB23C4D18C0020D007F409F /* Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C3F18C0020D007F409F /* Yellow.png */; };
 		7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */; };
 		7CB76CC718B692CB0003A622 /* hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB76CC618B692CB0003A622 /* hand.png */; };
+		B9460B1518DB6C7F008270DA /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B9460B1418DB6C7F008270DA /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B9460B1718DB6C99008270DA /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B9460B1618DB6C99008270DA /* libxml2.dylib */; };
 		B94A54B118C00DC100E92932 /* BabyMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B94A54B018C00DC100E92932 /* BabyMenuScene.m */; };
 		B96CAA9C18A7ED7700D5C20C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9B18A7ED7700D5C20C /* Foundation.framework */; };
 		B96CAA9E18A7ED7700D5C20C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9D18A7ED7700D5C20C /* CoreGraphics.framework */; };
@@ -118,6 +120,9 @@
 		7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetPracticeMenuScene.h; sourceTree = "<group>"; };
 		7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetPracticeMenuScene.m; sourceTree = "<group>"; };
 		7CB76CC618B692CB0003A622 /* hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand.png; sourceTree = "<group>"; };
+		B9460B1318DB6C7F008270DA /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
+		B9460B1418DB6C7F008270DA /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
+		B9460B1618DB6C99008270DA /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		B94A54AF18C00DC100E92932 /* BabyMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyMenuScene.h; sourceTree = "<group>"; };
 		B94A54B018C00DC100E92932 /* BabyMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyMenuScene.m; sourceTree = "<group>"; };
 		B96CAA9818A7ED7700D5C20C /* KidologyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KidologyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9460B1718DB6C99008270DA /* libxml2.dylib in Frameworks */,
 				B96CAA9E18A7ED7700D5C20C /* CoreGraphics.framework in Frameworks */,
 				B96CAAA018A7ED7700D5C20C /* UIKit.framework in Frameworks */,
 				B96CAAA218A7ED7700D5C20C /* SpriteKit.framework in Frameworks */,
@@ -279,6 +285,7 @@
 		B96CAA9A18A7ED7700D5C20C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B9460B1618DB6C99008270DA /* libxml2.dylib */,
 				B96CAA9B18A7ED7700D5C20C /* Foundation.framework */,
 				B96CAA9D18A7ED7700D5C20C /* CoreGraphics.framework */,
 				B96CAA9F18A7ED7700D5C20C /* UIKit.framework */,
@@ -291,6 +298,8 @@
 		B96CAAA318A7ED7700D5C20C /* KidologyApp */ = {
 			isa = PBXGroup;
 			children = (
+				B9460B1318DB6C7F008270DA /* GDataXMLNode.h */,
+				B9460B1418DB6C7F008270DA /* GDataXMLNode.m */,
 				B96CAAD718A7ED8400D5C20C /* iPad */,
 				0F7D547F18AD54DF00F9593D /* FetchScene.h */,
 				0F7D548018AD54DF00F9593D /* FetchScene.m */,
@@ -494,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */,
+				B9460B1518DB6C7F008270DA /* GDataXMLNode.m in Sources */,
 				7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */,
 				B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */,
 				B9D70C8C18C639FB000C12F1 /* SetupViewController.m in Sources */,
@@ -636,8 +646,14 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KidologyApp/KidologyApp-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = "KidologyApp/KidologyApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -652,8 +668,14 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KidologyApp/KidologyApp-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = "KidologyApp/KidologyApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				TARGETED_DEVICE_FAMILY = 2;
