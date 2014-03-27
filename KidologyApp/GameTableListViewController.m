@@ -27,12 +27,31 @@ extern NSString * gameName;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.gameArray = [NSArray arrayWithObjects:@"custom.txt",@"custom1.txt", nil];
+    //add files to array
+    [self addGameFilesToArray];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+-(void)addGameFilesToArray
+{
+    _gameArray = [[NSMutableArray alloc]init];
+    NSString *extension = @"txt";
+    NSString *resPath = [[NSBundle mainBundle] resourcePath];
+    NSString *item;
+    NSError *error = nil;
+    NSArray *items = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resPath error:&error];
+    for(item in items)
+    {
+        if([[item pathExtension] isEqualToString:extension])
+        {
+            [_gameArray addObject:item];
+        }
+    }
+    NSLog(@"%@", _gameArray);
 }
 
 - (void)didReceiveMemoryWarning

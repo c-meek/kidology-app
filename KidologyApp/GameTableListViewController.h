@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface GameTableListViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
-@property NSArray *gameArray;
+@property NSMutableArray *gameArray;
 @end
