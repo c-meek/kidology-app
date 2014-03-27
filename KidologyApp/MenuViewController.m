@@ -38,7 +38,7 @@
         [self performSegueWithIdentifier:@"setupSegue" sender:self];
     }
 
-    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,5 +58,9 @@
     mainMenu.scaleMode = SKSceneScaleModeAspectFill;
     // Present the scene.
     [skView presentScene: mainMenu];
+}
+- (IBAction)unwindToHideSettingsModal:(UIStoryboardSegue *)unwindSegue
+{
+    //NSLog(@"UNWILD");
 }
 @end

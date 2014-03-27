@@ -1,5 +1,5 @@
 Custom Game Readme:
-file input should be plain txt file with this format:
+file input should be plain txt, WITHOUT any extra/blank lines, file with this format:
 
 Duration between targets
 target1xpos target1ypos target1scale

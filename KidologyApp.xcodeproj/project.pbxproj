@@ -22,6 +22,9 @@
 		0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */; };
 		0FBA4C0818DB470200A9184D /* custom.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0FBA4C0718DB470200A9184D /* custom.txt */; };
 		0FDF3AA318DA56A400FBEC85 /* CustomTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */; };
+		0FE5600918E4835600DFB172 /* GameTableListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE5600818E4835600DFB172 /* GameTableListViewController.m */; };
+		0FE5600B18E4886B00DFB172 /* custom1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0FE5600A18E4886B00DFB172 /* custom1.txt */; };
+		0FE5600D18E48BBB00DFB172 /* customtargets.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0FE5600C18E48BBB00DFB172 /* customtargets.txt */; };
 		7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */; };
 		7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */; };
 		7CB23C4018C0020D007F409F /* Black.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C3218C0020D007F409F /* Black.png */; };
@@ -100,6 +103,10 @@
 		0FBA4C0718DB470200A9184D /* custom.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = custom.txt; sourceTree = "<group>"; };
 		0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTargetPracticeScene.h; sourceTree = "<group>"; };
 		0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTargetPracticeScene.m; sourceTree = "<group>"; };
+		0FE5600718E4835600DFB172 /* GameTableListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameTableListViewController.h; sourceTree = "<group>"; };
+		0FE5600818E4835600DFB172 /* GameTableListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameTableListViewController.m; sourceTree = "<group>"; };
+		0FE5600A18E4886B00DFB172 /* custom1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = custom1.txt; sourceTree = "<group>"; };
+		0FE5600C18E48BBB00DFB172 /* customtargets.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = customtargets.txt; sourceTree = "<group>"; };
 		7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Huge_Checkered_Background_[4096x3072].png"; sourceTree = "<group>"; };
 		7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyTargetPracticeScene.h; sourceTree = "<group>"; };
 		7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyTargetPracticeScene.m; sourceTree = "<group>"; };
@@ -210,6 +217,8 @@
 			isa = PBXGroup;
 			children = (
 				0FBA4C0718DB470200A9184D /* custom.txt */,
+				0FE5600C18E48BBB00DFB172 /* customtargets.txt */,
+				0FE5600A18E4886B00DFB172 /* custom1.txt */,
 				0F01046718DB627300D2378F /* customgame_README */,
 			);
 			name = "custom games";
@@ -306,6 +315,8 @@
 				B96CAAAC18A7ED7700D5C20C /* AppDelegate.h */,
 				B96CAAAD18A7ED7700D5C20C /* AppDelegate.m */,
 				B96CAAAF18A7ED7700D5C20C /* Main.storyboard */,
+				0FE5600718E4835600DFB172 /* GameTableListViewController.h */,
+				0FE5600818E4835600DFB172 /* GameTableListViewController.m */,
 				B96CAAB218A7ED7700D5C20C /* ViewController.h */,
 				B96CAAB318A7ED7700D5C20C /* ViewController.m */,
 				B96CAAB518A7ED7700D5C20C /* MainMenuScene.h */,
@@ -450,6 +461,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FE5600D18E48BBB00DFB172 /* customtargets.txt in Resources */,
 				7CB23C4618C0020D007F409F /* Lime.png in Resources */,
 				B9D70C8618C62ED8000C12F1 /* targetPracticeBackground.png in Resources */,
 				7CB23C4818C0020D007F409F /* Orange.png in Resources */,
@@ -466,6 +478,7 @@
 				7CB23C4218C0020D007F409F /* Brown.png in Resources */,
 				B96CAAA818A7ED7700D5C20C /* InfoPlist.strings in Resources */,
 				0F9462D618C0296A00E9E3BD /* anchor_green_left.png in Resources */,
+				0FE5600B18E4886B00DFB172 /* custom1.txt in Resources */,
 				0F9462CD18C01CE100E9E3BD /* target_menu_pressed.png in Resources */,
 				7CB23C4718C0020D007F409F /* Magenta.png in Resources */,
 				B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */,
@@ -518,6 +531,7 @@
 				0FDF3AA318DA56A400FBEC85 /* CustomTargetPracticeScene.m in Sources */,
 				B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */,
 				B96CAAAA18A7ED7700D5C20C /* main.m in Sources */,
+				0FE5600918E4835600DFB172 /* GameTableListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +658,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KidologyApp/KidologyApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -666,6 +681,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KidologyApp/KidologyApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

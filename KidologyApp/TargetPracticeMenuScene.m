@@ -11,11 +11,11 @@
 #import "MainMenuScene.h"
 #import "CustomTargetPracticeScene.h"
 
+NSString *gameName;
 @implementation TargetPracticeMenuScene
-
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
-        
+        gameName = nil;
         //Background here!!!
         [self addBackground]; 
         //Instructions...
@@ -160,7 +160,6 @@
     CGPoint position = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:position];
     
-    
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backLabel"])
         {
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
@@ -191,9 +190,18 @@
     }
     else if ([node.name isEqualToString:@"customModeLabel"] || [node.name isEqualToString:@"customModeButton"])
     {
-        SKScene *customTarget = [[CustomTargetPracticeScene alloc] initWithSize:self.size];
-        customTarget.scaleMode = SKSceneScaleModeAspectFill;
-        [self.view presentScene:customTarget];
+        if(nil == gameName)
+        {
+            UIViewController *vc = self.view.window.rootViewController;
+            [vc performSegueWithIdentifier:@"toGameList" sender:self];
+            _customModeButton.color = [SKColor greenColor];
+        }
+        else
+        {
+            SKScene *customTarget = [[CustomTargetPracticeScene alloc] initWithSize:self.size];
+            customTarget.scaleMode = SKSceneScaleModeAspectFill;
+            [self.view presentScene:customTarget];
+        }
     }
     else
     {

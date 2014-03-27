@@ -8,16 +8,18 @@
 
 #import "CustomTargetPracticeScene.h"
 #import "TargetPracticeGameOver.h"
-
+#import "TargetPracticeMenuScene.h"
+extern NSString *gameName;
 @implementation CustomTargetPracticeScene
 NSMutableArray *touchLog;
 -(id)initWithSize:(CGSize)size
 {
     if(self = [super initWithSize:size])
     {
+        NSLog(@"%@", gameName);
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         [self addBackground];
-        //read input from custom.txt
+        //read input from custom text file
         [self readInput];
         //assign total number of targets
         _totalTargets = [_commandArray count] - 1;
@@ -52,7 +54,9 @@ NSMutableArray *touchLog;
 
 -(void)readInput
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"custom" ofType:@"txt"];
+    NSString *shortenedGameName = [gameName substringToIndex:[gameName length] - 4];
+    NSLog(@"%@", shortenedGameName);
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:shortenedGameName ofType:@"txt"];
     NSError *error;
     NSString *fileContents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
     if(error)
