@@ -54,6 +54,7 @@
     
         
     NSString * output = [[NSString alloc] init];
+    output = [output stringByAppendingString:@"Type,Time,Touch Location X, Touch Location Y, Target Location X, Target Location Y, Target Radius\n"];
     for (int i=0;i<log.count;i++)
     {
         LogEntry *entry = log[i];
@@ -68,10 +69,13 @@
         NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
                                                               dateStyle:NSDateFormatterShortStyle
                                                               timeStyle:NSDateFormatterFullStyle];
-        NSString *fileName = [NSString stringWithFormat:@"%@/%@.csv", documentsDirectory, dateString];
-        //NSLog(@"%@", fileName);
+        NSString *dummyString = @"something";
+        NSString *fileName = [NSString stringWithFormat:@"%@/%@.csv", documentsDirectory, dummyString];
+        NSLog(@"%@", fileName);
         NSLog(@"%@", output);
-        [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:nil];
+        [[NSFileManager defaultManager] createFileAtPath:fileName contents:nil attributes:nil];
+       
+        [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];
     }
 
 }
