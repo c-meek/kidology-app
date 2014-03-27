@@ -9,6 +9,7 @@
 #import "CustomTargetPracticeScene.h"
 #import "TargetPracticeGameOver.h"
 #import "TargetPracticeMenuScene.h"
+#import "LogEntry.h"
 extern NSString *gameName;
 @implementation CustomTargetPracticeScene
 NSMutableArray *touchLog;
