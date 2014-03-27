@@ -9,6 +9,7 @@
 #import "TargetPracticeGameOver.h"
 #import "TargetPracticeScene.h"
 #import "MainMenuScene.h"
+#import "LogEntry.h"
 
 @implementation TargetPracticeGameOver
 
@@ -47,28 +48,19 @@
     NSMutableArray *log;
     SKScene *scene = [self.view scene];
     log = [scene.userData objectForKey:@"touchLog"];
+    //NSLog(@"%@", log[1]);
+    
+
+    
+        
     NSString * output = [[NSString alloc] init];
     for (int i=0;i<log.count;i++)
     {
-        LogEntry entry =  *(__bridge LogEntry *)log[i];
-        char * type;
-        switch (entry.type) {
-            case WHITESPACE:
-                type = "whitespace";
-                break;
-            case UNANCHORED_TARGET:
-                type = "unanchored target";
-                break;
-            case PANEL:
-                type = "panel";
-                break;
-            case TARGET:
-                type = "target";
-                break;
-            default:
-                type = "unknown";
-        }
-        output = [output stringByAppendingString:[NSString stringWithFormat:@"%s,%f,%f,%f,%f,%f,%f\n", type, entry.time, entry.touchLocation.x, entry.touchLocation.y, entry.targetLocation.x, entry.targetLocation.y, entry.targetRadius]];
+        LogEntry *entry = log[i];
+        //NSLog(@"%d,%f,%f", entry.type, entry.targetLocation.x,entry.targetLocation.y);
+        //NSString * type = typeArray[entry.type];
+             //NSString * type = @"a";
+        output = [output stringByAppendingString:[NSString stringWithFormat:@"%@,%f,%f,%f,%f,%f,%f\n", entry.type, entry.time, entry.touchLocation.x, entry.touchLocation.y, entry.targetLocation.x, entry.targetLocation.y, entry.targetRadius]];
         // get the documents directory
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -77,6 +69,8 @@
                                                               dateStyle:NSDateFormatterShortStyle
                                                               timeStyle:NSDateFormatterFullStyle];
         NSString *fileName = [NSString stringWithFormat:@"%@/%@.csv", documentsDirectory, dateString];
+        //NSLog(@"%@", fileName);
+        NSLog(@"%@", output);
         [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:nil];
     }
 

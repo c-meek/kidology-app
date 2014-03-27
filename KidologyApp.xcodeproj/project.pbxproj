@@ -66,6 +66,7 @@
 		B9D70C8618C62ED8000C12F1 /* targetPracticeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462C818BFFFC500E9E3BD /* targetPracticeBackground.png */; };
 		B9D70C8C18C639FB000C12F1 /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D70C8B18C639FB000C12F1 /* SetupViewController.m */; };
 		B9D70C8F18C64587000C12F1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D70C8E18C64587000C12F1 /* MenuViewController.m */; };
+		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
 		E8D5E14D18AD50C40061ED91 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = E8D5E14C18AD50C40061ED91 /* background.png */; };
 /* End PBXBuildFile section */
 
@@ -157,6 +158,8 @@
 		B9D70C8B18C639FB000C12F1 /* SetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupViewController.m; sourceTree = "<group>"; };
 		B9D70C8D18C64587000C12F1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		B9D70C8E18C64587000C12F1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		B9FC0CFE18E4994D006F2AEF /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogEntry.h; sourceTree = "<group>"; };
+		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
 		E8D5E14C18AD50C40061ED91 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -320,6 +323,8 @@
 				7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */,
 				B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */,
 				B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */,
+				B9FC0CFE18E4994D006F2AEF /* LogEntry.h */,
+				B9FC0CFF18E4994D006F2AEF /* LogEntry.m */,
 				7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */,
 				7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */,
 				B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */,
@@ -506,6 +511,7 @@
 				B9460B1518DB6C7F008270DA /* GDataXMLNode.m in Sources */,
 				7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */,
 				B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */,
+				B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */,
 				B9D70C8C18C639FB000C12F1 /* SetupViewController.m in Sources */,
 				B94A54B118C00DC100E92932 /* BabyMenuScene.m in Sources */,
 				B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */,

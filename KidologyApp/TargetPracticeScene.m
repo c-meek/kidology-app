@@ -10,6 +10,7 @@
 #import "TargetPracticeGameOver.h"
 #import "MainMenuScene.h"
 #import "math.h"
+#import "LogEntry.h"
 
 @implementation TargetPracticeScene
 
@@ -26,7 +27,7 @@ NSMutableArray *touchLog;
         if (game_mode == 2) {
             _gameMode = RANDOM;
         }
-        NSLog(@"Game_mode: %d", game_mode);
+       // NSLog(@"Game_mode: %d", game_mode);
 
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         /* Setup your scene here */
@@ -97,9 +98,9 @@ NSMutableArray *touchLog;
         self.target.position = CGPointMake(x_pos, y_pos);
     }
     
-    NSLog(@"x is %f", self.target.position.x);
-    NSLog(@"y is %f", self.target.position.y);
-    NSLog(@"scale is %f", self.target.xScale);
+  //  NSLog(@"x is %f", self.target.position.x);
+  //  NSLog(@"y is %f", self.target.position.y);
+   // NSLog(@"scale is %f", self.target.xScale);
 }
 
 -(Boolean)isAnchorTouch:(CGPoint)touchLocation
@@ -109,8 +110,9 @@ NSMutableArray *touchLog;
     SKNode *node = [self nodeAtPoint:touchLocation];
     if ([node.name isEqualToString:@"pressedAnchor"] || [node.name isEqualToString:@"anchor"])
     {
-        LogEntry currentTouch = {PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
-        [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
+        LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Panel" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:(self.target.size.width / 2)];
+        //{PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
+        [touchLog addObject:currentTouch];
 //        NSLog(@"anchor panel is being touched.");
         result = true;
     }
@@ -167,17 +169,19 @@ NSMutableArray *touchLog;
     double radius = self.target.size.width / 2;
     double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
     double rightHandSide = pow(radius, 2);
-    LogEntry currentTouch;
+    LogEntry *currentTouch;
     
     if(leftHandSide <= rightHandSide) // If the touch is on the target
     {
-        currentTouch.time = self.time;
-        currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
-        currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
-        currentTouch.targetRadius = radius;
+        
+        //currentTouch.time = self.time;
+        //currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
+        //currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
+        //currentTouch.targetRadius = radius;
         if (_anchored == TOUCHING) // the anchor is currently being touched
         {
-            currentTouch.type = TARGET;
+            currentTouch = [[LogEntry alloc] initWithType:@"Target" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
+            //currentTouch.type = TARGET;
             _correctTouches++;
             //make a "delete" target action
             SKAction *deleteTarget = [SKAction runBlock:^{
@@ -206,18 +210,21 @@ NSMutableArray *touchLog;
         }
         else // the anchor is not currently being touched
         {
-            currentTouch.type = UNANCHORED_TARGET;
+            currentTouch = [[LogEntry alloc] initWithType:@"Unanchored target" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
+            //currentTouch.type = UNANCHORED_TARGET;
         }
-        [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]]; // log the touch
+        [touchLog addObject:currentTouch]; // log the touch
     }
     else
     {
-        currentTouch.type = WHITESPACE;
-        currentTouch.time = self.time;
-        currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
-        currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
-        currentTouch.targetRadius = self.target.size.width / 2;
-        [touchLog addObject:[NSValue value:&currentTouch withObjCType:@encode(LogEntry)]];
+        currentTouch = [[LogEntry alloc] initWithType:@"Whitespace" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
+        //currentTouch.type = WHITESPACE;
+        //currentTouch.time = self.time;
+        //currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
+        //currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
+        //currentTouch.targetRadius = self.target.size.width / 2;
+        //NSLog(@"%i", currentTouch.type);
+        [touchLog addObject:currentTouch];
     }
 //    NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
     

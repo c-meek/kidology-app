@@ -13,25 +13,25 @@ typedef enum {
     RANDOM
 } Mode;
 
-typedef enum {
-    WHITESPACE,
-    UNANCHORED_TARGET,
-    PANEL,
-    TARGET
-} TouchType;
+//typedef enum {
+//    WHITESPACE,
+//    UNANCHORED_TARGET,
+//    PANEL,
+//    TARGET
+//} TouchType;
 
 typedef enum {
     TOUCHING,
     NOT_TOUCHING
 } AnchorStatus;
 
-typedef struct {
-    TouchType type;
-    float time;
-    CGPoint touchLocation;
-    CGPoint targetLocation;
-    float targetRadius;
-} LogEntry;
+//typedef struct {
+//    TouchType type;
+//    float time;
+//    CGPoint touchLocation;
+//    CGPoint targetLocation;
+//    float targetRadius;
+//} LogEntry;
 
 @interface TargetPracticeScene : SKScene
     @property (nonatomic) SKSpriteNode * anchorPanel;
