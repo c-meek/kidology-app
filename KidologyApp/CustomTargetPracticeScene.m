@@ -1,124 +1,104 @@
 //
-//  TargetPracticeScene.m
+//  CustomTargetPracticeScene.m
 //  KidologyApp
 //
-//  Created by meek, christopher glenn on 2/9/14.
+//  Created by klimczak, andrew edward on 3/19/14.
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
-#import "TargetPracticeScene.h"
+#import "CustomTargetPracticeScene.h"
 #import "TargetPracticeGameOver.h"
-#import "MainMenuScene.h"
-#import "math.h"
+#import "TargetPracticeMenuScene.h"
 #import "LogEntry.h"
-
-@implementation TargetPracticeScene
-
+extern NSString *gameName;
+@implementation CustomTargetPracticeScene
 NSMutableArray *touchLog;
-
--(id)initWithSize:(CGSize)size game_mode:(int)game_mode
+-(id)initWithSize:(CGSize)size
 {
-    if (self = [super initWithSize:size]) {
-        [self addBackground];
-//        NSLog(@"Size: %@", NSStringFromCGSize(size));
-        if (game_mode == 1) {
-            _gameMode = CENTER;
-        }
-        if (game_mode == 2) {
-            _gameMode = RANDOM;
-        }
-       // NSLog(@"Game_mode: %d", game_mode);
-
+    if(self = [super initWithSize:size])
+    {
+        NSLog(@"%@", gameName);
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
-        /* Setup your scene here */
-        self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
-        //initialize anchor
-        [self initializeAnchor];
-        //initialize panel
-//        self.anchorPanel = [SKSpriteNode spriteNodeWithColor:[SKColor orangeColor] size:CGSizeMake(200, self.size.height)];
-//        self.anchorPanel.position = CGPointMake(0, self.size.height/2);
-//        [self addChild:self.anchorPanel];
-        //initialize target
-        self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
-        //set the total number of targets for this session
-        self.totalTargets = 3;
-        self.correctTouches = 0;
+        [self addBackground];
+        //read input from custom text file
+        [self readInput];
+        //assign total number of targets
+        _totalTargets = [_commandArray count] - 1;
+        //assign delay duration between touched targets
+        _delayDuration = [_commandArray[0] floatValue];
+        //initialize targetIterator to start reading from the correct part of array
+        _targetIterator = 1;
+        //initialize target with image
+        _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
+        //display the first target
+        [self displayTarget];
+        [self addChild:_target];
         // initialize the anchor to "not being touched" state
         self.anchored = NOT_TOUCHING;
-        //set properties of target
-        [self displayTarget];
-        //add target to screen
-        [self addChild:self.target];
-        
-        self.time = 0;
+        [self initializeAnchor];
+        _time = 0;
     }
     return self;
 }
 
 -(void)displayTarget
 {
-    if (_gameMode == CENTER)
-    {
-        //set target to middle of screen
-        self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-        self.target.xScale = .67;
-        self.target.yScale = .67;
-    }
-    else if (_gameMode == RANDOM)
-    {
-        //set the target to appear at random locations
-//        int x_pos = (rand() % (int)self.size.width)*.8;
-    //randomize size of target
-        int min = 30;
-        int max = 67;
-        float randomScale = ((min + arc4random() % (max-min))) * .01;
-        _target.xScale = randomScale;
-        _target.yScale = randomScale;
-    int x_pos = .75 * ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
-    int pos_neg = (rand() % 1);
-    if (pos_neg == 0)
-    {
-        x_pos = self.frame.size.width/2 + x_pos;
-    }
-    else
-    {
-        x_pos = self.frame.size.width/2 - x_pos;
-    }
-    int y_pos = .75 * ((rand() % (int)self.size.height)/2)-(_target.size.height/2);
-    pos_neg = (rand() % 1);
-    if (pos_neg == 0)
-    {
-        y_pos = self.frame.size.height/2 + y_pos;
-    }
-    else
-    {
-        y_pos = self.frame.size.height/2 - y_pos;
-    }
+    //get the target information
+    NSString *targetInfoString = _commandArray[_targetIterator];
+    //array of size 3 where [0] = X position [1] = Y position [2] = scale of target
+    NSArray *targetInfoArray = [targetInfoString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    //set position based and scale on the values
+    _target.xScale = [targetInfoArray[2] floatValue];
+    _target.yScale = [targetInfoArray[2] floatValue];
+    _target.position = CGPointMake([targetInfoArray[0] floatValue], [targetInfoArray[1] floatValue]);
+}
 
-        self.target.position = CGPointMake(x_pos, y_pos);
+-(void)readInput
+{
+    NSString *shortenedGameName = [gameName substringToIndex:[gameName length] - 4];
+    NSLog(@"%@", shortenedGameName);
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:shortenedGameName ofType:@"txt"];
+    NSError *error;
+    NSString *fileContents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+    if(error)
+    {
+        NSLog(@"erorr %@", error.localizedDescription);
     }
-    
-  //  NSLog(@"x is %f", self.target.position.x);
-  //  NSLog(@"y is %f", self.target.position.y);
-   // NSLog(@"scale is %f", self.target.xScale);
+    _commandArray = [fileContents componentsSeparatedByString:@"\n"];
+
+    //printing out contents of array
+//    NSLog(@"item = %d", [_commandArray count]);
+//    for(int i = 0; i < [_commandArray count]; i++)
+//    {
+//        NSLog(@"%@\n", _commandArray[i]);
+//    }
+}
+
+-(void)addBackground
+{
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
+    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
+    bgImage.xScale = .4;
+    bgImage.yScale = .4;
+    [self addChild:bgImage];
 }
 
 -(Boolean)isAnchorTouch:(CGPoint)touchLocation
 {
     Boolean result;
-//    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
+    //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
     SKNode *node = [self nodeAtPoint:touchLocation];
     if ([node.name isEqualToString:@"pressedAnchor"] || [node.name isEqualToString:@"anchor"])
     {
-        LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Panel" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:(self.target.size.width / 2)];
-        //{PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
+        LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Panel" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:(self.target.size.width/2)];
+        //LogEntry currentTouch = {PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
         [touchLog addObject:currentTouch];
-//        NSLog(@"anchor panel is being touched.");
+        //        NSLog(@"anchor panel is being touched.");
         result = true;
     }
     else
     {
-//        NSLog(@"anchor panel is not being touched.");
+        //        NSLog(@"anchor panel is not being touched.");
         result = false;
     }
     return result;
@@ -130,17 +110,18 @@ NSMutableArray *touchLog;
         /* Called when a touch begins */
         CGPoint positionInScene = [touch locationInNode:self];
         //test whether the target has been touched
-       if ([self isAnchorTouch:positionInScene] == false) // If the touch isn't on the anchor,
-       {
+        if ([self isAnchorTouch:positionInScene] == false) // If the touch isn't on the anchor,
+        {
             [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
-       }
-       else{ // If it is on the anchor,
-           _anchored = TOUCHING; // make note of that.
-           _anchor.hidden = TRUE;
-           _pressedAnchor.hidden = FALSE;
-       }
+        }
+        else{ // If it is on the anchor,
+            _anchored = TOUCHING; // make note of that.
+            _anchor.hidden = TRUE;
+            _pressedAnchor.hidden = FALSE;
+        }
     }
 }
+
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch ends */
     for (UITouch *touch in [touches allObjects]) {
@@ -150,7 +131,6 @@ NSMutableArray *touchLog;
             _anchored = NOT_TOUCHING; // make note of that.
             _anchor.hidden = FALSE;         // Tien was here and the next line
             _pressedAnchor.hidden = TRUE;
-            
         }
         else
         {
@@ -163,17 +143,16 @@ NSMutableArray *touchLog;
 -(void)targetTouch:(CGPoint)touchLocation
 {
     _totalTouches++;
-//    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
+    //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
     double xDifference = touchLocation.x - self.target.position.x;
     double yDifference = touchLocation.y - self.target.position.y;
     double radius = self.target.size.width / 2;
     double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
     double rightHandSide = pow(radius, 2);
-    LogEntry *currentTouch;
+    LogEntry * currentTouch;
     
     if(leftHandSide <= rightHandSide) // If the touch is on the target
     {
-        
         //currentTouch.time = self.time;
         //currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
         //currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
@@ -188,7 +167,7 @@ NSMutableArray *touchLog;
                 self.target.position = CGPointMake(-100,-100);
             }];
             //make a wait action
-            SKAction *wait = [SKAction waitForDuration:.314];
+            SKAction *wait = [SKAction waitForDuration:_delayDuration];
             //make a "add" target action
             SKAction *addTarget = [SKAction runBlock:^{
                 [self displayTarget];
@@ -199,46 +178,46 @@ NSMutableArray *touchLog;
                 SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
                 SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targets:self.totalTargets];
                 // TODO: add the passing of the array like this:
-                NSLog(@"log before passing:%@", touchLog);
                 [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
                 [self.view presentScene:gameOverScene transition: reveal];
             }
             //combine all the actions into a sequence
             SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
+            //increment the targetIterator
+            _targetIterator = _targetIterator + 1;
             //run the actions in sequential order
             [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
+            [touchLog addObject:currentTouch]; // log the touch
+
         }
         else // the anchor is not currently being touched
         {
             currentTouch = [[LogEntry alloc] initWithType:@"Unanchored target" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
             //currentTouch.type = UNANCHORED_TARGET;
+            [touchLog addObject:currentTouch]; // log the touch
         }
-        [touchLog addObject:currentTouch]; // log the touch
     }
     else
     {
-        currentTouch = [[LogEntry alloc] initWithType:@"Whitespace" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
-        //currentTouch.type = WHITESPACE;
-        //currentTouch.time = self.time;
-        //currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
-        //currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
-        //currentTouch.targetRadius = self.target.size.width / 2;
-        //NSLog(@"%i", currentTouch.type);
+        currentTouch = [[LogEntry alloc] initWithType:@"Whitespace" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:(self.target.size.width / 2)];
+//        currentTouch.type = WHITESPACE;
+//        currentTouch.time = self.time;
+//        currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
+//        currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
+//        currentTouch.targetRadius = self.target.size.width / 2;
         [touchLog addObject:currentTouch];
     }
-//    NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
+    //    NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
     
 }
-
-
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     [self updateWithTimeSinceLastUpdate:timeSinceLast];
-//    NSLog(@"%@", touchLog);
-
+    //    NSLog(@"%@", touchLog);
+    
 }
 
 -(void)trackerLabel
@@ -269,40 +248,29 @@ NSMutableArray *touchLog;
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
     timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
-
+    
     //label for ratio of touched/total targets
     [self trackerLabel];
-    
     
     float r_time = roundf(self.time *100)/100.0;
     NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
     timeLabel.text = s_time;
     [self addChild: timeLabel];
-
-//    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
+    
+    //    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.0075];
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
 }
 
--(void)addBackground
-{
-    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
-    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
-    bgImage.xScale = .4;
-    bgImage.yScale = .4;
-    [self addChild:bgImage];
-}
-
 -(void)initializeAnchor
 {
-    NSString *hand = @"left";
+    NSString *hand = @"right";
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;
     _pressedAnchor.yScale = .3;
     _pressedAnchor.hidden = TRUE;
-    
     
     //initialize red anchor
     _anchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_red_left"];
@@ -328,5 +296,4 @@ NSMutableArray *touchLog;
     _anchor.name = @"anchor";
     [self addChild:_anchor];
 }
-
 @end

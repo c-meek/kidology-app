@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "GDataXMLNode.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

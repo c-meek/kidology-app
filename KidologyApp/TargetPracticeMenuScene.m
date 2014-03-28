@@ -9,12 +9,13 @@
 #import "TargetPracticeMenuScene.h"
 #import "TargetPracticeScene.h"
 #import "MainMenuScene.h"
+#import "CustomTargetPracticeScene.h"
 
+NSString *gameName;
 @implementation TargetPracticeMenuScene
-
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
-        
+        gameName = nil;
         //Background here!!!
         [self addBackground]; 
         //Instructions...
@@ -85,6 +86,21 @@
         _randomModeButtonLabel.verticalAlignmentMode = 1;
         [self addChild:_randomModeButtonLabel];
         
+        //custom mode button
+        _customModeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
+        _customModeButton.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2 - 200);
+        _customModeButton.name = @"customModeButton";
+        [self addChild:_customModeButton];
+        
+        _customModeLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
+        _customModeLabel.fontSize = 35;
+        _customModeLabel.fontColor = [SKColor whiteColor];
+        _customModeLabel.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2-200);
+        _customModeLabel.name = @"customModeLabel";
+        _customModeLabel.text = @"Custom";
+        _customModeLabel.verticalAlignmentMode = 1;
+        [self addChild:_customModeLabel];
+        
 //READ! Do we want this? Animation!!!
         _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         _target.position = (CGPointMake(self.frame.size.width/2-50, self.frame.size.height/2-82));
@@ -130,6 +146,11 @@
     {
         _randomModeButton.color = [SKColor yellowColor];
     }
+    else if ([node.name isEqualToString:@"customModeLabel"] ||
+             [node.name isEqualToString:@"customModeButton"])
+    {
+        _customModeButton.color = [SKColor yellowColor];
+    }
 
 }
 
@@ -138,7 +159,6 @@
     UITouch *touch = [touches anyObject];
     CGPoint position = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:position];
-    
     
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backLabel"])
         {
@@ -168,11 +188,27 @@
         // Present the scene.
         [self.view presentScene:targetPractice];
     }
+    else if ([node.name isEqualToString:@"customModeLabel"] || [node.name isEqualToString:@"customModeButton"])
+    {
+        if(nil == gameName)
+        {
+            UIViewController *vc = self.view.window.rootViewController;
+            [vc performSegueWithIdentifier:@"toGameList" sender:self];
+            _customModeButton.color = [SKColor greenColor];
+        }
+        else
+        {
+            SKScene *customTarget = [[CustomTargetPracticeScene alloc] initWithSize:self.size];
+            customTarget.scaleMode = SKSceneScaleModeAspectFill;
+            [self.view presentScene:customTarget];
+        }
+    }
     else
     {
         _backButton.color = [SKColor redColor];
         _centerModeButton.color = [SKColor redColor];
         _randomModeButton.color = [SKColor redColor];
+        _customModeLabel.color = [SKColor redColor];
     }
 
 }

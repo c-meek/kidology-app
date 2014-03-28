@@ -200,6 +200,7 @@
     [self addChild:_babyGameButton];
     [self addChild:babyButtonLabel];
 }
+
 -(void)addBackButton
 {
     //add button with attributes
