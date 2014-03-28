@@ -83,7 +83,7 @@ NSMutableArray *touchLog;
     {
         x_pos = self.frame.size.width/2 - x_pos;
     }
-    int y_pos = .75*((rand() % (int)self.size.height)/2)-(_target.size.height/2);
+    int y_pos = .75 * ((rand() % (int)self.size.height)/2)-(_target.size.height/2);
     pos_neg = (rand() % 1);
     if (pos_neg == 0)
     {
