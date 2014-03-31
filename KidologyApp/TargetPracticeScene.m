@@ -202,8 +202,8 @@ NSMutableArray *touchLog;
     SKAction * spinaction = [SKAction rotateByAngle:-rotation/60 duration:1/60];
     [_target runAction:[SKAction sequence:@[spinaction]]];
 
-    CGPoint locale = [recognizer locationInView:self.view];
-    NSLog(@"CENTER: \nXCoord = %f ------ YCoord = %f \n", locale.x, locale.y);
+//    CGPoint locale = [recognizer locationInView:self.view];
+//    NSLog(@"CENTER: \nXCoord = %f ------ YCoord = %f \n", locale.x, locale.y);
     NSUInteger num_of_touches = [recognizer numberOfTouches];
     int x =0;
 //    How do I get touch IDs?
