@@ -33,7 +33,15 @@ typedef enum {
 //    float targetRadius;
 //} LogEntry;
 
-@interface TargetPracticeScene : SKScene
+@interface TargetPracticeScene : SKScene <UIGestureRecognizerDelegate>
+    {
+        UIRotationGestureRecognizer* rotationGR;
+        UISwipeGestureRecognizer* swipeRightGesture;
+        UISwipeGestureRecognizer* swipeLeftGesture;
+        UISwipeGestureRecognizer* swipeUpGesture;
+        UISwipeGestureRecognizer* swipeDownGesture;
+    }
+
     @property (nonatomic) SKSpriteNode * anchorPanel;
     @property (nonatomic) SKSpriteNode * target;
     @property (nonatomic) SKLabelNode *targetsLabel;

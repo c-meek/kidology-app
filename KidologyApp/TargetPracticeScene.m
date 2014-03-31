@@ -160,6 +160,137 @@ NSMutableArray *touchLog;
     }
 }
 
+-(void) didMoveToView: (SKView *) view  {
+    
+//swipe right gesture…
+    
+    swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeRight:)];
+    [swipeRightGesture setDirection: UISwipeGestureRecognizerDirectionRight];
+    
+    [view addGestureRecognizer: swipeRightGesture ];
+    
+//swipe left gesture…
+    
+    swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeLeft:)];
+    [swipeLeftGesture setDirection: UISwipeGestureRecognizerDirectionLeft];
+    
+    [view addGestureRecognizer: swipeLeftGesture ];
+
+//swipe up gesture…
+    
+    swipeUpGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeUp:)];
+    [swipeUpGesture setDirection: UISwipeGestureRecognizerDirectionUp];
+    
+    [view addGestureRecognizer: swipeUpGesture ];
+
+//swipe down gesture…
+    
+    swipeDownGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeDown:)];
+    [swipeDownGesture setDirection: UISwipeGestureRecognizerDirectionDown];
+    
+    [view addGestureRecognizer: swipeDownGesture ];
+
+//And the rotation gesture will detect a two finger rotation
+    
+    rotationGR = [[ UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(handleRotation:)];
+    [view addGestureRecognizer:rotationGR ];
+    
+}
+-(void) handleRotation: (UIRotationGestureRecognizer *) recognizer  {
+    
+    CGFloat rotation = recognizer.rotation;
+    SKAction * spinaction = [SKAction rotateByAngle:-rotation/60 duration:1/60];
+    [_target runAction:[SKAction sequence:@[spinaction]]];
+
+    CGPoint locale = [recognizer locationInView:self.view];
+    NSLog(@"CENTER: \nXCoord = %f ------ YCoord = %f \n", locale.x, locale.y);
+    NSUInteger num_of_touches = [recognizer numberOfTouches];
+    int x =0;
+//    How do I get touch IDs?
+//    How do I get touch IDs?
+//    How do I get touch IDs?
+    while (x <= num_of_touches)
+    {
+//        CGPoint temp_loc = [recognizer locationOfTouch:_________ inView:self.view];
+//        NSLog(@"Point %d: \nXCoord = %f ------ YCoord = %f \n", x, temp_loc.x, temp_loc.y);
+        x++;
+    }
+    if ( recognizer.state == UIGestureRecognizerStateEnded ) {
+        NSLog(@"rotation has actually ended");
+    }
+    
+}
+
+-(void) handleSwipeRight:( UISwipeGestureRecognizer *) recognizer {
+    
+    if ( recognizer.numberOfTouches == 2) {
+        // do something if the swipe right had exactly 2 fingers involved
+        //      SKAction moveTo:realDest duration:realMoveDuration
+        //        CGPoint location = [recognizer locationOfTouch:<#(NSUInteger)#> inView:<#(UIView *)#>];
+    }
+    else
+    {
+        // do something else
+        
+        SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x + 200, _target.position.y) duration:1];
+        [_target runAction:[SKAction sequence:@[moveaction]]];
+    }
+    
+}
+
+-(void) handleSwipeLeft:( UISwipeGestureRecognizer *) recognizer {
+    
+    if ( recognizer.numberOfTouches == 2) {
+        // do something if the swipe right had exactly 2 fingers involved
+        //      SKAction moveTo:realDest duration:realMoveDuration
+        //        CGPoint location = [recognizer locationOfTouch:<#(NSUInteger)#> inView:<#(UIView *)#>];
+    }
+    else
+    {
+        // do something else
+        
+        SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x - 200, _target.position.y) duration:1];
+        [_target runAction:[SKAction sequence:@[moveaction]]];
+    }
+    
+}
+
+-(void) handleSwipeUp:( UISwipeGestureRecognizer *) recognizer {
+    
+    if ( recognizer.numberOfTouches == 2) {
+        // do something if the swipe right had exactly 2 fingers involved
+        //      SKAction moveTo:realDest duration:realMoveDuration
+        //        CGPoint location = [recognizer locationOfTouch:<#(NSUInteger)#> inView:<#(UIView *)#>];
+    }
+    else
+    {
+        // do something else
+        
+        SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x, _target.position.y+200) duration:1];
+        [_target runAction:[SKAction sequence:@[moveaction]]];
+    }
+    
+}
+-(void) handleSwipeDown:( UISwipeGestureRecognizer *) recognizer {
+    
+    if ( recognizer.numberOfTouches == 2) {
+        // do something if the swipe right had exactly 2 fingers involved
+        //      SKAction moveTo:realDest duration:realMoveDuration
+        //        CGPoint location = [recognizer locationOfTouch:<#(NSUInteger)#> inView:<#(UIView *)#>];
+    }
+    else
+    {
+        // do something else
+        
+        SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x, _target.position.y-200) duration:1];
+        [_target runAction:[SKAction sequence:@[moveaction]]];
+    }
+    
+}
+
+
+
+
 -(void)targetTouch:(CGPoint)touchLocation
 {
     _totalTouches++;
