@@ -10,7 +10,8 @@
 
 typedef enum {
     CENTER,
-    RANDOM
+    RANDOM,
+    OTHER_ACTION
 } Mode;
 
 //typedef enum {
@@ -54,8 +55,9 @@ typedef enum {
     @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
     @property (nonatomic) Mode gameMode;
     @property (nonatomic) AnchorStatus anchored;
-@property (nonatomic) SKSpriteNode *anchor;
-@property (nonatomic) SKSpriteNode *pressedAnchor;
+    @property (nonatomic) SKSpriteNode *anchor;
+    @property (nonatomic) SKSpriteNode *pressedAnchor;
+    @property (nonatomic) int numOfRotations;
 
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode;
 @end

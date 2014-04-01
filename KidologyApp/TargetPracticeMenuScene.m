@@ -101,6 +101,21 @@ NSString *gameName;
         _customModeLabel.verticalAlignmentMode = 1;
         [self addChild:_customModeLabel];
         
+        //Action Button!
+        _actionModeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
+        _actionModeButton.position = CGPointMake(self.frame.size.width/4*2, self.frame.size.height/2-250);
+        _actionModeButton.name = @"actionButton";
+        [self addChild:_actionModeButton];
+        
+        _actionModeButtonLabel =[SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
+        _actionModeButtonLabel.fontSize = 35;
+        _actionModeButtonLabel.fontColor = [SKColor whiteColor];
+        _actionModeButtonLabel.position = CGPointMake(self.frame.size.width/4*2, self.frame.size.height/2-250);
+        _actionModeButtonLabel.name = @"actionLabel";
+        _actionModeButtonLabel.text = @"Actions";
+        _actionModeButtonLabel.verticalAlignmentMode = 1;
+        [self addChild:_actionModeButtonLabel];
+        
 //READ! Do we want this? Animation!!!
         _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         _target.position = (CGPointMake(self.frame.size.width/2-50, self.frame.size.height/2-82));
@@ -144,12 +159,17 @@ NSString *gameName;
     else if ([node.name isEqualToString:@"randomLabel"] ||
              [node.name isEqualToString:@"randomButton"])
     {
-        _randomModeButton.color = [SKColor yellowColor];
+        _actionModeButton.color = [SKColor yellowColor];
     }
     else if ([node.name isEqualToString:@"customModeLabel"] ||
              [node.name isEqualToString:@"customModeButton"])
     {
         _customModeButton.color = [SKColor yellowColor];
+    }
+    else if ([node.name isEqualToString:@"actionModeLabel"] ||
+             [node.name isEqualToString:@"actionModeButton"])
+    {
+        _actionModeButton.color = [SKColor yellowColor];
     }
 
 }
@@ -188,6 +208,16 @@ NSString *gameName;
         // Present the scene.
         [self.view presentScene:targetPractice];
     }
+    else if ([node.name isEqualToString:@"actionLabel"] ||
+             [node.name isEqualToString:@"actionButton"])
+    {
+        // Create and configure the random "target practice" scene.
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:4];
+        targetPractice.scaleMode = SKSceneScaleModeAspectFill;
+        // Present the scene.
+        [self.view presentScene:targetPractice];
+    }
+
     else if ([node.name isEqualToString:@"customModeLabel"] || [node.name isEqualToString:@"customModeButton"])
     {
         if(nil == gameName)
@@ -207,7 +237,7 @@ NSString *gameName;
     {
         _backButton.color = [SKColor redColor];
         _centerModeButton.color = [SKColor redColor];
-        _randomModeButton.color = [SKColor redColor];
+        _actionModeButton.color = [SKColor redColor];
         _customModeLabel.color = [SKColor redColor];
     }
 

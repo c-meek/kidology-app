@@ -19,6 +19,7 @@ NSMutableArray *touchLog;
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode
 {
     if (self = [super initWithSize:size]) {
+        _numOfRotations = 0;
         [self addBackground];
 //        NSLog(@"Size: %@", NSStringFromCGSize(size));
         if (game_mode == 1) {
@@ -26,6 +27,10 @@ NSMutableArray *touchLog;
         }
         if (game_mode == 2) {
             _gameMode = RANDOM;
+        }
+        if (game_mode == 4)
+        {
+            _gameMode = OTHER_ACTION;
         }
        // NSLog(@"Game_mode: %d", game_mode);
 
@@ -57,7 +62,7 @@ NSMutableArray *touchLog;
 
 -(void)displayTarget
 {
-    if (_gameMode == CENTER)
+    if (_gameMode == CENTER || _gameMode == OTHER_ACTION)
     {
         //set target to middle of screen
         self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
@@ -197,28 +202,62 @@ NSMutableArray *touchLog;
     
 }
 -(void) handleRotation: (UIRotationGestureRecognizer *) recognizer  {
-    
-    CGFloat rotation = recognizer.rotation;
-    SKAction * spinaction = [SKAction rotateByAngle:-rotation/60 duration:1/60];
-    [_target runAction:[SKAction sequence:@[spinaction]]];
 
-//    CGPoint locale = [recognizer locationInView:self.view];
-//    NSLog(@"CENTER: \nXCoord = %f ------ YCoord = %f \n", locale.x, locale.y);
-    NSUInteger num_of_touches = [recognizer numberOfTouches];
-    int x =0;
-//    How do I get touch IDs?
-//    How do I get touch IDs?
-//    How do I get touch IDs?
-    while (x <= num_of_touches)
-    {
-//        CGPoint temp_loc = [recognizer locationOfTouch:_________ inView:self.view];
-//        NSLog(@"Point %d: \nXCoord = %f ------ YCoord = %f \n", x, temp_loc.x, temp_loc.y);
-        x++;
-    }
-    if ( recognizer.state == UIGestureRecognizerStateEnded ) {
-        NSLog(@"rotation has actually ended");
-    }
+//  currentTouch = [[LogEntry alloc] initWithType:@"Target" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
     
+    _numOfRotations ++;
+    LogEntry *currentTouch;
+    
+    bool allTouchedTarget =true;
+    if (true)  // chane this when proper testing can occure!
+    {
+        if (_gameMode == OTHER_ACTION)
+        {
+//            CGPoint locale = [recognizer locationInView:self.view];
+//            NSLog(@"CENTER: \nXCoord = %f ------ YCoord = %f \n", locale.x, locale.y);
+
+            NSUInteger num_of_touches = [recognizer numberOfTouches];
+            
+            int x = 0;
+            while (x < num_of_touches)
+            {
+                bool isTargetTouched = false;
+                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:x inView:self.view]];
+                
+                if (isTargetTouched)
+                {
+                    
+                    NSString *touch_type = [NSString stringWithFormat:@"Rotation%d Touch%d - On Target", _numOfRotations, x+1];
+                    currentTouch = [[LogEntry alloc] initWithType:touch_type time:self.time touchLocation:[recognizer locationOfTouch:x inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                
+                    CGPoint temp_loc = [recognizer locationOfTouch:x inView:self.view];
+//                    NSLog(@"Point %d: \nXCoord = %f ------ YCoord = %f \n", x, temp_loc.x, temp_loc.y);
+                    x++;
+                }
+                else
+                {
+                    NSString *touch_type = [NSString stringWithFormat:@"Rotation%d Touch%d - Off Target", _numOfRotations, x+1];
+                    currentTouch = [[LogEntry alloc] initWithType:touch_type time:self.time touchLocation:[recognizer locationOfTouch:x inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    
+                    CGPoint temp_loc = [recognizer locationOfTouch:x inView:self.view];
+//                    NSLog(@"Point %d: \nXCoord = %f ------ YCoord = %f \n", x, temp_loc.x, temp_loc.y);
+                    x++;
+                    allTouchedTarget = false;
+                }
+            }
+            
+            if (allTouchedTarget) {
+                CGFloat rotation = recognizer.rotation;
+                SKAction * spinaction = [SKAction rotateByAngle:-rotation/60 duration:1/60];
+                [_target runAction:[SKAction sequence:@[spinaction]]];
+
+            }
+
+            if ( recognizer.state == UIGestureRecognizerStateEnded ) {
+                NSLog(@"rotation has actually ended");
+            }
+        }
+    }
 }
 
 -(void) handleSwipeRight:( UISwipeGestureRecognizer *) recognizer {
@@ -226,7 +265,7 @@ NSMutableArray *touchLog;
     if ( recognizer.numberOfTouches == 2) {
         // do something if the swipe right had exactly 2 fingers involved
         //      SKAction moveTo:realDest duration:realMoveDuration
-        //        CGPoint location = [recognizer locationOfTouch:<#(NSUInteger)#> inView:<#(UIView *)#>];
+        //        CGPoint location = [recognizer locationOfTouch: inView:];
     }
     else
     {
@@ -288,7 +327,20 @@ NSMutableArray *touchLog;
     
 }
 
-
+-(bool)isTargetTouched:(CGPoint)touchLocation
+{
+    bool isInLocation = false;
+    double xDifference = touchLocation.x - self.target.position.x;
+    double yDifference = touchLocation.y - self.target.position.y;
+    double radius = self.target.size.width / 2;
+    double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
+    double rightHandSide = pow(radius, 2);
+    
+    if (leftHandSide <= rightHandSide) {
+        isInLocation = true;
+    }
+    return isInLocation;
+}
 
 
 -(void)targetTouch:(CGPoint)touchLocation
