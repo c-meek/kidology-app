@@ -11,11 +11,12 @@
 #import "MainMenuScene.h"
 #import "math.h"
 #import "LogEntry.h"
+#import "SetupViewController.h"
 
 @implementation TargetPracticeScene
 
 NSMutableArray *touchLog;
-
+extern NSUserDefaults *defaults;
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode
 {
     if (self = [super initWithSize:size]) {
@@ -427,7 +428,9 @@ NSMutableArray *touchLog;
 
 -(void)initializeAnchor
 {
-    NSString *hand = @"left";
+    //get handedness from the user defaults
+    defaults = [NSUserDefaults standardUserDefaults];
+    NSString *affectedHand = [defaults objectForKey:@"affectedHand"];
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;
@@ -440,14 +443,14 @@ NSMutableArray *touchLog;
     _anchor.xScale = .3;
     _anchor.yScale = .3;
     
-    if([hand isEqualToString:@"left"]) //if left hand
+    if([affectedHand isEqualToString:@"right"]) //if right hand affected
     {
         _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
         
         _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
         
     }
-    else    //if right hand (not left hand)
+    else    //if right hand not affected
     {
         _pressedAnchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
         
