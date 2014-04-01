@@ -196,64 +196,64 @@ NSMutableArray *touchLog;
     [view addGestureRecognizer: swipeDownGesture ];
 
 //And the rotation gesture will detect a two finger rotation
-    
+
     rotationGR = [[ UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(handleRotation:)];
-    [view addGestureRecognizer:rotationGR ];
+    [self.view addGestureRecognizer:rotationGR ];
     
 }
 -(void) handleRotation: (UIRotationGestureRecognizer *) recognizer  {
-
-//  currentTouch = [[LogEntry alloc] initWithType:@"Target" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
     
-    _numOfRotations ++;
     LogEntry *currentTouch;
     
     bool allTouchedTarget =true;
-    if (true)  // chane this when proper testing can occure!
+    if (true) //_anchor == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == OTHER_ACTION)
         {
-//            CGPoint locale = [recognizer locationInView:self.view];
-//            NSLog(@"CENTER: \nXCoord = %f ------ YCoord = %f \n", locale.x, locale.y);
-
             NSUInteger num_of_touches = [recognizer numberOfTouches];
             
             int x = 0;
             while (x < num_of_touches)
             {
                 bool isTargetTouched = false;
-                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:x inView:self.view]];
+                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:x inView:nil]];
                 
                 if (isTargetTouched)
                 {
                     
                     NSString *touch_type = [NSString stringWithFormat:@"Rotation%d Touch%d - On Target", _numOfRotations, x+1];
-                    currentTouch = [[LogEntry alloc] initWithType:touch_type time:self.time touchLocation:[recognizer locationOfTouch:x inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    currentTouch = [[LogEntry alloc] initWithType:touch_type time:self.time touchLocation:[recognizer locationOfTouch:x inView:nil] targetLocation:self.target.position targetRadius:_target.size.width/2];
                 
-                    CGPoint temp_loc = [recognizer locationOfTouch:x inView:self.view];
+//                    CGPoint temp_loc = [recognizer locationOfTouch:x inView:self.view];
 //                    NSLog(@"Point %d: \nXCoord = %f ------ YCoord = %f \n", x, temp_loc.x, temp_loc.y);
                     x++;
+                    [touchLog addObject:currentTouch];
                 }
                 else
                 {
                     NSString *touch_type = [NSString stringWithFormat:@"Rotation%d Touch%d - Off Target", _numOfRotations, x+1];
-                    currentTouch = [[LogEntry alloc] initWithType:touch_type time:self.time touchLocation:[recognizer locationOfTouch:x inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    currentTouch = [[LogEntry alloc] initWithType:touch_type time:self.time touchLocation:[recognizer locationOfTouch:x inView:nil] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     
-                    CGPoint temp_loc = [recognizer locationOfTouch:x inView:self.view];
+//                    CGPoint temp_loc = [recognizer locationOfTouch:x inView:self.view];
 //                    NSLog(@"Point %d: \nXCoord = %f ------ YCoord = %f \n", x, temp_loc.x, temp_loc.y);
                     x++;
                     allTouchedTarget = false;
+                    [touchLog addObject:currentTouch];
                 }
             }
             
-            if (allTouchedTarget) {
+            if (allTouchedTarget)
+            {
                 CGFloat rotation = recognizer.rotation;
                 SKAction * spinaction = [SKAction rotateByAngle:-rotation/60 duration:1/60];
                 [_target runAction:[SKAction sequence:@[spinaction]]];
 
             }
 
-            if ( recognizer.state == UIGestureRecognizerStateEnded ) {
+            if ( recognizer.state == UIGestureRecognizerStateEnded )
+            {
+                _numOfRotations ++;
+                allTouchedTarget = true;
                 NSLog(@"rotation has actually ended");
             }
         }
@@ -261,68 +261,138 @@ NSMutableArray *touchLog;
 }
 
 -(void) handleSwipeRight:( UISwipeGestureRecognizer *) recognizer {
+
+    LogEntry *currentTouch;
     
-    if ( recognizer.numberOfTouches == 2) {
-        // do something if the swipe right had exactly 2 fingers involved
-        //      SKAction moveTo:realDest duration:realMoveDuration
-        //        CGPoint location = [recognizer locationOfTouch: inView:];
-    }
-    else
+    if (true) //_anchor == TOUCHING)  // change this when proper testing can occure!
     {
-        // do something else
-        
-        SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x + 200, _target.position.y) duration:1];
-        [_target runAction:[SKAction sequence:@[moveaction]]];
+        if (_gameMode == OTHER_ACTION)
+        {
+            if ( recognizer.numberOfTouches == 2)
+            {  /* do nothing for now*/ }
+            else
+            {
+                bool isTargetTouched = false;
+                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:0 inView:self.view]];
+                    
+                if (isTargetTouched)
+                {
+                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Right On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    [touchLog addObject:currentTouch];
+                }
+                else
+                {
+                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Right Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    [touchLog addObject:currentTouch];
+
+                }
+                SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x + 200, _target.position.y) duration:1];
+                [_target runAction:[SKAction sequence:@[moveaction]]];
+            }
+        }
     }
     
 }
 
 -(void) handleSwipeLeft:( UISwipeGestureRecognizer *) recognizer {
     
-    if ( recognizer.numberOfTouches == 2) {
-        // do something if the swipe right had exactly 2 fingers involved
-        //      SKAction moveTo:realDest duration:realMoveDuration
-        //        CGPoint location = [recognizer locationOfTouch:<#(NSUInteger)#> inView:<#(UIView *)#>];
-    }
-    else
+    LogEntry *currentTouch;
+    
+    if (true) //_anchor == TOUCHING)  // change this when proper testing can occure!
     {
-        // do something else
-        
-        SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x - 200, _target.position.y) duration:1];
-        [_target runAction:[SKAction sequence:@[moveaction]]];
+        if (_gameMode == OTHER_ACTION)
+        {
+            if ( recognizer.numberOfTouches == 2)
+            {  /* do nothing for now*/ }
+            else
+            {
+                bool isTargetTouched = false;
+                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:0 inView:self.view]];
+                
+                if (isTargetTouched)
+                {
+                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Left On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    [touchLog addObject:currentTouch];
+                }
+                else
+                {
+                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Left Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    [touchLog addObject:currentTouch];
+                    
+                }
+                SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x - 200, _target.position.y) duration:1];
+                [_target runAction:[SKAction sequence:@[moveaction]]];
+            }
+        }
     }
     
 }
 
+
 -(void) handleSwipeUp:( UISwipeGestureRecognizer *) recognizer {
     
-    if ( recognizer.numberOfTouches == 2) {
-        // do something if the swipe right had exactly 2 fingers involved
-        //      SKAction moveTo:realDest duration:realMoveDuration
-        //        CGPoint location = [recognizer locationOfTouch:<#(NSUInteger)#> inView:<#(UIView *)#>];
-    }
-    else
+    LogEntry *currentTouch;
+    
+    if (true) //_anchor == TOUCHING)  // change this when proper testing can occure!
     {
-        // do something else
-        
-        SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x, _target.position.y+200) duration:1];
-        [_target runAction:[SKAction sequence:@[moveaction]]];
+        if (_gameMode == OTHER_ACTION)
+        {
+            if ( recognizer.numberOfTouches == 2)
+            {  /* do nothing for now*/ }
+            else
+            {
+                bool isTargetTouched = false;
+                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:0 inView:self.view]];
+                
+                if (isTargetTouched)
+                {
+                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Up On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    [touchLog addObject:currentTouch];
+                }
+                else
+                {
+                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Up Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    [touchLog addObject:currentTouch];
+                    
+                }
+                SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x , _target.position.y +200) duration:1];
+                [_target runAction:[SKAction sequence:@[moveaction]]];
+            }
+        }
     }
     
 }
+
 -(void) handleSwipeDown:( UISwipeGestureRecognizer *) recognizer {
     
-    if ( recognizer.numberOfTouches == 2) {
-        // do something if the swipe right had exactly 2 fingers involved
-        //      SKAction moveTo:realDest duration:realMoveDuration
-        //        CGPoint location = [recognizer locationOfTouch:<#(NSUInteger)#> inView:<#(UIView *)#>];
-    }
-    else
+    LogEntry *currentTouch;
+    
+    if (true) //_anchor == TOUCHING)  // change this when proper testing can occure!
     {
-        // do something else
-        
-        SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x, _target.position.y-200) duration:1];
-        [_target runAction:[SKAction sequence:@[moveaction]]];
+        if (_gameMode == OTHER_ACTION)
+        {
+            if ( recognizer.numberOfTouches == 2)
+            {  /* do nothing for now*/ }
+            else
+            {
+                bool isTargetTouched = false;
+                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:0 inView:self.view]];
+                
+                if (isTargetTouched)
+                {
+                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Down On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    [touchLog addObject:currentTouch];
+                }
+                else
+                {
+                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Down Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    [touchLog addObject:currentTouch];
+                    
+                }
+                SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x, _target.position.y-200) duration:1];
+                [_target runAction:[SKAction sequence:@[moveaction]]];
+            }
+        }
     }
     
 }
@@ -390,6 +460,10 @@ NSMutableArray *touchLog;
                 else if (_gameMode == RANDOM)
                 {
                     mode = @"random";
+                }
+                else if (_gameMode == OTHER_ACTION)
+                {
+                    mode = @"action";
                 }
                 [gameOverScene.userData setObject:mode forKey:@"gameMode"];
                 [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
