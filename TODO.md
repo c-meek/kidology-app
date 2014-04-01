@@ -1,7 +1,7 @@
 #5 week left meeting
 * settings page (affected hand, e-mail, etc.)
 * dashboard
-* custom target
+* ~~custom target~~
 * writing stats to text file -> dumping into email
 
 kidology-app
@@ -31,4 +31,4 @@ xN yN scaleN
 * ~~put values into object (2d array?, map?)~~
 * ~~have number of targets touched correspond to the object~~
 * ~~I don't think having the targets timed as important, so default to 3 seconds (=target game) We will take a value for this instead, where all targets appear after the custom time~~
-* allow for player to select different custom games
+* ~~allow for player to select different custom games~~

@@ -69,8 +69,14 @@
         NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
                                                               dateStyle:NSDateFormatterShortStyle
                                                               timeStyle:NSDateFormatterFullStyle];
-        NSString *dummyString = @"something";
-        NSString *fileName = [NSString stringWithFormat:@"%@/%@.csv", documentsDirectory, dummyString];
+        // take out spaces
+        dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
+        // replace colons with hyphens
+        dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@"-"];
+        // replace slashes with hyphens
+        dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+        NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
+        NSString *fileName = [NSString stringWithFormat:@"%@/%@-%@.csv", documentsDirectory, dateString, gameModeString];
         NSLog(@"%@", fileName);
         NSLog(@"%@", output);
         [[NSFileManager defaultManager] createFileAtPath:fileName contents:nil attributes:nil];

@@ -14,25 +14,13 @@ typedef enum {
     OTHER_ACTION
 } Mode;
 
-//typedef enum {
-//    WHITESPACE,
-//    UNANCHORED_TARGET,
-//    PANEL,
-//    TARGET
-//} TouchType;
 
 typedef enum {
     TOUCHING,
     NOT_TOUCHING
 } AnchorStatus;
 
-//typedef struct {
-//    TouchType type;
-//    float time;
-//    CGPoint touchLocation;
-//    CGPoint targetLocation;
-//    float targetRadius;
-//} LogEntry;
+
 
 @interface TargetPracticeScene : SKScene <UIGestureRecognizerDelegate>
     {
