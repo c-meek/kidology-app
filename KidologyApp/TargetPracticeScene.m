@@ -330,8 +330,17 @@ extern NSUserDefaults *defaults;
             {
                 SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
                 SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targets:self.totalTargets];
-                // TODO: add the passing of the array like this:
-                NSLog(@"log before passing:%@", touchLog);
+                // pass the game type and touch log to "game over" scene
+                NSString *mode;
+                if (_gameMode == CENTER)
+                {
+                    mode = @"center";
+                }
+                else if (_gameMode == RANDOM)
+                {
+                    mode = @"random";
+                }
+                [gameOverScene.userData setObject:mode forKey:@"gameMode"];
                 [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
                 [self.view presentScene:gameOverScene transition: reveal];
             }
