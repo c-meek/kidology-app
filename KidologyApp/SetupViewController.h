@@ -9,5 +9,6 @@
 #import "ViewController.h"
 
 @interface SetupViewController : ViewController
-
+@property NSString *affectedHand;
+@property NSString *therapistEmail;
 @end
