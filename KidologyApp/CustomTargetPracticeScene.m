@@ -66,12 +66,7 @@ NSMutableArray *touchLog;
     }
     _commandArray = [fileContents componentsSeparatedByString:@"\n"];
 
-    //printing out contents of array
-//    NSLog(@"item = %d", [_commandArray count]);
-//    for(int i = 0; i < [_commandArray count]; i++)
-//    {
-//        NSLog(@"%@\n", _commandArray[i]);
-//    }
+
 }
 
 -(void)addBackground
@@ -91,7 +86,6 @@ NSMutableArray *touchLog;
     if ([node.name isEqualToString:@"pressedAnchor"] || [node.name isEqualToString:@"anchor"])
     {
         LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Panel" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:(self.target.size.width/2)];
-        //LogEntry currentTouch = {PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
         [touchLog addObject:currentTouch];
         //        NSLog(@"anchor panel is being touched.");
         result = true;
@@ -153,10 +147,6 @@ NSMutableArray *touchLog;
     
     if(leftHandSide <= rightHandSide) // If the touch is on the target
     {
-        //currentTouch.time = self.time;
-        //currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
-        //currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
-        //currentTouch.targetRadius = radius;
         if (_anchored == TOUCHING) // the anchor is currently being touched
         {
             currentTouch = [[LogEntry alloc] initWithType:@"Target" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
@@ -177,7 +167,9 @@ NSMutableArray *touchLog;
             {
                 SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
                 SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targets:self.totalTargets];
-                // TODO: add the passing of the array like this:
+                // pass the game type and touch log to the "game over" scene
+                NSString *mode = @"custom";
+                [gameOverScene.userData setObject:mode forKey:@"gameMode"];
                 [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
                 [self.view presentScene:gameOverScene transition: reveal];
             }
@@ -200,14 +192,9 @@ NSMutableArray *touchLog;
     else
     {
         currentTouch = [[LogEntry alloc] initWithType:@"Whitespace" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:(self.target.size.width / 2)];
-//        currentTouch.type = WHITESPACE;
-//        currentTouch.time = self.time;
-//        currentTouch.touchLocation = CGPointMake(touchLocation.x, touchLocation.y);
-//        currentTouch.targetLocation = CGPointMake(self.target.position.x, self.target.position.y);
-//        currentTouch.targetRadius = self.target.size.width / 2;
         [touchLog addObject:currentTouch];
     }
-    //    NSLog(@"Correct touches: %d | Total touches: %d", _correctTouches, _totalTouches);
+
     
 }
 
@@ -216,7 +203,6 @@ NSMutableArray *touchLog;
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     [self updateWithTimeSinceLastUpdate:timeSinceLast];
-    //    NSLog(@"%@", touchLog);
     
 }
 
