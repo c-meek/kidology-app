@@ -26,6 +26,8 @@
 		0FE5600918E4835600DFB172 /* GameTableListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE5600818E4835600DFB172 /* GameTableListViewController.m */; };
 		0FE5600B18E4886B00DFB172 /* custom1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0FE5600A18E4886B00DFB172 /* custom1.txt */; };
 		0FE5600D18E48BBB00DFB172 /* customtargets.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0FE5600C18E48BBB00DFB172 /* customtargets.txt */; };
+		7C5523F218EDB7D30042DEAB /* rotate_green_target.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F118EDB7D30042DEAB /* rotate_green_target.png */; };
+		7C5523F418EDB7DF0042DEAB /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F318EDB7DF0042DEAB /* arrow.png */; };
 		7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */; };
 		7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */; };
 		7CB23C4018C0020D007F409F /* Black.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C3218C0020D007F409F /* Black.png */; };
@@ -110,6 +112,8 @@
 		0FE5600818E4835600DFB172 /* GameTableListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameTableListViewController.m; sourceTree = "<group>"; };
 		0FE5600A18E4886B00DFB172 /* custom1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = custom1.txt; sourceTree = "<group>"; };
 		0FE5600C18E48BBB00DFB172 /* customtargets.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = customtargets.txt; sourceTree = "<group>"; };
+		7C5523F118EDB7D30042DEAB /* rotate_green_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate_green_target.png; sourceTree = "<group>"; };
+		7C5523F318EDB7DF0042DEAB /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Huge_Checkered_Background_[4096x3072].png"; sourceTree = "<group>"; };
 		7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyTargetPracticeScene.h; sourceTree = "<group>"; };
 		7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyTargetPracticeScene.m; sourceTree = "<group>"; };
@@ -255,6 +259,8 @@
 		7CB23C4F18C00284007F409F /* TargetGame */ = {
 			isa = PBXGroup;
 			children = (
+				7C5523F118EDB7D30042DEAB /* rotate_green_target.png */,
+				7C5523F318EDB7DF0042DEAB /* arrow.png */,
 				0F9462C818BFFFC500E9E3BD /* targetPracticeBackground.png */,
 				B96CAAE118A81D6B00D5C20C /* green_target.png */,
 				0F7D547A18AD4EBA00F9593D /* purple_target.png */,
@@ -472,6 +478,7 @@
 				0FE5600D18E48BBB00DFB172 /* customtargets.txt in Resources */,
 				7CB23C4618C0020D007F409F /* Lime.png in Resources */,
 				B9D70C8618C62ED8000C12F1 /* targetPracticeBackground.png in Resources */,
+				7C5523F218EDB7D30042DEAB /* rotate_green_target.png in Resources */,
 				7CB23C4818C0020D007F409F /* Orange.png in Resources */,
 				7CB23C4118C0020D007F409F /* Blue.png in Resources */,
 				0F423CAB18AD5D2200EE5F4E /* dog.png in Resources */,
@@ -503,6 +510,7 @@
 				0F423CAF18AD61EC00EE5F4E /* tennis.png in Resources */,
 				7CB23C4418C0020D007F409F /* Gray.png in Resources */,
 				7CB23C4C18C0020D007F409F /* White.png in Resources */,
+				7C5523F418EDB7DF0042DEAB /* arrow.png in Resources */,
 				0F9462D518C0296A00E9E3BD /* anchor_green_right.png in Resources */,
 				B96CAAB118A7ED7700D5C20C /* Main.storyboard in Resources */,
 				7CB23C4518C0020D007F409F /* Green.png in Resources */,

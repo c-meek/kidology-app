@@ -104,6 +104,8 @@ extern NSUserDefaults *defaults;
         self.target.position = CGPointMake(x_pos, y_pos);
     }
     
+    
+    
   //  NSLog(@"x is %f", self.target.position.x);
   //  NSLog(@"y is %f", self.target.position.y);
    // NSLog(@"scale is %f", self.target.xScale);

@@ -20,6 +20,12 @@ typedef enum {
     NOT_TOUCHING
 } AnchorStatus;
 
+typedef enum {
+    SWIPE,
+    ROTATE,
+    ZOOM,
+    DRAG //Not implemented yet
+} ActionType;
 
 
 @interface TargetPracticeScene : SKScene <UIGestureRecognizerDelegate>
@@ -46,6 +52,7 @@ typedef enum {
     @property (nonatomic) SKSpriteNode *anchor;
     @property (nonatomic) SKSpriteNode *pressedAnchor;
     @property (nonatomic) int numOfRotations;
+@property (nonatomic) ActionType currentAction;
 
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode;
 @end
