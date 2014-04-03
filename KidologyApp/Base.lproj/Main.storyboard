@@ -51,7 +51,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <segue destination="Awo-7N-XL4" kind="unwind" unwindAction="unwindToHideSettingsModal:" id="Mb9-nH-4ft"/>
+                                                <segue destination="Awo-7N-XL4" kind="unwind" unwindAction="unwindToHideSettingsModal:" id="7g2-9j-Fvw"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
@@ -99,7 +99,7 @@
                     </navigationBar>
                     <connections>
                         <segue destination="LVB-YS-i5n" kind="relationship" relationship="rootViewController" id="OfR-Io-LV1"/>
-                        <segue destination="xgT-3d-b1i" kind="modal" identifier="toGameList" id="Bct-tD-tHA"/>
+                        <segue destination="xgT-3d-b1i" kind="modal" identifier="toGameList" id="O2f-kb-aDe"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q1C-vb-tfw" userLabel="First Responder" sceneMemberID="firstResponder"/>

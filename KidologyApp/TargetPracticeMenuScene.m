@@ -220,7 +220,6 @@ NSString *gameName;
 
     else if ([node.name isEqualToString:@"customModeLabel"] || [node.name isEqualToString:@"customModeButton"])
     {
-        gameName = @"4corners.txt";
         if(nil == gameName)
         {
             UIViewController *vc = self.view.window.rootViewController;
@@ -250,6 +249,10 @@ NSString *gameName;
     bgImage.xScale = .4;
     bgImage.yScale = .4;
     [self addChild:bgImage];
+}
+- (IBAction)backToViewControllerOne:(UIStoryboardSegue *)segue
+{
+    NSLog(@"from segue id: %@", segue.identifier);
 }
 
 @end
