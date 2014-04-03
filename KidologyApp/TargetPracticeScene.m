@@ -104,7 +104,61 @@ extern NSUserDefaults *defaults;
         self.target.position = CGPointMake(x_pos, y_pos);
     }
     
-    
+    if (_gameMode == OTHER_ACTION)
+    {
+        int x = (rand() % 2); // REMEMBER TO CHANGE THIS TO 3 WHEN ZOOM IS COMPLETE
+        if (x == 0)
+        {
+            _currentAction = SWIPE;
+            int direction = (rand() % 4);
+            if ( direction == 0)
+            {
+                _actionDirection = UP;
+            }
+            else if ( direction == 1)
+            {
+                _actionDirection = DOWN;
+            }
+            else if (direction == 2)
+            {
+                _actionDirection = LEFT;
+            }
+            else if (direction == 3)
+            {
+                _actionDirection = RIGHT;
+            }
+        }
+        else if ( x == 1)
+        {
+            _currentAction = ROTATE;
+            //And the rotation gesture will detect a two finger rotation
+            
+            [self.view addGestureRecognizer:rotationGR ];
+            int direction = (rand() % 2);
+            if (direction == 0)
+            {
+                _actionDirection = CLOCKWISE;
+            }
+            else if (direction == 1)
+            {
+                _actionDirection = COUNTER_CLOCKWISE;
+            }
+        }
+        else if ( x == 2)
+        {
+            _currentAction = ZOOM;
+            int direction = (rand() % 2);
+            if (direction == 0)
+            {
+                _actionDirection = IN;
+            }
+            else if (direction == 1)
+            {
+                _actionDirection = OUT;
+            }
+
+        }
+    }
     
   //  NSLog(@"x is %f", self.target.position.x);
   //  NSLog(@"y is %f", self.target.position.y);
@@ -201,7 +255,6 @@ extern NSUserDefaults *defaults;
 //And the rotation gesture will detect a two finger rotation
 
     rotationGR = [[ UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(handleRotation:)];
-    [self.view addGestureRecognizer:rotationGR ];
     
 }
 -(void) handleRotation: (UIRotationGestureRecognizer *) recognizer  {
@@ -261,6 +314,7 @@ extern NSUserDefaults *defaults;
             }
         }
     }
+    [self.view removeGestureRecognizer:rotationGR ];
 }
 
 -(void) handleSwipeRight:( UISwipeGestureRecognizer *) recognizer {
