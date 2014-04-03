@@ -65,6 +65,9 @@ typedef enum {
     @property (nonatomic) int numOfRotations;
     @property (nonatomic) ActionType currentAction;
     @property (nonatomic) Direction actionDirection;
+    @property (nonatomic) SKSpriteNode *rotateTarget;
+    @property (nonatomic) SKSpriteNode *arrow;
+    @property (nonatomic) SKAction * actionMoveDone;
 
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode;
 @end

@@ -19,7 +19,9 @@ NSMutableArray *touchLog;
 extern NSUserDefaults *defaults;
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode
 {
-    if (self = [super initWithSize:size]) {
+    if (self = [super initWithSize:size])
+    {
+//------Some Initializing Stuff------------------
         _numOfRotations = 0;
         [self addBackground];
 //        NSLog(@"Size: %@", NSStringFromCGSize(size));
@@ -33,7 +35,6 @@ extern NSUserDefaults *defaults;
         {
             _gameMode = OTHER_ACTION;
         }
-       // NSLog(@"Game_mode: %d", game_mode);
 
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         /* Setup your scene here */
@@ -51,12 +52,37 @@ extern NSUserDefaults *defaults;
         self.correctTouches = 0;
         // initialize the anchor to "not being touched" state
         self.anchored = NOT_TOUCHING;
-        //set properties of target
-        [self displayTarget];
+        
         //add target to screen
         [self addChild:self.target];
         
+        _actionMoveDone =[SKAction removeFromParent];
+        //swipe right gesture…
+        swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeRight:)];
+        [swipeRightGesture setDirection: UISwipeGestureRecognizerDirectionRight];
+        
+        //swipe left gesture…
+        swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeLeft:)];
+        [swipeLeftGesture setDirection: UISwipeGestureRecognizerDirectionLeft];
+        
+        
+        //swipe up gesture…
+        swipeUpGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeUp:)];
+        [swipeUpGesture setDirection: UISwipeGestureRecognizerDirectionUp];
+        
+        
+        //swipe down gesture…
+        swipeDownGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeDown:)];
+        [swipeDownGesture setDirection: UISwipeGestureRecognizerDirectionDown];
+        
+        
+        //And the rotation gesture will detect a two finger rotation
+        rotationGR = [[ UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(handleRotation:)];
+        
         self.time = 0;
+        
+        //set properties of target
+        [self displayTarget];
     }
     return self;
 }
@@ -108,31 +134,32 @@ extern NSUserDefaults *defaults;
     if (_gameMode == OTHER_ACTION)
     {
         int x = (rand() % 2); // REMEMBER TO CHANGE THIS TO 3 WHEN ZOOM IS COMPLETE
-        if (x == 0)
+        NSLog(@"x = %d\n",x);
+        if (x == 1)
         {
-            SKSpriteNode *arrow;
+
             SKAction *rotate90 = [SKAction rotateByAngle:-3.14/2 duration:0];
             SKAction *negRotate90 = [SKAction rotateByAngle:3.14/2 duration:0];
-            arrow = [SKSpriteNode spriteNodeWithImageNamed:@"arrow"];
-            arrow.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+            _arrow = [SKSpriteNode spriteNodeWithImageNamed:@"arrow"];
+            _arrow.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
             _currentAction = SWIPE;
             int direction = (rand() % 4);
             if ( direction == 0)
             {
-                [arrow runAction:negRotate90];
+                [_arrow runAction:negRotate90];
                 [self.view addGestureRecognizer: swipeUpGesture ];
                 _actionDirection = UP;
             }
             else if ( direction == 1)
             {
-                [arrow runAction:rotate90];
+                [_arrow runAction:rotate90];
                 [self.view addGestureRecognizer: swipeDownGesture ];
                 _actionDirection = DOWN;
             }
             else if (direction == 2)
             {
-                [arrow runAction:negRotate90];
-                [arrow runAction:negRotate90];
+                [_arrow runAction:negRotate90];
+                [_arrow runAction:negRotate90];
                 [self.view addGestureRecognizer: swipeLeftGesture ];
                 _actionDirection = LEFT;
             }
@@ -142,15 +169,19 @@ extern NSUserDefaults *defaults;
                 _actionDirection = RIGHT;
             }
             
-            [self addChild:arrow];
+            [self addChild:_arrow];
         }
-        else if ( x == 1)
+        else if ( x == 0)
         {
-            SKSpriteNode *rotateTarget;
-            rotateTarget = [SKSpriteNode spriteNodeWithImageNamed:@"rotate_green_target"];
-            rotateTarget.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-            rotateTarget.xScale = .67;
-            rotateTarget.yScale = .67;
+//            SKAction * moveaction = [SKAction moveTo:CGPointMake(-100, -100) duration:0];
+//            [_target runAction: moveaction];
+            
+            
+            [self.view addGestureRecognizer:rotationGR];
+            _rotateTarget = [SKSpriteNode spriteNodeWithImageNamed:@"rotate_green_target"];
+            _rotateTarget.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+            _rotateTarget.xScale = .67;
+            _rotateTarget.yScale = .67;
             _currentAction = ROTATE;
             int direction = (rand() % 2);
             if (direction == 0)
@@ -161,9 +192,7 @@ extern NSUserDefaults *defaults;
             {
                 _actionDirection = COUNTER_CLOCKWISE;
             }
-            [self addChild:rotateTarget];
-            
-            [self.view addGestureRecognizer:rotationGR ];
+            [self addChild:_rotateTarget];
         }
         else if ( x == 2)
         {
@@ -243,39 +272,6 @@ extern NSUserDefaults *defaults;
     }
 }
 
--(void) didMoveToView: (SKView *) view  {
-    
-//swipe right gesture…
-    
-    swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeRight:)];
-    [swipeRightGesture setDirection: UISwipeGestureRecognizerDirectionRight];
-    
-//swipe left gesture…
-    
-    swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeLeft:)];
-    [swipeLeftGesture setDirection: UISwipeGestureRecognizerDirectionLeft];
-    
-
-//swipe up gesture…
-    
-    swipeUpGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeUp:)];
-    [swipeUpGesture setDirection: UISwipeGestureRecognizerDirectionUp];
-    
-    
-
-//swipe down gesture…
-    
-    swipeDownGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeDown:)];
-    [swipeDownGesture setDirection: UISwipeGestureRecognizerDirectionDown];
-    
-
-//And the rotation gesture will detect a two finger rotation
-
-    rotationGR = [[ UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(handleRotation:)];
-    
-    
-    
-}
 -(void) handleRotation: (UIRotationGestureRecognizer *) recognizer  {
     
     LogEntry *currentTouch;
@@ -298,9 +294,6 @@ extern NSUserDefaults *defaults;
                     
                     NSString *touch_type = [NSString stringWithFormat:@"Rotation%d Touch%d - On Target", _numOfRotations, x+1];
                     currentTouch = [[LogEntry alloc] initWithType:touch_type time:self.time touchLocation:[recognizer locationOfTouch:x inView:nil] targetLocation:self.target.position targetRadius:_target.size.width/2];
-                
-//                    CGPoint temp_loc = [recognizer locationOfTouch:x inView:self.view];
-//                    NSLog(@"Point %d: \nXCoord = %f ------ YCoord = %f \n", x, temp_loc.x, temp_loc.y);
                     x++;
                     [touchLog addObject:currentTouch];
                 }
@@ -308,9 +301,6 @@ extern NSUserDefaults *defaults;
                 {
                     NSString *touch_type = [NSString stringWithFormat:@"Rotation%d Touch%d - Off Target", _numOfRotations, x+1];
                     currentTouch = [[LogEntry alloc] initWithType:touch_type time:self.time touchLocation:[recognizer locationOfTouch:x inView:nil] targetLocation:self.target.position targetRadius:_target.size.width/2];
-                    
-//                    CGPoint temp_loc = [recognizer locationOfTouch:x inView:self.view];
-//                    NSLog(@"Point %d: \nXCoord = %f ------ YCoord = %f \n", x, temp_loc.x, temp_loc.y);
                     x++;
                     allTouchedTarget = false;
                     [touchLog addObject:currentTouch];
@@ -321,7 +311,8 @@ extern NSUserDefaults *defaults;
             {
                 CGFloat rotation = recognizer.rotation;
                 SKAction * spinaction = [SKAction rotateByAngle:-rotation/60 duration:1/60];
-                [_target runAction:[SKAction sequence:@[spinaction]]];
+                [_rotateTarget runAction:[SKAction sequence:@[spinaction]]];
+                _correctTouches++;
 
             }
 
@@ -355,6 +346,9 @@ extern NSUserDefaults *defaults;
                 {
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Right On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     [touchLog addObject:currentTouch];
+                    [_arrow runAction:_actionMoveDone];
+                    _correctTouches++;
+                    
                 }
                 else
                 {
@@ -389,6 +383,8 @@ extern NSUserDefaults *defaults;
                 {
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Left On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     [touchLog addObject:currentTouch];
+                    [_arrow runAction:_actionMoveDone];
+                    _correctTouches++;
                 }
                 else
                 {
@@ -424,6 +420,8 @@ extern NSUserDefaults *defaults;
                 {
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Up On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     [touchLog addObject:currentTouch];
+                    [_arrow runAction:_actionMoveDone];
+                    _correctTouches++;
                 }
                 else
                 {
@@ -458,6 +456,8 @@ extern NSUserDefaults *defaults;
                 {
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Down On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     [touchLog addObject:currentTouch];
+                    [_arrow runAction:_actionMoveDone];
+                    _correctTouches++;
                 }
                 else
                 {
