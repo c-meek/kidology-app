@@ -52,7 +52,7 @@ typedef enum {
     @property (nonatomic) SKSpriteNode *anchor;
     @property (nonatomic) SKSpriteNode *pressedAnchor;
     @property (nonatomic) int numOfRotations;
-@property (nonatomic) ActionType currentAction;
+    @property (nonatomic) ActionType currentAction;
 
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode;
 @end
