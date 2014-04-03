@@ -250,5 +250,9 @@ NSString *gameName;
     bgImage.yScale = .4;
     [self addChild:bgImage];
 }
+- (IBAction)backToViewControllerOne:(UIStoryboardSegue *)segue
+{
+    NSLog(@"from segue id: %@", segue.identifier);
+}
 
 @end

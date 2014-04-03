@@ -51,7 +51,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <segue destination="Awo-7N-XL4" kind="unwind" unwindAction="unwindToHideSettingsModal:" id="2cw-0T-PXu"/>
+                                                <segue destination="Awo-7N-XL4" kind="unwind" unwindAction="unwindToHideSettingsModal:" id="7g2-9j-Fvw"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
