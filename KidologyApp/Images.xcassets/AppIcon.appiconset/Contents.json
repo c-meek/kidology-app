@@ -45,25 +45,25 @@
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "kidologyspotlight-icon.png",
+      "filename" : "kidologyspotlight-legacy.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "kidologyspotlight-icon@2x.png",
+      "filename" : "kidologyspotlight-legacy@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "50x50",
       "idiom" : "ipad",
-      "filename" : "kidologyspotlight-legacy.png",
+      "filename" : "kidologyspotlight-icon.png",
       "scale" : "1x"
     },
     {
       "size" : "50x50",
       "idiom" : "ipad",
-      "filename" : "kidologyspotlight-legacy@2x.png",
+      "filename" : "kidologyspotlight-icon@2x.png",
       "scale" : "2x"
     },
     {
