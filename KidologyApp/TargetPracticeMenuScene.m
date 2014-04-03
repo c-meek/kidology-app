@@ -220,7 +220,6 @@ NSString *gameName;
 
     else if ([node.name isEqualToString:@"customModeLabel"] || [node.name isEqualToString:@"customModeButton"])
     {
-        gameName = @"4corners.txt";
         if(nil == gameName)
         {
             UIViewController *vc = self.view.window.rootViewController;
