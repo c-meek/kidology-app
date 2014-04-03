@@ -40,10 +40,13 @@ extern NSString * gameName;
 {
     _gameArray = [[NSMutableArray alloc]init];
     NSString *extension = @"txt";
-    NSString *resPath = [[NSBundle mainBundle] resourcePath];
+    //NSString *resPath = [[NSBundle mainBundle] resourcePath];
+    // get the documents directory
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *item;
     NSError *error = nil;
-    NSArray *items = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resPath error:&error];
+    NSArray *items = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:&error];
     for(item in items)
     {
         if([[item pathExtension] isEqualToString:extension])
