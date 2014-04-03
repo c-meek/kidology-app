@@ -51,10 +51,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="donePicking:" destination="cDl-OV-9CF" eventType="touchUpInside" id="gTd-lC-Wto"/>
-                                                <action selector="exit:" destination="cDl-OV-9CF" eventType="touchUpInside" id="f8G-Eg-qkn"/>
-                                                <action selector="goBack" destination="cDl-OV-9CF" eventType="touchUpInside" id="VMZ-Id-k27"/>
-                                                <segue destination="Awo-7N-XL4" kind="unwind" unwindAction="unwindToHideSettingsModal:" id="DMt-PM-6iA"/>
+                                                <segue destination="Awo-7N-XL4" kind="unwind" unwindAction="unwindToHideSettingsModal:" id="Mb9-nH-4ft"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
