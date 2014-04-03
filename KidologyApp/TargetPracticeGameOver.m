@@ -63,8 +63,15 @@
              //NSString * type = @"a";
         output = [output stringByAppendingString:[NSString stringWithFormat:@"%@,%f,%f,%f,%f,%f,%f\n", entry.type, entry.time, entry.touchLocation.x, entry.touchLocation.y, entry.targetLocation.x, entry.targetLocation.y, entry.targetRadius]];
         // get the documents directory
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"logs"];
+        // make the folder if it doesn't already exist
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
+            [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
+        [[NSFileManager defaultManager] createFileAtPath:folderPath contents:nil attributes:nil];
+
         // make a file name from the current date (dd/mm/yy hh:mm:ss timezone)
         NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
                                                               dateStyle:NSDateFormatterShortStyle
@@ -76,11 +83,10 @@
         // replace slashes with hyphens
         dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
         NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
-        NSString *fileName = [NSString stringWithFormat:@"%@/%@-%@.csv", documentsDirectory, dateString, gameModeString];
+        NSString *fileName = [NSString stringWithFormat:@"%@/%@-%@.csv", folderPath, dateString, gameModeString];
         NSLog(@"%@", fileName);
         NSLog(@"%@", output);
-        [[NSFileManager defaultManager] createFileAtPath:fileName contents:nil attributes:nil];
-       
+        
         [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];
     }
 

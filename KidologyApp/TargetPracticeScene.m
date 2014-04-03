@@ -104,6 +104,83 @@ extern NSUserDefaults *defaults;
         self.target.position = CGPointMake(x_pos, y_pos);
     }
     
+    
+    if (_gameMode == OTHER_ACTION)
+    {
+        int x = (rand() % 2); // REMEMBER TO CHANGE THIS TO 3 WHEN ZOOM IS COMPLETE
+        if (x == 0)
+        {
+            SKSpriteNode *arrow;
+            SKAction *rotate90 = [SKAction rotateByAngle:-3.14/2 duration:0];
+            SKAction *negRotate90 = [SKAction rotateByAngle:3.14/2 duration:0];
+            arrow = [SKSpriteNode spriteNodeWithImageNamed:@"arrow"];
+            arrow.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+            _currentAction = SWIPE;
+            int direction = (rand() % 4);
+            if ( direction == 0)
+            {
+                [arrow runAction:negRotate90];
+                [self.view addGestureRecognizer: swipeUpGesture ];
+                _actionDirection = UP;
+            }
+            else if ( direction == 1)
+            {
+                [arrow runAction:rotate90];
+                [self.view addGestureRecognizer: swipeDownGesture ];
+                _actionDirection = DOWN;
+            }
+            else if (direction == 2)
+            {
+                [arrow runAction:negRotate90];
+                [arrow runAction:negRotate90];
+                [self.view addGestureRecognizer: swipeLeftGesture ];
+                _actionDirection = LEFT;
+            }
+            else if (direction == 3)
+            {
+                [self.view addGestureRecognizer: swipeRightGesture ];
+                _actionDirection = RIGHT;
+            }
+            
+            [self addChild:arrow];
+        }
+        else if ( x == 1)
+        {
+            SKSpriteNode *rotateTarget;
+            rotateTarget = [SKSpriteNode spriteNodeWithImageNamed:@"rotate_green_target"];
+            rotateTarget.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+            rotateTarget.xScale = .67;
+            rotateTarget.yScale = .67;
+            _currentAction = ROTATE;
+            int direction = (rand() % 2);
+            if (direction == 0)
+            {
+                _actionDirection = CLOCKWISE;
+            }
+            else if (direction == 1)
+            {
+                _actionDirection = COUNTER_CLOCKWISE;
+            }
+            [self addChild:rotateTarget];
+            
+            [self.view addGestureRecognizer:rotationGR ];
+        }
+        else if ( x == 2)
+        {
+            _currentAction = ZOOM;
+            int direction = (rand() % 2);
+            if (direction == 0)
+            {
+                _actionDirection = IN;
+            }
+            else if (direction == 1)
+            {
+                _actionDirection = OUT;
+            }
+
+        }
+    }
+    
   //  NSLog(@"x is %f", self.target.position.x);
   //  NSLog(@"y is %f", self.target.position.y);
    // NSLog(@"scale is %f", self.target.xScale);
@@ -173,33 +250,30 @@ extern NSUserDefaults *defaults;
     swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeRight:)];
     [swipeRightGesture setDirection: UISwipeGestureRecognizerDirectionRight];
     
-    [view addGestureRecognizer: swipeRightGesture ];
-    
 //swipe left gesture…
     
     swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeLeft:)];
     [swipeLeftGesture setDirection: UISwipeGestureRecognizerDirectionLeft];
     
-    [view addGestureRecognizer: swipeLeftGesture ];
 
 //swipe up gesture…
     
     swipeUpGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeUp:)];
     [swipeUpGesture setDirection: UISwipeGestureRecognizerDirectionUp];
     
-    [view addGestureRecognizer: swipeUpGesture ];
+    
 
 //swipe down gesture…
     
     swipeDownGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeDown:)];
     [swipeDownGesture setDirection: UISwipeGestureRecognizerDirectionDown];
     
-    [view addGestureRecognizer: swipeDownGesture ];
 
 //And the rotation gesture will detect a two finger rotation
 
     rotationGR = [[ UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(handleRotation:)];
-    [self.view addGestureRecognizer:rotationGR ];
+    
+    
     
 }
 -(void) handleRotation: (UIRotationGestureRecognizer *) recognizer  {
@@ -256,6 +330,7 @@ extern NSUserDefaults *defaults;
                 _numOfRotations ++;
                 allTouchedTarget = true;
                 NSLog(@"rotation has actually ended");
+                [self.view removeGestureRecognizer:rotationGR ];
             }
         }
     }
