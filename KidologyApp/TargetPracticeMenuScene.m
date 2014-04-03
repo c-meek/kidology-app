@@ -184,7 +184,7 @@ NSString *gameName;
         {
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
             backToMain.scaleMode = SKSceneScaleModeAspectFill;
-            
+            [_tbv removeFromSuperview];
             [self.view presentScene:backToMain];
         }
     
@@ -196,6 +196,7 @@ NSString *gameName;
         SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
+        [_tbv removeFromSuperview];
         [self.view presentScene:targetPractice];
     }
     
@@ -205,6 +206,7 @@ NSString *gameName;
         // Create and configure the random "target practice" scene.
         SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:2];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
+        [_tbv removeFromSuperview];
         // Present the scene.
         [self.view presentScene:targetPractice];
     }
@@ -214,6 +216,7 @@ NSString *gameName;
         // Create and configure the random "target practice" scene.
         SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:4];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
+        [_tbv removeFromSuperview];
         // Present the scene.
         [self.view presentScene:targetPractice];
     }
