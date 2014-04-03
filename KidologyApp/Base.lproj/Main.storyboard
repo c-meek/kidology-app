@@ -99,7 +99,7 @@
                     </navigationBar>
                     <connections>
                         <segue destination="LVB-YS-i5n" kind="relationship" relationship="rootViewController" id="OfR-Io-LV1"/>
-                        <segue destination="xgT-3d-b1i" kind="modal" identifier="toGameList" id="O2f-kb-aDe"/>
+                        <segue destination="xgT-3d-b1i" kind="modal" identifier="toGameList" animates="NO" id="O2f-kb-aDe"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q1C-vb-tfw" userLabel="First Responder" sceneMemberID="firstResponder"/>

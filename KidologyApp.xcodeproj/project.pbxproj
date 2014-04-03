@@ -27,6 +27,7 @@
 		0FE5600B18E4886B00DFB172 /* custom1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0FE5600A18E4886B00DFB172 /* custom1.txt */; };
 		0FE5600D18E48BBB00DFB172 /* customtargets.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0FE5600C18E48BBB00DFB172 /* customtargets.txt */; };
 		0FF78FC318EDD59100BD200D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FF78FC218EDD59100BD200D /* Settings.bundle */; };
+		0FF78FC618EDE3F000BD200D /* mainMenuBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FF78FC518EDE3F000BD200D /* mainMenuBackground.png */; };
 		7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */; };
 		7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */; };
 		7CB23C4018C0020D007F409F /* Black.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C3218C0020D007F409F /* Black.png */; };
@@ -122,6 +123,7 @@
 		0FE5600A18E4886B00DFB172 /* custom1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = custom1.txt; sourceTree = "<group>"; };
 		0FE5600C18E48BBB00DFB172 /* customtargets.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = customtargets.txt; sourceTree = "<group>"; };
 		0FF78FC218EDD59100BD200D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		0FF78FC518EDE3F000BD200D /* mainMenuBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainMenuBackground.png; sourceTree = "<group>"; };
 		7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Huge_Checkered_Background_[4096x3072].png"; sourceTree = "<group>"; };
 		7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyTargetPracticeScene.h; sourceTree = "<group>"; };
 		7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyTargetPracticeScene.m; sourceTree = "<group>"; };
@@ -252,6 +254,15 @@
 			name = "custom games";
 			sourceTree = "<group>";
 		};
+		0FF78FC418EDE3DC00BD200D /* main menu */ = {
+			isa = PBXGroup;
+			children = (
+				0FF78FC518EDE3F000BD200D /* mainMenuBackground.png */,
+			);
+			name = "main menu";
+			path = KidologyApp;
+			sourceTree = "<group>";
+		};
 		7CB23C4E18C00212007F409F /* BabyGameTargets */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +308,7 @@
 		B96CAA8F18A7ED7700D5C20C = {
 			isa = PBXGroup;
 			children = (
+				0FF78FC418EDE3DC00BD200D /* main menu */,
 				FD6B78D018ED19040035CA95 /* icons */,
 				0FBA4C0618DB46B800A9184D /* custom games */,
 				0F9462CF18C0291A00E9E3BD /* anchors */,
@@ -536,6 +548,7 @@
 				7CB23C4718C0020D007F409F /* Magenta.png in Resources */,
 				B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */,
 				B96CAAB918A7ED7700D5C20C /* Spaceship.png in Resources */,
+				0FF78FC618EDE3F000BD200D /* mainMenuBackground.png in Resources */,
 				FD6B78CF18ED17020035CA95 /* kidologyapp-icon.png in Resources */,
 				FD6B78DE18ED19240035CA95 /* kidologyspotlight-icon@2x.png in Resources */,
 				7CB76CC718B692CB0003A622 /* hand.png in Resources */,

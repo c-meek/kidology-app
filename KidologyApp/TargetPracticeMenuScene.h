@@ -21,4 +21,7 @@
 @property (nonatomic) SKSpriteNode * hand;
 @property (nonatomic) SKSpriteNode *customModeButton;
 @property (nonatomic) SKLabelNode *customModeLabel;
+@property NSMutableArray *gameArray;
+@property UITableView *tbv;
+
 @end

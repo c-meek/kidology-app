@@ -21,15 +21,16 @@
         // In final project, will be single photoshop image with empty label or sprite node's
         // in same position as photoshop elements
         
-        SKSpriteNode *blueSky = [[SKSpriteNode alloc] initWithColor:[SKColor colorWithRed:(0) green:195 blue:255 alpha:1] size:CGSizeMake(2000, 2000)];
-        [self addChild:blueSky];
-        
-        SKTexture *backgroundTexture = [SKTexture textureWithImageNamed:@"background"];
-        SKSpriteNode *background = [SKSpriteNode spriteNodeWithTexture:backgroundTexture size:CGSizeMake(self.frame.size.width, self.frame.size.height - 50)];
-        background.position = CGPointMake(CGRectGetMidX(self.frame),
-                                          CGRectGetMidY(self.frame));
-        [self addChild:background];
-
+//        SKSpriteNode *blueSky = [[SKSpriteNode alloc] initWithColor:[SKColor colorWithRed:(0) green:195 blue:255 alpha:1] size:CGSizeMake(2000, 2000)];
+//        [self addChild:blueSky];
+//        
+//        SKTexture *backgroundTexture = [SKTexture textureWithImageNamed:@"background"];
+//        SKSpriteNode *background = [SKSpriteNode spriteNodeWithTexture:backgroundTexture size:CGSizeMake(self.frame.size.width, self.frame.size.height - 50)];
+//        background.position = CGPointMake(CGRectGetMidX(self.frame),
+//                                          CGRectGetMidY(self.frame));
+//        [self addChild:background];
+        //add background
+        [self addBackground];
         //add game menu button
         [self addMenuButton];
         //add therapist button
@@ -111,6 +112,15 @@
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
+}
+
+-(void)addBackground
+{
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"mainMenuBackground"];
+    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
+    bgImage.xScale = .38;
+    bgImage.yScale = .38;
+    [self addChild:bgImage];
 }
 
 @end

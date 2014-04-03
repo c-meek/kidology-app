@@ -220,14 +220,21 @@ NSString *gameName;
 
     else if ([node.name isEqualToString:@"customModeLabel"] || [node.name isEqualToString:@"customModeButton"])
     {
+        
         if(nil == gameName)
         {
-            UIViewController *vc = self.view.window.rootViewController;
-            [vc performSegueWithIdentifier:@"toGameList" sender:self];
-            _customModeButton.color = [SKColor greenColor];
+//            UIViewController *vc = self.view.window.rootViewController;
+//            [vc performSegueWithIdentifier:@"toGameList" sender:self];
+//            _customModeButton.color = [SKColor greenColor];
+            [self addGameFilesToArray];
+            _tbv = [[UITableView alloc] initWithFrame:CGRectMake(100,100, 500, 500)];
+            _tbv.delegate = self;
+            _tbv.dataSource = self;
+            [self.view addSubview:_tbv];
         }
         else
         {
+            [_tbv removeFromSuperview];
             SKScene *customTarget = [[CustomTargetPracticeScene alloc] initWithSize:self.size];
             customTarget.scaleMode = SKSceneScaleModeAspectFill;
             [self.view presentScene:customTarget];
@@ -250,9 +257,56 @@ NSString *gameName;
     bgImage.yScale = .4;
     [self addChild:bgImage];
 }
-- (IBAction)backToViewControllerOne:(UIStoryboardSegue *)segue
+
+
+
+-(void)addGameFilesToArray
 {
-    NSLog(@"from segue id: %@", segue.identifier);
+    _gameArray = [[NSMutableArray alloc]init];
+    NSString *extension = @"txt";
+    NSString *resPath = [[NSBundle mainBundle] resourcePath];
+    NSString *item;
+    NSError *error = nil;
+    NSArray *items = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resPath error:&error];
+    for(item in items)
+    {
+        if([[item pathExtension] isEqualToString:extension])
+        {
+            [_gameArray addObject:item];
+        }
+    }
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _gameArray.count;
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    cell.textLabel.text = [self.gameArray objectAtIndex:indexPath.row];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    gameName = [self.gameArray objectAtIndex:indexPath.row];
 }
 
 @end
