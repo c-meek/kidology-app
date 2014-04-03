@@ -74,6 +74,16 @@
 		B9D70C8F18C64587000C12F1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D70C8E18C64587000C12F1 /* MenuViewController.m */; };
 		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
 		E8D5E14D18AD50C40061ED91 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = E8D5E14C18AD50C40061ED91 /* background.png */; };
+		FD6B78CD18ED16CB0035CA95 /* kidologyapp-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78CC18ED16CB0035CA95 /* kidologyapp-icon@2x.png */; };
+		FD6B78CF18ED17020035CA95 /* kidologyapp-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78CE18ED17020035CA95 /* kidologyapp-icon.png */; };
+		FD6B78D918ED19240035CA95 /* kidology-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D118ED19240035CA95 /* kidology-settings.png */; };
+		FD6B78DA18ED19240035CA95 /* kidology-settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D218ED19240035CA95 /* kidology-settings@2x.png */; };
+		FD6B78DB18ED19240035CA95 /* kidologyapp-legacy.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D318ED19240035CA95 /* kidologyapp-legacy.png */; };
+		FD6B78DC18ED19240035CA95 /* kidologyapp-legacy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D418ED19240035CA95 /* kidologyapp-legacy@2x.png */; };
+		FD6B78DD18ED19240035CA95 /* kidologyspotlight-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D518ED19240035CA95 /* kidologyspotlight-icon.png */; };
+		FD6B78DE18ED19240035CA95 /* kidologyspotlight-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D618ED19240035CA95 /* kidologyspotlight-icon@2x.png */; };
+		FD6B78DF18ED19240035CA95 /* kidologyspotlight-legacy.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D718ED19240035CA95 /* kidologyspotlight-legacy.png */; };
+		FD6B78E018ED19240035CA95 /* kidologyspotlight-legacy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D818ED19240035CA95 /* kidologyspotlight-legacy@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +184,16 @@
 		B9FC0CFE18E4994D006F2AEF /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogEntry.h; sourceTree = "<group>"; };
 		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
 		E8D5E14C18AD50C40061ED91 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		FD6B78CC18ED16CB0035CA95 /* kidologyapp-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyapp-icon@2x.png"; sourceTree = "<group>"; };
+		FD6B78CE18ED17020035CA95 /* kidologyapp-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kidologyapp-icon.png"; path = "KidologyApp/kidologyapp-icon.png"; sourceTree = "<group>"; };
+		FD6B78D118ED19240035CA95 /* kidology-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidology-settings.png"; sourceTree = "<group>"; };
+		FD6B78D218ED19240035CA95 /* kidology-settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidology-settings@2x.png"; sourceTree = "<group>"; };
+		FD6B78D318ED19240035CA95 /* kidologyapp-legacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyapp-legacy.png"; sourceTree = "<group>"; };
+		FD6B78D418ED19240035CA95 /* kidologyapp-legacy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyapp-legacy@2x.png"; sourceTree = "<group>"; };
+		FD6B78D518ED19240035CA95 /* kidologyspotlight-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyspotlight-icon.png"; sourceTree = "<group>"; };
+		FD6B78D618ED19240035CA95 /* kidologyspotlight-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyspotlight-icon@2x.png"; sourceTree = "<group>"; };
+		FD6B78D718ED19240035CA95 /* kidologyspotlight-legacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyspotlight-legacy.png"; sourceTree = "<group>"; };
+		FD6B78D818ED19240035CA95 /* kidologyspotlight-legacy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyspotlight-legacy@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +301,7 @@
 		B96CAA8F18A7ED7700D5C20C = {
 			isa = PBXGroup;
 			children = (
+				FD6B78D018ED19040035CA95 /* icons */,
 				0FBA4C0618DB46B800A9184D /* custom games */,
 				0F9462CF18C0291A00E9E3BD /* anchors */,
 				0F9462CA18C01C0900E9E3BD /* GameMenu */,
@@ -399,6 +420,23 @@
 			name = iPad;
 			sourceTree = "<group>";
 		};
+		FD6B78D018ED19040035CA95 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				FD6B78D118ED19240035CA95 /* kidology-settings.png */,
+				FD6B78D218ED19240035CA95 /* kidology-settings@2x.png */,
+				FD6B78D318ED19240035CA95 /* kidologyapp-legacy.png */,
+				FD6B78D418ED19240035CA95 /* kidologyapp-legacy@2x.png */,
+				FD6B78D518ED19240035CA95 /* kidologyspotlight-icon.png */,
+				FD6B78D618ED19240035CA95 /* kidologyspotlight-icon@2x.png */,
+				FD6B78D718ED19240035CA95 /* kidologyspotlight-legacy.png */,
+				FD6B78D818ED19240035CA95 /* kidologyspotlight-legacy@2x.png */,
+				FD6B78CE18ED17020035CA95 /* kidologyapp-icon.png */,
+				FD6B78CC18ED16CB0035CA95 /* kidologyapp-icon@2x.png */,
+			);
+			name = icons;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -443,7 +481,7 @@
 		B96CAA9018A7ED7700D5C20C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = OSU;
 				TargetAttributes = {
 					B96CAABF18A7ED7700D5C20C = {
@@ -475,14 +513,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD6B78DA18ED19240035CA95 /* kidology-settings@2x.png in Resources */,
 				0FE5600D18E48BBB00DFB172 /* customtargets.txt in Resources */,
 				7CB23C4618C0020D007F409F /* Lime.png in Resources */,
 				B9D70C8618C62ED8000C12F1 /* targetPracticeBackground.png in Resources */,
 				7C5523F218EDB7D30042DEAB /* rotate_green_target.png in Resources */,
 				7CB23C4818C0020D007F409F /* Orange.png in Resources */,
+				FD6B78E018ED19240035CA95 /* kidologyspotlight-legacy@2x.png in Resources */,
 				7CB23C4118C0020D007F409F /* Blue.png in Resources */,
+				FD6B78DB18ED19240035CA95 /* kidologyapp-legacy.png in Resources */,
 				0F423CAB18AD5D2200EE5F4E /* dog.png in Resources */,
 				B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */,
+				FD6B78CD18ED16CB0035CA95 /* kidologyapp-icon@2x.png in Resources */,
 				0F9462CE18C01CE100E9E3BD /* target_menu.png in Resources */,
 				7CB23C4B18C0020D007F409F /* Red.png in Resources */,
 				0F01046818DB627300D2378F /* customgame_README in Resources */,
@@ -498,17 +540,23 @@
 				7CB23C4718C0020D007F409F /* Magenta.png in Resources */,
 				B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */,
 				B96CAAB918A7ED7700D5C20C /* Spaceship.png in Resources */,
+				FD6B78CF18ED17020035CA95 /* kidologyapp-icon.png in Resources */,
+				FD6B78DE18ED19240035CA95 /* kidologyspotlight-icon@2x.png in Resources */,
 				7CB76CC718B692CB0003A622 /* hand.png in Resources */,
 				0FBA4C0818DB470200A9184D /* custom.txt in Resources */,
 				7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */,
 				0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */,
 				0F9462D718C0296A00E9E3BD /* anchor_red_right.png in Resources */,
 				7CB23C4018C0020D007F409F /* Black.png in Resources */,
+				FD6B78DC18ED19240035CA95 /* kidologyapp-legacy@2x.png in Resources */,
 				0FA9082518E4B55B002A1BBC /* 4corners.txt in Resources */,
 				7CB23C4318C0020D007F409F /* Cyan.png in Resources */,
+				FD6B78D918ED19240035CA95 /* kidology-settings.png in Resources */,
 				7CB23C4A18C0020D007F409F /* Purple.png in Resources */,
 				0F423CAF18AD61EC00EE5F4E /* tennis.png in Resources */,
 				7CB23C4418C0020D007F409F /* Gray.png in Resources */,
+				FD6B78DD18ED19240035CA95 /* kidologyspotlight-icon.png in Resources */,
+				FD6B78DF18ED19240035CA95 /* kidologyspotlight-legacy.png in Resources */,
 				7CB23C4C18C0020D007F409F /* White.png in Resources */,
 				7C5523F418EDB7DF0042DEAB /* arrow.png in Resources */,
 				0F9462D518C0296A00E9E3BD /* anchor_green_right.png in Resources */,
@@ -603,7 +651,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -642,7 +689,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -720,7 +766,6 @@
 		B96CAAD518A7ED7700D5C20C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/KidologyApp.app/KidologyApp";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -743,7 +788,6 @@
 		B96CAAD618A7ED7700D5C20C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/KidologyApp.app/KidologyApp";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
