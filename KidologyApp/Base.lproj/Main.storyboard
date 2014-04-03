@@ -22,7 +22,6 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <segue destination="95g-7x-9SS" kind="push" identifier="setupSegue" id="GHZ-0l-hKz"/>
-                        <segue destination="xgT-3d-b1i" kind="push" identifier="toGameList" id="7AS-BH-YKI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
@@ -53,8 +52,9 @@
                                             </state>
                                             <connections>
                                                 <action selector="donePicking:" destination="cDl-OV-9CF" eventType="touchUpInside" id="gTd-lC-Wto"/>
-                                                <action selector="goBack" destination="cDl-OV-9CF" eventType="touchUpInside" id="36z-Wq-OXW"/>
-                                                <segue destination="Awo-7N-XL4" kind="unwind" unwindAction="unwindToHideSettingsModal:" id="Dqr-TF-olT"/>
+                                                <action selector="exit:" destination="cDl-OV-9CF" eventType="touchUpInside" id="f8G-Eg-qkn"/>
+                                                <action selector="goBack" destination="cDl-OV-9CF" eventType="touchUpInside" id="VMZ-Id-k27"/>
+                                                <segue destination="Awo-7N-XL4" kind="unwind" unwindAction="unwindToHideSettingsModal:" id="DMt-PM-6iA"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
@@ -86,7 +86,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDl-OV-9CF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Awo-7N-XL4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-108" y="470"/>
+            <point key="canvasLocation" x="-116" y="462"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="t0M-Q8-i1L">
@@ -102,6 +102,7 @@
                     </navigationBar>
                     <connections>
                         <segue destination="LVB-YS-i5n" kind="relationship" relationship="rootViewController" id="OfR-Io-LV1"/>
+                        <segue destination="xgT-3d-b1i" kind="modal" identifier="toGameList" id="Bct-tD-tHA"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q1C-vb-tfw" userLabel="First Responder" sceneMemberID="firstResponder"/>

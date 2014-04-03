@@ -59,9 +59,9 @@ NSString *therapistEmail;
     [defaults synchronize];
 }
 
--(void)test
+-(IBAction)exit:(id)sender
 {
-    NSLog(@"test");
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

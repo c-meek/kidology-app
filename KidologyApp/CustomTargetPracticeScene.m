@@ -197,8 +197,6 @@ NSMutableArray *touchLog;
         currentTouch = [[LogEntry alloc] initWithType:@"Whitespace" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:(self.target.size.width / 2)];
         [touchLog addObject:currentTouch];
     }
-
-    
 }
 
 -(void)update:(CFTimeInterval)currentTime {
