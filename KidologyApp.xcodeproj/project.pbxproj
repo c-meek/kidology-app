@@ -26,6 +26,7 @@
 		0FE5600918E4835600DFB172 /* GameTableListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE5600818E4835600DFB172 /* GameTableListViewController.m */; };
 		0FE5600B18E4886B00DFB172 /* custom1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0FE5600A18E4886B00DFB172 /* custom1.txt */; };
 		0FE5600D18E48BBB00DFB172 /* customtargets.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0FE5600C18E48BBB00DFB172 /* customtargets.txt */; };
+		0FF78FC318EDD59100BD200D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FF78FC218EDD59100BD200D /* Settings.bundle */; };
 		7C5523F218EDB7D30042DEAB /* rotate_green_target.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F118EDB7D30042DEAB /* rotate_green_target.png */; };
 		7C5523F418EDB7DF0042DEAB /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F318EDB7DF0042DEAB /* arrow.png */; };
 		7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */; };
@@ -122,6 +123,7 @@
 		0FE5600818E4835600DFB172 /* GameTableListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameTableListViewController.m; sourceTree = "<group>"; };
 		0FE5600A18E4886B00DFB172 /* custom1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = custom1.txt; sourceTree = "<group>"; };
 		0FE5600C18E48BBB00DFB172 /* customtargets.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = customtargets.txt; sourceTree = "<group>"; };
+		0FF78FC218EDD59100BD200D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		7C5523F118EDB7D30042DEAB /* rotate_green_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate_green_target.png; sourceTree = "<group>"; };
 		7C5523F318EDB7DF0042DEAB /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Huge_Checkered_Background_[4096x3072].png"; sourceTree = "<group>"; };
