@@ -216,8 +216,8 @@ extern NSUserDefaults *defaults;
         }
         else
         {
-            _anchor.hidden = FALSE;
-            _pressedAnchor.hidden = TRUE;
+            _anchor.hidden = TRUE;
+            _pressedAnchor.hidden = FALSE;
         }
     }
 }
