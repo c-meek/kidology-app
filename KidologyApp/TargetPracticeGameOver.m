@@ -8,7 +8,7 @@
 
 #import "TargetPracticeGameOver.h"
 #import "TargetPracticeScene.h"
-#import "MainMenuScene.h"
+#import "GameMenuScene.h"
 #import "LogEntry.h"
 
 @implementation TargetPracticeGameOver
@@ -28,10 +28,19 @@
         message.position = CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame));
         [self addChild:message];
         
-        _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
+        _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(400, 40)];
         _backButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
         _backButton.name = @"backButton";
         [self addChild:_backButton];
+        
+        NSString * returnText = [NSString stringWithFormat:@"Return To Game Menu"];
+        SKLabelNode * returnMessage = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        returnMessage.text = returnText;
+        returnMessage.fontSize = 20;
+        returnMessage.fontColor = [SKColor whiteColor];
+        returnMessage.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
+        [self addChild:returnMessage];
+
     }
     return self;
 }
@@ -100,12 +109,19 @@
     // Check which button was pressed
     if ([node.name isEqualToString:@"backButton"])
     {
+//        // Create and configure the "main menu" scene.
+//        SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
+//        mainMenu.scaleMode = SKSceneScaleModeAspectFill;
+//        
+//        // Present the scene.
+//        [self.view presentScene:mainMenu];
         // Create and configure the "main menu" scene.
-        SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
-        mainMenu.scaleMode = SKSceneScaleModeAspectFill;
+        SKScene * gameMenu = [[GameMenuScene alloc] initWithSize:self.size];
+        gameMenu.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
-        [self.view presentScene:mainMenu];
+        [self.view presentScene:gameMenu];
+        
     }
     else
     {

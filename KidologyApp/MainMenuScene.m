@@ -8,6 +8,7 @@
 
 #import "MainMenuScene.h"
 #import "GameMenuScene.h"
+#import "TherapistMenuScene.h"
 
 
 @implementation MainMenuScene
@@ -46,10 +47,17 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
+    // if one of the buttons is pressed, change its color
     if ([node.name isEqualToString:@"gameMenuButton"] ||
         [node.name isEqualToString:@"gameMenuLabel"])
     {
         _gameMenuButton.color = [SKColor yellowColor];
+    }
+    else if([node.name isEqualToString:@"therapistMenuButton"] ||
+            [node.name isEqualToString:@"therapistMenuLabel"])
+    {
+        _therapistMenuButton.color = [SKColor yellowColor];
+        NSLog(@"set therapist button color");
     }
 }
 
@@ -58,21 +66,38 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
-    // Check which button was pressed
+    
+    // Check if one of the buttons was pressed and load that scene
     if ([node.name isEqualToString:@"gameMenuButton"] ||
         [node.name isEqualToString:@"gameMenuLabel"])
     {
-        // Create and configure the "target practice" scene.
+        // Create and configure the "game menu" scene.
         SKScene * gameMenu = [[GameMenuScene alloc] initWithSize:self.size];
         gameMenu.scaleMode = SKSceneScaleModeAspectFill;
+        
+        NSLog(@"presenting game menu scene");
         
         // Present the scene.
         [self.view presentScene:gameMenu];
     }
-    else
+    else if([node.name isEqualToString:@"therapistMenuButton"] ||
+            [node.name isEqualToString:@"therapistMenuLabel"])
     {
-        _gameMenuButton.color = [SKColor redColor];
+        NSLog(@"creating therapist menu scene...");
+        // Create and configure the "therapist" scene.
+        SKScene * therapistMenu = [[TherapistMenuScene alloc] initWithSize:self.size];
+        therapistMenu.scaleMode = SKSceneScaleModeAspectFill;
+        
+        NSLog(@"presenting therapist menu scene");
+
+        
+        // Present the scene.
+        [self.view presentScene:therapistMenu];
     }
+//    else
+//    {
+//        _gameMenuButton.color = [SKColor redColor];
+//    }
 
 }
 
@@ -96,18 +121,18 @@
 -(void)addTherapistButton
 {
     // therapist button
-    _therapistButton = [[SKSpriteNode alloc] initWithColor:[SKColor grayColor] size:CGSizeMake(200, 40)];
-    _therapistButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
+    _therapistMenuButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(200, 40)];
+    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
                                            CGRectGetMidY(self.frame) - 200);
-    _therapistButton.name = @"therapistButton";
+    _therapistMenuButton.name = @"therapistMenuButton";
     NSString * therapistLabelText = [NSString stringWithFormat:@"Therapist"];
-    SKLabelNode *therapistLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    therapistLabel.name = @"therapistLabel";
-    therapistLabel.text = therapistLabelText;
-    therapistLabel.fontSize = 24;
-    therapistLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225, CGRectGetMidY(self.frame)-210);
-    [self addChild:_therapistButton];
-    [self addChild:therapistLabel];
+    SKLabelNode *therapistMenuLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    therapistMenuLabel.name = @"therapistMenuLabel";
+    therapistMenuLabel.text = therapistLabelText;
+    therapistMenuLabel.fontSize = 24;
+    therapistMenuLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225, CGRectGetMidY(self.frame)-210);
+    [self addChild:_therapistMenuButton];
+    [self addChild:therapistMenuLabel];
 }
 
 -(void)update:(CFTimeInterval)currentTime {
