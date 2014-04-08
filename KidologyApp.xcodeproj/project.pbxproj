@@ -86,6 +86,8 @@
 		FD6B78E018ED19240035CA95 /* kidologyspotlight-legacy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D818ED19240035CA95 /* kidologyspotlight-legacy@2x.png */; };
 		FDB9D7B818F45899006329EB /* launchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB9D7B618F45899006329EB /* launchScreen.png */; };
 		FDB9D7B918F45899006329EB /* launchScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB9D7B718F45899006329EB /* launchScreen@2x.png */; };
+		FDE1C3A118F468560025811F /* launchScreenLegacy.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE1C39F18F468560025811F /* launchScreenLegacy.png */; };
+		FDE1C3A218F468560025811F /* launchScreenLegacy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE1C3A018F468560025811F /* launchScreenLegacy@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +202,8 @@
 		FD6B78D818ED19240035CA95 /* kidologyspotlight-legacy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyspotlight-legacy@2x.png"; sourceTree = "<group>"; };
 		FDB9D7B618F45899006329EB /* launchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launchScreen.png; sourceTree = "<group>"; };
 		FDB9D7B718F45899006329EB /* launchScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchScreen@2x.png"; sourceTree = "<group>"; };
+		FDE1C39F18F468560025811F /* launchScreenLegacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launchScreenLegacy.png; sourceTree = "<group>"; };
+		FDE1C3A018F468560025811F /* launchScreenLegacy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchScreenLegacy@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +264,8 @@
 		0FF78FC418EDE3DC00BD200D /* main menu */ = {
 			isa = PBXGroup;
 			children = (
+				FDE1C39F18F468560025811F /* launchScreenLegacy.png */,
+				FDE1C3A018F468560025811F /* launchScreenLegacy@2x.png */,
 				FDB9D7B618F45899006329EB /* launchScreen.png */,
 				FDB9D7B718F45899006329EB /* launchScreen@2x.png */,
 				E8A34CEB18F27984006F6D1B /* therapistScreen.png */,
@@ -537,10 +543,12 @@
 				B9D70C8618C62ED8000C12F1 /* targetPracticeBackground.png in Resources */,
 				7CB23C4818C0020D007F409F /* Orange.png in Resources */,
 				FD6B78E018ED19240035CA95 /* kidologyspotlight-legacy@2x.png in Resources */,
+				FDE1C3A118F468560025811F /* launchScreenLegacy.png in Resources */,
 				7CB23C4118C0020D007F409F /* Blue.png in Resources */,
 				FD6B78DB18ED19240035CA95 /* kidologyapp-legacy.png in Resources */,
 				0F423CAB18AD5D2200EE5F4E /* dog.png in Resources */,
 				B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */,
+				FDE1C3A218F468560025811F /* launchScreenLegacy@2x.png in Resources */,
 				FD6B78CD18ED16CB0035CA95 /* kidologyapp-icon@2x.png in Resources */,
 				0F9462CE18C01CE100E9E3BD /* target_menu.png in Resources */,
 				7CB23C4B18C0020D007F409F /* Red.png in Resources */,
