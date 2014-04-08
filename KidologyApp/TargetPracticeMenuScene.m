@@ -262,7 +262,7 @@ NSString *gameName;
 -(void)addGameFilesToArray
 {
     _gameArray = [[NSMutableArray alloc]init];
-    NSString *extension = @"txt";
+    NSString *extension = @"csv";
     NSString *resPath = [[NSBundle mainBundle] resourcePath];
     NSString *item;
     NSError *error = nil;

@@ -21,6 +21,7 @@
 		0F9462D718C0296A00E9E3BD /* anchor_red_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D318C0296A00E9E3BD /* anchor_red_right.png */; };
 		0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */; };
 		0FB5157118F463CE005C309C /* 4target.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0FB5157018F463CE005C309C /* 4target.csv */; };
+		0FDC0EB618F49690000CE9E0 /* 4corners.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0FDC0EB518F49690000CE9E0 /* 4corners.csv */; };
 		0FDF3AA318DA56A400FBEC85 /* CustomTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */; };
 		0FE5600918E4835600DFB172 /* GameTableListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE5600818E4835600DFB172 /* GameTableListViewController.m */; };
 		0FF78FC318EDD59100BD200D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FF78FC218EDD59100BD200D /* Settings.bundle */; };
@@ -119,6 +120,7 @@
 		0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchInstructionScene.h; sourceTree = "<group>"; };
 		0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchInstructionScene.m; sourceTree = "<group>"; };
 		0FB5157018F463CE005C309C /* 4target.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = 4target.csv; path = KidologyApp/4target.csv; sourceTree = "<group>"; };
+		0FDC0EB518F49690000CE9E0 /* 4corners.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 4corners.csv; sourceTree = "<group>"; };
 		0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTargetPracticeScene.h; sourceTree = "<group>"; };
 		0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTargetPracticeScene.m; sourceTree = "<group>"; };
 		0FE5600718E4835600DFB172 /* GameTableListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameTableListViewController.h; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				0F01046718DB627300D2378F /* customgame_README */,
+				0FDC0EB518F49690000CE9E0 /* 4corners.csv */,
 				0FB5157018F463CE005C309C /* 4target.csv */,
 			);
 			name = "custom games";
@@ -560,6 +563,7 @@
 				7CB23C4218C0020D007F409F /* Brown.png in Resources */,
 				B96CAAA818A7ED7700D5C20C /* InfoPlist.strings in Resources */,
 				0F9462D618C0296A00E9E3BD /* anchor_green_left.png in Resources */,
+				0FDC0EB618F49690000CE9E0 /* 4corners.csv in Resources */,
 				0F9462CD18C01CE100E9E3BD /* target_menu_pressed.png in Resources */,
 				FDB9D7B818F45899006329EB /* launchScreen.png in Resources */,
 				7CB23C4718C0020D007F409F /* Magenta.png in Resources */,
