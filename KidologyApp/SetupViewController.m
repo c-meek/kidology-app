@@ -20,8 +20,7 @@ NSString *therapistEmail;
     {
         affectedHand = [defaults objectForKey:@"affectedHand"];
     }
-    else
-    {
+
         if([sender isOn])
         {
             affectedHand = @"right";
@@ -30,7 +29,6 @@ NSString *therapistEmail;
         {
             affectedHand = @"left";
         }
-    }
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
