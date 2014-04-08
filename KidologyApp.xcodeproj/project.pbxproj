@@ -83,6 +83,8 @@
 		FD6B78DE18ED19240035CA95 /* kidologyspotlight-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D618ED19240035CA95 /* kidologyspotlight-icon@2x.png */; };
 		FD6B78DF18ED19240035CA95 /* kidologyspotlight-legacy.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D718ED19240035CA95 /* kidologyspotlight-legacy.png */; };
 		FD6B78E018ED19240035CA95 /* kidologyspotlight-legacy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D818ED19240035CA95 /* kidologyspotlight-legacy@2x.png */; };
+		FDB9D7B818F45899006329EB /* launchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB9D7B618F45899006329EB /* launchScreen.png */; };
+		FDB9D7B918F45899006329EB /* launchScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB9D7B718F45899006329EB /* launchScreen@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +196,8 @@
 		FD6B78D618ED19240035CA95 /* kidologyspotlight-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyspotlight-icon@2x.png"; sourceTree = "<group>"; };
 		FD6B78D718ED19240035CA95 /* kidologyspotlight-legacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyspotlight-legacy.png"; sourceTree = "<group>"; };
 		FD6B78D818ED19240035CA95 /* kidologyspotlight-legacy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyspotlight-legacy@2x.png"; sourceTree = "<group>"; };
+		FDB9D7B618F45899006329EB /* launchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launchScreen.png; sourceTree = "<group>"; };
+		FDB9D7B718F45899006329EB /* launchScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchScreen@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +257,8 @@
 		0FF78FC418EDE3DC00BD200D /* main menu */ = {
 			isa = PBXGroup;
 			children = (
+				FDB9D7B618F45899006329EB /* launchScreen.png */,
+				FDB9D7B718F45899006329EB /* launchScreen@2x.png */,
 				E8A34CEB18F27984006F6D1B /* therapistScreen.png */,
 				0FF78FC518EDE3F000BD200D /* mainMenuBackground.png */,
 			);
@@ -544,6 +550,7 @@
 				B96CAAA818A7ED7700D5C20C /* InfoPlist.strings in Resources */,
 				0F9462D618C0296A00E9E3BD /* anchor_green_left.png in Resources */,
 				0F9462CD18C01CE100E9E3BD /* target_menu_pressed.png in Resources */,
+				FDB9D7B818F45899006329EB /* launchScreen.png in Resources */,
 				7CB23C4718C0020D007F409F /* Magenta.png in Resources */,
 				B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */,
 				B96CAAB918A7ED7700D5C20C /* Spaceship.png in Resources */,
@@ -565,6 +572,7 @@
 				FD6B78DD18ED19240035CA95 /* kidologyspotlight-icon.png in Resources */,
 				FD6B78DF18ED19240035CA95 /* kidologyspotlight-legacy.png in Resources */,
 				7CB23C4C18C0020D007F409F /* White.png in Resources */,
+				FDB9D7B918F45899006329EB /* launchScreen@2x.png in Resources */,
 				0F9462D518C0296A00E9E3BD /* anchor_green_right.png in Resources */,
 				E8A34CEC18F27984006F6D1B /* therapistScreen.png in Resources */,
 				B96CAAB118A7ED7700D5C20C /* Main.storyboard in Resources */,

@@ -29,12 +29,8 @@
     [super viewDidLoad];
     [self loadScene];
 	// Do any additional setup after loading the view.
-    if (! [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"therapistEmail"] == NULL)
     {
-        
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
         [self performSegueWithIdentifier:@"setupSegue" sender:self];
     }
 

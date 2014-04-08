@@ -51,7 +51,6 @@ NSString *therapistEmail;
 }
 
 - (IBAction)returnToMain:(id)sender {
-    NSLog(@"This is where the values would be saved.");
     [self.navigationController popToRootViewControllerAnimated:YES];
     defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:affectedHand forKey:@"affectedHand"];
