@@ -7,9 +7,9 @@
 //
 
 #import "TherapistMenuScene.h"
+#import "SetupViewController.h"
 
 @implementation TherapistMenuScene
-
 -(id)initWithSize:(CGSize)size
 {
     if(self = [super initWithSize:size])
@@ -31,6 +31,10 @@
         [node.name isEqualToString:@"browseButtonLabel"])
     {
         _browseButton.color = [SKColor yellowColor];
+        //get handedness from the user defaults
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *affectedHand = [defaults objectForKey:@"therapistEmail"];
+        NSLog(@"%@", affectedHand);
     }
 }
 
@@ -44,7 +48,7 @@
     if ([node.name isEqualToString:@"browseButton"] ||
         [node.name isEqualToString:@"browseButtonLabel"])
     {
-        [self listFileAtPath:@"/var/mobile/Applications/50A20629-6CE5-4033-AD18-05AB2F07F83B/Documents/Inbox/"];
+//        [self listFileAtPath:@"/var/mobile/Applications/50A20629-6CE5-4033-AD18-05AB2F07F83B/Documents/Inbox/"];
         _browseButton.color = [SKColor redColor];
     }
 

@@ -8,7 +8,7 @@
 
 #import "SetupViewController.h"
 NSUserDefaults *defaults;
-NSString *affectedHand = @"left";
+NSString *affectedHand;
 NSString *therapistEmail;
 @implementation SetupViewController : ViewController
 - (IBAction)therapistInfo:(UITextField *)sender
@@ -16,16 +16,20 @@ NSString *therapistEmail;
     therapistEmail = sender.text;
 }
 - (IBAction)affectedHand:(UISwitch *)sender {
-    
-    if([sender isOn])
+    if ([defaults objectForKey:@"affectedHand"] != NULL)
     {
-        affectedHand = @"right";
-        NSLog(@"right");
+        affectedHand = [defaults objectForKey:@"affectedHand"];
     }
     else
     {
-        affectedHand = @"left";
-        NSLog(@"left");
+        if([sender isOn])
+        {
+            affectedHand = @"right";
+        }
+        else
+        {
+            affectedHand = @"left";
+        }
     }
 }
 
@@ -56,6 +60,7 @@ NSString *therapistEmail;
     [defaults setObject:affectedHand forKey:@"affectedHand"];
     [defaults setObject:therapistEmail forKey:@"therapistEmail"];
     [defaults synchronize];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end
