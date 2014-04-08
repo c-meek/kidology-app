@@ -34,12 +34,13 @@
         [self addChild:_backButton];
         
         NSString * returnText = [NSString stringWithFormat:@"Return To Game Menu"];
-        SKLabelNode * returnMessage = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-        returnMessage.text = returnText;
-        returnMessage.fontSize = 20;
-        returnMessage.fontColor = [SKColor whiteColor];
-        returnMessage.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
-        [self addChild:returnMessage];
+        _returnMessage = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        _returnMessage.text = returnText;
+        _returnMessage.name = @"returnTextLabel";
+        _returnMessage.fontSize = 20;
+        _returnMessage.fontColor = [SKColor whiteColor];
+        _returnMessage.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
+        [self addChild:_returnMessage];
 
     }
     return self;
@@ -50,7 +51,7 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
-    if ([node.name isEqualToString:@"backButton"])
+    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"returnTextLabel"])
     {
         _backButton.color = [SKColor yellowColor];
     }
@@ -107,7 +108,7 @@
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
     // Check which button was pressed
-    if ([node.name isEqualToString:@"backButton"])
+    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"returnTextLabel"])
     {
 //        // Create and configure the "main menu" scene.
 //        SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
