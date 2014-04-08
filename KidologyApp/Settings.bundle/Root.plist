@@ -28,9 +28,9 @@
 			<key>IsSecure</key>
 			<false/>
 			<key>Key</key>
-			<string>therapistInfo</string>
+			<string>therapistEmail</string>
 			<key>KeyboardType</key>
-			<string>Alphabet</string>
+			<string>EmailAddress</string>
 			<key>Title</key>
 			<string>Therapist Email</string>
 			<key>Type</key>
