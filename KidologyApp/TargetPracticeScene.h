@@ -51,6 +51,7 @@ typedef enum {
     @property (nonatomic) SKSpriteNode * anchorPanel;
     @property (nonatomic) SKSpriteNode * target;
     @property (nonatomic) SKLabelNode *targetsLabel;
+    @property (nonatomic) SKLabelNode *tapSreenLabel;
     @property (nonatomic) int totalTouches;
     @property (nonatomic) int correctTouches;
     @property (nonatomic) int totalTargets;
@@ -68,6 +69,12 @@ typedef enum {
     @property (nonatomic) SKSpriteNode *rotateTarget;
     @property (nonatomic) SKSpriteNode *arrow;
     @property (nonatomic) SKAction * actionMoveDone;
+
+//....just global varibles to keep track of stuff for certain procedures...
+    @property (nonatomic) Boolean isActionDone;
+    @property (nonatomic) int hasRotated;
+    @property (nonatomic) Boolean swipedOutside;
+//.........................................................................
 
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode;
 @end

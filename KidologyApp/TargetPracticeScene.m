@@ -56,6 +56,8 @@ extern NSUserDefaults *defaults;
         //add target to screen
         [self addChild:self.target];
         
+        _isActionDone = true;
+        
         _actionMoveDone =[SKAction removeFromParent];
         //swipe right gesture…
         swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeRight:)];
@@ -81,15 +83,29 @@ extern NSUserDefaults *defaults;
         
         self.time = 0;
         
+        _tapSreenLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+        _tapSreenLabel.fontSize = 50;
+        _tapSreenLabel.fontColor = [SKColor orangeColor];
+        _tapSreenLabel.position = CGPointMake(self.size.width/2, self.size.height/2);
+        _tapSreenLabel.text = @"Tap Screen for action!";
+        
         //set properties of target
-        [self displayTarget];
+        if (_gameMode != OTHER_ACTION)
+        {
+            [self displayTarget];
+        }
+        else
+        {
+            [self addChild:_tapSreenLabel];
+            [self displayActionTarget];
+        }
     }
     return self;
 }
 
 -(void)displayTarget
 {
-    if (_gameMode == CENTER || _gameMode == OTHER_ACTION)
+    if (_gameMode == CENTER)
     {
         //set target to middle of screen
         self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
@@ -129,89 +145,92 @@ extern NSUserDefaults *defaults;
         self.target.position = CGPointMake(x_pos, y_pos);
     }
     
-    
-    if (_gameMode == OTHER_ACTION)
-    {
-        int x = (rand() % 2); // REMEMBER TO CHANGE THIS TO 3 WHEN ZOOM IS COMPLETE
-        NSLog(@"x = %d\n",x);
-        if (x == 0)
-        {
-
-            SKAction *rotate90 = [SKAction rotateByAngle:-3.14/2 duration:0];
-            SKAction *negRotate90 = [SKAction rotateByAngle:3.14/2 duration:0];
-            _arrow = [SKSpriteNode spriteNodeWithImageNamed:@"arrow"];
-            _arrow.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-            _currentAction = SWIPE;
-            
-            [self addChild:_arrow];
-            
-            int direction = (rand() % 4);
-            if ( direction == 0)
-            {
-                [self.view addGestureRecognizer: swipeUpGesture ];
-                [_arrow runAction:negRotate90];
-                _actionDirection = UP;
-            }
-            else if ( direction == 1)
-            {
-                [self.view addGestureRecognizer: swipeDownGesture ];
-                [_arrow runAction:rotate90];
-                _actionDirection = DOWN;
-            }
-            else if (direction == 2)
-            {
-                [self.view addGestureRecognizer: swipeLeftGesture ];
-                [_arrow runAction:negRotate90];
-                [_arrow runAction:negRotate90];
-                _actionDirection = LEFT;
-            }
-            else if (direction == 3)
-            {
-                [self.view addGestureRecognizer: swipeRightGesture ];
-                _actionDirection = RIGHT;
-            }
-        }
-        else if ( x == 1)
-        {
-            
-            [self.view addGestureRecognizer:rotationGR];
-            
-            _rotateTarget = [SKSpriteNode spriteNodeWithImageNamed:@"rotate_green_target"];
-            _rotateTarget.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-            _rotateTarget.xScale = .67;
-            _rotateTarget.yScale = .67;
-            [self addChild:_rotateTarget];
-            _currentAction = ROTATE;
-
-            int direction = (rand() % 2);
-            if (direction == 0)
-            {
-                _actionDirection = CLOCKWISE;
-            }
-            else if (direction == 1)
-            {
-                _actionDirection = COUNTER_CLOCKWISE;
-            }
-        }
-        else if ( x == 2)
-        {
-            _currentAction = ZOOM;
-            int direction = (rand() % 2);
-            if (direction == 0)
-            {
-                _actionDirection = IN;
-            }
-            else if (direction == 1)
-            {
-                _actionDirection = OUT;
-            }
-
-        }
-    }
-    
   //  NSLog(@"x is %f", self.target.position.x);
   //  NSLog(@"y is %f", self.target.position.y);
    // NSLog(@"scale is %f", self.target.xScale);
+}
+
+-(void)displayActionTarget
+{
+    
+    self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+    self.target.xScale = .67;
+    self.target.yScale = .67;
+
+    int x = (rand() % 2); // REMEMBER TO CHANGE THIS TO 3 WHEN ZOOM IS COMPLETE
+    NSLog(@"Action Num %d\n",x);
+    if (x == 0)
+    {
+            
+        SKAction *rotate90 = [SKAction rotateByAngle:-3.14/2 duration:0];
+        SKAction *negRotate90 = [SKAction rotateByAngle:3.14/2 duration:0];
+        _arrow = [SKSpriteNode spriteNodeWithImageNamed:@"arrow"];
+        _arrow.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+        _currentAction = SWIPE;
+        _swipedOutside = true;
+            
+        int direction = (rand() % 4);
+        if ( direction == 0)
+        {
+            [self.view addGestureRecognizer: swipeUpGesture ];
+            [_arrow runAction:negRotate90];
+            _actionDirection = UP;
+        }
+        else if ( direction == 1)
+        {
+            [self.view addGestureRecognizer: swipeDownGesture ];
+            [_arrow runAction:rotate90];
+            _actionDirection = DOWN;
+        }
+        else if (direction == 2)
+        {
+            [self.view addGestureRecognizer: swipeLeftGesture ];
+            [_arrow runAction:negRotate90];
+            [_arrow runAction:negRotate90];
+            _actionDirection = LEFT;
+        }
+        else if (direction == 3)
+        {
+            [self.view addGestureRecognizer: swipeRightGesture ];
+            _actionDirection = RIGHT;
+        }
+    }
+    else if ( x == 1)
+    {
+        
+        [self.view addGestureRecognizer:rotationGR];
+        
+        _rotateTarget = [SKSpriteNode spriteNodeWithImageNamed:@"rotate_green_target"];
+        _rotateTarget.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+        _rotateTarget.xScale = .67;
+        _rotateTarget.yScale = .67;
+        
+        _currentAction = ROTATE;
+        _hasRotated = 0;
+        int direction = (rand() % 2);
+        if (direction == 0)
+        {
+            _actionDirection = CLOCKWISE;
+        }
+        else if (direction == 1)
+        {
+            _actionDirection = COUNTER_CLOCKWISE;
+        }
+    }
+    else if ( x == 2)
+    {
+        _currentAction = ZOOM;
+        int direction = (rand() % 2);
+        if (direction == 0)
+        {
+            _actionDirection = IN;
+        }
+        else if (direction == 1)
+        {
+            _actionDirection = OUT;
+        }
+            
+    }
 }
 
 -(Boolean)isAnchorTouch:(CGPoint)touchLocation
@@ -233,13 +252,29 @@ extern NSUserDefaults *defaults;
     }
     return result;
 }
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-
-//    if (_currentAction != SWIPE && _currentAction != ROTATE)
-//    {
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if (_gameMode == OTHER_ACTION && _isActionDone == true)
+    {
+        NSLog(@"touches began! \n");
+        [self displayActionTarget];
+        [_tapSreenLabel runAction:_actionMoveDone];
+        _isActionDone = false;
+        if (_currentAction == SWIPE)
+        {
+            [self addChild:_arrow];
+        }
+        else if (_currentAction == ROTATE)
+        {
+            [self addChild:_rotateTarget];
+        }
+    }
+//    else if (_gameMode != OTHER_ACTION)
+    {
     /* Called when a touch begins */
     //test whether the target has been touched
-    for (UITouch *touch in [touches allObjects]) {
+    for (UITouch *touch in [touches allObjects])
+    {
         /* Called when a touch begins */
         CGPoint positionInScene = [touch locationInNode:self];
         //test whether the target has been touched
@@ -253,9 +288,8 @@ extern NSUserDefaults *defaults;
            _anchor.hidden = TRUE;
            _pressedAnchor.hidden = FALSE;
        }
-//    }
     }
-    
+    }
 }
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch ends */
@@ -309,28 +343,30 @@ extern NSUserDefaults *defaults;
                     [touchLog addObject:currentTouch];
                 }
             }
-            int has_rotated = 0;
+
             if (allTouchedTarget)
             {
                 CGFloat rotation = recognizer.rotation;
                 SKAction * spinaction = [SKAction rotateByAngle:-rotation/60 duration:1/60];
                 [_rotateTarget runAction:[SKAction sequence:@[spinaction]]];
-                has_rotated ++;
+                _hasRotated ++;
             }
 
             if ( recognizer.state == UIGestureRecognizerStateEnded )
             {
                 _numOfRotations ++;
-                if (has_rotated < 0)      // THIS IS WHEN THE ROTATION IS CORRECT! (that means they has successfully spun the target for a little bit...
+                if (_hasRotated > 0)      // THIS IS WHEN THE ROTATION IS CORRECT! (that means they has successfully spun the target for a little bit...
                 {
                     NSLog(@"correct rotation!\n");
                     _correctTouches++;
-                    [_rotateTarget runAction:_actionMoveDone];
                     [self rightAction];
+                    [self.view removeGestureRecognizer:rotationGR ];
+                    _isActionDone = true;
+                    [_rotateTarget runAction:_actionMoveDone];
+                    [self addChild:_tapSreenLabel];
                 }
                 allTouchedTarget = true;
                 NSLog(@"rotation has actually ended");
-                [self.view removeGestureRecognizer:rotationGR ];
             }
         }
     }
@@ -350,33 +386,43 @@ extern NSUserDefaults *defaults;
             {
                 bool isTargetTouched = false;
                 isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:0 inView:self.view]];
-                    
+                
                 if (isTargetTouched)
                 {
+                    _swipedOutside = false;
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Right On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
-                    SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x + 200, _target.position.y) duration:1];
-                    [_target runAction:[SKAction sequence:@[moveaction]]];
-
                     [touchLog addObject:currentTouch];
-                    [_arrow runAction:_actionMoveDone];
-                    _correctTouches++;
-                    [self rightAction];
+                    
+                    
+                    SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x + 200 , _target.position.y) duration:1];
+                    [_target runAction:moveaction];
+                    
                 }
                 else
                 {
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Right Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     [touchLog addObject:currentTouch];
-
                 }
                 
                 if ( recognizer.state == UIGestureRecognizerStateEnded )
                 {
+                    if (_swipedOutside == false)
+                    {
+                        NSLog(@"Swipe right correct! has_touch_outside: %d\n", _swipedOutside);
+                        
+                        [_arrow runAction:_actionMoveDone];
+                        _correctTouches++;
+                        
+                        [self.view removeGestureRecognizer:swipeUpGesture ];
+                        _isActionDone = true;
+                        [self addChild:_tapSreenLabel];
+                    }
                     NSLog(@"Swipe has actually ended");
-                    [self.view removeGestureRecognizer:swipeRightGesture ];
                 }
             }
         }
     }
+
 }
 
 -(void) handleSwipeLeft:( UISwipeGestureRecognizer *) recognizer {
@@ -396,31 +442,41 @@ extern NSUserDefaults *defaults;
                 
                 if (isTargetTouched)
                 {
+                    _swipedOutside = false;
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Left On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     [touchLog addObject:currentTouch];
-                    SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x - 200, _target.position.y) duration:1];
-                    [_target runAction:[SKAction sequence:@[moveaction]]];
                     
-                    [_arrow runAction:_actionMoveDone];
-                    _correctTouches++;
-                    [self rightAction];
+                    
+                    SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x -200 , _target.position.y) duration:1];
+                    [_target runAction:moveaction];
+                    
                 }
                 else
                 {
-                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Left Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
+                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Down Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     [touchLog addObject:currentTouch];
-                    
                 }
                 
                 if ( recognizer.state == UIGestureRecognizerStateEnded )
                 {
+                    if (_swipedOutside == false)
+                    {
+                        NSLog(@"Swipe left correct! has_touch_outside: %d\n", _swipedOutside);
+                        
+                        [_arrow runAction:_actionMoveDone];
+                        _correctTouches++;
+                        
+                        //[self rightAction];
+                        [self.view removeGestureRecognizer:swipeUpGesture ];
+                        _isActionDone = true;
+                        [self addChild:_tapSreenLabel];
+                    }
                     NSLog(@"Swipe has actually ended");
-                    [self.view removeGestureRecognizer:swipeLeftGesture ];
                 }
             }
         }
     }
-    
+
 }
 
 
@@ -439,10 +495,9 @@ extern NSUserDefaults *defaults;
                 bool isTargetTouched = false;
                 isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:0 inView:self.view]];
                 
-                int has_touched_outside = 1;
                 if (isTargetTouched)
                 {
-                    has_touched_outside = 0;
+                    _swipedOutside = false;
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Up On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     [touchLog addObject:currentTouch];
                     
@@ -459,15 +514,17 @@ extern NSUserDefaults *defaults;
                 
                 if ( recognizer.state == UIGestureRecognizerStateEnded )
                 {
-                    if (has_touched_outside == 0)
+                    if (_swipedOutside == false)
                     {
-                        NSLog(@"Swipe up correct! has_touch_outside: %d\n", has_touched_outside);
+                        NSLog(@"Swipe up correct! has_touch_outside: %d\n", _swipedOutside);
                         
                         [_arrow runAction:_actionMoveDone];
                         _correctTouches++;
                         
                         //[self rightAction];
                         [self.view removeGestureRecognizer:swipeUpGesture ];
+                        _isActionDone = true;
+                        [self addChild:_tapSreenLabel];
                     }
                     NSLog(@"Swipe has actually ended");
                 }
@@ -494,31 +551,40 @@ extern NSUserDefaults *defaults;
                 
                 if (isTargetTouched)
                 {
+                    _swipedOutside = false;
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Down On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     [touchLog addObject:currentTouch];
-                    SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x, _target.position.y-200) duration:1];
-                    [_target runAction:[SKAction sequence:@[moveaction]]];
-
-                    [_arrow runAction:_actionMoveDone];
-                    _correctTouches++;
-                    [self rightAction];
+                    
+                    
+                    SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x , _target.position.y -200) duration:1];
+                    [_target runAction:moveaction];
+                    
                 }
                 else
                 {
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Down Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
                     [touchLog addObject:currentTouch];
-                    
                 }
                 
                 if ( recognizer.state == UIGestureRecognizerStateEnded )
                 {
+                    if (_swipedOutside == false)
+                    {
+                        NSLog(@"Swipe down correct! has_touch_outside: %d\n", _swipedOutside);
+                        
+                        [_arrow runAction:_actionMoveDone];
+                        _correctTouches++;
+                        
+                        //[self rightAction];
+                        [self.view removeGestureRecognizer:swipeUpGesture ];
+                        _isActionDone = true;
+                        [self addChild:_tapSreenLabel];
+                    }
                     NSLog(@"Swipe has actually ended");
-                    [self.view removeGestureRecognizer:swipeDownGesture ];
                 }
             }
         }
     }
-    
 }
 
 -(bool)isTargetTouched:(CGPoint)touchLocation
@@ -564,7 +630,7 @@ extern NSUserDefaults *defaults;
     }
     else
     {
-        [self displayTarget];
+        [self displayActionTarget];
     }
 }
 
