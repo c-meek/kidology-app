@@ -20,6 +20,7 @@
     if(self = [super initWithSize:size])
     {
         //add background
+        
         //add target practice button and label
         [self addPressedTargetButton];
         [self addTargetPracticeButton];

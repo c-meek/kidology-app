@@ -219,17 +219,16 @@ extern NSUserDefaults *defaults;
     Boolean result;
 //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
     SKNode *node = [self nodeAtPoint:touchLocation];
+
     if ([node.name isEqualToString:@"pressedAnchor"] || [node.name isEqualToString:@"anchor"])
     {
         LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Panel" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:(self.target.size.width / 2)];
         //{PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
         [touchLog addObject:currentTouch];
-//        NSLog(@"anchor panel is being touched.");
         result = true;
     }
     else
     {
-//        NSLog(@"anchor panel is not being touched.");
         result = false;
     }
     return result;
@@ -269,10 +268,9 @@ extern NSUserDefaults *defaults;
             _pressedAnchor.hidden = TRUE;
             
         }
-        else
+        else // non-anchor touch ending
         {
-            _anchor.hidden = TRUE;
-            _pressedAnchor.hidden = FALSE;
+            // don't need to do anything?
         }
     }
 }

@@ -223,14 +223,13 @@ NSString *gameName;
 
     else if ([node.name isEqualToString:@"customModeLabel"] || [node.name isEqualToString:@"customModeButton"])
     {
-        
-        if(nil == gameName)
+        if(nil == gameName && [_tbv superview] == nil)
         {
 //            UIViewController *vc = self.view.window.rootViewController;
 //            [vc performSegueWithIdentifier:@"toGameList" sender:self];
 //            _customModeButton.color = [SKColor greenColor];
             [self addGameFilesToArray];
-            _tbv = [[UITableView alloc] initWithFrame:CGRectMake(100,100, 500, 500)];
+            _tbv = [[UITableView alloc] initWithFrame:CGRectMake(0, 87, self.frame.size.height, self.frame.size.width)];
             _tbv.delegate = self;
             _tbv.dataSource = self;
             [self.view addSubview:_tbv];
@@ -238,9 +237,6 @@ NSString *gameName;
         else
         {
             [_tbv removeFromSuperview];
-            SKScene *customTarget = [[CustomTargetPracticeScene alloc] initWithSize:self.size];
-            customTarget.scaleMode = SKSceneScaleModeAspectFill;
-            [self.view presentScene:customTarget];
         }
     }
     else
@@ -266,7 +262,7 @@ NSString *gameName;
 -(void)addGameFilesToArray
 {
     _gameArray = [[NSMutableArray alloc]init];
-    NSString *extension = @"txt";
+    NSString *extension = @"csv";
     NSString *resPath = [[NSBundle mainBundle] resourcePath];
     NSString *item;
     NSError *error = nil;
@@ -310,6 +306,16 @@ NSString *gameName;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     gameName = [self.gameArray objectAtIndex:indexPath.row];
+    [_tbv removeFromSuperview];
+    SKScene *customTarget = [[CustomTargetPracticeScene alloc] initWithSize:self.size];
+    customTarget.scaleMode = SKSceneScaleModeAspectFill;
+    [self.view presentScene:customTarget];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+
+{
+    return @"SELECT A GAME";
 }
 
 @end

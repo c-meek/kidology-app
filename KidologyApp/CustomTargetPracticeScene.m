@@ -27,8 +27,6 @@ NSMutableArray *touchLog;
         [self readInput];
         //assign total number of targets
         _totalTargets = [_commandArray count] - 1;
-        //assign delay duration between touched targets
-        _delayDuration = [_commandArray[0] floatValue];
         //initialize targetIterator to start reading from the correct part of array
         _targetIterator = 1;
         //initialize target with image
@@ -49,18 +47,23 @@ NSMutableArray *touchLog;
     //get the target information
     NSString *targetInfoString = _commandArray[_targetIterator];
     //array of size 3 where [0] = X position [1] = Y position [2] = scale of target
-    NSArray *targetInfoArray = [targetInfoString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSArray *targetInfoArray = [targetInfoString componentsSeparatedByString:@","];
+    NSLog(@"%@", targetInfoArray);
     //set position based and scale on the values
     _target.xScale = [targetInfoArray[2] floatValue];
     _target.yScale = [targetInfoArray[2] floatValue];
     _target.position = CGPointMake([targetInfoArray[0] floatValue], [targetInfoArray[1] floatValue]);
+    if([targetInfoArray count] == 4)
+    {
+        _delayDuration = [targetInfoArray[3] floatValue];
+    }
+    NSLog(@"%f", _delayDuration);
 }
 
 -(void)readInput
 {
     NSString *shortenedGameName = [gameName substringToIndex:[gameName length] - 4];
-    NSLog(@"%@", shortenedGameName);
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:shortenedGameName ofType:@"txt"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:shortenedGameName ofType:@"csv"];
     NSError *error;
     NSString *fileContents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
     if(error)

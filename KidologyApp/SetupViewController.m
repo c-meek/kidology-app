@@ -8,7 +8,7 @@
 
 #import "SetupViewController.h"
 NSUserDefaults *defaults;
-NSString *affectedHand = @"left";
+NSString *affectedHand;
 NSString *therapistEmail;
 @implementation SetupViewController : ViewController
 - (IBAction)therapistInfo:(UITextField *)sender
@@ -16,17 +16,29 @@ NSString *therapistEmail;
     therapistEmail = sender.text;
 }
 - (IBAction)affectedHand:(UISwitch *)sender {
-    
+//    if ([defaults objectForKey:@"affectedHand"] != NULL)
+//    {
+//        affectedHand = [defaults objectForKey:@"affectedHand"];
+//        if ([affectedHand isEqual: @"right"])
+//        {
+//            [sender setOn:YES animated:YES];
+//        }
+//        // otherwise, switch will default to the left position
+//    }
+
     if([sender isOn])
     {
         affectedHand = @"right";
-        NSLog(@"right");
     }
-    else
-    {
-        affectedHand = @"left";
-        NSLog(@"left");
-    }
+
+        if([sender isOn])
+        {
+            affectedHand = @"right";
+        }
+        else
+        {
+            affectedHand = @"left";
+        }
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -51,12 +63,12 @@ NSString *therapistEmail;
 }
 
 - (IBAction)returnToMain:(id)sender {
-    NSLog(@"This is where the values would be saved.");
     [self.navigationController popToRootViewControllerAnimated:YES];
     defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:affectedHand forKey:@"affectedHand"];
     [defaults setObject:therapistEmail forKey:@"therapistEmail"];
     [defaults synchronize];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end
