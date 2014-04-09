@@ -53,6 +53,7 @@ NSMutableArray *touchLog;
     _target.xScale = [targetInfoArray[2] floatValue];
     _target.yScale = [targetInfoArray[2] floatValue];
     _target.position = CGPointMake([targetInfoArray[0] floatValue], [targetInfoArray[1] floatValue]);
+    NSLog(@"%@", targetInfoArray);
     if([targetInfoArray count] == 4)
     {
         _delayDuration = [targetInfoArray[3] floatValue];
