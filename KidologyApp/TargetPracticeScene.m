@@ -151,7 +151,7 @@ extern NSUserDefaults *defaults;
     self.target.yScale = .67;
 
     int x = (rand() % 2); // REMEMBER TO CHANGE THIS TO 3 WHEN ZOOM IS COMPLETE
-    NSLog(@"Action Num %d\n",x);
+   // NSLog(@"Action Num %d\n",x);
     if (x == 0)
     {
             
@@ -597,7 +597,7 @@ extern NSUserDefaults *defaults;
     if(self.totalTargets <= self.correctTouches)
     {
         
-        NSLog(@"Correct Touches: %d\n", self.correctTouches);
+        //NSLog(@"Correct Touches: %d\n", self.correctTouches);
         SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
         SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targets:self.totalTargets];
         // pass the game type and touch log to "game over" scene
