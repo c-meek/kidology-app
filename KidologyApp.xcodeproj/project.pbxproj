@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F01046818DB627300D2378F /* customgame_README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0F01046718DB627300D2378F /* customgame_README.txt */; };
+		0F3AC2BF18F6EA61007CE27C /* test1.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0F3AC2BE18F6EA61007CE27C /* test1.csv */; };
 		0F423CAB18AD5D2200EE5F4E /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F423CAA18AD5D2200EE5F4E /* dog.png */; };
 		0F423CAF18AD61EC00EE5F4E /* tennis.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F423CAE18AD61EC00EE5F4E /* tennis.png */; };
 		0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D547A18AD4EBA00F9593D /* purple_target.png */; };
@@ -117,6 +118,7 @@
 
 /* Begin PBXFileReference section */
 		0F01046718DB627300D2378F /* customgame_README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = customgame_README.txt; sourceTree = "<group>"; };
+		0F3AC2BE18F6EA61007CE27C /* test1.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.csv; sourceTree = "<group>"; };
 		0F423CAA18AD5D2200EE5F4E /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
 		0F423CAE18AD61EC00EE5F4E /* tennis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tennis.png; sourceTree = "<group>"; };
 		0F7D547A18AD4EBA00F9593D /* purple_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purple_target.png; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				0FD6614018F5E0FE00B0CDB3 /* backwards.csv */,
+				0F3AC2BE18F6EA61007CE27C /* test1.csv */,
 				0F01046718DB627300D2378F /* customgame_README.txt */,
 				0FDC0EB518F49690000CE9E0 /* 4corners.csv */,
 				0FB5157018F463CE005C309C /* test.csv */,
@@ -655,6 +658,7 @@
 				0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */,
 				E8DF544B18F58B8F00B9D1D1 /* targetGameButtonPressed.png in Resources */,
 				0F9462D718C0296A00E9E3BD /* anchor_red_right.png in Resources */,
+				0F3AC2BF18F6EA61007CE27C /* test1.csv in Resources */,
 				7CB23C4018C0020D007F409F /* Black.png in Resources */,
 				FD6B78DC18ED19240035CA95 /* kidologyapp-legacy@2x.png in Resources */,
 				7CB23C4318C0020D007F409F /* Cyan.png in Resources */,
