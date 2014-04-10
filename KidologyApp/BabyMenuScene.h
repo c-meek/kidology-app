@@ -10,5 +10,6 @@
 
 @interface BabyMenuScene : SKScene
 @property (nonatomic) SKSpriteNode *backButton;
+@property (nonatomic) SKSpriteNode *pressedBackButton;
 @property (nonatomic) SKLabelNode * backButtonLabel;
 @end

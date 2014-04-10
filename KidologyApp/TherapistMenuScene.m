@@ -37,9 +37,10 @@
         _uploadButton.color = [SKColor yellowColor];
     }
     else if ([node.name isEqualToString:@"backButton"] ||
-             [node.name isEqualToString:@"backButtonLabel"])
+             [node.name isEqualToString:@"pressedBackButton"])
     {
-        _backButton.color = [SKColor yellowColor];
+        _backButton.hidden = true;
+        _pressedBackButton.hidden = false;
     }
 
 }
@@ -67,6 +68,11 @@
         SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
         mainMenu.scaleMode = SKSceneScaleModeAspectFill;
         [self.view presentScene:mainMenu];
+    }
+    else
+    {
+        _pressedBackButton.hidden = true;
+        _backButton.hidden = false;
     }
 
 
@@ -225,21 +231,22 @@
 
 -(void)addBackButton
 {
-    // add browse button to scene
-    _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor]
-                                                              size:CGSizeMake(200, 40)];
-    _backButton.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
-                                         CGRectGetMidY(self.frame) + 200);
+    //Back Button!
+    _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
+    _backButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
     _backButton.name = @"backButton";
-    NSString *backButtonText = [NSString stringWithFormat:@"Back"];
-    SKLabelNode *backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    backButtonLabel.name = @"backButtonLabel";
-    backButtonLabel.text = backButtonText;
-    backButtonLabel.fontSize = 24;
-    backButtonLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225,
-                                           CGRectGetMidY(self.frame) + 200);
+    _backButton.xScale = .5;
+    _backButton.yScale = .5;
     [self addChild:_backButton];
-    [self addChild:backButtonLabel];
+    
+    //Pressed Back Button!
+    _pressedBackButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
+    _pressedBackButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
+    _pressedBackButton.name = @"backButton";
+    _pressedBackButton.hidden = true;
+    _pressedBackButton.xScale = .5;
+    _pressedBackButton.yScale = .5;
+    [self addChild:_pressedBackButton];
 }
 
 @end

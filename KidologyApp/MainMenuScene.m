@@ -9,7 +9,7 @@
 #import "MainMenuScene.h"
 #import "BabyMenuScene.h"
 #import "TargetPracticeMenuScene.h"
-#import "FetchInstructionScene.h"
+#import "FetchScene.h"
 #import "TherapistMenuScene.h"
 // #import "SettingsMenuScene.h"
 #import "MenuViewController.h"
@@ -133,7 +133,7 @@ bool isFirstLogin = true;
              [node.name isEqualToString:@"fetchGameButtonPressed"])
     {
         // Create and configure the "game menu" scene.
-        SKScene * fetchGame = [[FetchInstructionScene alloc] initWithSize:self.size];
+        SKScene * fetchGame = [[FetchScene alloc] initWithSize:self.size];
         fetchGame.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
