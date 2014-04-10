@@ -270,29 +270,30 @@ extern NSUserDefaults *defaults;
         /* Called when a touch begins */
         CGPoint positionInScene = [touch locationInNode:self];
         //test whether the target has been touched
-       if ([self isAnchorTouch:positionInScene] == false && _gameMode != OTHER_ACTION) // If the touch isn't on the anchor,
+        if ([self isAnchorTouch:positionInScene])
+        {
+            // If it is on the anchor,
+            _anchored = TOUCHING; // make note of that.
+            _anchor.hidden = TRUE;
+            _pressedAnchor.hidden = FALSE;
+        }
+       else if (_gameMode != OTHER_ACTION)
        {
+           // If the touch isn't on the anchor
             [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
        }
-       else
-       { // If it is on the anchor,
-           _anchored = TOUCHING; // make note of that.
-           _anchor.hidden = TRUE;
-           _pressedAnchor.hidden = FALSE;
-       }
-    
     }
 }
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch ends */
     for (UITouch *touch in [touches allObjects]) {
         CGPoint positionInScene = [touch locationInNode:self];
-        if ([self isAnchorTouch:positionInScene] == true) // If a touch on the anchor is ending,
+        // If a touch on the anchor is ending
+        if ([self isAnchorTouch:positionInScene])
         {
             _anchored = NOT_TOUCHING; // make note of that.
             _anchor.hidden = FALSE;         
             _pressedAnchor.hidden = TRUE;
-            
         }
         // else, it's a non-anchor touch and nothing needs done
     }
@@ -302,6 +303,7 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
+    NSLog(@"in handle rotation");
     bool allTouchedTarget =true;
     if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
@@ -312,9 +314,8 @@ extern NSUserDefaults *defaults;
             int x = 0;
             while (x < num_of_touches)
             {
-                bool isTargetTouched = false;
-                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:x inView:nil]];
-                
+                bool isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:x
+                                                                                  inView:nil]];
                 if (isTargetTouched)
                 {
                     

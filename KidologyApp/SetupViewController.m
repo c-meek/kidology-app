@@ -54,6 +54,7 @@ NSString *lastName;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"settingsScreen.png"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,7 +79,7 @@ NSString *lastName;
     if(textField == self.firstName) {
         [self.lastName becomeFirstResponder];
     } else if(textField == self.lastName) {
-        [self.lastName resignFirstResponder];
+        [self.therapistEmail becomeFirstResponder];
     } else if(textField == self.therapistEmail) {
         [self.therapistEmail resignFirstResponder];
     }
