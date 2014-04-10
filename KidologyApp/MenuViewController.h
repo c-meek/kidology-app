@@ -9,5 +9,4 @@
 #import "ViewController.h"
 
 @interface MenuViewController : ViewController
-
 @end

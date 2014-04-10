@@ -6,17 +6,31 @@
 	<array>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Affected Hand (left or right)</string>
+			<string>First Name</string>
+			<key>IsSecure</key>
+			<false/>
 			<key>Key</key>
-			<string>affectedHand</string>
+			<string>firstName</string>
 			<key>DefaultValue</key>
 			<string></string>
-			<key>TrueValue</key>
-			<string>right</string>
-			<key>FalseValue</key>
-			<string>left</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Last Name</string>
+			<key>Key</key>
+			<string>lastName</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
 		</dict>
 		<dict>
 			<key>AutocapitalizationType</key>
@@ -36,8 +50,24 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Affected Hand (Left or Right)</string>
+			<key>Key</key>
+			<string>affectedHand</string>
+			<key>DefaultValue</key>
+			<false/>
+			<key>TrueValue</key>
+			<string>right</string>
+			<key>FalseValue</key>
+			<string>left</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>
+	<key>Title</key>
+	<string>The Kidology App!</string>
 </dict>
 </plist>

@@ -274,6 +274,7 @@ NSString *gameName;
             [_gameArray addObject:item];
         }
     }
+    
 }
 
 #pragma mark - Table view data source

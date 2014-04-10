@@ -8,8 +8,8 @@
 
 #import "TargetPracticeGameOver.h"
 #import "TargetPracticeScene.h"
-#import "GameMenuScene.h"
 #import "LogEntry.h"
+#import "MainMenuScene.h"
 
 @implementation TargetPracticeGameOver
 
@@ -117,11 +117,11 @@
 //        // Present the scene.
 //        [self.view presentScene:mainMenu];
         // Create and configure the "main menu" scene.
-        SKScene * gameMenu = [[GameMenuScene alloc] initWithSize:self.size];
-        gameMenu.scaleMode = SKSceneScaleModeAspectFill;
+        SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
+        mainMenu.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
-        [self.view presentScene:gameMenu];
+        [self.view presentScene:mainMenu];
         
     }
     else
