@@ -119,7 +119,7 @@ NSString *gameName;
         _actionModeButtonLabel.verticalAlignmentMode = 1;
         [self addChild:_actionModeButtonLabel];
         
-//READ! Do we want this? Animation!!!
+
         _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         _target.position = (CGPointMake(self.frame.size.width/2-50, self.frame.size.height/2-82));
         _target.xScale = .4;

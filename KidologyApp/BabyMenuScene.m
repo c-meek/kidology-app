@@ -107,19 +107,7 @@
 
 -(void)addBackButton
 {
-//    //add button with attributes
-//    _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(100, 40)];
-//    _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
-//    _backButton.name = @"backButton";
-//    [self addChild:_backButton];
-//    //add label with attributes
-//    NSString * labelText = [NSString stringWithFormat:@"Back"];
-//    _backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-//    _backButtonLabel.name = @"backButtonLabel";
-//    _backButtonLabel.text = labelText;
-//    _backButtonLabel.fontSize = 24;
-//    _backButtonLabel.position = CGPointMake(self.frame.size.width-55, self.frame.size.height/2 + 240);
-//    [self addChild:_backButtonLabel];
+
     //Back Button!
     _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
     _backButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);

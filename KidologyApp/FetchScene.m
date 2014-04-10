@@ -48,19 +48,6 @@
 
 -(void)displayBackButton
 {
-//    //add button with attributes
-//    _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(100, 40)];
-//    _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
-//    _backButton.name = @"backButton";
-//    [self addChild:_backButton];
-//    //add label with attributes
-//    NSString * labelText = [NSString stringWithFormat:@"Back"];
-//    _backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-//    _backButtonLabel.name = @"backButtonLabel";
-//    _backButtonLabel.text = labelText;
-//    _backButtonLabel.fontSize = 24;
-//    _backButtonLabel.position = CGPointMake(self.frame.size.width-55, self.frame.size.height/2 + 240);
-//    [self addChild:_backButtonLabel];
     //Back Button!
     _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
     _backButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
@@ -135,8 +122,7 @@
     //move both onscreen
     [self moveBackDogAndBall];
     
-    // deallocate positions array from memory
-//    free(positions);  // this line was producing the error "Pointer being freed was not allocated", so it is commented out.
+    
 }
 
 // generate random direction to move the dog and ball along
