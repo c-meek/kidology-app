@@ -70,6 +70,7 @@ NSString *lastName;
 
 - (IBAction)returnToMain:(id)sender {
     
+    NSLog(@"updating settings fields!");
     //[self.navigationController popToRootViewControllerAnimated:YES];
     defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:affectedHand forKey:@"affectedHand"];
@@ -78,9 +79,9 @@ NSString *lastName;
     [defaults setObject:lastName forKey:@"lastName"];
 
     [defaults synchronize];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self performSegueWithIdentifier:@"unwindToMenuViewController" sender:self];
+    //[self.navigationController popToRootViewControllerAnimated:YES];
 }
-
 
 // advances thru input fields when user hits return in text field
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
