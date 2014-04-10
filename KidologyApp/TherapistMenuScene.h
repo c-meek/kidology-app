@@ -12,6 +12,7 @@
 @interface TherapistMenuScene : SKScene <MFMailComposeViewControllerDelegate> 
 @property (nonatomic) SKSpriteNode *uploadButton;
 @property (nonatomic) SKSpriteNode *backButton;
+@property (nonatomic) SKSpriteNode *pressedBackButton;
 
 
 @end

@@ -68,7 +68,13 @@ NSMutableArray *touchLog;
     {
         NSLog(@"erorr %@", error.localizedDescription);
     }
-    _commandArray = [fileContents componentsSeparatedByString:@"\n"];
+    
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@"\n" withString:@";"];
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@"\r" withString:@";"];
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@";;" withString:@";"];
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@";;;" withString:@";"];
+    _commandArray = [fileContents componentsSeparatedByString:@";"];
+    
     NSLog(@"%@", _commandArray);
 
 

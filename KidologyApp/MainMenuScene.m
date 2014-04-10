@@ -9,7 +9,7 @@
 #import "MainMenuScene.h"
 #import "BabyMenuScene.h"
 #import "TargetPracticeMenuScene.h"
-#import "FetchInstructionScene.h"
+#import "FetchScene.h"
 #import "TherapistMenuScene.h"
 // #import "SettingsMenuScene.h"
 #import "MenuViewController.h"
@@ -133,7 +133,7 @@ bool isFirstLogin = true;
              [node.name isEqualToString:@"fetchGameButtonPressed"])
     {
         // Create and configure the "game menu" scene.
-        SKScene * fetchGame = [[FetchInstructionScene alloc] initWithSize:self.size];
+        SKScene * fetchGame = [[FetchScene alloc] initWithSize:self.size];
         fetchGame.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
@@ -180,9 +180,16 @@ bool isFirstLogin = true;
 //        [self.view presentScene:therapistMenu];
 //    }
 //    else
-//    {
-//        _gameMenuButton.color = [SKColor redColor];
-//    }
+    {
+        _targetGameButton.hidden = false;
+        _targetGameButtonPressed.hidden = true;
+        _babyGameButton.hidden = false;
+        _babyGameButtonPressed.hidden = true;
+        _fetchGameButton.hidden = false;
+        _fetchGameButtonPressed.hidden = true;
+        _therapistMenuButton.hidden = false;
+        _therapistMenuButtonPressed.hidden = true;
+    }
 
 }
 
@@ -264,8 +271,8 @@ bool isFirstLogin = true;
 {
     // therapist button
     _therapistMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"therapistMenuButton.png"];
-    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 260,
-                                                CGRectGetMidY(self.frame) - 10);
+    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 280,
+                                                CGRectGetMidY(self.frame) - 180);
     _therapistMenuButton.xScale = .38;
     _therapistMenuButton.yScale = .38;
     _therapistMenuButton.name = @"therapistMenuButton";
@@ -273,8 +280,8 @@ bool isFirstLogin = true;
     
     // pressed therapist menu button icon
     _therapistMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"therapistMenuButtonPressed.png"];
-    _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 260,
-                                                       CGRectGetMidY(self.frame) - 10);
+    _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 280,
+                                                       CGRectGetMidY(self.frame) - 180);
     _therapistMenuButtonPressed.xScale = .38;
     _therapistMenuButtonPressed.yScale = .38;
     _therapistMenuButtonPressed.name = @"therapistMenuButtonPressed";

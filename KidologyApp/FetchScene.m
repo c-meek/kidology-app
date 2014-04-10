@@ -48,19 +48,35 @@
 
 -(void)displayBackButton
 {
-    //add button with attributes
-    _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(100, 40)];
-    _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
+//    //add button with attributes
+//    _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(100, 40)];
+//    _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
+//    _backButton.name = @"backButton";
+//    [self addChild:_backButton];
+//    //add label with attributes
+//    NSString * labelText = [NSString stringWithFormat:@"Back"];
+//    _backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+//    _backButtonLabel.name = @"backButtonLabel";
+//    _backButtonLabel.text = labelText;
+//    _backButtonLabel.fontSize = 24;
+//    _backButtonLabel.position = CGPointMake(self.frame.size.width-55, self.frame.size.height/2 + 240);
+//    [self addChild:_backButtonLabel];
+    //Back Button!
+    _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
+    _backButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
     _backButton.name = @"backButton";
+    _backButton.xScale = .5;
+    _backButton.yScale = .5;
     [self addChild:_backButton];
-    //add label with attributes
-    NSString * labelText = [NSString stringWithFormat:@"Back"];
-    _backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    _backButtonLabel.name = @"backButtonLabel";
-    _backButtonLabel.text = labelText;
-    _backButtonLabel.fontSize = 24;
-    _backButtonLabel.position = CGPointMake(self.frame.size.width-55, self.frame.size.height/2 + 240);
-    [self addChild:_backButtonLabel];    
+    
+    //Pressed Back Button!
+    _pressedBackButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
+    _pressedBackButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
+    _pressedBackButton.name = @"backButton";
+    _pressedBackButton.hidden = true;
+    _pressedBackButton.xScale = .5;
+    _pressedBackButton.yScale = .5;
+    [self addChild:_pressedBackButton];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -69,9 +85,10 @@
     {
         CGPoint location = [touch locationInNode:self];
         SKNode *node = [self nodeAtPoint:location];
-        if([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonLabel"])
+        if([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"pressedBackButton"])
         {
-            _backButton.color = [SKColor yellowColor];
+            _backButton.hidden = true;
+            _pressedBackButton.hidden = false;
         }
     }
 }
@@ -93,13 +110,14 @@
         {
             [self dogTouch];
         }
-        else if([_backButton isEqual:touchedNode] || [_backButtonLabel isEqual:touchedNode])
+        else if([_backButton isEqual:touchedNode] || [_pressedBackButton isEqual:touchedNode])
         {
             [self goToMainScreen];
         }
         else
         {
-            _backButton.color = [SKColor redColor];
+            _pressedBackButton.hidden = true;
+            _backButton.hidden = false;
         }
     }
 }
@@ -232,7 +250,7 @@
 
 -(void)addInstruction
 {
-    NSString * text2 = [NSString stringWithFormat:@"Touch the ball to throw it."];
+    NSString * text2 = [NSString stringWithFormat:@"Touch the ball to throw it!"];
     SKLabelNode * instructionLabel2 = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     instructionLabel2.name = @"instructionLabel2";
     instructionLabel2.text = text2;
