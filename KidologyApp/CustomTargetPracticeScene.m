@@ -48,16 +48,14 @@ NSMutableArray *touchLog;
     NSString *targetInfoString = _commandArray[_targetIterator];
     //array of size 3 where [0] = X position [1] = Y position [2] = scale of target
     NSArray *targetInfoArray = [targetInfoString componentsSeparatedByString:@","];
-    NSLog(@"%@", targetInfoArray);
     //set position based and scale on the values
     _target.xScale = [targetInfoArray[2] floatValue];
     _target.yScale = [targetInfoArray[2] floatValue];
     _target.position = CGPointMake([targetInfoArray[0] floatValue], [targetInfoArray[1] floatValue]);
-    if([targetInfoArray count] == 4)
+    if(!([targetInfoArray[3] isEqualToString:@""]))
     {
         _delayDuration = [targetInfoArray[3] floatValue];
     }
-    NSLog(@"%f", _delayDuration);
 }
 
 -(void)readInput
@@ -70,7 +68,14 @@ NSMutableArray *touchLog;
     {
         NSLog(@"erorr %@", error.localizedDescription);
     }
-    _commandArray = [fileContents componentsSeparatedByString:@"\n"];
+    
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@"\n" withString:@";"];
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@"\r" withString:@";"];
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@";;" withString:@";"];
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@";;;" withString:@";"];
+    _commandArray = [fileContents componentsSeparatedByString:@";"];
+    
+    NSLog(@"%@", _commandArray);
 
 
 }

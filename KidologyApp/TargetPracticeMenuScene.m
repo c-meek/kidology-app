@@ -43,18 +43,21 @@ NSString *gameName;
         [self addChild:selectModeLabel];
         
         //Back Button!
-        _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
-        _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
+        _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
+        _backButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
         _backButton.name = @"backButton";
+        _backButton.xScale = .5;
+        _backButton.yScale = .5;
         [self addChild:_backButton];
         
-        _backButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
-        _backButtonLabel.fontSize = 35;
-        _backButtonLabel.fontColor = [SKColor whiteColor];
-        _backButtonLabel.position = CGPointMake(self.frame.size.width - 62, self.frame.size.height/2 + 235);
-        _backButtonLabel.name = @"backLabel";
-        _backButtonLabel.text = @"Back";
-        [self addChild:_backButtonLabel];
+        //Pressed Back Button!
+        _pressedBackButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
+        _pressedBackButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
+        _pressedBackButton.name = @"backButton";
+        _pressedBackButton.hidden = true;
+        _pressedBackButton.xScale = .5;
+        _pressedBackButton.yScale = .5;
+        [self addChild:_pressedBackButton];
 
         //Center Button!
         _centerModeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
@@ -116,7 +119,7 @@ NSString *gameName;
         _actionModeButtonLabel.verticalAlignmentMode = 1;
         [self addChild:_actionModeButtonLabel];
         
-//READ! Do we want this? Animation!!!
+
         _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         _target.position = (CGPointMake(self.frame.size.width/2-50, self.frame.size.height/2-82));
         _target.xScale = .4;
@@ -146,7 +149,8 @@ NSString *gameName;
     
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backLabel"])
     {
-        _backButton.color = [SKColor yellowColor];
+        _backButton.hidden = true;
+        _pressedBackButton.hidden = false;
     }
     
     //Added another variable for Target Pratice call.
@@ -185,10 +189,10 @@ NSString *gameName;
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
             backToMain.scaleMode = SKSceneScaleModeAspectFill;
             [_tbv removeFromSuperview];
-            [self.view presentScene:backToMain];
+            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+            [self.view presentScene:backToMain transition:reveal];
         }
-    
-    //Added another variable for Target Pratice call.
+    //Added another variable for Target Practice call.
     else if ([node.name isEqualToString:@"centerLabel"] ||
         [node.name isEqualToString:@"centerButton"])
     {
@@ -241,7 +245,9 @@ NSString *gameName;
     }
     else
     {
-        _backButton.color = [SKColor redColor];
+
+        _pressedBackButton.hidden = true;
+        _backButton.hidden = false;
         _centerModeButton.color = [SKColor redColor];
         _actionModeButton.color = [SKColor redColor];
         _customModeLabel.color = [SKColor redColor];
