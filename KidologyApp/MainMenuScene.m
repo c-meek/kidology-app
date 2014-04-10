@@ -335,14 +335,15 @@ bool isFirstLogin = true;
     
     // alert when empty/incomplete name fields
     NSString *message = @"";
+  
     if (firstName == NULL || firstName.length == 0 ||
         lastName  == NULL || lastName.length  == 0)
     {
-        message = @"Your name is missing in the application settings!  Without a name, your therapist could get confused!";
+        message = @"Your name is missing in the application settings.  Without a name, your therapist could get confused! Please go to the Settings app and enter your name.";
     }
     else if (therapistEmail  == NULL || therapistEmail.length  == 0)
     {
-        message = @"You have not provided an e-mail address for your therapist!  Without an e-mail address, you cannot send them your progress reports!";
+        message = @"You have not provided an e-mail address for your therapist.  Without an e-mail address, you cannot send them your progress reports! Please go to the Settings app and enter your therapist's email.";
     }
     if (message.length > 0)
     {
@@ -356,7 +357,9 @@ bool isFirstLogin = true;
         return;
     }
 
-    NSString *wholeName = [firstName stringByAppendingString:lastName];
+    NSString *lastInitial = [lastName substringToIndex:1];
+    lastInitial = [lastInitial stringByAppendingString:@"."];
+    NSString *wholeName = [firstName stringByAppendingString:lastInitial];
     NSString *usernameLabelText = [@"Playing as " stringByAppendingString:wholeName];
     SKLabelNode *usernameLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     usernameLabel.name = @"usernameLabel";
@@ -364,7 +367,7 @@ bool isFirstLogin = true;
     usernameLabel.fontSize = 20;
     usernameLabel.fontColor = [SKColor blackColor];
     usernameLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 200,
-                                         CGRectGetMidY(self.frame)+ 270);
+                                         CGRectGetMidY(self.frame)+ 250);
     [self addChild:usernameLabel];
 
 }
