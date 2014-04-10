@@ -35,8 +35,6 @@ bool isFirstLogin = true;
         [self addFetchGameButton];
         //add therapist menu button
         [self addTherapistMenuButton];
-        //add settings menu button
-        [self addSettingsMenuButton];
         // add user info label to corner
         if (!isFirstLogin)
             [self addUserInfo];
@@ -87,12 +85,7 @@ bool isFirstLogin = true;
         _therapistMenuButtonPressed.hidden = false;
         //_gameMenuButton.color = [SKColor yellowColor];
     }
-    else if ([node.name isEqualToString:@"settingsMenuButton"] ||
-             [node.name isEqualToString:@"settingsMenuButtonPressed"])
-    {
-        _settingsMenuButton.hidden = true;
-        _settingsMenuButtonPressed.hidden = false;
-    }
+
 //    else if([node.name isEqualToString:@"therapistMenuButton"] ||
 //            [node.name isEqualToString:@"therapistMenuLabel"])
 //    {
@@ -298,27 +291,27 @@ bool isFirstLogin = true;
     //    [self addChild:therapistMenuLabel];
 }
 
--(void)addSettingsMenuButton
-{
-    // therapist button
-    _settingsMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"settingsMenuButton.png"];
-    _settingsMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 260,
-                                               CGRectGetMidY(self.frame) - 140);
-    _settingsMenuButton.xScale = .38;
-    _settingsMenuButton.yScale = .38;
-    _settingsMenuButton.name = @"settingsMenuButton";
-    [self addChild:_settingsMenuButton];
-    
-    // pressed settings menu button icon
-    _settingsMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"settingsMenuButtonPressed.png"];
-    _settingsMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 260,
-                                                      CGRectGetMidY(self.frame) - 140);
-    _settingsMenuButtonPressed.xScale = .38;
-    _settingsMenuButtonPressed.yScale = .38;
-    _settingsMenuButtonPressed.name = @"settingsMenuButtonPressed";
-    _settingsMenuButtonPressed.hidden = true;
-    [self addChild:_settingsMenuButtonPressed];
-}
+//-(void)addSettingsMenuButton
+//{
+//    // therapist button
+//    _settingsMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"settingsMenuButton.png"];
+//    _settingsMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 260,
+//                                               CGRectGetMidY(self.frame) - 140);
+//    _settingsMenuButton.xScale = .38;
+//    _settingsMenuButton.yScale = .38;
+//    _settingsMenuButton.name = @"settingsMenuButton";
+//    [self addChild:_settingsMenuButton];
+//    
+//    // pressed settings menu button icon
+//    _settingsMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"settingsMenuButtonPressed.png"];
+//    _settingsMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 260,
+//                                                      CGRectGetMidY(self.frame) - 140);
+//    _settingsMenuButtonPressed.xScale = .38;
+//    _settingsMenuButtonPressed.yScale = .38;
+//    _settingsMenuButtonPressed.name = @"settingsMenuButtonPressed";
+//    _settingsMenuButtonPressed.hidden = true;
+//    [self addChild:_settingsMenuButtonPressed];
+//}
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
