@@ -245,6 +245,7 @@ extern NSUserDefaults *defaults;
     }
     return result;
 }
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (_gameMode == OTHER_ACTION && _isActionDone == true)
@@ -262,8 +263,6 @@ extern NSUserDefaults *defaults;
             [self addChild:_rotateTarget];
         }
     }
-//    else if (_gameMode != OTHER_ACTION)
-    {
     /* Called when a touch begins */
     //test whether the target has been touched
     for (UITouch *touch in [touches allObjects])
@@ -271,7 +270,7 @@ extern NSUserDefaults *defaults;
         /* Called when a touch begins */
         CGPoint positionInScene = [touch locationInNode:self];
         //test whether the target has been touched
-       if ([self isAnchorTouch:positionInScene] == false) // If the touch isn't on the anchor,
+       if ([self isAnchorTouch:positionInScene] == false && _gameMode != OTHER_ACTION) // If the touch isn't on the anchor,
        {
             [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
        }
@@ -281,7 +280,7 @@ extern NSUserDefaults *defaults;
            _anchor.hidden = TRUE;
            _pressedAnchor.hidden = FALSE;
        }
-    }
+    
     }
 }
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -304,7 +303,7 @@ extern NSUserDefaults *defaults;
     LogEntry *currentTouch;
     
     bool allTouchedTarget =true;
-    if (true) //_anchor == TOUCHING)  // change this when proper testing can occure!
+    if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == OTHER_ACTION)
         {
@@ -366,7 +365,7 @@ extern NSUserDefaults *defaults;
 
     LogEntry *currentTouch;
     
-    if (true) //_anchor == TOUCHING)  // change this when proper testing can occure!
+    if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == OTHER_ACTION)
         {
@@ -419,7 +418,7 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
-    if (true) //_anchor == TOUCHING)  // change this when proper testing can occure!
+    if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == OTHER_ACTION)
         {
@@ -474,7 +473,7 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
-    if (true) //_anchor == TOUCHING)  // change this when proper testing can occure!
+    if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == OTHER_ACTION)
         {
@@ -528,7 +527,7 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
-    if (true) //_anchor == TOUCHING)  // change this when proper testing can occure!
+    if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == OTHER_ACTION)
         {
