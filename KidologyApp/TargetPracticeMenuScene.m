@@ -270,15 +270,23 @@ NSString *gameName;
 {
     _gameArray = [[NSMutableArray alloc]init];
     NSString *extension = @"csv";
-    NSString *resPath = [[NSBundle mainBundle] resourcePath];
-    NSString *item;
+    //NSString *resPath = [[NSBundle mainBundle] resourcePath];
+    
+    NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"Inbox"];
+    // make the folder if it doesn't already exist
     NSError *error = nil;
-    NSArray *items = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:resPath error:&error];
-    for(item in items)
+    if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
+    
+    
+    
+    NSString *file;
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:&error];
+    for(file in files)
     {
-        if([[item pathExtension] isEqualToString:extension])
+        if([[file pathExtension] isEqualToString:extension])
         {
-            [_gameArray addObject:item];
+            [_gameArray addObject:file];
         }
     }
     

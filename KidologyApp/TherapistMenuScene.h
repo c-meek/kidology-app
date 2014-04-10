@@ -13,6 +13,10 @@
 @property (nonatomic) SKSpriteNode *uploadButton;
 @property (nonatomic) SKSpriteNode *backButton;
 @property (nonatomic) SKSpriteNode *pressedBackButton;
+@property (nonatomic) NSString *firstName;
+@property (nonatomic) NSString *lastName;
+@property (nonatomic) NSString *therapistEmail;
+
 
 
 @end
