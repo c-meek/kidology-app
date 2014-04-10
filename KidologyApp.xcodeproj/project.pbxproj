@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F01046818DB627300D2378F /* customgame_README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0F01046718DB627300D2378F /* customgame_README.txt */; };
 		0F3AC2BF18F6EA61007CE27C /* test1.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0F3AC2BE18F6EA61007CE27C /* test1.csv */; };
 		0F3AC2C218F6EEA1007CE27C /* Back_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3AC2C018F6EEA1007CE27C /* Back_Button.png */; };
 		0F3AC2C318F6EEA1007CE27C /* Back_Button_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3AC2C118F6EEA1007CE27C /* Back_Button_Pressed.png */; };
@@ -44,6 +43,7 @@
 		7CB23C4D18C0020D007F409F /* Yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C3F18C0020D007F409F /* Yellow.png */; };
 		7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */; };
 		7CB76CC718B692CB0003A622 /* hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB76CC618B692CB0003A622 /* hand.png */; };
+		B904BBAC18F720CB00A81860 /* customgame_README.txt in Resources */ = {isa = PBXBuildFile; fileRef = B904BBAB18F720CB00A81860 /* customgame_README.txt */; };
 		B9460B1718DB6C99008270DA /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B9460B1618DB6C99008270DA /* libxml2.dylib */; };
 		B94A54B118C00DC100E92932 /* BabyMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B94A54B018C00DC100E92932 /* BabyMenuScene.m */; };
 		B96CAA9C18A7ED7700D5C20C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9B18A7ED7700D5C20C /* Foundation.framework */; };
@@ -122,7 +122,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0F01046718DB627300D2378F /* customgame_README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = customgame_README.txt; sourceTree = "<group>"; };
 		0F3AC2BE18F6EA61007CE27C /* test1.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test1.csv; sourceTree = "<group>"; };
 		0F3AC2C018F6EEA1007CE27C /* Back_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_Button.png; sourceTree = "<group>"; };
 		0F3AC2C118F6EEA1007CE27C /* Back_Button_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_Button_Pressed.png; sourceTree = "<group>"; };
@@ -165,6 +164,7 @@
 		7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TargetPracticeMenuScene.h; sourceTree = "<group>"; };
 		7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TargetPracticeMenuScene.m; sourceTree = "<group>"; };
 		7CB76CC618B692CB0003A622 /* hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand.png; sourceTree = "<group>"; };
+		B904BBAB18F720CB00A81860 /* customgame_README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = customgame_README.txt; path = KidologyApp/customgame_README.txt; sourceTree = "<group>"; };
 		B9460B1618DB6C99008270DA /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		B94A54AF18C00DC100E92932 /* BabyMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyMenuScene.h; sourceTree = "<group>"; };
 		B94A54B018C00DC100E92932 /* BabyMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyMenuScene.m; sourceTree = "<group>"; };
@@ -293,9 +293,9 @@
 		0FBA4C0618DB46B800A9184D /* custom games */ = {
 			isa = PBXGroup;
 			children = (
+				B904BBAB18F720CB00A81860 /* customgame_README.txt */,
 				0FD6614018F5E0FE00B0CDB3 /* backwards.csv */,
 				0F3AC2BE18F6EA61007CE27C /* test1.csv */,
-				0F01046718DB627300D2378F /* customgame_README.txt */,
 				0FDC0EB518F49690000CE9E0 /* 4corners.csv */,
 				0FB5157018F463CE005C309C /* test.csv */,
 			);
@@ -650,7 +650,6 @@
 				E89BFA8718F71564006C1959 /* settingsScreenLegacy.png in Resources */,
 				7CB23C4B18C0020D007F409F /* Red.png in Resources */,
 				E8DF543C18F58AB700B9D1D1 /* babyGameButtonPressed.png in Resources */,
-				0F01046818DB627300D2378F /* customgame_README.txt in Resources */,
 				0F3AC2C318F6EEA1007CE27C /* Back_Button_Pressed.png in Resources */,
 				7CB23C4D18C0020D007F409F /* Yellow.png in Resources */,
 				0F9462D418C0296A00E9E3BD /* anchor_red_left.png in Resources */,
@@ -676,6 +675,7 @@
 				E89BFA8518F71564006C1959 /* settingsScreen.png in Resources */,
 				E8DF544B18F58B8F00B9D1D1 /* targetGameButtonPressed.png in Resources */,
 				0F9462D718C0296A00E9E3BD /* anchor_red_right.png in Resources */,
+				B904BBAC18F720CB00A81860 /* customgame_README.txt in Resources */,
 				0F3AC2BF18F6EA61007CE27C /* test1.csv in Resources */,
 				7CB23C4018C0020D007F409F /* Black.png in Resources */,
 				FD6B78DC18ED19240035CA95 /* kidologyapp-legacy@2x.png in Resources */,
