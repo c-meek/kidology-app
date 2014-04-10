@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "KidologyApp/MainMenuScene.m"
-            timestampString = "414008610.703565"
+            timestampString = "418835422.433486"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "-touchesBegan:withEvent:"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "-initWithSize:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
