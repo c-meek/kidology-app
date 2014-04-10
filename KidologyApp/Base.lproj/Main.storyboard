@@ -207,11 +207,13 @@
                         <outlet property="lastName" destination="DMU-Ec-LeV" id="Bql-Sf-m6A"/>
                         <outlet property="submit" destination="2ZD-5g-8v3" id="NpZ-h8-64E"/>
                         <outlet property="therapistEmail" destination="eB5-wU-cGm" id="yrI-Qg-dKs"/>
+                        <segue destination="G3n-ii-hVT" kind="unwind" identifier="unwindToMenuViewController" unwindAction="unwindToHideSettingsModal:" id="5HR-lQ-C8k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VOd-Ar-OYr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="G3n-ii-hVT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1114" y="-571"/>
+            <point key="canvasLocation" x="1552" y="-508"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

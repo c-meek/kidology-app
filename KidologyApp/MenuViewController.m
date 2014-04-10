@@ -15,6 +15,8 @@
 
 @implementation MenuViewController
 
+bool isFirstLogin = true;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,7 +40,8 @@
     {
         [self performSegueWithIdentifier:@"setupSegue" sender:self];
     }
-    [self loadScene];
+    else
+        [self loadScene];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,6 +62,6 @@
 }
 - (IBAction)unwindToHideSettingsModal:(UIStoryboardSegue *)unwindSegue
 {
-    //NSLog(@"UNWILD");
+    [self loadScene];
 }
 @end

@@ -19,8 +19,6 @@
 
 @implementation MainMenuScene
 
-bool isFirstLogin = true;
-
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
@@ -38,18 +36,10 @@ bool isFirstLogin = true;
         //add settings menu button
         [self addSettingsMenuButton];
         // add user info label to corner
-        if (!isFirstLogin)
-            [self addUserInfo];
+        [self addUserInfo];
         
     }
     return self;
-}
-
--(void)didMoveToView:(SKView *)view
-{
-    NSLog(@"menu scene presented");
-    [self addUserInfo];
-    isFirstLogin = false;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
