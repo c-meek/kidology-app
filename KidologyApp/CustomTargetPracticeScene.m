@@ -212,7 +212,6 @@ NSMutableArray *touchLog;
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     [self updateWithTimeSinceLastUpdate:timeSinceLast];
-    
 }
 
 -(void)trackerLabel

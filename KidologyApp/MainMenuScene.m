@@ -218,7 +218,7 @@ bool isFirstLogin = true;
 {
     // therapist button
     _therapistMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"therapistMenuButton.png"];
-    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 280,
+    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 320,
                                                 CGRectGetMidY(self.frame) - 180);
     _therapistMenuButton.xScale = .38;
     _therapistMenuButton.yScale = .38;
@@ -227,7 +227,7 @@ bool isFirstLogin = true;
     
     // pressed therapist menu button icon
     _therapistMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"therapistMenuButtonPressed.png"];
-    _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 280,
+    _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 320,
                                                        CGRectGetMidY(self.frame) - 180);
     _therapistMenuButtonPressed.xScale = .38;
     _therapistMenuButtonPressed.yScale = .38;
