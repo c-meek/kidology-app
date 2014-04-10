@@ -86,7 +86,6 @@
 		E8F0BC2B18F6289C0021BB55 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = E8F0BC2318F6289C0021BB55 /* unzip.c */; };
 		E8F0BC2C18F6289C0021BB55 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = E8F0BC2518F6289C0021BB55 /* zip.c */; };
 		E8F0BC2D18F6289C0021BB55 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = E8F0BC2818F6289C0021BB55 /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E8F0BC3318F65C610021BB55 /* gray_form.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E8F0BC3218F65C610021BB55 /* gray_form.jpg */; };
 		E8F0BC3518F6A6A00021BB55 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F0BC3418F6A6A00021BB55 /* MessageUI.framework */; };
 		FD6B78CD18ED16CB0035CA95 /* kidologyapp-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78CC18ED16CB0035CA95 /* kidologyapp-icon@2x.png */; };
 		FD6B78CF18ED17020035CA95 /* kidologyapp-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78CE18ED17020035CA95 /* kidologyapp-icon.png */; };
@@ -220,7 +219,6 @@
 		E8F0BC2618F6289C0021BB55 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		E8F0BC2718F6289C0021BB55 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		E8F0BC2818F6289C0021BB55 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
-		E8F0BC3218F65C610021BB55 /* gray_form.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = gray_form.jpg; sourceTree = "<group>"; };
 		E8F0BC3418F6A6A00021BB55 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		FD6B78CC18ED16CB0035CA95 /* kidologyapp-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyapp-icon@2x.png"; sourceTree = "<group>"; };
 		FD6B78CE18ED17020035CA95 /* kidologyapp-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "kidologyapp-icon.png"; path = "KidologyApp/kidologyapp-icon.png"; sourceTree = "<group>"; };
@@ -299,7 +297,6 @@
 		0FF78FC418EDE3DC00BD200D /* main menu */ = {
 			isa = PBXGroup;
 			children = (
-				E8F0BC3218F65C610021BB55 /* gray_form.jpg */,
 				E8DF544218F58B7800B9D1D1 /* mainMenuBackground.png */,
 				FDE1C39F18F468560025811F /* launchScreenLegacy.png */,
 				FDE1C3A018F468560025811F /* launchScreenLegacy@2x.png */,
@@ -616,7 +613,6 @@
 				E8DF544318F58B7800B9D1D1 /* mainMenuBackground.png in Resources */,
 				FDE1C3A118F468560025811F /* launchScreenLegacy.png in Resources */,
 				7CB23C4118C0020D007F409F /* Blue.png in Resources */,
-				E8F0BC3318F65C610021BB55 /* gray_form.jpg in Resources */,
 				FD6B78DB18ED19240035CA95 /* kidologyapp-legacy.png in Resources */,
 				E8DF544018F58AC000B9D1D1 /* fetchGameButtonPressed.png in Resources */,
 				0F423CAB18AD5D2200EE5F4E /* dog.png in Resources */,
