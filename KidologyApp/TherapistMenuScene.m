@@ -20,6 +20,7 @@
         [self addBackground];
         [self addUploadButton];
         [self addBackButton];
+        [self loadSettingsInfo];
     }
     return self;
 }
@@ -74,9 +75,6 @@
         _pressedBackButton.hidden = true;
         _backButton.hidden = false;
     }
-
-
-    
 }
 
 -(NSString *)zipFilesAtPath:(NSString *)path
@@ -97,6 +95,9 @@
     {
         NSLog(@"subpath %d is %@", i, subpath);
         i++;
+        // ignore previously zipped files
+        NSArray *nameAndExtension = [subpath componentsSeparatedByString:@"."];
+        NSString *extension = nameAndExtension[[nameAndExtension count]-1];
         NSString *longPath = [path stringByAppendingPathComponent:subpath];
         if([fileManager fileExistsAtPath:longPath isDirectory:&isDir] && !isDir)
         {
@@ -124,11 +125,7 @@
     NSString *zipFile = parts[[parts count]-1];
     NSLog(@"NOW zip file name is %@", zipFile);
 
-    //get therapist's email address from the app settings
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *therapistEmail = [defaults objectForKey:@"therapistEmail"];
-    NSLog(@"therapistEmail is: %@", therapistEmail);
-    NSArray *recipients = @[therapistEmail];
+    NSArray *recipients = @[_therapistEmail];
     
     MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
     composer.mailComposeDelegate = self;
@@ -176,7 +173,6 @@
             [alert show];
             [alert release];
         }
-            
             break;
     }
     [self.view.window.rootViewController dismissModalViewControllerAnimated:YES];
@@ -247,6 +243,15 @@
     _pressedBackButton.xScale = .5;
     _pressedBackButton.yScale = .5;
     [self addChild:_pressedBackButton];
+}
+
+-(void)loadSettingsInfo
+{
+    //get user's first and last name and therapist's email address from the app settings
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _firstName = [defaults objectForKey:@"firstName"];
+    _lastName = [defaults objectForKey:@"lastName"];
+    _therapistEmail = [defaults objectForKey:@"therapistEmail"];
 }
 
 @end

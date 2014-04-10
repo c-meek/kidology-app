@@ -16,23 +16,17 @@ NSString *lastName;
 
 #import "MainMenuScene.h"
 
-
 @implementation SetupViewController : ViewController
 - (IBAction)therapistInfo:(UITextField *)sender
 {
-    NSLog(@"In therapistInfo with %@", sender.text);
     therapistEmail = sender.text;
 }
 - (IBAction)firstNameInfo:(UITextField *)sender
 {
-    NSLog(@"In firstNameInfo with %@", sender.text);
-
     firstName = sender.text;
 }
 - (IBAction)lastNameInfo:(UITextField *)sender
 {
-    NSLog(@"In lastNameInfo with %@", sender.text);
-
     lastName = sender.text;
 }
 - (IBAction)affectedHand:(UISwitch *)sender {
@@ -69,9 +63,6 @@ NSString *lastName;
 }
 
 - (IBAction)returnToMain:(id)sender {
-    
-    NSLog(@"updating settings fields!");
-    //[self.navigationController popToRootViewControllerAnimated:YES];
     defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:affectedHand forKey:@"affectedHand"];
     [defaults setObject:therapistEmail forKey:@"therapistEmail"];
@@ -80,7 +71,6 @@ NSString *lastName;
 
     [defaults synchronize];
     [self performSegueWithIdentifier:@"unwindToMenuViewController" sender:self];
-    //[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 // advances thru input fields when user hits return in text field

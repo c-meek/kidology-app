@@ -73,7 +73,6 @@
 		B9E5BE2E18F700010065B26D /* rotate_green_target.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2D18F700010065B26D /* rotate_green_target.png */; };
 		B9E5BE3018F700930065B26D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2F18F700930065B26D /* arrow.png */; };
 		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
-		E8A34CE718F274A1006F6D1B /* FileBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A34CE618F274A1006F6D1B /* FileBrowser.m */; };
 		E8A34CEA18F276AD006F6D1B /* TherapistMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A34CE918F276AD006F6D1B /* TherapistMenuScene.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8A34CEC18F27984006F6D1B /* therapistScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A34CEB18F27984006F6D1B /* therapistScreen.png */; };
 		E8DF543C18F58AB700B9D1D1 /* babyGameButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E8DF543A18F58AB700B9D1D1 /* babyGameButtonPressed.png */; };
@@ -204,8 +203,6 @@
 		B9E5BE2F18F700930065B26D /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		B9FC0CFE18E4994D006F2AEF /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogEntry.h; sourceTree = "<group>"; };
 		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
-		E8A34CE518F274A1006F6D1B /* FileBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileBrowser.h; sourceTree = "<group>"; };
-		E8A34CE618F274A1006F6D1B /* FileBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileBrowser.m; sourceTree = "<group>"; };
 		E8A34CE818F276AD006F6D1B /* TherapistMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TherapistMenuScene.h; sourceTree = "<group>"; };
 		E8A34CE918F276AD006F6D1B /* TherapistMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TherapistMenuScene.m; sourceTree = "<group>"; };
 		E8A34CEB18F27984006F6D1B /* therapistScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = therapistScreen.png; sourceTree = "<group>"; };
@@ -443,8 +440,6 @@
 				7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */,
 				B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */,
 				B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */,
-				E8A34CE518F274A1006F6D1B /* FileBrowser.h */,
-				E8A34CE618F274A1006F6D1B /* FileBrowser.m */,
 				0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */,
 				0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */,
 				B9D70C8A18C639FB000C12F1 /* SetupViewController.h */,
@@ -710,7 +705,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */,
-				E8A34CE718F274A1006F6D1B /* FileBrowser.m in Sources */,
 				7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */,
 				E8F0BC2A18F6289C0021BB55 /* mztools.c in Sources */,
 				B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */,

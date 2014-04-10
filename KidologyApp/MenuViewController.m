@@ -50,6 +50,11 @@ bool isFirstLogin = true;
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)unwindToHideSettingsModal:(UIStoryboardSegue *)unwindSegue
+{
+    [self loadScene];
+}
+
 - (void)loadScene
 {
     SKView * skView = (SKView *)self.view;
@@ -60,8 +65,5 @@ bool isFirstLogin = true;
     // Present the scene.
     [skView presentScene: mainMenu];
 }
-- (IBAction)unwindToHideSettingsModal:(UIStoryboardSegue *)unwindSegue
-{
-    [self loadScene];
-}
+
 @end
