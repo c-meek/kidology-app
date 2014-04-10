@@ -7,8 +7,11 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface TherapistMenuScene : SKScene
-@property (nonatomic) SKSpriteNode *browseButton;
+@interface TherapistMenuScene : SKScene <MFMailComposeViewControllerDelegate> 
+@property (nonatomic) SKSpriteNode *uploadButton;
+@property (nonatomic) SKSpriteNode *backButton;
+
 
 @end

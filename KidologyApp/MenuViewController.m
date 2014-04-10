@@ -27,14 +27,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self loadScene];
 	// Do any additional setup after loading the view.
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"therapistEmail"] == NULL)
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
+    NSString *lastName = [defaults objectForKey:@"lastName"];
+    NSString *therapistEmail = [defaults objectForKey:@"therapistEmail"];
+    if (firstName == NULL || firstName.length == 0 ||
+        lastName  == NULL || lastName.length  == 0 ||
+        therapistEmail  == NULL || therapistEmail.length  == 0)
     {
         [self performSegueWithIdentifier:@"setupSegue" sender:self];
     }
-
-
+    [self loadScene];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,8 +46,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 - (void)loadScene
 {

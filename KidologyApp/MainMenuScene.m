@@ -9,16 +9,19 @@
 #import "MainMenuScene.h"
 #import "BabyMenuScene.h"
 #import "TargetPracticeMenuScene.h"
-#import "FetchScene.h"
+#import "FetchInstructionScene.h"
 #import "TherapistMenuScene.h"
 // #import "SettingsMenuScene.h"
+#import "MenuViewController.h"
 
 // test
 
 
 @implementation MainMenuScene
 
--(id)initWithSize:(CGSize)size {    
+bool isFirstLogin = true;
+
+-(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         
@@ -34,8 +37,19 @@
         [self addTherapistMenuButton];
         //add settings menu button
         [self addSettingsMenuButton];
+        // add user info label to corner
+        if (!isFirstLogin)
+            [self addUserInfo];
+        
     }
     return self;
+}
+
+-(void)didMoveToView:(SKView *)view
+{
+    NSLog(@"menu scene presented");
+    [self addUserInfo];
+    isFirstLogin = false;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -45,7 +59,6 @@
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
     // if one of the buttons is pressed, change its color
-    NSLog(@"touched node name is %@", node.name);
     if ([node.name isEqualToString:@"babyGameButton"] ||
         [node.name isEqualToString:@"babyGameButtonPressed"])
     {
@@ -72,8 +85,6 @@
     {
         _therapistMenuButton.hidden = true;
         _therapistMenuButtonPressed.hidden = false;
-        NSLog(@"hidden button pos is x=%f y=%f", _therapistMenuButtonPressed.position.x,
-                _therapistMenuButtonPressed.position.y);
         //_gameMenuButton.color = [SKColor yellowColor];
     }
     else if ([node.name isEqualToString:@"settingsMenuButton"] ||
@@ -81,9 +92,6 @@
     {
         _settingsMenuButton.hidden = true;
         _settingsMenuButtonPressed.hidden = false;
-        NSLog(@"hidden button pos is x=%f y=%f", _settingsMenuButtonPressed.position.x,
-              _settingsMenuButtonPressed.position.y);
-        //_gameMenuButton.color = [SKColor yellowColor];
     }
 //    else if([node.name isEqualToString:@"therapistMenuButton"] ||
 //            [node.name isEqualToString:@"therapistMenuLabel"])
@@ -99,16 +107,13 @@
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
     
-    NSLog(@"released node name is %@", node.name);
     // Check if one of the buttons was pressed and load that scene
     if ([node.name isEqualToString:@"babyGameButton"] ||
         [node.name isEqualToString:@"babyGameButtonPressed"])
     {
-        // Create and configure the "game menu" scene.
+        // Create and configure the "baby game" scene.
         SKScene * babyGame = [[BabyMenuScene alloc] initWithSize:self.size];
         babyGame.scaleMode = SKSceneScaleModeAspectFill;
-        
-        NSLog(@"presenting baby game scene");
         
         // Present the scene.
         [self.view presentScene:babyGame];
@@ -128,8 +133,6 @@
         SKScene * targetGame = [[TargetPracticeMenuScene alloc] initWithSize:self.size];
         targetGame.scaleMode = SKSceneScaleModeAspectFill;
         
-        NSLog(@"presenting target game scene");
-        
         // Present the scene.
         [self.view presentScene:targetGame];
     }
@@ -137,10 +140,8 @@
              [node.name isEqualToString:@"fetchGameButtonPressed"])
     {
         // Create and configure the "game menu" scene.
-        SKScene * fetchGame = [[FetchScene alloc] initWithSize:self.size];
+        SKScene * fetchGame = [[FetchInstructionScene alloc] initWithSize:self.size];
         fetchGame.scaleMode = SKSceneScaleModeAspectFill;
-        
-        NSLog(@"presenting fetch game scene");
         
         // Present the scene.
         [self.view presentScene:fetchGame];
@@ -151,8 +152,6 @@
         // Create and configure the "game menu" scene.
         SKScene * therapistMenu = [[TherapistMenuScene alloc] initWithSize:self.size];
         therapistMenu.scaleMode = SKSceneScaleModeAspectFill;
-        
-        NSLog(@"presenting therapist menu scene");
         
         // Present the scene.
         [self.view presentScene:therapistMenu];
@@ -332,6 +331,49 @@
     bgImage.xScale = .38;
     bgImage.yScale = .38;
     [self addChild:bgImage];
+}
+
+-(void)addUserInfo
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
+    NSString *lastName = [defaults objectForKey:@"lastName"];
+    NSString *therapistEmail = [defaults objectForKey:@"therapistEmail"];
+    
+    // alert when empty/incomplete name fields
+    NSString *message = @"";
+    if (firstName == NULL || firstName.length == 0 ||
+        lastName  == NULL || lastName.length  == 0)
+    {
+        message = @"Your name is missing in the application settings!  Without a name, your therapist could get confused!";
+    }
+    else if (therapistEmail  == NULL || therapistEmail.length  == 0)
+    {
+        message = @"You have not provided an e-mail address for your therapist!  Without an e-mail address, you cannot send them your progress reports!";
+    }
+    if (message.length > 0)
+    {
+        UIAlertView *mustUpdateNameAlert=
+            [[UIAlertView alloc]initWithTitle:@"ERROR:"message:message
+                        delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+        [mustUpdateNameAlert show];
+        
+        // in the old days you could redirect to the settings app, but no more...
+        //
+        return;
+    }
+
+    NSString *wholeName = [firstName stringByAppendingString:lastName];
+    NSString *usernameLabelText = [@"Playing as " stringByAppendingString:wholeName];
+    SKLabelNode *usernameLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    usernameLabel.name = @"usernameLabel";
+    usernameLabel.text = usernameLabelText;
+    usernameLabel.fontSize = 20;
+    usernameLabel.fontColor = [SKColor blackColor];
+    usernameLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 200,
+                                         CGRectGetMidY(self.frame)+ 270);
+    [self addChild:usernameLabel];
+
 }
 
 @end
