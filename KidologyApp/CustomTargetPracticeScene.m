@@ -61,9 +61,14 @@ NSMutableArray *touchLog;
 -(void)readInput
 {
     NSString *shortenedGameName = [gameName substringToIndex:[gameName length] - 4];
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:shortenedGameName ofType:@"csv"];
+    //NSString *filePath = [[NSBundle mainBundle] pathForResource:shortenedGameName ofType:@"csv"];
+    NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
+    NSString *filePath = [folderPath stringByAppendingString:@"/"];
+    filePath = [filePath stringByAppendingString:shortenedGameName];// add the filename
+    filePath = [filePath stringByAppendingString:@".csv"]; // add the .csv extension
     NSError *error;
     NSString *fileContents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+    
     if(error)
     {
         NSLog(@"erorr %@", error.localizedDescription);
