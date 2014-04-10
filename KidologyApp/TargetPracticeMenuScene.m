@@ -163,7 +163,7 @@ NSString *gameName;
     else if ([node.name isEqualToString:@"randomLabel"] ||
              [node.name isEqualToString:@"randomButton"])
     {
-        _actionModeButton.color = [SKColor yellowColor];
+        _randomModeButton.color = [SKColor yellowColor];
     }
     else if ([node.name isEqualToString:@"customModeLabel"] ||
              [node.name isEqualToString:@"customModeButton"])
@@ -232,7 +232,7 @@ NSString *gameName;
 //            [vc performSegueWithIdentifier:@"toGameList" sender:self];
 //            _customModeButton.color = [SKColor greenColor];
             [self addGameFilesToArray];
-            _tbv = [[UITableView alloc] initWithFrame:CGRectMake(0, 87, self.frame.size.height, self.frame.size.width)];
+            _tbv = [[UITableView alloc] initWithFrame:CGRectMake(250, 200, self.frame.size.height/2, self.frame.size.width/2)];
             _tbv.delegate = self;
             _tbv.dataSource = self;
             [self.view addSubview:_tbv];
@@ -244,12 +244,13 @@ NSString *gameName;
     }
     else
     {
-
         _pressedBackButton.hidden = true;
         _backButton.hidden = false;
         _centerModeButton.color = [SKColor redColor];
         _actionModeButton.color = [SKColor redColor];
-        _customModeLabel.color = [SKColor redColor];
+        _customModeButton.color = [SKColor redColor];
+        _randomModeButton.color = [SKColor redColor];
+        [_tbv removeFromSuperview];
     }
 
 }
