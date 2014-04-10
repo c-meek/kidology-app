@@ -189,9 +189,10 @@ NSString *gameName;
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
             backToMain.scaleMode = SKSceneScaleModeAspectFill;
             [_tbv removeFromSuperview];
-            [self.view presentScene:backToMain];
+            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+            [self.view presentScene:backToMain transition:reveal];
         }
-    //Added another variable for Target Pratice call.
+    //Added another variable for Target Practice call.
     else if ([node.name isEqualToString:@"centerLabel"] ||
         [node.name isEqualToString:@"centerButton"])
     {

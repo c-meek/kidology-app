@@ -94,8 +94,8 @@
         dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
         NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
         NSString *fileName = [NSString stringWithFormat:@"%@/%@-%@.csv", folderPath, dateString, gameModeString];
-        NSLog(@"%@", fileName);
-        NSLog(@"%@", output);
+        //NSLog(@"%@", fileName);
+        //NSLog(@"%@", output);
         
         [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];
     }

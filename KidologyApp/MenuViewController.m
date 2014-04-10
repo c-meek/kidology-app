@@ -50,8 +50,8 @@
 - (void)loadScene
 {
     SKView * skView = (SKView *)self.view;
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
+    //skView.showsFPS = YES;
+    //skView.showsNodeCount = YES;
     SKScene * mainMenu = [MainMenuScene sceneWithSize:skView.bounds.size];
     mainMenu.scaleMode = SKSceneScaleModeAspectFill;
     // Present the scene.
