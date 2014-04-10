@@ -23,6 +23,9 @@
 		0FDC0EB618F49690000CE9E0 /* 4corners.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0FDC0EB518F49690000CE9E0 /* 4corners.csv */; };
 		0FDF3AA318DA56A400FBEC85 /* CustomTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */; };
 		0FF78FC318EDD59100BD200D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FF78FC218EDD59100BD200D /* Settings.bundle */; };
+		0FF78FC618EDE3F000BD200D /* mainMenuBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FF78FC518EDE3F000BD200D /* mainMenuBackground.png */; };
+		7C5523F218EDB7D30042DEAB /* rotate_green_targetII.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */; };
+		7C5523F418EDB7DF0042DEAB /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F318EDB7DF0042DEAB /* arrow.png */; };
 		7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */; };
 		7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */; };
 		7CB23C4018C0020D007F409F /* Black.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C3218C0020D007F409F /* Black.png */; };
@@ -134,6 +137,9 @@
 		0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTargetPracticeScene.h; sourceTree = "<group>"; };
 		0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTargetPracticeScene.m; sourceTree = "<group>"; };
 		0FF78FC218EDD59100BD200D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		0FF78FC518EDE3F000BD200D /* mainMenuBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainMenuBackground.png; sourceTree = "<group>"; };
+		7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate_green_targetII.png; sourceTree = "<group>"; };
+		7C5523F318EDB7DF0042DEAB /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Huge_Checkered_Background_[4096x3072].png"; sourceTree = "<group>"; };
 		7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyTargetPracticeScene.h; sourceTree = "<group>"; };
 		7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyTargetPracticeScene.m; sourceTree = "<group>"; };
@@ -334,6 +340,9 @@
 		7CB23C4F18C00284007F409F /* TargetGame */ = {
 			isa = PBXGroup;
 			children = (
+				7CC8064B18EDE11100837C71 /* rotate_green_target.png */,
+				7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */,
+				7C5523F318EDB7DF0042DEAB /* arrow.png */,
 				0F9462C818BFFFC500E9E3BD /* targetPracticeBackground.png */,
 				B96CAAE118A81D6B00D5C20C /* green_target.png */,
 				0F7D547A18AD4EBA00F9593D /* purple_target.png */,
@@ -607,12 +616,14 @@
 				FD6B78DA18ED19240035CA95 /* kidology-settings@2x.png in Resources */,
 				7CB23C4618C0020D007F409F /* Lime.png in Resources */,
 				B9D70C8618C62ED8000C12F1 /* targetPracticeBackground.png in Resources */,
+				7C5523F218EDB7D30042DEAB /* rotate_green_targetII.png in Resources */,
 				7CB23C4818C0020D007F409F /* Orange.png in Resources */,
 				FD6B78E018ED19240035CA95 /* kidologyspotlight-legacy@2x.png in Resources */,
 				E8DF544D18F58B8F00B9D1D1 /* therapistMenuButtonPressed.png in Resources */,
 				E8DF544318F58B7800B9D1D1 /* mainMenuBackground.png in Resources */,
 				FDE1C3A118F468560025811F /* launchScreenLegacy.png in Resources */,
 				7CB23C4118C0020D007F409F /* Blue.png in Resources */,
+				7CC8064C18EDE11100837C71 /* rotate_green_target.png in Resources */,
 				FD6B78DB18ED19240035CA95 /* kidologyapp-legacy.png in Resources */,
 				E8DF544018F58AC000B9D1D1 /* fetchGameButtonPressed.png in Resources */,
 				0F423CAB18AD5D2200EE5F4E /* dog.png in Resources */,
