@@ -74,7 +74,8 @@ if (self = [super initWithSize:size])
             mainMenu.scaleMode = SKSceneScaleModeAspectFill;
             
             // Present the scene.
-            [self.view presentScene:mainMenu];
+            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+            [self.view presentScene:mainMenu transition:reveal];
         }
     }
 }

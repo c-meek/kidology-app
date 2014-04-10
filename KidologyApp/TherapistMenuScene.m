@@ -68,7 +68,8 @@
     {
         SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
         mainMenu.scaleMode = SKSceneScaleModeAspectFill;
-        [self.view presentScene:mainMenu];
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+        [self.view presentScene:mainMenu transition:reveal];
     }
     else
     {

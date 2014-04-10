@@ -63,7 +63,8 @@
         game.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
-        [self.view presentScene:game];
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+        [self.view presentScene:game transition:reveal];
     }
     else if([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"pressedBackButton"])
     {
