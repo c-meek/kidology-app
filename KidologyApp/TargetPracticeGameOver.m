@@ -110,12 +110,7 @@
     // Check which button was pressed
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"returnTextLabel"])
     {
-//        // Create and configure the "main menu" scene.
-//        SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
-//        mainMenu.scaleMode = SKSceneScaleModeAspectFill;
-//        
-//        // Present the scene.
-//        [self.view presentScene:mainMenu];
+
         // Create and configure the "main menu" scene.
         SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
         mainMenu.scaleMode = SKSceneScaleModeAspectFill;

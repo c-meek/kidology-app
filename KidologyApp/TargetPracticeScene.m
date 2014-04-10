@@ -41,10 +41,6 @@ extern NSUserDefaults *defaults;
         self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
         //initialize anchor
         [self initializeAnchor];
-        //initialize panel
-//        self.anchorPanel = [SKSpriteNode spriteNodeWithColor:[SKColor orangeColor] size:CGSizeMake(200, self.size.height)];
-//        self.anchorPanel.position = CGPointMake(0, self.size.height/2);
-//        [self addChild:self.anchorPanel];
         //initialize target
         self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
         //set the total number of targets for this session
@@ -145,9 +141,6 @@ extern NSUserDefaults *defaults;
         self.target.position = CGPointMake(x_pos, y_pos);
     }
     
-  //  NSLog(@"x is %f", self.target.position.x);
-  //  NSLog(@"y is %f", self.target.position.y);
-   // NSLog(@"scale is %f", self.target.xScale);
 }
 
 -(void)displayActionTarget
@@ -298,14 +291,11 @@ extern NSUserDefaults *defaults;
         if ([self isAnchorTouch:positionInScene] == true) // If a touch on the anchor is ending,
         {
             _anchored = NOT_TOUCHING; // make note of that.
-            _anchor.hidden = FALSE;         // Tien was here and the next line
+            _anchor.hidden = FALSE;         
             _pressedAnchor.hidden = TRUE;
             
         }
-        else // non-anchor touch ending
-        {
-            // don't need to do anything?
-        }
+        // else, it's a non-anchor touch and nothing needs done
     }
 }
 

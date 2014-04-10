@@ -36,15 +36,6 @@ NSString *lastName;
     lastName = sender.text;
 }
 - (IBAction)affectedHand:(UISwitch *)sender {
-//    if ([defaults objectForKey:@"affectedHand"] != NULL)
-//    {
-//        affectedHand = [defaults objectForKey:@"affectedHand"];
-//        if ([affectedHand isEqual: @"right"])
-//        {
-//            [sender setOn:YES animated:YES];
-//        }
-//        // otherwise, switch will default to the left position
-//    }
 
     if([sender isOn])
     {

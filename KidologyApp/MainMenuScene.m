@@ -14,8 +14,6 @@
 // #import "SettingsMenuScene.h"
 #import "MenuViewController.h"
 
-// test
-
 
 @implementation MainMenuScene
 
@@ -86,12 +84,6 @@ bool isFirstLogin = true;
         //_gameMenuButton.color = [SKColor yellowColor];
     }
 
-//    else if([node.name isEqualToString:@"therapistMenuButton"] ||
-//            [node.name isEqualToString:@"therapistMenuLabel"])
-//    {
-//        _therapistMenuButton.color = [SKColor yellowColor];
-//        NSLog(@"set therapist button color");
-//    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -110,14 +102,7 @@ bool isFirstLogin = true;
         
         // Present the scene.
         [self.view presentScene:babyGame];
-//        // Create and configure the "game menu" scene.
-//        SKScene * gameMenu = [[GameMenuScene alloc] initWithSize:self.size];
-//        gameMenu.scaleMode = SKSceneScaleModeAspectFill;
-//        
-//        NSLog(@"presenting game menu scene");
-//        
-//        // Present the scene.
-//        [self.view presentScene:gameMenu];
+
     }
     else if ([node.name isEqualToString:@"targetGameButton"] ||
              [node.name isEqualToString:@"targetGameButtonPressed"])
@@ -149,37 +134,8 @@ bool isFirstLogin = true;
         // Present the scene.
         [self.view presentScene:therapistMenu];
     }
-//    else if ([node.name isEqualToString:@"settingsMenuButton"] ||
-//             [node.name isEqualToString:@"settingsMenuButtonPressed"])
-//    {
-//        // Create and configure the "game menu" scene.
-//        SKScene * settingsMenu = [[SettingsScene alloc] initWithSize:self.size];
-//        settingsMenu.scaleMode = SKSceneScaleModeAspectFill;
-//        
-//        NSLog(@"presenting settings menu scene");
-//        
-//        // Present the scene.
-//        [self.view presentScene:settingsMenu];
-//    }
-    
-    
-    
-    
-//    else if([node.name isEqualToString:@"therapistMenuButton"] ||
-//            [node.name isEqualToString:@"therapistMenuLabel"])
-//    {
-//        NSLog(@"creating therapist menu scene...");
-//        // Create and configure the "therapist" scene.
-//        SKScene * therapistMenu = [[TherapistMenuScene alloc] initWithSize:self.size];
-//        therapistMenu.scaleMode = SKSceneScaleModeAspectFill;
-//        
-//        NSLog(@"presenting therapist menu scene");
-//
-//        
-//        // Present the scene.
-//        [self.view presentScene:therapistMenu];
-//    }
-//    else
+
+    else
     {
         _targetGameButton.hidden = false;
         _targetGameButtonPressed.hidden = true;
@@ -214,15 +170,6 @@ bool isFirstLogin = true;
     _babyGameButtonPressed.hidden = true;
     [self addChild:_babyGameButtonPressed];
 
-    
-//    NSString * gameMenuLabelText = [NSString stringWithFormat:@"Game Menu"];
-//    SKLabelNode *gameMenuLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-//    gameMenuLabel.name = @"gameMenuLabel";
-//    gameMenuLabel.text = gameMenuLabelText;
-//    gameMenuLabel.fontSize = 24;
-//    gameMenuLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225, CGRectGetMidY(self.frame)-158);
-
-    // [self addChild:gameMenuLabel];
 }
 
 -(void)addTargetGameButton
@@ -288,37 +235,7 @@ bool isFirstLogin = true;
     _therapistMenuButtonPressed.hidden = true;
     [self addChild:_therapistMenuButtonPressed];
     
-    
-    //    NSString * therapistLabelText = [NSString stringWithFormat:@"Therapist"];
-    //    SKLabelNode *therapistMenuLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    //    therapistMenuLabel.name = @"therapistMenuLabel";
-    //    therapistMenuLabel.text = therapistLabelText;
-    //    therapistMenuLabel.fontSize = 24;
-    //    therapistMenuLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 225, CGRectGetMidY(self.frame)-210);
-    //    [self addChild:therapistMenuLabel];
 }
-
-//-(void)addSettingsMenuButton
-//{
-//    // therapist button
-//    _settingsMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"settingsMenuButton.png"];
-//    _settingsMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 260,
-//                                               CGRectGetMidY(self.frame) - 140);
-//    _settingsMenuButton.xScale = .38;
-//    _settingsMenuButton.yScale = .38;
-//    _settingsMenuButton.name = @"settingsMenuButton";
-//    [self addChild:_settingsMenuButton];
-//    
-//    // pressed settings menu button icon
-//    _settingsMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"settingsMenuButtonPressed.png"];
-//    _settingsMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 260,
-//                                                      CGRectGetMidY(self.frame) - 140);
-//    _settingsMenuButtonPressed.xScale = .38;
-//    _settingsMenuButtonPressed.yScale = .38;
-//    _settingsMenuButtonPressed.name = @"settingsMenuButtonPressed";
-//    _settingsMenuButtonPressed.hidden = true;
-//    [self addChild:_settingsMenuButtonPressed];
-//}
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
