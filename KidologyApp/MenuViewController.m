@@ -15,6 +15,8 @@
 
 @implementation MenuViewController
 
+bool isFirstLogin = true;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,13 +40,19 @@
     {
         [self performSegueWithIdentifier:@"setupSegue" sender:self];
     }
-    [self loadScene];
+    else
+        [self loadScene];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)unwindToHideSettingsModal:(UIStoryboardSegue *)unwindSegue
+{
+    [self loadScene];
 }
 
 - (void)loadScene
@@ -57,8 +65,5 @@
     // Present the scene.
     [skView presentScene: mainMenu];
 }
-- (IBAction)unwindToHideSettingsModal:(UIStoryboardSegue *)unwindSegue
-{
-    //NSLog(@"UNWILD");
-}
+
 @end

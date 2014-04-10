@@ -16,23 +16,17 @@ NSString *lastName;
 
 #import "MainMenuScene.h"
 
-
 @implementation SetupViewController : ViewController
 - (IBAction)therapistInfo:(UITextField *)sender
 {
-    NSLog(@"In therapistInfo with %@", sender.text);
     therapistEmail = sender.text;
 }
 - (IBAction)firstNameInfo:(UITextField *)sender
 {
-    NSLog(@"In firstNameInfo with %@", sender.text);
-
     firstName = sender.text;
 }
 - (IBAction)lastNameInfo:(UITextField *)sender
 {
-    NSLog(@"In lastNameInfo with %@", sender.text);
-
     lastName = sender.text;
 }
 - (IBAction)affectedHand:(UISwitch *)sender {
@@ -60,6 +54,7 @@ NSString *lastName;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"settingsScreen.png"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,8 +64,6 @@ NSString *lastName;
 }
 
 - (IBAction)returnToMain:(id)sender {
-    
-    //[self.navigationController popToRootViewControllerAnimated:YES];
     defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:affectedHand forKey:@"affectedHand"];
     [defaults setObject:therapistEmail forKey:@"therapistEmail"];
@@ -78,16 +71,15 @@ NSString *lastName;
     [defaults setObject:lastName forKey:@"lastName"];
 
     [defaults synchronize];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self performSegueWithIdentifier:@"unwindToMenuViewController" sender:self];
 }
-
 
 // advances thru input fields when user hits return in text field
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if(textField == self.firstName) {
         [self.lastName becomeFirstResponder];
     } else if(textField == self.lastName) {
-        [self.lastName resignFirstResponder];
+        [self.therapistEmail becomeFirstResponder];
     } else if(textField == self.therapistEmail) {
         [self.therapistEmail resignFirstResponder];
     }
