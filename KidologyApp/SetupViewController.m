@@ -64,6 +64,16 @@ NSString *lastName;
 }
 
 - (IBAction)returnToMain:(id)sender {
+    NSString *errorMessage = [self checkFields];
+    if (errorMessage.length != 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                        message:errorMessage
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+//        [alert release];
+        return;
+    }
     defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:affectedHand forKey:@"affectedHand"];
     [defaults setObject:therapistEmail forKey:@"therapistEmail"];
@@ -84,6 +94,35 @@ NSString *lastName;
         [self.therapistEmail resignFirstResponder];
     }
     return NO;
+}
+
+// check input fields before proceeding to main menu
+- (NSString *)checkFields
+{
+    NSString *errorMessage = @"";
+    if (firstName == NULL || firstName.length == 0||
+        lastName == NULL  || lastName.length == 0 ||
+        therapistEmail == NULL || therapistEmail.length == 0)
+    {
+        errorMessage = @"Missing a required field!";
+    }
+    else
+    {
+        NSError *error = NULL;
+        // pattern regex courtesy of: https://stackoverflow.com/questions/201323/using-a-regular-expression-to-validate-an-email-address
+        NSString *pattern = @"^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
+        NSRegularExpression *regex = [NSRegularExpression
+                                      regularExpressionWithPattern:pattern
+                                      options:NSRegularExpressionCaseInsensitive error:&error];
+        NSUInteger numberOfMatches = [regex numberOfMatchesInString:therapistEmail
+                                      options:0
+                                      range:NSMakeRange(0, [therapistEmail length])];
+        if (numberOfMatches == 0)
+        {
+            errorMessage = @"Invalid email format";
+        }
+    }
+    return errorMessage;
 }
 
 @end

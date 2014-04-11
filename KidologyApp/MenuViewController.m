@@ -29,7 +29,6 @@ bool isFirstLogin = true;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"loading menu view controller");
 	// Do any additional setup after loading the view.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
@@ -39,12 +38,12 @@ bool isFirstLogin = true;
         lastName  == NULL || lastName.length  == 0 ||
         therapistEmail  == NULL || therapistEmail.length  == 0)
     {
-        NSLog(@"segueing");
-
         [self performSegueWithIdentifier:@"setupSegue" sender:self];
     }
     else
+    {
         [self loadScene];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,8 +54,6 @@ bool isFirstLogin = true;
 
 - (IBAction)unwindToHideSettingsModal:(UIStoryboardSegue *)unwindSegue
 {
-    NSLog(@"unwinding");
-
     [self loadScene];
 }
 
