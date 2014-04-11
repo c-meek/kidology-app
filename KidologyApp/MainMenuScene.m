@@ -81,7 +81,8 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
-    
+    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+
     // Check if one of the buttons was pressed and load that scene
     if ([node.name isEqualToString:@"babyGameButton"] ||
         [node.name isEqualToString:@"babyGameButtonPressed"])
@@ -91,7 +92,7 @@
         babyGame.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
-        [self.view presentScene:babyGame];
+        [self.view presentScene:babyGame transition:reveal];
 
     }
     else if ([node.name isEqualToString:@"targetGameButton"] ||
@@ -102,7 +103,7 @@
         targetGame.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
-        [self.view presentScene:targetGame];
+        [self.view presentScene:targetGame transition:reveal];
     }
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
              [node.name isEqualToString:@"fetchGameButtonPressed"])
@@ -112,7 +113,7 @@
         fetchGame.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
-        [self.view presentScene:fetchGame];
+        [self.view presentScene:fetchGame transition:reveal];
     }
     else if ([node.name isEqualToString:@"therapistMenuButton"] ||
              [node.name isEqualToString:@"therapistMenuButtonPressed"])
@@ -122,7 +123,7 @@
         therapistMenu.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
-        [self.view presentScene:therapistMenu];
+        [self.view presentScene:therapistMenu transition:reveal];
     }
 
     else

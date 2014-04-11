@@ -183,7 +183,8 @@ NSString *gameName;
     UITouch *touch = [touches anyObject];
     CGPoint position = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:position];
-    
+    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backLabel"])
         {
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
@@ -201,7 +202,7 @@ NSString *gameName;
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
         [_tbv removeFromSuperview];
-        [self.view presentScene:targetPractice];
+        [self.view presentScene:targetPractice transition:reveal];
     }
     
     else if ([node.name isEqualToString:@"randomLabel"] ||
@@ -212,7 +213,7 @@ NSString *gameName;
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene.
-        [self.view presentScene:targetPractice];
+        [self.view presentScene:targetPractice transition:reveal];
     }
     else if ([node.name isEqualToString:@"actionLabel"] ||
              [node.name isEqualToString:@"actionButton"])
@@ -222,7 +223,7 @@ NSString *gameName;
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene.
-        [self.view presentScene:targetPractice];
+        [self.view presentScene:targetPractice transition:reveal];
     }
 
     else if ([node.name isEqualToString:@"customModeLabel"] || [node.name isEqualToString:@"customModeButton"])
@@ -325,7 +326,8 @@ NSString *gameName;
     [_tbv removeFromSuperview];
     SKScene *customTarget = [[CustomTargetPracticeScene alloc] initWithSize:self.size];
     customTarget.scaleMode = SKSceneScaleModeAspectFill;
-    [self.view presentScene:customTarget];
+    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+    [self.view presentScene:customTarget transition:reveal];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
