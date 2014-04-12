@@ -62,7 +62,6 @@
         [self listFileAtPath:folderPath];
         NSString *zipFile = [self zipFilesAtPath:folderPath];
         [self emailZipFile:zipFile];
-//        [self listFileAtPath:folderPath];
         _uploadButton.color = [SKColor redColor];
     }
     else if ([node.name isEqualToString:@"backButton"] ||
@@ -83,6 +82,15 @@
 
 -(NSString *)zipFilesAtPath:(NSString *)path
 {
+    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+    [DateFormatter setDateFormat:@"MM-dd-yyyy"];
+    NSString *currentDate = [DateFormatter stringFromDate:[NSDate date]];
+    NSString *zipFileName = [[[[[_firstName stringByAppendingString:@"_"]
+                               stringByAppendingString:_lastName]
+                              stringByAppendingString:@"_"]
+                             stringByAppendingString:currentDate]
+                             stringByAppendingString:@".zip"];
+    
     BOOL isDir = NO;
     NSArray *subpaths;
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -90,11 +98,14 @@
     {
         subpaths = [fileManager subpathsAtPath:path];
     }
-    NSString *archivePath = [path stringByAppendingString:@"/test.zip"];
+    NSString *archivePath = [[path stringByAppendingString:@"/" ]
+                             stringByAppendingString:zipFileName ];
+    NSLog(@"achive path is %@", archivePath);
     ZipArchive *archiver = [[ZipArchive alloc] init];
     [archiver CreateZipFile2:archivePath];
     NSLog(@"num paths found is %d", [subpaths count]);
     int i = 0;
+    NSMutableArray *csvfiles = [[NSMutableArray alloc] initWithCapacity:[subpaths count]];
     for(NSString *subpath in subpaths)
     {
         NSLog(@"subpath %d is %@", i, subpath);
@@ -102,9 +113,16 @@
         // ignore previously zipped files
         NSArray *nameAndExtension = [subpath componentsSeparatedByString:@"."];
         NSString *extension = nameAndExtension[[nameAndExtension count]-1];
+        NSLog(@"extension is %@", extension);
         NSString *longPath = [path stringByAppendingPathComponent:subpath];
+        if ([extension isEqualToString:@"zip"])
+        {
+            NSLog(@"ignoring zip file %@", subpath);
+            continue;
+        }
         if([fileManager fileExistsAtPath:longPath isDirectory:&isDir] && !isDir)
         {
+            [csvfiles addObject:longPath];
             [archiver addFileToZip:longPath newname:subpath];      
         }
     }
@@ -112,6 +130,15 @@
     BOOL successCompressing = [archiver CloseZipFile2];
     if (successCompressing)
     {
+        for (NSString *file in csvfiles)
+        {
+            NSError *error;
+            BOOL success = [fileManager removeItemAtPath:file error:&error];
+            if(!success)
+                NSLog(@"unable to delete file %@ because %@", file, [error description]);
+            else
+                NSLog(@"sucessfully deleted file %@", file);
+        }
         NSLog(@"successful compression! ");
         return archivePath;
     }
@@ -203,7 +230,10 @@
 
 -(void)addBackground
 {
-    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"therapistScreen"];
+    NSLog(@"adding therapist screen");
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"therapistScreen.png"];
+    NSLog(@"added therapist screen");
+
     bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
     bgImage.xScale = .38;
     bgImage.yScale = .38;
