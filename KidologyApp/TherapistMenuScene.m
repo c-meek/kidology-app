@@ -21,6 +21,8 @@
         [self addUploadButton];
         [self addBackButton];
         [self loadSettingsInfo];
+        //[self addTextField];
+        [self updateSettingsInfo];
     }
     return self;
 }
@@ -69,6 +71,7 @@
         SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
         mainMenu.scaleMode = SKSceneScaleModeAspectFill;
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+        [_textField removeFromSuperview];
         [self.view presentScene:mainMenu transition:reveal];
     }
     else
@@ -253,6 +256,54 @@
     _firstName = [defaults objectForKey:@"firstName"];
     _lastName = [defaults objectForKey:@"lastName"];
     _therapistEmail = [defaults objectForKey:@"therapistEmail"];
+    
+}
+-(void)updateSettingsInfo
+{
+    //get user's first and last name and therapist's email address from the app settings
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"3" forKey:@"numberOfTargets"];
+    [defaults synchronize];
+    NSLog(@"updating settings");
+
+}
+-(void)didMoveToView:(SKView *)view
+{
+    _textField = [[UITextField alloc] initWithFrame:CGRectMake(self.size.width/2, self.size.height/2+20, 200, 40)];
+    _textField.center = self.view.center;
+    _textField.borderStyle = UITextBorderStyleRoundedRect;
+    _textField.textColor = [UIColor blackColor];
+    _textField.font = [UIFont systemFontOfSize:17.0];
+    _textField.placeholder = @"Enter your name here";
+    _textField.backgroundColor = [UIColor whiteColor];
+    _textField.autocorrectionType = UITextAutocorrectionTypeYes;
+    _textField.keyboardType = UIKeyboardTypeDefault;
+    _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    //textField.delegate = self.delegate;
+    [self.view addSubview:_textField];
+    
+//    ttaAppDelegate *myDel = [[UIApplication sharedApplication] delegate];
+//    UIViewController *vc = myDel.window.rootViewController;
+//    self.textField= [[UITextField alloc] initWithFrame:CGRectMake(self.size.width/2, self.size.height/2+20, 200, 40)];
+//    self.textField.center = self.view.center;
+//    self.textField.borderStyle = UITextBorderStyleRoundedRect;
+//    self.textField.textColor = [UIColor blackColor];
+//    self.textField.font = [UIFont systemFontOfSize:17.0];
+//    self.textField.placeholder = @"Enter your name here";
+//    self.textField.backgroundColor = [UIColor whiteColor];
+//    self.textField.autocorrectionType = UITextAutocorrectionTypeYes;
+//    self.textField.keyboardType = UIKeyboardTypeDefault;
+//    self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+//    self.textField.delegate = self;
+//    self.button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    [self.button addTarget:self action:@selector(saveScore:) forControlEvents:UIControlEventTouchDown];
+//    [self.button setTitle:@"Save" forState:UIControlStateNormal];
+//    self.button.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
+//    
+//    [vc.view addSubview:self.textField];
+//    [vc.view addSubview:self.button];
+//    vc.interstitialPresentationPolicy = ADInterstitialPresentationPolicyManual;
+//    [vc requestInterstitialAdPresentation];
 }
 
 @end

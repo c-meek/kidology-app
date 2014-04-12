@@ -52,10 +52,11 @@ bool isFirstLogin = true;
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)unwindToHideSettingsModal:(UIStoryboardSegue *)unwindSegue
-{
+
+- (IBAction)returnedFromSettings:(UIStoryboardSegue *)segue {
     [self loadScene];
 }
+
 
 - (void)loadScene
 {

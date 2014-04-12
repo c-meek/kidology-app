@@ -17,6 +17,8 @@
 			<string></string>
 			<key>AutocorrectionType</key>
 			<string>No</string>
+			<key>KeyboardType</key>
+			<string>Alphabet</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -31,6 +33,8 @@
 			<string></string>
 			<key>AutocorrectionType</key>
 			<string>No</string>
+			<key>KeyboardType</key>
+			<string>Alphabet</string>
 		</dict>
 		<dict>
 			<key>AutocapitalizationType</key>
@@ -64,10 +68,22 @@
 			<key>FalseValue</key>
 			<string>left</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+			<key>Title</key>
+			<string>Number of Targets</string>
+			<key>Key</key>
+			<string>numberOfTargets</string>
+			<key>DefaultValue</key>
+			<string>5</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>
 	<key>Title</key>
-	<string>The Kidology App!</string>
+	<string>Kidology App</string>
 </dict>
 </plist>

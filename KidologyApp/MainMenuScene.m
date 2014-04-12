@@ -11,7 +11,7 @@
 #import "TargetPracticeMenuScene.h"
 #import "FetchScene.h"
 #import "TherapistMenuScene.h"
-// #import "SettingsMenuScene.h"
+#import "SettingsMenuScene.h"
 #import "MenuViewController.h"
 
 
@@ -19,23 +19,24 @@
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
-        /* Setup your scene here */
-        
-        //add background
+        // add game and menu buttons to screen
         [self addBackground];
-        //add baby game button
         [self addBabyGameButton];
-        //add target game button
         [self addTargetGameButton];
-        //add fetch game button
         [self addFetchGameButton];
-        //add therapist menu button
         [self addTherapistMenuButton];
-        // add user info label to corner
-        [self addUserInfo];
+        [self addSettingsMenuButton];
         
+        // check user name and add user name label to corner
+        [self addUserInfo];
     }
     return self;
+}
+
+// check user name and therapist email before allowing to play a game
+- (void)didMoveToView:(SKView *)view
+{
+    [self checkNameAndEmail];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -44,36 +45,38 @@
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
+    
     // if one of the buttons is pressed, change its color
     if ([node.name isEqualToString:@"babyGameButton"] ||
         [node.name isEqualToString:@"babyGameButtonPressed"])
     {
         _babyGameButton.hidden = true;
         _babyGameButtonPressed.hidden = false;
-        //_gameMenuButton.color = [SKColor yellowColor];
     }
     else if ([node.name isEqualToString:@"targetGameButton"] ||
              [node.name isEqualToString:@"targetGameButtonPressed"])
     {
         _targetGameButton.hidden = true;
         _targetGameButtonPressed.hidden = false;
-        //_gameMenuButton.color = [SKColor yellowColor];
     }
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
         [node.name isEqualToString:@"fetchGameButtonPressed"])
     {
         _fetchGameButton.hidden = true;
         _fetchGameButtonPressed.hidden = false;
-        //_gameMenuButton.color = [SKColor yellowColor];
     }
     else if ([node.name isEqualToString:@"therapistMenuButton"] ||
              [node.name isEqualToString:@"therapistMenuButtonPressed"])
     {
         _therapistMenuButton.hidden = true;
         _therapistMenuButtonPressed.hidden = false;
-        //_gameMenuButton.color = [SKColor yellowColor];
     }
-
+    else if ([node.name isEqualToString:@"settingsMenuButton"] ||
+             [node.name isEqualToString:@"settingsMenuButtonPressed"])
+    {
+        _settingsMenuButton.hidden = true;
+        _settingsMenuButtonPressed.hidden = false;
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -108,7 +111,7 @@
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
              [node.name isEqualToString:@"fetchGameButtonPressed"])
     {
-        // Create and configure the "game menu" scene.
+        // Create and configure the fetch game menu scene.
         SKScene * fetchGame = [[FetchScene alloc] initWithSize:self.size];
         fetchGame.scaleMode = SKSceneScaleModeAspectFill;
         
@@ -118,14 +121,23 @@
     else if ([node.name isEqualToString:@"therapistMenuButton"] ||
              [node.name isEqualToString:@"therapistMenuButtonPressed"])
     {
-        // Create and configure the "game menu" scene.
+        // Create and configure the therapist menu scene.
         SKScene * therapistMenu = [[TherapistMenuScene alloc] initWithSize:self.size];
         therapistMenu.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
         [self.view presentScene:therapistMenu transition:reveal];
     }
-
+    else if ([node.name isEqualToString:@"settingsMenuButton"] ||
+             [node.name isEqualToString:@"settingsMenuButtonPressed"])
+    {
+        // Create and configure the "settings menu" scene.
+        SKScene * settingsMenu = [[SettingsMenuScene alloc] initWithSize:self.size];
+        settingsMenu.scaleMode = SKSceneScaleModeAspectFill;
+        
+        // Present the scene.
+        [self.view presentScene:settingsMenu transition:reveal];
+    }
     else
     {
         _targetGameButton.hidden = false;
@@ -137,7 +149,20 @@
         _therapistMenuButton.hidden = false;
         _therapistMenuButtonPressed.hidden = true;
     }
+}
 
+
+// ------------------------------------------------------------------------------------
+//                             ADD BACKGROUND AND BUTTONS
+// ------------------------------------------------------------------------------------
+
+-(void)addBackground
+{
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"mainMenuBackground"];
+    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
+    bgImage.xScale = .38;
+    bgImage.yScale = .38;
+    [self addChild:bgImage];
 }
 
 -(void)addBabyGameButton
@@ -210,7 +235,7 @@
     // therapist button
     _therapistMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"therapistMenuButton.png"];
     _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 320,
-                                                CGRectGetMidY(self.frame) - 180);
+                                                CGRectGetMidY(self.frame));
     _therapistMenuButton.xScale = .38;
     _therapistMenuButton.yScale = .38;
     _therapistMenuButton.name = @"therapistMenuButton";
@@ -219,59 +244,49 @@
     // pressed therapist menu button icon
     _therapistMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"therapistMenuButtonPressed.png"];
     _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 320,
-                                                       CGRectGetMidY(self.frame) - 180);
+                                                       CGRectGetMidY(self.frame));
     _therapistMenuButtonPressed.xScale = .38;
     _therapistMenuButtonPressed.yScale = .38;
     _therapistMenuButtonPressed.name = @"therapistMenuButtonPressed";
     _therapistMenuButtonPressed.hidden = true;
     [self addChild:_therapistMenuButtonPressed];
-    
 }
 
--(void)update:(CFTimeInterval)currentTime {
-    /* Called before each frame is rendered */
-}
-
--(void)addBackground
+-(void)addSettingsMenuButton
 {
-    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"mainMenuBackground"];
-    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
-    bgImage.xScale = .38;
-    bgImage.yScale = .38;
-    [self addChild:bgImage];
+    // settings menu button
+    _settingsMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"settingsMenuButton.png"];
+    _settingsMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 320,
+                                                CGRectGetMidY(self.frame) - 180);
+    _settingsMenuButton.xScale = .38;
+    _settingsMenuButton.yScale = .38;
+    _settingsMenuButton.name = @"settingsMenuButton";
+    [self addChild:_settingsMenuButton];
+    
+    // pressed settings menu button icon
+    _settingsMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"settingsMenuButtonPressed.png"];
+    _settingsMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 320,
+                                                       CGRectGetMidY(self.frame) - 180);
+    _settingsMenuButtonPressed.xScale = .38;
+    _settingsMenuButtonPressed.yScale = .38;
+    _settingsMenuButtonPressed.name = @"settingsMenuButtonPressed";
+    _settingsMenuButtonPressed.hidden = true;
+    [self addChild:_settingsMenuButtonPressed];
 }
+
+//-(void)update:(CFTimeInterval)currentTime {
+//    /* Called before each frame is rendered */
+//}
+
+
 
 -(void)addUserInfo
 {
+    // get user's first and last names + therapist email from settings bundle
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
     NSString *lastName = [defaults objectForKey:@"lastName"];
-    NSString *therapistEmail = [defaults objectForKey:@"therapistEmail"];
     
-    // alert when empty/incomplete name fields
-    NSString *message = @"";
-  
-    if (firstName == NULL || firstName.length == 0 ||
-        lastName  == NULL || lastName.length  == 0)
-    {
-        message = @"Your name is missing in the application settings.  Without a name, your therapist could get confused! Please go to the Settings app and enter your name.";
-    }
-    else if (therapistEmail  == NULL || therapistEmail.length  == 0)
-    {
-        message = @"You have not provided an e-mail address for your therapist.  Without an e-mail address, you cannot send them your progress reports! Please go to the Settings app and enter your therapist's email.";
-    }
-    if (message.length > 0)
-    {
-        UIAlertView *mustUpdateNameAlert=
-            [[UIAlertView alloc]initWithTitle:@"ERROR:"message:message
-                        delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
-        [mustUpdateNameAlert show];
-        
-        // in the old days you could redirect to the settings app, but no more...
-        //
-        return;
-    }
-
     NSString *lastInitial = [lastName substringToIndex:1];
     lastInitial = [lastInitial stringByAppendingString:@"."];
     NSString *wholeName = [firstName stringByAppendingString:lastInitial];
@@ -284,7 +299,61 @@
     usernameLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 200,
                                          CGRectGetMidY(self.frame)+ 250);
     [self addChild:usernameLabel];
+}
 
+-(void)checkNameAndEmail
+{
+    // get user's first and last names + therapist email from settings bundle
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
+    NSString *lastName = [defaults objectForKey:@"lastName"];
+    NSString *therapistEmail = [defaults objectForKey:@"therapistEmail"];
+    
+    // trim any leading or trailing whitespace
+    firstName = [firstName stringByTrimmingCharactersInSet:
+                 [NSCharacterSet whitespaceCharacterSet]];
+    lastName = [lastName stringByTrimmingCharactersInSet:
+                [NSCharacterSet whitespaceCharacterSet]];
+    therapistEmail = [therapistEmail stringByTrimmingCharactersInSet:
+                      [NSCharacterSet whitespaceCharacterSet]];
+    
+    // alert when one of these fields is empty/incomplete
+    NSString *message = @"";
+    if (firstName == NULL || firstName.length == 0 ||
+        lastName  == NULL || lastName.length  == 0)
+    {
+        message = @"You have not provided a first and/or last name!";
+    }
+    else if (therapistEmail  == NULL || therapistEmail.length  == 0)
+    {
+        message = @"You have not provided an e-mail address for your therapist.";
+    }
+    if (message.length > 0)
+    {
+        UIAlertView *mustUpdateNameAlert = [[UIAlertView alloc]initWithTitle:@"ERROR:"
+                                                                     message:message
+                                                                    delegate:self
+                                                           cancelButtonTitle:@"Close"
+                                                           otherButtonTitles:nil];
+        [mustUpdateNameAlert show];
+    }
+}
+
+// present settings menu scene when alert view closed
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0)
+    {
+        // in the old days you could redirect to the settings app, but no more...
+        // instead, redirect to our settings menu scene
+        // Create and configure the "settings menu" scene.
+        SKScene * settingsMenu = [[SettingsMenuScene alloc] initWithSize:self.size];
+        settingsMenu.scaleMode = SKSceneScaleModeAspectFill;
+        
+        // Present the scene
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+        [self.view presentScene:settingsMenu transition:reveal];
+    }
 }
 
 @end

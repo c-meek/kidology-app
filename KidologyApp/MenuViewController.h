@@ -9,4 +9,5 @@
 #import "ViewController.h"
 
 @interface MenuViewController : ViewController
+- (IBAction)returnedFromSegue:(UIStoryboardSegue *)segue;
 @end

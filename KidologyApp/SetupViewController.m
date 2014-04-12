@@ -63,27 +63,6 @@ NSString *lastName;
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)returnToMain:(id)sender {
-    NSString *errorMessage = [self checkFields];
-    if (errorMessage.length != 0)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
-                                                        message:errorMessage
-                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alert show];
-//        [alert release];
-        return;
-    }
-    defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:affectedHand forKey:@"affectedHand"];
-    [defaults setObject:therapistEmail forKey:@"therapistEmail"];
-    [defaults setObject:firstName forKey:@"firstName"];
-    [defaults setObject:lastName forKey:@"lastName"];
-
-    [defaults synchronize];
-    [self performSegueWithIdentifier:@"unwindToMenuViewController" sender:self];
-}
-
 // advances thru input fields when user hits return in text field
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if(textField == self.firstName) {
@@ -123,6 +102,29 @@ NSString *lastName;
         }
     }
     return errorMessage;
+}
+
+
+- (IBAction)returnToMenuViewController:(id)sender {
+    NSString *errorMessage = [self checkFields];
+    if (errorMessage.length != 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                        message:errorMessage
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        //        [alert release];
+        return;
+    }
+    defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:affectedHand forKey:@"affectedHand"];
+    [defaults setObject:therapistEmail forKey:@"therapistEmail"];
+    [defaults setObject:firstName forKey:@"firstName"];
+    [defaults setObject:lastName forKey:@"lastName"];
+    
+    [defaults synchronize];
+    [self performSegueWithIdentifier:@"returnToMenuViewController" sender:self];
+    //[self performSegueWithIdentifier:@"UnwindFromSecondView" sender:self];
 }
 
 @end
