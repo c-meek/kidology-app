@@ -17,7 +17,7 @@
         NSLog(@"Size: %@", NSStringFromCGSize(size));
         
         //setup scene
-        self.backgroundColor = [SKColor colorWithRed:0.2 green:.6 blue:0.0 alpha:1.0];
+        [self addBackground];
         
         self.ball = [SKSpriteNode spriteNodeWithImageNamed:@"tennis"];
         self.dog = [SKSpriteNode spriteNodeWithImageNamed:@"dog"];
@@ -29,6 +29,15 @@
         [self addBackButton];
     }
     return self;
+}
+
+-(void)addBackground
+{
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"fetchBackground"];
+    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
+    bgImage.xScale = .4;
+    bgImage.yScale = .4;
+    [self addChild:bgImage];
 }
 
 -(void)displayBall

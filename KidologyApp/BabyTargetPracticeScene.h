@@ -14,6 +14,8 @@
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 @property (nonatomic) float time;
+@property (nonatomic) SKSpriteNode *backButton;
+@property (nonatomic) SKSpriteNode *backButtonPressed;
 -(id)initWithSize:(CGSize)size color:(NSString *)color;
 
 @end

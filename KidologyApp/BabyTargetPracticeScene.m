@@ -23,6 +23,7 @@ if (self = [super initWithSize:size])
         _target.yScale = .70;
         _target.position = CGPointMake(self.size.width/2, self.size.height/2);
         [self addChild:_target];
+        [self addBackButton];
         
     }
     return self;
@@ -39,9 +40,18 @@ if (self = [super initWithSize:size])
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [touches anyObject];
-    CGPoint position = [touch locationInNode:self];
-    [self targetTouch:position];
+    for(UITouch *touch in [touches allObjects])
+    {
+        CGPoint position = [touch locationInNode:self];
+        SKNode *node = [self nodeAtPoint:position];
+        [self targetTouch:position];
+        if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
+        {
+            _backButton.hidden = true;
+            _backButtonPressed.hidden = false;
+        }
+
+    }
 }
 
 -(void)update:(CFTimeInterval)currentTime {
@@ -97,7 +107,7 @@ if (self = [super initWithSize:size])
             [self hideTarget];
         }];
         //make a wait action
-        SKAction *wait = [SKAction waitForDuration:1];
+        SKAction *wait = [SKAction waitForDuration:3];
         //make a "add" target action
         SKAction *addTarget = [SKAction runBlock:^{
             [self displayTarget];
@@ -107,15 +117,75 @@ if (self = [super initWithSize:size])
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
         _totalTouches++;
         
-        if (_totalTouches > 5) {
-            SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
-            mainMenu.scaleMode = SKSceneScaleModeAspectFill;
-            
-            // Present the scene.
-            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-            [self.view presentScene:mainMenu transition:reveal];
+//        if (_totalTouches > 5) {
+//            SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
+//            mainMenu.scaleMode = SKSceneScaleModeAspectFill;
+//            
+//            // Present the scene.
+//            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+//            [self.view presentScene:mainMenu transition:reveal];
+//        }
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    for (UITouch *touch in [touches allObjects]) {
+    	CGPoint currentLocation  = [touch locationInNode:self];
+        CGPoint previousLocation = [touch previousLocationInNode:self];
+        SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
+        SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
+        
+        // If a touch was off the back button but has moved onto it
+        if (!([_backButton isEqual:previousNode] || [_backButtonPressed isEqual:previousNode]) &&
+            ([_backButton isEqual:currentNode] || [_backButtonPressed isEqual:currentNode]))
+        {
+            _backButtonPressed.hidden = false;
+            _backButton.hidden = true;
+        }
+        else if (([_backButton isEqual:previousNode] || [_backButtonPressed isEqual:previousNode]) &&
+                 !([_backButton isEqual:currentNode] || [_backButtonPressed isEqual:currentNode]))
+        {
+            _backButtonPressed.hidden = true;
+            _backButton.hidden = false;
         }
     }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch begins */
+    UITouch *touch = [touches anyObject];
+    CGPoint position = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:position];
+    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+    
+    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
+    {
+        SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
+        backToMain.scaleMode = SKSceneScaleModeAspectFill;
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+        [self.view presentScene:backToMain transition:reveal];
+    }
+}
+
+-(void)addBackButton
+{
+    _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
+    _backButton.position = CGPointMake(100, self.frame.size.height/2+235);
+    _backButton.name = @"backButton";
+    _backButton.xScale = .5;
+    _backButton.yScale = .5;
+    [self addChild:_backButton];
+    
+    _backButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
+    _backButtonPressed.position = CGPointMake(100, self.frame.size.height/2+235);
+    _backButtonPressed.name = @"backButtonPressed";
+    _backButtonPressed.hidden = true;
+    _backButtonPressed.xScale = .5;
+    _backButtonPressed.yScale = .5;
+    [self addChild:_backButtonPressed];
 }
 
 @end
