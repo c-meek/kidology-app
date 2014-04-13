@@ -19,7 +19,6 @@
 		0F9462D518C0296A00E9E3BD /* anchor_green_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D118C0296A00E9E3BD /* anchor_green_right.png */; };
 		0F9462D618C0296A00E9E3BD /* anchor_green_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D218C0296A00E9E3BD /* anchor_green_left.png */; };
 		0F9462D718C0296A00E9E3BD /* anchor_red_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D318C0296A00E9E3BD /* anchor_red_right.png */; };
-		0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */; };
 		0FB5157118F463CE005C309C /* test.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0FB5157018F463CE005C309C /* test.csv */; };
 		0FD6614118F5E0FE00B0CDB3 /* backwards.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0FD6614018F5E0FE00B0CDB3 /* backwards.csv */; };
 		0FDC0EB618F49690000CE9E0 /* 4corners.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0FDC0EB518F49690000CE9E0 /* 4corners.csv */; };
@@ -138,8 +137,6 @@
 		0F9462D118C0296A00E9E3BD /* anchor_green_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor_green_right.png; sourceTree = "<group>"; };
 		0F9462D218C0296A00E9E3BD /* anchor_green_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor_green_left.png; sourceTree = "<group>"; };
 		0F9462D318C0296A00E9E3BD /* anchor_red_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor_red_right.png; sourceTree = "<group>"; };
-		0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchInstructionScene.h; sourceTree = "<group>"; };
-		0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchInstructionScene.m; sourceTree = "<group>"; };
 		0FB5157018F463CE005C309C /* test.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.csv; path = KidologyApp/test.csv; sourceTree = "<group>"; };
 		0FD6614018F5E0FE00B0CDB3 /* backwards.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = backwards.csv; sourceTree = "<group>"; };
 		0FDC0EB518F49690000CE9E0 /* 4corners.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 4corners.csv; sourceTree = "<group>"; };
@@ -438,8 +435,6 @@
 				7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */,
 				B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */,
 				B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */,
-				0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */,
-				0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */,
 				B9D70C8A18C639FB000C12F1 /* SetupViewController.h */,
 				B9D70C8B18C639FB000C12F1 /* SetupViewController.m */,
 				B9D70C8D18C64587000C12F1 /* MenuViewController.h */,
@@ -733,7 +728,6 @@
 				B94A54B118C00DC100E92932 /* BabyMenuScene.m in Sources */,
 				B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */,
 				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
-				0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */,
 				B9938EBF18A9A5C40004890B /* TargetPracticeGameOver.m in Sources */,
 				E8F0BC2D18F6289C0021BB55 /* ZipArchive.mm in Sources */,
 				7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */,

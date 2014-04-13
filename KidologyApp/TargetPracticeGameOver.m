@@ -107,6 +107,7 @@ NSString *gameName;
         // Create and configure the "main menu" scene.
         NSString *gameMode = [self.userData objectForKey:@"gameMode"];
         int mode = 0;
+        NSLog(@"game mode is %@", gameMode);
         if ([gameMode isEqualToString: @"center"])
         {
             mode = 1;
@@ -123,6 +124,7 @@ NSString *gameName;
         {
             mode = 4;
         }
+        NSLog(@"mode is %d",mode);
         
         if (mode != 4)
         {

@@ -9,4 +9,5 @@
 #import "ViewController.h"
 
 @interface MenuViewController : ViewController
+- (void)handleOpenURL:(NSURL *)url;
 @end

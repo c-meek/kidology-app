@@ -112,7 +112,7 @@ NSString *gameName;
              [node.name isEqualToString:@"gestureModeButton"])
     {
         // Create and configure the random "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:4 numTargets:3]; //added numTagets...
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:3 numTargets:3]; //added numTagets...
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene.
@@ -293,7 +293,7 @@ NSString *gameName;
     _gestureModeButtonLabel.position = CGPointMake(self.frame.size.width/4*2,
                                                    self.frame.size.height/2-250);
     _gestureModeButtonLabel.name = @"gestureModeLabel";
-    _gestureModeButtonLabel.text = @"Actions";
+    _gestureModeButtonLabel.text = @"Gesture";
     _gestureModeButtonLabel.verticalAlignmentMode = 1;
     [self addChild:_gestureModeButtonLabel];
 }
