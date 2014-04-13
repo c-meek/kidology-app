@@ -36,6 +36,8 @@
 		7C5523F218EDB7D30042DEAB /* rotate_green_targetII.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */; };
 		7C9E74D418FB105100E2723B /* green_target_w_outward_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9E74D318FB105100E2723B /* green_target_w_outward_arrows.png */; };
 		7C9E74D618FB106300E2723B /* green_target_w_inward_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9E74D518FB106300E2723B /* green_target_w_inward_arrows.png */; };
+		7C9E74D818FB10CA00E2723B /* green_target_w_outward_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9E74D718FB10CA00E2723B /* green_target_w_outward_arrows.png */; };
+		7C9E74DA18FB10D000E2723B /* green_target_w_inward_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9E74D918FB10D000E2723B /* green_target_w_inward_arrows.png */; };
 		7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */; };
 		7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */; };
 		7CB23C4018C0020D007F409F /* Black.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C3218C0020D007F409F /* Black.png */; };
@@ -167,6 +169,8 @@
 		7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate_green_targetII.png; sourceTree = "<group>"; };
 		7C9E74D318FB105100E2723B /* green_target_w_outward_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target_w_outward_arrows.png; sourceTree = "<group>"; };
 		7C9E74D518FB106300E2723B /* green_target_w_inward_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target_w_inward_arrows.png; sourceTree = "<group>"; };
+		7C9E74D718FB10CA00E2723B /* green_target_w_outward_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target_w_outward_arrows.png; sourceTree = "<group>"; };
+		7C9E74D918FB10D000E2723B /* green_target_w_inward_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target_w_inward_arrows.png; sourceTree = "<group>"; };
 		7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Huge_Checkered_Background_[4096x3072].png"; sourceTree = "<group>"; };
 		7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyTargetPracticeScene.h; sourceTree = "<group>"; };
 		7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyTargetPracticeScene.m; sourceTree = "<group>"; };
@@ -364,6 +368,8 @@
 			isa = PBXGroup;
 			children = (
 				7C9E74D318FB105100E2723B /* green_target_w_outward_arrows.png */,
+				7C9E74D918FB10D000E2723B /* green_target_w_inward_arrows.png */,
+				7C9E74D718FB10CA00E2723B /* green_target_w_outward_arrows.png */,
 				7C9E74D518FB106300E2723B /* green_target_w_inward_arrows.png */,
 				B9E5BE2F18F700930065B26D /* arrow.png */,
 				B9E5BE2D18F700010065B26D /* rotate_green_target.png */,
@@ -689,6 +695,7 @@
 				0FDEFA3318FAFE1600D458F9 /* Center.png in Resources */,
 				E89BFA8718F71564006C1959 /* settingsScreenLegacy.png in Resources */,
 				7C9E74D618FB106300E2723B /* green_target_w_inward_arrows.png in Resources */,
+				7C9E74DA18FB10D000E2723B /* green_target_w_inward_arrows.png in Resources */,
 				0FDEFA3B18FB080600D458F9 /* Actions.png in Resources */,
 				7CB23C4B18C0020D007F409F /* Red.png in Resources */,
 				E8DF543C18F58AB700B9D1D1 /* babyGameButtonPressed.png in Resources */,
@@ -715,6 +722,7 @@
 				FD6B78DE18ED19240035CA95 /* kidologyspotlight-icon@2x.png in Resources */,
 				7CB76CC718B692CB0003A622 /* hand.png in Resources */,
 				7C9E74D418FB105100E2723B /* green_target_w_outward_arrows.png in Resources */,
+				7C9E74D818FB10CA00E2723B /* green_target_w_outward_arrows.png in Resources */,
 				E89BFA8618F71564006C1959 /* settingsScreen@2x.png in Resources */,
 				7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */,
 				0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */,
