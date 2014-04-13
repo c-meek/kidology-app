@@ -43,7 +43,7 @@ extern NSUserDefaults *defaults;
         if (game_mode == 2) {
             _gameMode = RANDOM;
         }
-        if (game_mode == 4)
+        if (game_mode == 3)
         {
             _gameMode = GESTURE;
         }
@@ -645,7 +645,7 @@ extern NSUserDefaults *defaults;
         }
         else if (_gameMode == GESTURE)
         {
-            mode = @"action";
+            mode = @"gesture";
         }
         [gameOverScene.userData setObject:mode forKey:@"gameMode"];
         [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];

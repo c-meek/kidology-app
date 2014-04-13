@@ -75,10 +75,11 @@ NSString *gameName;
             [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
         [[NSFileManager defaultManager] createFileAtPath:folderPath contents:nil attributes:nil];
 
-        // make a file name from the current date (dd/mm/yy hh:mm:ss timezone)
+        // make a file name from the player name and the current date/time (dd/mm/yy hh:mm:ss timezone)
+        NSString *nameString = [NSString stringWithFormat:@"%@_%@_",[[NSUserDefaults standardUserDefaults] stringForKey:@"firstName"] , [[NSUserDefaults standardUserDefaults] stringForKey:@"lastName"]];
         NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
-                                                              dateStyle:NSDateFormatterShortStyle
-                                                              timeStyle:NSDateFormatterFullStyle];
+                                                              dateStyle:NSDateFormatterMediumStyle
+                                                              timeStyle:NSDateFormatterMediumStyle];
         // take out spaces
         dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
         // replace colons with hyphens
@@ -86,8 +87,8 @@ NSString *gameName;
         // replace slashes with hyphens
         dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
         NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
-        NSString *fileName = [NSString stringWithFormat:@"%@/%@-%@.csv", folderPath, dateString, gameModeString];
-        //NSLog(@"%@", fileName);
+        NSString *fileName = [NSString stringWithFormat:@"%@/%@%@-%@.csv", folderPath, nameString, dateString, gameModeString];
+        NSLog(@"%@", fileName);
         //NSLog(@"%@", output);
         
         [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];
@@ -107,6 +108,7 @@ NSString *gameName;
         // Create and configure the "main menu" scene.
         NSString *gameMode = [self.userData objectForKey:@"gameMode"];
         int mode = 0;
+        NSLog(@"game mode is %@", gameMode);
         if ([gameMode isEqualToString: @"center"])
         {
             mode = 1;
@@ -123,6 +125,7 @@ NSString *gameName;
         {
             mode = 4;
         }
+        NSLog(@"mode is %d",mode);
         
         if (mode != 4)
         {
@@ -137,11 +140,8 @@ NSString *gameName;
         {
             if(nil == gameName && [_tbv superview] == nil)
             {
-                //            UIViewController *vc = self.view.window.rootViewController;
-                //            [vc performSegueWithIdentifier:@"toGameList" sender:self];
-                //            _customModeButton.color = [SKColor greenColor];
                 [self addGameFilesToArray];
-                _tbv = [[UITableView alloc] initWithFrame:CGRectMake(250, 200, self.frame.size.height/2, self.frame.size.width/2)];
+                _tbv = [[UITableView alloc] initWithFrame:CGRectMake(230, 200, self.frame.size.height/2+70, self.frame.size.width/2+50)];
                 _tbv.delegate = self;
                 _tbv.dataSource = self;
                 [self.view addSubview:_tbv];
@@ -150,13 +150,12 @@ NSString *gameName;
             {
                 [_tbv removeFromSuperview];
             }
-            SKScene * customTargetPracticeScene = [[CustomTargetPracticeScene alloc] initWithSize:self.size
-                                                                                    ];
-            customTargetPracticeScene.scaleMode = SKSceneScaleModeAspectFill;
-            
-            // Present the scene.
-            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-            [self.view presentScene:customTargetPracticeScene transition:reveal];
+//            SKScene * customTargetPracticeScene = [[CustomTargetPracticeScene alloc] initWithSize:self.size];
+//            customTargetPracticeScene.scaleMode = SKSceneScaleModeAspectFill;
+//            
+//            // Present the scene.
+//            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+//            [self.view presentScene:customTargetPracticeScene transition:reveal];
         }
     }
     else if ([node.name isEqualToString:@"backToTargetGameMenuButton"] ||
@@ -181,6 +180,10 @@ NSString *gameName;
         // Present the scene.
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         [self.view presentScene:mainMenuScene transition:reveal];
+    }
+    else
+    {
+        [_tbv removeFromSuperview];
     }
 }
 

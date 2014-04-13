@@ -11,11 +11,13 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
+// called when e-mail attachment opened with the app
+-(BOOL) application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    MenuViewController *rootController = [[MenuViewController alloc] initWithNibName:nil bundle:nil];
+    if (url != nil && [url isFileURL]) {
+        [rootController handleOpenURL:url];
+    }
     return YES;
-    
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

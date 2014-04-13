@@ -76,6 +76,10 @@ NSString *gameName;
 
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
         {
+            // reset button
+            _backButtonPressed.hidden = true;
+            _backButton.hidden = false;
+            // go back to the main menu
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
             backToMain.scaleMode = SKSceneScaleModeAspectFill;
             [_tbv removeFromSuperview];
@@ -109,7 +113,7 @@ NSString *gameName;
              [node.name isEqualToString:@"gestureModeButton"])
     {
         // Create and configure the random "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:4 numTargets:3]; //added numTagets...
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:3 numTargets:3]; //added numTagets...
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene.
@@ -325,15 +329,15 @@ NSString *gameName;
     _customModeButton = [[SKSpriteNode alloc] initWithImageNamed:@"Custom"];
     _customModeButton.position = CGPointMake(self.frame.size.width/4*2, self.frame.size.height/2 - 250);
     _customModeButton.name = @"customModeButton";
-    _customModeButton.xScale = .45;
-    _customModeButton.yScale = .45;
+    _customModeButton.xScale = .42;
+    _customModeButton.yScale = .42;
     [self addChild:_customModeButton];
     
     _customModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Custom_Pressed"];
     _customModeButtonPressed.position = CGPointMake(self.frame.size.width/4*2, self.frame.size.height/2 - 250);
     _customModeButtonPressed.name = @"customModeButtonPressed";
-    _customModeButtonPressed.xScale = .45;
-    _customModeButtonPressed.yScale = .45;
+    _customModeButtonPressed.xScale = .42;
+    _customModeButtonPressed.yScale = .42;
     _customModeButtonPressed.hidden = true;
     [self addChild:_customModeButtonPressed];
 }

@@ -47,6 +47,9 @@
     if ([node.name isEqualToString:@"backButton"] ||
              [node.name isEqualToString:@"backButtonLabel"])
     {
+        // reset button
+        _pressedBackButton.hidden = true;
+        _backButton.hidden = false;
         SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
         mainMenu.scaleMode = SKSceneScaleModeAspectFill;
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
