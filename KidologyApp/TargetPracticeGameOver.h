@@ -10,6 +10,13 @@
 
 @interface TargetPracticeGameOver : SKScene
 -(id)initWithSize:(CGSize)size targets:(int)targets;
-@property (nonatomic) SKSpriteNode *backButton;
-@property (nonatomic) SKLabelNode * returnMessage;
+@property (nonatomic) SKSpriteNode *playAgainButton;
+@property (nonatomic) SKSpriteNode *playAgainButtonPressed;
+@property (nonatomic) SKSpriteNode *backToTargetGameMenuButton;
+@property (nonatomic) SKSpriteNode *backToTargetGameMenuButtonPressed;
+@property (nonatomic) SKSpriteNode *backToMainMenuButton;
+@property (nonatomic) SKSpriteNode *backToMainMenuButtonPressed;
+@property (nonatomic) SKLabelNode *returnMessage;
+@property (nonatomic) NSMutableArray *gameArray;
+@property (nonatomic) UITableView *tbv;
 @end

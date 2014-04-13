@@ -87,8 +87,9 @@ NSString *gameName;
         }
     //Added another variable for Target Practice call.
     else if ([node.name isEqualToString:@"centerLabel"] ||
-        [node.name isEqualToString:@"centerButton"])
+             [node.name isEqualToString:@"centerButton"])
     {
+        NSLog(@"hit center button");
         // Create and configure the center "target practice" scene.
         SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1 numTargets:3]; //added numTagets...
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
