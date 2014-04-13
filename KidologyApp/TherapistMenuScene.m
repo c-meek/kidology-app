@@ -21,8 +21,6 @@
         [self addUploadButton];
         [self addBackButton];
         [self loadSettingsInfo];
-        //[self addTextField];
-        [self updateSettingsInfo];
     }
     return self;
 }
@@ -70,13 +68,37 @@
         SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
         mainMenu.scaleMode = SKSceneScaleModeAspectFill;
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-        [_textField removeFromSuperview];
         [self.view presentScene:mainMenu transition:reveal];
     }
     else
     {
         _pressedBackButton.hidden = true;
         _backButton.hidden = false;
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    for (UITouch *touch in [touches allObjects]) {
+    	CGPoint currentLocation  = [touch locationInNode:self];
+        CGPoint previousLocation = [touch previousLocationInNode:self];
+        SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
+        SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
+        
+        // If a touch was off the back button but has moved onto it
+        if (!([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
+            ([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
+        {
+            _pressedBackButton.hidden = false;
+            _backButton.hidden = true;
+        }
+        else if (([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
+                 !([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
+        {
+            _pressedBackButton.hidden = true;
+            _backButton.hidden = false;
+        }
     }
 }
 
@@ -174,8 +196,8 @@
     [composer release];
 }
 
-// Dismisses the email composition interface when users tap Cancel or Send. Proceeds to update the message field with the result of the operation.
-
+// Dismisses the email composition interface when users tap Cancel or Send
+// Proceeds to update the message field with the result of the operation
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
     // Notifies users about errors associated with the interface
@@ -187,7 +209,8 @@
             break;
         case MFMailComposeResultSent:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email" message:@"Email Successfully Sent!"
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email"
+                                                            message:@"Email Successfully Sent!"
                                                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [alert show];
             [alert release];
@@ -230,13 +253,10 @@
 
 -(void)addBackground
 {
-    NSLog(@"adding therapist screen");
-    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"therapistScreen.png"];
-    NSLog(@"added therapist screen");
-
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
     bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
-    bgImage.xScale = .38;
-    bgImage.yScale = .38;
+    bgImage.xScale = .4;
+    bgImage.yScale = .4;
     [self addChild:bgImage];
 }
 
@@ -263,7 +283,7 @@
 {
     //Back Button!
     _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
-    _backButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
+    _backButton.position = CGPointMake(100, self.frame.size.height/2+235);
     _backButton.name = @"backButton";
     _backButton.xScale = .5;
     _backButton.yScale = .5;
@@ -271,7 +291,7 @@
     
     //Pressed Back Button!
     _pressedBackButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
-    _pressedBackButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
+    _pressedBackButton.position = CGPointMake(100, self.frame.size.height/2+235);
     _pressedBackButton.name = @"backButton";
     _pressedBackButton.hidden = true;
     _pressedBackButton.xScale = .5;
@@ -286,54 +306,6 @@
     _firstName = [defaults objectForKey:@"firstName"];
     _lastName = [defaults objectForKey:@"lastName"];
     _therapistEmail = [defaults objectForKey:@"therapistEmail"];
-    
-}
--(void)updateSettingsInfo
-{
-    //get user's first and last name and therapist's email address from the app settings
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"3" forKey:@"numberOfTargets"];
-    [defaults synchronize];
-    NSLog(@"updating settings");
-
-}
--(void)didMoveToView:(SKView *)view
-{
-    _textField = [[UITextField alloc] initWithFrame:CGRectMake(self.size.width/2, self.size.height/2+20, 200, 40)];
-    _textField.center = self.view.center;
-    _textField.borderStyle = UITextBorderStyleRoundedRect;
-    _textField.textColor = [UIColor blackColor];
-    _textField.font = [UIFont systemFontOfSize:17.0];
-    _textField.placeholder = @"Enter your name here";
-    _textField.backgroundColor = [UIColor whiteColor];
-    _textField.autocorrectionType = UITextAutocorrectionTypeYes;
-    _textField.keyboardType = UIKeyboardTypeDefault;
-    _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    //textField.delegate = self.delegate;
-    [self.view addSubview:_textField];
-    
-//    ttaAppDelegate *myDel = [[UIApplication sharedApplication] delegate];
-//    UIViewController *vc = myDel.window.rootViewController;
-//    self.textField= [[UITextField alloc] initWithFrame:CGRectMake(self.size.width/2, self.size.height/2+20, 200, 40)];
-//    self.textField.center = self.view.center;
-//    self.textField.borderStyle = UITextBorderStyleRoundedRect;
-//    self.textField.textColor = [UIColor blackColor];
-//    self.textField.font = [UIFont systemFontOfSize:17.0];
-//    self.textField.placeholder = @"Enter your name here";
-//    self.textField.backgroundColor = [UIColor whiteColor];
-//    self.textField.autocorrectionType = UITextAutocorrectionTypeYes;
-//    self.textField.keyboardType = UIKeyboardTypeDefault;
-//    self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-//    self.textField.delegate = self;
-//    self.button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    [self.button addTarget:self action:@selector(saveScore:) forControlEvents:UIControlEventTouchDown];
-//    [self.button setTitle:@"Save" forState:UIControlStateNormal];
-//    self.button.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
-//    
-//    [vc.view addSubview:self.textField];
-//    [vc.view addSubview:self.button];
-//    vc.interstitialPresentationPolicy = ADInterstitialPresentationPolicyManual;
-//    [vc requestInterstitialAdPresentation];
 }
 
 @end

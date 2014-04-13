@@ -15,6 +15,8 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         
+        [self addBackground];
+
         float width = self.frame.size.width;
         float column = width / 5;
         float height = self.frame.size.height;
@@ -37,12 +39,8 @@
         [self addButton:@"Magenta" withPosition:CGPointMake(4*column, row3)];
         
         //add the label
-        SKLabelNode *title = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-        title.position = CGPointMake(width/2, 5.5*(height/8));
-        title.text = @"Pick a color!";
-        title.fontSize = 50;
-        title.fontColor = [SKColor whiteColor];
-        [self addChild:title];
+        [self addLabel];
+
         //add back button to main menu
         [self addBackButton];
     }
@@ -82,13 +80,39 @@
         SKSpriteNode * touchedNode = (SKSpriteNode *)[self nodeAtPoint:loc];
         //transition
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-        if([_backButton isEqual:touchedNode] || [_pressedBackButton isEqual:touchedNode]) //go back to main menu
+        if([_backButton isEqual:touchedNode] || [_pressedBackButton isEqual:touchedNode])
         {
+            //go back to main menu
             SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
             mainMenu.scaleMode = SKSceneScaleModeAspectFill;
             [self.view presentScene:mainMenu transition:reveal];
         }
         else
+        {
+            _pressedBackButton.hidden = true;
+            _backButton.hidden = false;
+        }
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    for (UITouch *touch in [touches allObjects]) {
+    	CGPoint currentLocation  = [touch locationInNode:self];
+        CGPoint previousLocation = [touch previousLocationInNode:self];
+        SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
+        SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
+
+        // If a touch was off the back button but has moved onto it
+        if (!([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
+           ([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
+        {
+            _pressedBackButton.hidden = false;
+            _backButton.hidden = true;
+        }
+        else if (([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
+            !([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
         {
             _pressedBackButton.hidden = true;
             _backButton.hidden = false;
@@ -111,7 +135,7 @@
 
     //Back Button!
     _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
-    _backButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
+    _backButton.position = CGPointMake(100, self.frame.size.height/2+235);
     _backButton.name = @"backButton";
     _backButton.xScale = .5;
     _backButton.yScale = .5;
@@ -119,12 +143,31 @@
     
     //Pressed Back Button!
     _pressedBackButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
-    _pressedBackButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
+    _pressedBackButton.position = CGPointMake(100, self.frame.size.height/2+235);
     _pressedBackButton.name = @"backButton";
     _pressedBackButton.hidden = true;
     _pressedBackButton.xScale = .5;
     _pressedBackButton.yScale = .5;
     [self addChild:_pressedBackButton];
+}
+
+-(void)addLabel
+{
+    SKLabelNode *title = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    title.position = CGPointMake(self.frame.size.width/2, 5.25*(self.frame.size.height/8));
+    title.text = @"Pick a color!";
+    title.fontSize = 50;
+    title.fontColor = [SKColor whiteColor];
+    [self addChild:title];
+}
+
+-(void)addBackground
+{
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
+    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
+    bgImage.xScale = .4;
+    bgImage.yScale = .4;
+    [self addChild:bgImage];
 }
 
 -(void)update:(CFTimeInterval)currentTime {

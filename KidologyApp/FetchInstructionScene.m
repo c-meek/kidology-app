@@ -72,7 +72,7 @@
 {
     //add button with attributes
     _backButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(100, 40)];
-    _backButton.position = CGPointMake(self.frame.size.width - 55, self.frame.size.height/2+250);
+    _backButton.position = CGPointMake(100, self.frame.size.height/2+250);
     _backButton.name = @"backButton";
     [self addChild:_backButton];
     //add label with attributes
@@ -81,7 +81,7 @@
     _backButtonLabel.name = @"backButtonLabel";
     _backButtonLabel.text = labelText;
     _backButtonLabel.fontSize = 24;
-    _backButtonLabel.position = CGPointMake(self.frame.size.width-55, self.frame.size.height/2 + 240);
+    _backButtonLabel.position = CGPointMake(100, self.frame.size.height/2 + 240);
     [self addChild:_backButtonLabel];
 }
 
@@ -128,4 +128,7 @@
         }
     }
 }
+
+
+
 @end

@@ -16,8 +16,8 @@
 @property (nonatomic) SKLabelNode *centerModeButtonLabel;
 @property (nonatomic) SKSpriteNode *randomModeButton;
 @property (nonatomic) SKLabelNode *randomModeButtonLabel;
-@property (nonatomic) SKSpriteNode *actionModeButton;
-@property (nonatomic) SKLabelNode *actionModeButtonLabel;
+@property (nonatomic) SKSpriteNode *gestureModeButton;
+@property (nonatomic) SKLabelNode *gestureModeButtonLabel;
 @property (nonatomic) SKSpriteNode * target;
 @property (nonatomic) SKSpriteNode * hand;
 @property (nonatomic) SKSpriteNode *customModeButton;

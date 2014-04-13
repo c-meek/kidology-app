@@ -12,5 +12,7 @@
 
 @property (nonatomic) SKSpriteNode *backButton;
 @property (nonatomic) SKSpriteNode *pressedBackButton;
+@property (nonatomic) UITextField *textField;
+
 
 @end

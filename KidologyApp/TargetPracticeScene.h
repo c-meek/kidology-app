@@ -11,7 +11,7 @@
 typedef enum {
     CENTER,
     RANDOM,
-    OTHER_ACTION
+    GESTURE
 } Mode;
 
 

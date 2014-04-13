@@ -26,7 +26,7 @@
         [self displayBall];
         [self addChild:self.ball];
         [self addInstruction];
-        [self displayBackButton];
+        [self addBackButton];
     }
     return self;
 }
@@ -46,11 +46,11 @@
     self.dog.position = CGPointMake(self.frame.size.width/2 - 200, self.frame.size.height/2-170);
 }
 
--(void)displayBackButton
+-(void)addBackButton
 {
     //Back Button!
     _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
-    _backButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
+    _backButton.position = CGPointMake(100, self.frame.size.height/2+235);
     _backButton.name = @"backButton";
     _backButton.xScale = .5;
     _backButton.yScale = .5;
@@ -58,7 +58,7 @@
     
     //Pressed Back Button!
     _pressedBackButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
-    _pressedBackButton.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2+235);
+    _pressedBackButton.position = CGPointMake(100, self.frame.size.height/2+235);
     _pressedBackButton.name = @"backButton";
     _pressedBackButton.hidden = true;
     _pressedBackButton.xScale = .5;
@@ -102,6 +102,31 @@
             [self goToMainScreen];
         }
         else
+        {
+            _pressedBackButton.hidden = true;
+            _backButton.hidden = false;
+        }
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    for (UITouch *touch in [touches allObjects]) {
+    	CGPoint currentLocation  = [touch locationInNode:self];
+        CGPoint previousLocation = [touch previousLocationInNode:self];
+        SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
+        SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
+        
+        // If a touch was off the back button but has moved onto it
+        if (!([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
+            ([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
+        {
+            _pressedBackButton.hidden = false;
+            _backButton.hidden = true;
+        }
+        else if (([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
+                 !([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
         {
             _pressedBackButton.hidden = true;
             _backButton.hidden = false;

@@ -150,6 +150,33 @@ NSMutableArray *touchLog;
     }
 }
 
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    for (UITouch *touch in [touches allObjects]) {
+    	CGPoint currentLocation  = [touch locationInNode:self];
+        CGPoint previousLocation = [touch previousLocationInNode:self];
+        
+        // If a touch was on the anchor but has moved off
+        if ([self isAnchorTouch:previousLocation] &&
+            ![self isAnchorTouch:currentLocation])
+        {
+            _anchored = NOT_TOUCHING;       // update _achored
+            _anchor.hidden = FALSE;         // display red anchor image
+            _pressedAnchor.hidden = TRUE;   // hide green anchor image
+        }
+        else if (![self isAnchorTouch:previousLocation] &&
+                 [self isAnchorTouch:currentLocation])
+        {
+            // it wasn't an anchor touch but now it has moved onto the anchor
+            _anchored = TOUCHING;           // update _anchored
+            _anchor.hidden = TRUE;          // hide red anchor image
+            _pressedAnchor.hidden = FALSE;  // display green anchor image
+        }
+        // else, it's a non-anchor touch and nothing needs done
+    }
+}
+
 -(void)targetTouch:(CGPoint)touchLocation
 {
     _totalTouches++;

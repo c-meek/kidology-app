@@ -148,6 +148,70 @@
         _fetchGameButtonPressed.hidden = true;
         _therapistMenuButton.hidden = false;
         _therapistMenuButtonPressed.hidden = true;
+        _settingsMenuButton.hidden = false;
+        _settingsMenuButtonPressed.hidden = true;
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    UITouch *touch = [touches anyObject];
+    CGPoint currentLocation = [touch locationInNode:self];
+    CGPoint previousLocation = [touch previousLocationInNode:self];
+    SKNode *currentNode = [self nodeAtPoint:currentLocation];
+    SKNode *previousNode = [self nodeAtPoint:previousLocation];
+    
+    // Check if one of the buttons was being pressed but isn't any more
+    if (currentNode.name == NULL && [self nodeIsButton:previousNode.name])
+    {
+        NSLog(@"moved off a button");
+        _targetGameButton.hidden = false;
+        _targetGameButtonPressed.hidden = true;
+        _babyGameButton.hidden = false;
+        _babyGameButtonPressed.hidden = true;
+        _fetchGameButton.hidden = false;
+        _fetchGameButtonPressed.hidden = true;
+        _therapistMenuButton.hidden = false;
+        _therapistMenuButtonPressed.hidden = true;
+        _settingsMenuButton.hidden = false;
+        _settingsMenuButtonPressed.hidden = true;
+    }
+    else if ([self nodeIsButton:currentNode.name] && previousNode.name == NULL)
+    {
+        NSLog(@"moved onto button %@", currentNode.name);
+        // for when wasn't touching a button but moved/swiped onto one
+        // figure out which button is pressed and change its color
+        if ([currentNode.name isEqualToString:@"babyGameButton"] ||
+            [currentNode.name isEqualToString:@"babyGameButtonPressed"])
+        {
+            _babyGameButton.hidden = true;
+            _babyGameButtonPressed.hidden = false;
+        }
+        else if ([currentNode.name isEqualToString:@"targetGameButton"] ||
+                 [currentNode.name isEqualToString:@"targetGameButtonPressed"])
+        {
+            _targetGameButton.hidden = true;
+            _targetGameButtonPressed.hidden = false;
+        }
+        else if ([currentNode.name isEqualToString:@"fetchGameButton"] ||
+                 [currentNode.name isEqualToString:@"fetchGameButtonPressed"])
+        {
+            _fetchGameButton.hidden = true;
+            _fetchGameButtonPressed.hidden = false;
+        }
+        else if ([currentNode.name isEqualToString:@"therapistMenuButton"] ||
+                 [currentNode.name isEqualToString:@"therapistMenuButtonPressed"])
+        {
+            _therapistMenuButton.hidden = true;
+            _therapistMenuButtonPressed.hidden = false;
+        }
+        else if ([currentNode.name isEqualToString:@"settingsMenuButton"] ||
+                 [currentNode.name isEqualToString:@"settingsMenuButtonPressed"])
+        {
+            _settingsMenuButton.hidden = true;
+            _settingsMenuButtonPressed.hidden = false;
+        }
     }
 }
 
@@ -234,8 +298,8 @@
 {
     // therapist button
     _therapistMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"therapistMenuButton.png"];
-    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 320,
-                                                CGRectGetMidY(self.frame));
+    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
+                                                CGRectGetMidY(self.frame) - 40);
     _therapistMenuButton.xScale = .38;
     _therapistMenuButton.yScale = .38;
     _therapistMenuButton.name = @"therapistMenuButton";
@@ -243,8 +307,8 @@
     
     // pressed therapist menu button icon
     _therapistMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"therapistMenuButtonPressed.png"];
-    _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 320,
-                                                       CGRectGetMidY(self.frame));
+    _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
+                                                       CGRectGetMidY(self.frame) - 40);
     _therapistMenuButtonPressed.xScale = .38;
     _therapistMenuButtonPressed.yScale = .38;
     _therapistMenuButtonPressed.name = @"therapistMenuButtonPressed";
@@ -256,7 +320,7 @@
 {
     // settings menu button
     _settingsMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"settingsMenuButton.png"];
-    _settingsMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 320,
+    _settingsMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
                                                 CGRectGetMidY(self.frame) - 180);
     _settingsMenuButton.xScale = .38;
     _settingsMenuButton.yScale = .38;
@@ -265,7 +329,7 @@
     
     // pressed settings menu button icon
     _settingsMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"settingsMenuButtonPressed.png"];
-    _settingsMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 320,
+    _settingsMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
                                                        CGRectGetMidY(self.frame) - 180);
     _settingsMenuButtonPressed.xScale = .38;
     _settingsMenuButtonPressed.yScale = .38;
@@ -300,6 +364,10 @@
                                          CGRectGetMidY(self.frame)+ 250);
     [self addChild:usernameLabel];
 }
+
+// ------------------------------------------------------------------------------------
+//                             DATA CHECKING LOGIC
+// ------------------------------------------------------------------------------------
 
 -(void)checkNameAndEmail
 {
@@ -354,6 +422,20 @@
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         [self.view presentScene:settingsMenu transition:reveal];
     }
+}
+
+-(bool)nodeIsButton:(NSString *)previousNodeName
+{
+    return [previousNodeName isEqualToString:@"babyGameButton"] ||
+        [previousNodeName isEqualToString:@"babyGameButtonPressed"] ||
+        [previousNodeName isEqualToString:@"targetGameButton"] ||
+        [previousNodeName isEqualToString:@"targetGameButtonPressed"] ||
+        [previousNodeName isEqualToString:@"fetchGameButton"] ||
+        [previousNodeName isEqualToString:@"fetchGameButtonPressed"] ||
+        [previousNodeName isEqualToString:@"therapistMenuButton"] ||
+        [previousNodeName isEqualToString:@"therapistMenuButtonPressed"] ||
+        [previousNodeName isEqualToString:@"settingsMenuButton"] ||
+        [previousNodeName isEqualToString:@"settingsMenuButtonPressed"];
 }
 
 @end

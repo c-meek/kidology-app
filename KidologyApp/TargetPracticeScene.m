@@ -17,14 +17,26 @@
 
 NSMutableArray *touchLog;
 extern NSUserDefaults *defaults;
--(id)initWithSize:(CGSize)size game_mode:(int)game_mode
+-(id)initWithSize:(CGSize)size game_mode:(int)game_mode numTargets:(int)numTargets
 {
     if (self = [super initWithSize:size])
     {
-//------Some Initializing Stuff------------------
+        // initialize variables
         _numOfRotations = 0;
+        touchLog = [[NSMutableArray alloc] initWithCapacity:1];
+        //set the total number of targets for this session
+        self.totalTargets = numTargets;
+        self.correctTouches = 0;
+        // initialize the anchor to "not being touched" state
+        self.anchored = NOT_TOUCHING;
+        self.time = 0;
+
+        // add images
         [self addBackground];
-//        NSLog(@"Size: %@", NSStringFromCGSize(size));
+        [self addTargetImage];
+
+        //initialize anchor
+        [self initializeAnchor];
         if (game_mode == 1) {
             _gameMode = CENTER;
         }
@@ -33,27 +45,13 @@ extern NSUserDefaults *defaults;
         }
         if (game_mode == 4)
         {
-            _gameMode = OTHER_ACTION;
+            _gameMode = GESTURE;
         }
-
-        touchLog = [[NSMutableArray alloc] initWithCapacity:1];
-        /* Setup your scene here */
-        self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
-        //initialize anchor
-        [self initializeAnchor];
-        //initialize target
-        self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
-        //set the total number of targets for this session
-        self.totalTargets = 3;
-        self.correctTouches = 0;
-        // initialize the anchor to "not being touched" state
-        self.anchored = NOT_TOUCHING;
+ 
         
-        //add target to screen
-        [self addChild:self.target];
+        // STUFF FOR GESTURES
         
         _isActionDone = true;
-        
         _actionMoveDone =[SKAction removeFromParent];
         //swipe right gesture…
         swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeRight:)];
@@ -62,7 +60,6 @@ extern NSUserDefaults *defaults;
         //swipe left gesture…
         swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeLeft:)];
         [swipeLeftGesture setDirection: UISwipeGestureRecognizerDirectionLeft];
-        
         
         //swipe up gesture…
         swipeUpGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeUp:)];
@@ -77,8 +74,6 @@ extern NSUserDefaults *defaults;
         //And the rotation gesture will detect a two finger rotation
         rotationGR = [[ UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(handleRotation:)];
         
-        self.time = 0;
-        
         _tapSreenLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         _tapSreenLabel.fontSize = 50;
         _tapSreenLabel.fontColor = [SKColor orangeColor];
@@ -86,7 +81,7 @@ extern NSUserDefaults *defaults;
         _tapSreenLabel.text = @"Tap Screen for action!";
         
         //set properties of target
-        if (_gameMode != OTHER_ACTION)
+        if (_gameMode != GESTURE)
         {
             [self displayTarget];
         }
@@ -248,7 +243,7 @@ extern NSUserDefaults *defaults;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (_gameMode == OTHER_ACTION && _isActionDone == true)
+    if (_gameMode == GESTURE && _isActionDone == true)
     {
         NSLog(@"touches began! \n");
         [self displayActionTarget];
@@ -277,14 +272,16 @@ extern NSUserDefaults *defaults;
             _anchor.hidden = TRUE;
             _pressedAnchor.hidden = FALSE;
         }
-       else if (_gameMode != OTHER_ACTION)
+       else if (_gameMode != GESTURE)
        {
            // If the touch isn't on the anchor
             [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
        }
     }
 }
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
     /* Called when a touch ends */
     for (UITouch *touch in [touches allObjects]) {
         CGPoint positionInScene = [touch locationInNode:self];
@@ -299,7 +296,35 @@ extern NSUserDefaults *defaults;
     }
 }
 
--(void) handleRotation: (UIRotationGestureRecognizer *) recognizer  {
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    for (UITouch *touch in [touches allObjects]) {
+    	CGPoint currentLocation  = [touch locationInNode:self];
+        CGPoint previousLocation = [touch previousLocationInNode:self];
+        
+        // If a touch was on the anchor but has moved off
+        if ([self isAnchorTouch:previousLocation] &&
+            ![self isAnchorTouch:currentLocation])
+        {
+            _anchored = NOT_TOUCHING;       // update _achored
+            _anchor.hidden = FALSE;         // display red anchor image
+            _pressedAnchor.hidden = TRUE;   // hide green anchor image
+        }
+        else if (![self isAnchorTouch:previousLocation] &&
+                 [self isAnchorTouch:currentLocation])
+        {
+            // it wasn't an anchor touch but now it has moved onto the anchor
+            _anchored = TOUCHING;           // update _anchored
+            _anchor.hidden = TRUE;          // hide red anchor image
+            _pressedAnchor.hidden = FALSE;  // display green anchor image
+        }
+        // else, it's a non-anchor touch and nothing needs done
+    }
+}
+
+-(void) handleRotation: (UIRotationGestureRecognizer *) recognizer
+{
     
     LogEntry *currentTouch;
     
@@ -307,7 +332,7 @@ extern NSUserDefaults *defaults;
     bool allTouchedTarget =true;
     if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
-        if (_gameMode == OTHER_ACTION)
+        if (_gameMode == GESTURE)
         {
             NSUInteger num_of_touches = [recognizer numberOfTouches];
             
@@ -368,7 +393,7 @@ extern NSUserDefaults *defaults;
     
     if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
-        if (_gameMode == OTHER_ACTION)
+        if (_gameMode == GESTURE)
         {
             if ( recognizer.numberOfTouches == 2)
             {  /* do nothing for now*/ }
@@ -421,7 +446,7 @@ extern NSUserDefaults *defaults;
     
     if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
-        if (_gameMode == OTHER_ACTION)
+        if (_gameMode == GESTURE)
         {
             if ( recognizer.numberOfTouches == 2)
             {  /* do nothing for now*/ }
@@ -476,7 +501,7 @@ extern NSUserDefaults *defaults;
     
     if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
-        if (_gameMode == OTHER_ACTION)
+        if (_gameMode == GESTURE)
         {
             if ( recognizer.numberOfTouches == 2)
             {  /* do nothing for now*/ }
@@ -530,7 +555,7 @@ extern NSUserDefaults *defaults;
     
     if (_anchored == TOUCHING)  // change this when proper testing can occure!
     {
-        if (_gameMode == OTHER_ACTION)
+        if (_gameMode == GESTURE)
         {
             if ( recognizer.numberOfTouches == 2)
             {  /* do nothing for now*/ }
@@ -610,7 +635,7 @@ extern NSUserDefaults *defaults;
         {
             mode = @"random";
         }
-        else if (_gameMode == OTHER_ACTION)
+        else if (_gameMode == GESTURE)
         {
             mode = @"action";
         }
@@ -672,7 +697,7 @@ extern NSUserDefaults *defaults;
                 {
                     mode = @"random";
                 }
-                else if (_gameMode == OTHER_ACTION)
+                else if (_gameMode == GESTURE)
                 {
                     mode = @"action";
                 }
@@ -769,6 +794,15 @@ extern NSUserDefaults *defaults;
     bgImage.xScale = .4;
     bgImage.yScale = .4;
     [self addChild:bgImage];
+}
+
+-(void)addTargetImage
+{
+    //initialize target
+    self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
+    
+    //add target to screen
+    [self addChild:self.target];
 }
 
 -(void)initializeAnchor
