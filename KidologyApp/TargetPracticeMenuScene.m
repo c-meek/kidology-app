@@ -109,7 +109,7 @@ NSString *gameName;
              [node.name isEqualToString:@"gestureModeButton"])
     {
         // Create and configure the random "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:4 numTargets:3]; //added numTagets...
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:3 numTargets:3]; //added numTagets...
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene.

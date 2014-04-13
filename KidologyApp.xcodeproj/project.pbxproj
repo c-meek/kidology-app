@@ -19,7 +19,6 @@
 		0F9462D518C0296A00E9E3BD /* anchor_green_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D118C0296A00E9E3BD /* anchor_green_right.png */; };
 		0F9462D618C0296A00E9E3BD /* anchor_green_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D218C0296A00E9E3BD /* anchor_green_left.png */; };
 		0F9462D718C0296A00E9E3BD /* anchor_red_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D318C0296A00E9E3BD /* anchor_red_right.png */; };
-		0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */; };
 		0FB5157118F463CE005C309C /* test.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0FB5157018F463CE005C309C /* test.csv */; };
 		0FD6614118F5E0FE00B0CDB3 /* backwards.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0FD6614018F5E0FE00B0CDB3 /* backwards.csv */; };
 		0FDC0EB618F49690000CE9E0 /* 4corners.csv in Resources */ = {isa = PBXBuildFile; fileRef = 0FDC0EB518F49690000CE9E0 /* 4corners.csv */; };
@@ -31,7 +30,6 @@
 		0FDEFA3818FAFE1600D458F9 /* Random_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA3218FAFE1600D458F9 /* Random_Pressed.png */; };
 		0FDEFA3B18FB080600D458F9 /* Actions.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA3918FB080600D458F9 /* Actions.png */; };
 		0FDEFA3C18FB080600D458F9 /* Actions_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA3A18FB080600D458F9 /* Actions_Pressed.png */; };
-		0FDEFA4018FB12F300D458F9 /* fetchBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA3F18FB12F300D458F9 /* fetchBackground.png */; };
 		0FDF3AA318DA56A400FBEC85 /* CustomTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */; };
 		0FF78FC318EDD59100BD200D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FF78FC218EDD59100BD200D /* Settings.bundle */; };
 		7C5523F218EDB7D30042DEAB /* rotate_green_targetII.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */; };
@@ -81,6 +79,7 @@
 		B9E5BE2E18F700010065B26D /* rotate_green_target.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2D18F700010065B26D /* rotate_green_target.png */; };
 		B9E5BE3018F700930065B26D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2F18F700930065B26D /* arrow.png */; };
 		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
+		E813050318FB1CC200862935 /* fetchBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E813050218FB1CC200862935 /* fetchBackground.png */; };
 		E8969EDB18F8B7ED00EC65E2 /* SettingsMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E8969EDA18F8B7ED00EC65E2 /* SettingsMenuScene.m */; };
 		E89BFA8518F71564006C1959 /* settingsScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8118F71564006C1959 /* settingsScreen.png */; };
 		E89BFA8618F71564006C1959 /* settingsScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8218F71564006C1959 /* settingsScreen@2x.png */; };
@@ -147,8 +146,6 @@
 		0F9462D118C0296A00E9E3BD /* anchor_green_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor_green_right.png; sourceTree = "<group>"; };
 		0F9462D218C0296A00E9E3BD /* anchor_green_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor_green_left.png; sourceTree = "<group>"; };
 		0F9462D318C0296A00E9E3BD /* anchor_red_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor_red_right.png; sourceTree = "<group>"; };
-		0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchInstructionScene.h; sourceTree = "<group>"; };
-		0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchInstructionScene.m; sourceTree = "<group>"; };
 		0FB5157018F463CE005C309C /* test.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.csv; path = KidologyApp/test.csv; sourceTree = "<group>"; };
 		0FD6614018F5E0FE00B0CDB3 /* backwards.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = backwards.csv; sourceTree = "<group>"; };
 		0FDC0EB518F49690000CE9E0 /* 4corners.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 4corners.csv; sourceTree = "<group>"; };
@@ -160,7 +157,6 @@
 		0FDEFA3218FAFE1600D458F9 /* Random_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Random_Pressed.png; sourceTree = "<group>"; };
 		0FDEFA3918FB080600D458F9 /* Actions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Actions.png; sourceTree = "<group>"; };
 		0FDEFA3A18FB080600D458F9 /* Actions_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Actions_Pressed.png; sourceTree = "<group>"; };
-		0FDEFA3F18FB12F300D458F9 /* fetchBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fetchBackground.png; sourceTree = "<group>"; };
 		0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTargetPracticeScene.h; sourceTree = "<group>"; };
 		0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTargetPracticeScene.m; sourceTree = "<group>"; };
 		0FF78FC218EDD59100BD200D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -224,6 +220,7 @@
 		B9E5BE2F18F700930065B26D /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		B9FC0CFE18E4994D006F2AEF /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogEntry.h; sourceTree = "<group>"; };
 		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
+		E813050218FB1CC200862935 /* fetchBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fetchBackground.png; sourceTree = "<group>"; };
 		E8969ED918F8B7ED00EC65E2 /* SettingsMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsMenuScene.h; path = ../SettingsMenuScene.h; sourceTree = "<group>"; };
 		E8969EDA18F8B7ED00EC65E2 /* SettingsMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsMenuScene.m; path = ../SettingsMenuScene.m; sourceTree = "<group>"; };
 		E89BFA8118F71564006C1959 /* settingsScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsScreen.png; sourceTree = "<group>"; };
@@ -375,8 +372,8 @@
 		7CB23C5018C002D4007F409F /* FetchGame */ = {
 			isa = PBXGroup;
 			children = (
+				E813050218FB1CC200862935 /* fetchBackground.png */,
 				0F423CAA18AD5D2200EE5F4E /* dog.png */,
-				0FDEFA3F18FB12F300D458F9 /* fetchBackground.png */,
 				0F423CAE18AD61EC00EE5F4E /* tennis.png */,
 			);
 			name = FetchGame;
@@ -457,8 +454,6 @@
 				7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */,
 				B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */,
 				B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */,
-				0FA6066C18B65DB4001E0C9A /* FetchInstructionScene.h */,
-				0FA6066D18B65DB4001E0C9A /* FetchInstructionScene.m */,
 				B9D70C8A18C639FB000C12F1 /* SetupViewController.h */,
 				B9D70C8B18C639FB000C12F1 /* SetupViewController.m */,
 				B9D70C8D18C64587000C12F1 /* MenuViewController.h */,
@@ -729,7 +724,7 @@
 				0FDEFA3C18FB080600D458F9 /* Actions_Pressed.png in Resources */,
 				7CB23C4418C0020D007F409F /* Gray.png in Resources */,
 				FD6B78DD18ED19240035CA95 /* kidologyspotlight-icon.png in Resources */,
-				0FDEFA4018FB12F300D458F9 /* fetchBackground.png in Resources */,
+				E813050318FB1CC200862935 /* fetchBackground.png in Resources */,
 				0FB5157118F463CE005C309C /* test.csv in Resources */,
 				FD6B78DF18ED19240035CA95 /* kidologyspotlight-legacy.png in Resources */,
 				7CB23C4C18C0020D007F409F /* White.png in Resources */,
@@ -769,7 +764,6 @@
 				B94A54B118C00DC100E92932 /* BabyMenuScene.m in Sources */,
 				B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */,
 				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
-				0FA6066E18B65DB4001E0C9A /* FetchInstructionScene.m in Sources */,
 				B9938EBF18A9A5C40004890B /* TargetPracticeGameOver.m in Sources */,
 				E8F0BC2D18F6289C0021BB55 /* ZipArchive.mm in Sources */,
 				7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */,

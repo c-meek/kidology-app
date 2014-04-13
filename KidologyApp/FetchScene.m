@@ -33,7 +33,7 @@
 
 -(void)addBackground
 {
-    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"fetchBackground"];
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"fetchBackground.png"];
     bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
     bgImage.xScale = .4;
     bgImage.yScale = .4;
