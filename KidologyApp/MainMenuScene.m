@@ -29,11 +29,11 @@
         [self addTargetGameButton];
         [self addFetchGameButton];
         [self addTherapistMenuButton];
-        
-        // check user name and add user name label to corner
-        [self addUserInfo];
         // load user settings for therapist upload
         [self loadSettingsInfo];
+        // check user name and add user name label to corner
+        [self addUserInfo];
+
     }
     return self;
 }
@@ -288,7 +288,7 @@
 {
     // therapist button
     _therapistMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"therapistMenuButton.png"];
-    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 300,
+    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
                                                 CGRectGetMidY(self.frame) - 180);
     _therapistMenuButton.xScale = .38;
     _therapistMenuButton.yScale = .38;
@@ -297,7 +297,7 @@
     
     // pressed therapist menu button icon
     _therapistMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"therapistMenuButtonPressed.png"];
-    _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 300,
+    _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
                                                        CGRectGetMidY(self.frame) - 180);
     _therapistMenuButtonPressed.xScale = .38;
     _therapistMenuButtonPressed.yScale = .38;
@@ -306,17 +306,44 @@
     [self addChild:_therapistMenuButtonPressed];
 }
 
+//-(void)addSettingsMenuButton
+//{
+//    // settings menu button
+//    _settingsMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"settingsMenuButton.png"];
+//    _settingsMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
+//                                                CGRectGetMidY(self.frame) - 180);
+//    _settingsMenuButton.xScale = .38;
+//    _settingsMenuButton.yScale = .38;
+//    _settingsMenuButton.name = @"settingsMenuButton";
+//    [self addChild:_settingsMenuButton];
+//    
+//    // pressed settings menu button icon
+//    _settingsMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"settingsMenuButtonPressed.png"];
+//    _settingsMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
+//                                                       CGRectGetMidY(self.frame) - 180);
+//    _settingsMenuButtonPressed.xScale = .38;
+//    _settingsMenuButtonPressed.yScale = .38;
+//    _settingsMenuButtonPressed.name = @"settingsMenuButtonPressed";
+//    _settingsMenuButtonPressed.hidden = true;
+//    [self addChild:_settingsMenuButtonPressed];
+//}
+
+//-(void)update:(CFTimeInterval)currentTime {
+//    /* Called before each frame is rendered */
+//}
+
+
+
 -(void)addUserInfo
 {
     // get user's first and last names + therapist email from settings bundle
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
-    NSString *lastName = [defaults objectForKey:@"lastName"];
+
     
-    NSString *lastInitial = [lastName substringToIndex:1];
+    NSString *lastInitial = [_lastName substringToIndex:1];
     lastInitial = [lastInitial stringByAppendingString:@"."];
-    NSString *wholeName = [firstName stringByAppendingString:lastInitial];
-    NSString *usernameLabelText = [@"Playing as " stringByAppendingString:wholeName];
+    NSString *wholeName = [_firstName stringByAppendingString:lastInitial];
+    NSString *usernameLabelText = [[@"Playing as " stringByAppendingString:@" "]
+                                   stringByAppendingString:wholeName];
     SKLabelNode *usernameLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     usernameLabel.name = @"usernameLabel";
     usernameLabel.text = usernameLabelText;

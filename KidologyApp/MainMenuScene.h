@@ -18,4 +18,8 @@
 @property (nonatomic) SKSpriteNode *fetchGameButtonPressed;
 @property (nonatomic) SKSpriteNode *therapistMenuButton;
 @property (nonatomic) SKSpriteNode *therapistMenuButtonPressed;
+@property (nonatomic) NSString *firstName;
+@property (nonatomic) NSString *lastName;
+@property (nonatomic) NSString *therapistEmail;
+
 @end
