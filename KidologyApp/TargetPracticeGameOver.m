@@ -75,10 +75,11 @@ NSString *gameName;
             [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
         [[NSFileManager defaultManager] createFileAtPath:folderPath contents:nil attributes:nil];
 
-        // make a file name from the current date (dd/mm/yy hh:mm:ss timezone)
+        // make a file name from the player name and the current date/time (dd/mm/yy hh:mm:ss timezone)
+        NSString *nameString = [NSString stringWithFormat:@"%@_%@_",[[NSUserDefaults standardUserDefaults] stringForKey:@"firstName"] , [[NSUserDefaults standardUserDefaults] stringForKey:@"lastName"]];
         NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
-                                                              dateStyle:NSDateFormatterShortStyle
-                                                              timeStyle:NSDateFormatterFullStyle];
+                                                              dateStyle:NSDateFormatterMediumStyle
+                                                              timeStyle:NSDateFormatterMediumStyle];
         // take out spaces
         dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
         // replace colons with hyphens
@@ -86,8 +87,8 @@ NSString *gameName;
         // replace slashes with hyphens
         dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
         NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
-        NSString *fileName = [NSString stringWithFormat:@"%@/%@-%@.csv", folderPath, dateString, gameModeString];
-        //NSLog(@"%@", fileName);
+        NSString *fileName = [NSString stringWithFormat:@"%@/%@%@-%@.csv", folderPath, nameString, dateString, gameModeString];
+        NSLog(@"%@", fileName);
         //NSLog(@"%@", output);
         
         [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];

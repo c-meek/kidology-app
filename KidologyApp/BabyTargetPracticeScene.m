@@ -54,6 +54,44 @@ if (self = [super initWithSize:size])
     }
 }
 
+-(void)update:(CFTimeInterval)currentTime {
+    /* Called before each frame is rendered */
+    CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
+    self.lastUpdateTimeInterval = currentTime;
+    [self updateWithTimeSinceLastUpdate:timeSinceLast];
+    //    NSLog(@"%@", touchLog);
+    
+}
+
+
+- (void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
+    
+    self.lastSpawnTimeInterval += timeSinceLast;
+    if (self.lastSpawnTimeInterval > .1) {
+        self.lastSpawnTimeInterval = 0;
+        self.time +=.1;
+    }
+    SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    timeLabel.fontSize = 20;
+    timeLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    timeLabel.verticalAlignmentMode = 2;
+    timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
+    timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
+    
+ 
+    float r_time = roundf(self.time *100)/100.0;
+    NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
+    timeLabel.text = s_time;
+    [self addChild: timeLabel];
+    
+    //    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
+    SKAction * actionMoveDone = [SKAction removeFromParent];
+    SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.0075];
+    [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
+}
+
+
+
 -(void)targetTouch:(CGPoint)touchLocation
 {
     //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
