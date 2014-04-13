@@ -87,10 +87,13 @@ NSString *gameName;
         }
     //Added another variable for Target Practice call.
     else if ([node.name isEqualToString:@"centerLabel"] ||
-        [node.name isEqualToString:@"centerButton"])
+             [node.name isEqualToString:@"centerButton"])
     {
+        NSLog(@"hit center button");
         // Create and configure the center "target practice" scene.
         SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1];
+        NSLog(@"created target scene");
+
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
         [_tbv removeFromSuperview];
@@ -111,7 +114,7 @@ NSString *gameName;
              [node.name isEqualToString:@"gestureModeButton"])
     {
         // Create and configure the random "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:4];
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:3];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene.
