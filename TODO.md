@@ -3,6 +3,7 @@
 * dashboard
 * ~~custom target~~
 * ~~writing stats to text file -> dumping into email~~
+* gestures
 
 kidology-app
 ============
