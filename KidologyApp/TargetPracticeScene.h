@@ -76,5 +76,5 @@ typedef enum {
     @property (nonatomic) Boolean swipedOutside;
 //.........................................................................
 
--(id)initWithSize:(CGSize)size game_mode:(int)game_mode;
+-(id)initWithSize:(CGSize)size game_mode:(int)game_mode numTargets:(int)numTargets; //added numTagets...
 @end

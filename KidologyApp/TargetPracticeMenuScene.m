@@ -90,7 +90,7 @@ NSString *gameName;
         [node.name isEqualToString:@"centerButton"])
     {
         // Create and configure the center "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1];
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1 numTargets:3]; //added numTagets...
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
         [_tbv removeFromSuperview];
@@ -101,7 +101,7 @@ NSString *gameName;
         [node.name isEqualToString:@"randomButton"])
     {
         // Create and configure the random "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:2];
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:2 numTargets:3]; //added numTagets...
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene.
@@ -111,7 +111,7 @@ NSString *gameName;
              [node.name isEqualToString:@"gestureModeButton"])
     {
         // Create and configure the random "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:4];
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:4 numTargets:3]; //added numTagets...
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene.
