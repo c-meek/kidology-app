@@ -73,10 +73,10 @@ if (self = [super initWithSize:size])
     }
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     timeLabel.fontSize = 20;
-    timeLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    timeLabel.fontColor = [SKColor colorWithRed:0.27 green:0.27 blue:0.27 alpha:1];
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
-    timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
+    timeLabel.position = CGPointMake(self.frame.size.width - 60, self.frame.size.height/2+200);
     
  
     float r_time = roundf(self.time *100)/100.0;
