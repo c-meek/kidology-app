@@ -161,6 +161,10 @@ if (self = [super initWithSize:size])
     
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
     {
+        // reset button
+        _backButtonPressed.hidden = true;
+        _backButton.hidden = false;
+        // go back to the main menu
         SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
         backToMain.scaleMode = SKSceneScaleModeAspectFill;
         [self.view presentScene:backToMain transition:reveal];

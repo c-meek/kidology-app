@@ -63,7 +63,7 @@
 		B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAAD18A7ED7700D5C20C /* AppDelegate.m */; };
 		B96CAAB118A7ED7700D5C20C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B96CAAAF18A7ED7700D5C20C /* Main.storyboard */; };
 		B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB318A7ED7700D5C20C /* ViewController.m */; };
-		B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */; };
+		B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B96CAABA18A7ED7700D5C20C /* Images.xcassets */; };
 		B96CAAC218A7ED7700D5C20C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAAC118A7ED7700D5C20C /* XCTest.framework */; };
 		B96CAAC318A7ED7700D5C20C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9B18A7ED7700D5C20C /* Foundation.framework */; };
