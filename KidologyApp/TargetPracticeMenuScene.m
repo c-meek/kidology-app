@@ -325,15 +325,15 @@ NSString *gameName;
     _customModeButton = [[SKSpriteNode alloc] initWithImageNamed:@"Custom"];
     _customModeButton.position = CGPointMake(self.frame.size.width/4*2, self.frame.size.height/2 - 250);
     _customModeButton.name = @"customModeButton";
-    _customModeButton.xScale = .45;
-    _customModeButton.yScale = .45;
+    _customModeButton.xScale = .42;
+    _customModeButton.yScale = .42;
     [self addChild:_customModeButton];
     
     _customModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Custom_Pressed"];
     _customModeButtonPressed.position = CGPointMake(self.frame.size.width/4*2, self.frame.size.height/2 - 250);
     _customModeButtonPressed.name = @"customModeButtonPressed";
-    _customModeButtonPressed.xScale = .45;
-    _customModeButtonPressed.yScale = .45;
+    _customModeButtonPressed.xScale = .42;
+    _customModeButtonPressed.yScale = .42;
     _customModeButtonPressed.hidden = true;
     [self addChild:_customModeButtonPressed];
 }
