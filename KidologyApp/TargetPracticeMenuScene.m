@@ -25,7 +25,7 @@ NSString *gameName;
         [self addCenterModeButton];
         [self addRandomModeButton];
         [self addCustomModeButton];
-        [self addGestureModeButton];
+//        [self addGestureModeButton];
 //        [self addTarget];
 //        [self addHandAnimation];
         [self addLogo];
@@ -60,11 +60,11 @@ NSString *gameName;
         _customModeButton.hidden = true;
         _customModeButtonPressed.hidden = false;
     }
-    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] || [node.name isEqualToString:@"gestureModeButton"])
-    {
-        _gestureModeButton.hidden = true;
-        _gestureModeButtonPressed.hidden = false;
-    }
+//    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] || [node.name isEqualToString:@"gestureModeButton"])
+//    {
+//        _gestureModeButton.hidden = true;
+//        _gestureModeButtonPressed.hidden = false;
+//    }
 
 }
 
@@ -110,16 +110,16 @@ NSString *gameName;
         // Present the scene.
         [self.view presentScene:targetPractice transition:reveal];
     }
-    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
-             [node.name isEqualToString:@"gestureModeButton"])
-    {
-        // Create and configure the random "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:3 numTargets:3]; //added numTagets...
-        targetPractice.scaleMode = SKSceneScaleModeAspectFill;
-        [_tbv removeFromSuperview];
-        // Present the scene.
-        [self.view presentScene:targetPractice transition:reveal];
-    }
+//    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
+//             [node.name isEqualToString:@"gestureModeButton"])
+//    {
+//        // Create and configure the random "target practice" scene.
+//        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:3 numTargets:3]; //added numTagets...
+//        targetPractice.scaleMode = SKSceneScaleModeAspectFill;
+//        [_tbv removeFromSuperview];
+//        // Present the scene.
+//        [self.view presentScene:targetPractice transition:reveal];
+//    }
 
     else if ([node.name isEqualToString:@"customModeButtonPressed"] || [node.name isEqualToString:@"customModeButton"])
     {
@@ -153,8 +153,8 @@ NSString *gameName;
         _randomModeButtonPressed.hidden = true;
         _customModeButton.hidden = false;
         _customModeButtonPressed.hidden = true;
-        _gestureModeButton.hidden = false;
-        _gestureModeButtonPressed.hidden = true;
+//        _gestureModeButton.hidden = false;
+//        _gestureModeButtonPressed.hidden = true;
         [_tbv removeFromSuperview];
     }
 }
@@ -217,18 +217,18 @@ NSString *gameName;
             _customModeButtonPressed.hidden = true;
             _customModeButton.hidden = false;
         }
-        else if (!([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
-                 ([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed isEqual:currentNode]))
-        {
-            _gestureModeButtonPressed.hidden = false;
-            _gestureModeButton.hidden = true;
-        }
-        else if (([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
-                 !([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed  isEqual:currentNode]))
-        {
-            _gestureModeButtonPressed .hidden = true;
-            _gestureModeButton.hidden = false;
-        }
+//        else if (!([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
+//                 ([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed isEqual:currentNode]))
+//        {
+//            _gestureModeButtonPressed.hidden = false;
+//            _gestureModeButton.hidden = true;
+//        }
+//        else if (([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
+//                 !([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed  isEqual:currentNode]))
+//        {
+//            _gestureModeButtonPressed .hidden = true;
+//            _gestureModeButton.hidden = false;
+//        }
 
 
     }

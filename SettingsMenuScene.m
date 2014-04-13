@@ -88,6 +88,7 @@
     //get user's first and last name and therapist's email address from the app settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:@"3" forKey:@"numberOfTargets"];
+    [defaults setObject:@"3.2" forKey:@"delayBetweenTargets"];
     [defaults synchronize];
     NSLog(@"updating settings");
 }

@@ -27,7 +27,13 @@ extern NSUserDefaults *defaults;
         //set the total number of targets for this session
         //get handedness from the user defaults
         defaults = [NSUserDefaults standardUserDefaults];
+        [defaults synchronize];
         self.totalTargets = [[defaults objectForKey:@"numberOfTargets"] integerValue];
+        if(_totalTargets == 0)
+        {
+            _totalTargets = 10;
+        }
+        NSLog(@"%d", _totalTargets);
         self.correctTouches = 0;
         // initialize the anchor to "not being touched" state
         self.anchored = NOT_TOUCHING;
@@ -688,7 +694,12 @@ extern NSUserDefaults *defaults;
             }];
             //make a wait action
             defaults = [NSUserDefaults standardUserDefaults];
+            [defaults synchronize];
             float waitDelay = [[defaults objectForKey:@"delayBetweenTargets"] floatValue];
+            if(waitDelay == 0.0)
+            {
+                waitDelay = 3.2;
+            }
             SKAction *wait = [SKAction waitForDuration:waitDelay];
             //make a "add" target action
             SKAction *addTarget = [SKAction runBlock:^{
@@ -822,6 +833,12 @@ extern NSUserDefaults *defaults;
     //get handedness from the user defaults
     defaults = [NSUserDefaults standardUserDefaults];
     NSString *affectedHand = [defaults objectForKey:@"affectedHand"];
+    //handle default case
+//    if(0 == [affectedHand integerValue])
+//    {
+//        affectedHand = @"left";
+//    }
+    NSLog(@"affected hand %@", affectedHand);
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;
