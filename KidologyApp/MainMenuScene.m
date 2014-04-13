@@ -14,6 +14,10 @@
 #import "SettingsMenuScene.h"
 #import "MenuViewController.h"
 
+#import "SetupViewController.h"
+#import "ZipArchive.h"
+#import <MessageUI/MFMailComposeViewController.h>
+
 
 @implementation MainMenuScene
 
@@ -28,6 +32,8 @@
         
         // check user name and add user name label to corner
         [self addUserInfo];
+        // load user settings for therapist upload
+        [self loadSettingsInfo];
     }
     return self;
 }
@@ -73,7 +79,7 @@
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
+    /* Called when a touch ends */
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
@@ -83,6 +89,9 @@
     if ([node.name isEqualToString:@"babyGameButton"] ||
         [node.name isEqualToString:@"babyGameButtonPressed"])
     {
+        // reset the button
+        _babyGameButton.hidden = false;
+        _babyGameButtonPressed.hidden = true;
         // Create and configure the "baby game" scene.
         SKScene * babyGame = [[BabyMenuScene alloc] initWithSize:self.size];
         babyGame.scaleMode = SKSceneScaleModeAspectFill;
@@ -94,6 +103,9 @@
     else if ([node.name isEqualToString:@"targetGameButton"] ||
              [node.name isEqualToString:@"targetGameButtonPressed"])
     {
+        // reset the button
+        _targetGameButton.hidden = false;
+        _targetGameButtonPressed.hidden = true;
         // Create and configure the "game menu" scene.
         SKScene * targetGame = [[TargetPracticeMenuScene alloc] initWithSize:self.size];
         targetGame.scaleMode = SKSceneScaleModeAspectFill;
@@ -104,6 +116,9 @@
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
              [node.name isEqualToString:@"fetchGameButtonPressed"])
     {
+        // reset the button
+        _fetchGameButton.hidden = false;
+        _fetchGameButtonPressed.hidden = true;
         // Create and configure the fetch game menu scene.
         SKScene * fetchGame = [[FetchScene alloc] initWithSize:self.size];
         fetchGame.scaleMode = SKSceneScaleModeAspectFill;
@@ -114,12 +129,14 @@
     else if ([node.name isEqualToString:@"therapistMenuButton"] ||
              [node.name isEqualToString:@"therapistMenuButtonPressed"])
     {
-        // Create and configure the therapist menu scene.
-        SKScene * therapistMenu = [[TherapistMenuScene alloc] initWithSize:self.size];
-        therapistMenu.scaleMode = SKSceneScaleModeAspectFill;
+        // reset the button
+        _therapistMenuButton.hidden = false;
+        _therapistMenuButtonPressed.hidden = true;
+        NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]   stringByAppendingPathComponent:@"logs"];
+        [self listFileAtPath:folderPath];
+        NSString *zipFile = [self zipFilesAtPath:folderPath];
+        [self emailZipFile:zipFile];
         
-        // Present the scene.
-        [self.view presentScene:therapistMenu transition:reveal];
     }
     else
     {
@@ -382,5 +399,164 @@
         [previousNodeName isEqualToString:@"settingsMenuButton"] ||
         [previousNodeName isEqualToString:@"settingsMenuButtonPressed"];
 }
+
+-(NSString *)zipFilesAtPath:(NSString *)path
+{
+    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+    [DateFormatter setDateFormat:@"MM-dd-yyyy"];
+    NSString *currentDate = [DateFormatter stringFromDate:[NSDate date]];
+    NSString *zipFileName = [[[[[_firstName stringByAppendingString:@"_"]
+                                stringByAppendingString:_lastName]
+                               stringByAppendingString:@"_"]
+                              stringByAppendingString:currentDate]
+                             stringByAppendingString:@".zip"];
+    NSLog(@"zip Filename is %@", zipFileName);
+    
+    BOOL isDir = NO;
+    NSArray *subpaths;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if([fileManager fileExistsAtPath:path isDirectory:&isDir] && isDir)
+    {
+        subpaths = [fileManager subpathsAtPath:path];
+    }
+    NSString *archivePath = [[path stringByAppendingString:@"/" ]
+                             stringByAppendingString:zipFileName ];
+    NSLog(@"achive path is %@", archivePath);
+    ZipArchive *archiver = [[ZipArchive alloc] init];
+    [archiver CreateZipFile2:archivePath];
+    NSLog(@"num paths found is %d", [subpaths count]);
+    int i = 0;
+    NSMutableArray *csvfiles = [[NSMutableArray alloc] initWithCapacity:[subpaths count]];
+    for(NSString *subpath in subpaths)
+    {
+        NSLog(@"subpath %d is %@", i, subpath);
+        i++;
+        // ignore previously zipped files
+        NSArray *nameAndExtension = [subpath componentsSeparatedByString:@"."];
+        NSString *extension = nameAndExtension[[nameAndExtension count]-1];
+        NSLog(@"extension is %@", extension);
+        NSString *longPath = [path stringByAppendingPathComponent:subpath];
+        if ([extension isEqualToString:@"zip"])
+        {
+            NSLog(@"ignoring zip file %@", subpath);
+            continue;
+        }
+        if([fileManager fileExistsAtPath:longPath isDirectory:&isDir] && !isDir)
+        {
+            [csvfiles addObject:longPath];
+            [archiver addFileToZip:longPath newname:subpath];
+        }
+    }
+    NSLog(@"compressing...");
+    BOOL successCompressing = [archiver CloseZipFile2];
+    if (successCompressing)
+    {
+        for (NSString *file in csvfiles)
+        {
+            NSError *error;
+            BOOL success = [fileManager removeItemAtPath:file error:&error];
+            if(!success)
+                NSLog(@"unable to delete file %@ because %@", file, [error description]);
+            else
+                NSLog(@"sucessfully deleted file %@", file);
+        }
+        NSLog(@"successful compression! ");
+        return archivePath;
+    }
+    else
+    {
+        NSLog(@"UNSUCCESSFUL compression! ");
+        return @"";
+    }
+}
+
+-(void)emailZipFile:(NSString *)zipFilePath
+{
+    NSLog(@"zip file path is %@", zipFilePath);
+    NSArray *parts = [zipFilePath componentsSeparatedByString:@"/"];
+    NSString *zipFile = parts[[parts count]-1];
+    NSLog(@"NOW zip file name is %@", zipFile);
+    
+    NSArray *recipients = @[_therapistEmail];
+    
+    MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
+    composer.mailComposeDelegate = self;
+    // want to be able to use
+    // if ([composer canSendMail]) ... to check if user has e-mail account setup yet
+    
+    // populate the fields
+    [composer setToRecipients:recipients];
+    [composer setSubject:@"testing out app2"];
+    [composer setMessageBody:@"Hello, here are my game files from today" isHTML:NO];
+    NSData *zipData = [NSData dataWithContentsOfFile:zipFilePath];
+    [composer addAttachmentData:zipData mimeType:@"application/zip" fileName:zipFile];
+    composer.navigationBar.barStyle = UIBarStyleBlack;
+    [self.view.window.rootViewController presentModalViewController:composer animated:YES];
+    [composer release];
+}
+
+// Dismisses the email composition interface when users tap Cancel or Send
+// Proceeds to update the message field with the result of the operation
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    // Notifies users about errors associated with the interface
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            break;
+        case MFMailComposeResultSaved:
+            break;
+        case MFMailComposeResultSent:
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email"
+                                                            message:@"Email Successfully Sent!"
+                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+            [alert release];
+            
+            break;
+        }
+        case MFMailComposeResultFailed:
+            break;
+            
+        default:
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email" message:@"Sending Failed - Unknown Error :-("
+                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+            [alert release];
+        }
+            break;
+    }
+    [self.view.window.rootViewController dismissModalViewControllerAnimated:YES];
+}
+
+
+-(NSArray *)listFileAtPath:(NSString *)path
+{
+    //-----> LIST ALL FILES <-----//
+    NSLog(@"LISTING ALL FILES FOUND");
+    
+    int count;
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
+    for (count = 0; count < (int)[directoryContent count]; count++)
+    {
+        NSString *file = [directoryContent objectAtIndex:count];
+        NSLog(@"File %d: %@", (count + 1), file);
+    }
+    NSLog(@"found %d files", count);
+    
+    return directoryContent;
+}
+
+-(void)loadSettingsInfo
+{
+    //get user's first and last name and therapist's email address from the app settings
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _firstName = [defaults objectForKey:@"firstName"];
+    _lastName = [defaults objectForKey:@"lastName"];
+    _therapistEmail = [defaults objectForKey:@"therapistEmail"];
+}
+
 
 @end

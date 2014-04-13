@@ -19,7 +19,7 @@ NSString *gameName;
         gameName = nil;
 
         [self addBackground];
-        [self addInstructionLabel];
+//        [self addInstructionLabel];
         [self addSelectModeLabel];
         [self addBackButton];
         [self addCenterModeButton];
@@ -60,11 +60,11 @@ NSString *gameName;
         _customModeButton.hidden = true;
         _customModeButtonPressed.hidden = false;
     }
-    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] || [node.name isEqualToString:@"gestureModeButton"])
-    {
-        _gestureModeButton.hidden = true;
-        _gestureModeButtonPressed.hidden = false;
-    }
+//    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] || [node.name isEqualToString:@"gestureModeButton"])
+//    {
+//        _gestureModeButton.hidden = true;
+//        _gestureModeButtonPressed.hidden = false;
+//    }
 
 }
 
@@ -77,6 +77,10 @@ NSString *gameName;
 
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
         {
+            // reset button
+            _backButtonPressed.hidden = true;
+            _backButton.hidden = false;
+            // go back to the main menu
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
             backToMain.scaleMode = SKSceneScaleModeAspectFill;
             [_tbv removeFromSuperview];
@@ -106,16 +110,16 @@ NSString *gameName;
         // Present the scene.
         [self.view presentScene:targetPractice transition:reveal];
     }
-    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
-             [node.name isEqualToString:@"gestureModeButton"])
-    {
-        // Create and configure the random "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:3 numTargets:3]; //added numTagets...
-        targetPractice.scaleMode = SKSceneScaleModeAspectFill;
-        [_tbv removeFromSuperview];
-        // Present the scene.
-        [self.view presentScene:targetPractice transition:reveal];
-    }
+//    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
+//             [node.name isEqualToString:@"gestureModeButton"])
+//    {
+//        // Create and configure the random "target practice" scene.
+//        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:3 numTargets:3]; //added numTagets...
+//        targetPractice.scaleMode = SKSceneScaleModeAspectFill;
+//        [_tbv removeFromSuperview];
+//        // Present the scene.
+//        [self.view presentScene:targetPractice transition:reveal];
+//    }
 
     else if ([node.name isEqualToString:@"customModeButtonPressed"] || [node.name isEqualToString:@"customModeButton"])
     {
@@ -149,8 +153,8 @@ NSString *gameName;
         _randomModeButtonPressed.hidden = true;
         _customModeButton.hidden = false;
         _customModeButtonPressed.hidden = true;
-        _gestureModeButton.hidden = false;
-        _gestureModeButtonPressed.hidden = true;
+//        _gestureModeButton.hidden = false;
+//        _gestureModeButtonPressed.hidden = true;
         [_tbv removeFromSuperview];
     }
 }
@@ -213,18 +217,18 @@ NSString *gameName;
             _customModeButtonPressed.hidden = true;
             _customModeButton.hidden = false;
         }
-        else if (!([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
-                 ([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed isEqual:currentNode]))
-        {
-            _gestureModeButtonPressed.hidden = false;
-            _gestureModeButton.hidden = true;
-        }
-        else if (([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
-                 !([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed  isEqual:currentNode]))
-        {
-            _gestureModeButtonPressed .hidden = true;
-            _gestureModeButton.hidden = false;
-        }
+//        else if (!([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
+//                 ([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed isEqual:currentNode]))
+//        {
+//            _gestureModeButtonPressed.hidden = false;
+//            _gestureModeButton.hidden = true;
+//        }
+//        else if (([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
+//                 !([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed  isEqual:currentNode]))
+//        {
+//            _gestureModeButtonPressed .hidden = true;
+//            _gestureModeButton.hidden = false;
+//        }
 
 
     }
@@ -249,23 +253,32 @@ NSString *gameName;
     [self addChild:selectModeLabel];
 }
 
--(void)addInstructionLabel
+-(void)addLogo
 {
-    SKLabelNode *instructionLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    instructionLabel.fontSize = 40;
-    instructionLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
-    instructionLabel.position = CGPointMake(CGRectGetMidX(self.frame)-150, CGRectGetMidY(self.frame)+150);
-    instructionLabel.text = @"Instructions:";
-    [self addChild:instructionLabel];
+    SKSpriteNode *logo = [SKSpriteNode spriteNodeWithImageNamed:@"logo"];
+    logo.xScale = .5*.8;
+    logo.yScale = .5*.8;
+    logo.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+    [self addChild:logo];
     
-    SKLabelNode *instructionContentLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    instructionContentLabel.fontSize = 20;
-    instructionContentLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
-    instructionContentLabel.position = CGPointMake(CGRectGetMidX(self.frame)-200, CGRectGetMidY(self.frame)+110);
-    instructionContentLabel.horizontalAlignmentMode = 1;
-    instructionContentLabel.text = @"Touch the center of the target when it appears.";
-    [self addChild:instructionContentLabel];
 }
+//-(void)addInstructionLabel
+//{
+//    SKLabelNode *instructionLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+//    instructionLabel.fontSize = 40;
+//    instructionLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+//    instructionLabel.position = CGPointMake(CGRectGetMidX(self.frame)-150, CGRectGetMidY(self.frame)+150);
+//    instructionLabel.text = @"Instructions:";
+//    [self addChild:instructionLabel];
+//    
+//    SKLabelNode *instructionContentLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+//    instructionContentLabel.fontSize = 20;
+//    instructionContentLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+//    instructionContentLabel.position = CGPointMake(CGRectGetMidX(self.frame)-200, CGRectGetMidY(self.frame)+110);
+//    instructionContentLabel.horizontalAlignmentMode = 1;
+//    instructionContentLabel.text = @"Touch the center of the target when it appears.";
+//    [self addChild:instructionContentLabel];
+//}
 
 -(void)addBackButton
 {

@@ -108,6 +108,10 @@
         }
         else if([_backButton isEqual:touchedNode] || [_pressedBackButton isEqual:touchedNode])
         {
+            // reset button
+            _pressedBackButton.hidden = true;
+            _backButton.hidden = false;
+            // go back to the main menu
             [self goToMainScreen];
         }
         else

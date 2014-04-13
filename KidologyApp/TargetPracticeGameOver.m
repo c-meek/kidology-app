@@ -140,11 +140,8 @@ NSString *gameName;
         {
             if(nil == gameName && [_tbv superview] == nil)
             {
-                //            UIViewController *vc = self.view.window.rootViewController;
-                //            [vc performSegueWithIdentifier:@"toGameList" sender:self];
-                //            _customModeButton.color = [SKColor greenColor];
                 [self addGameFilesToArray];
-                _tbv = [[UITableView alloc] initWithFrame:CGRectMake(250, 200, self.frame.size.height/2, self.frame.size.width/2)];
+                _tbv = [[UITableView alloc] initWithFrame:CGRectMake(230, 200, self.frame.size.height/2+70, self.frame.size.width/2+50)];
                 _tbv.delegate = self;
                 _tbv.dataSource = self;
                 [self.view addSubview:_tbv];
@@ -153,13 +150,12 @@ NSString *gameName;
             {
                 [_tbv removeFromSuperview];
             }
-            SKScene * customTargetPracticeScene = [[CustomTargetPracticeScene alloc] initWithSize:self.size
-                                                                                    ];
-            customTargetPracticeScene.scaleMode = SKSceneScaleModeAspectFill;
-            
-            // Present the scene.
-            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-            [self.view presentScene:customTargetPracticeScene transition:reveal];
+//            SKScene * customTargetPracticeScene = [[CustomTargetPracticeScene alloc] initWithSize:self.size];
+//            customTargetPracticeScene.scaleMode = SKSceneScaleModeAspectFill;
+//            
+//            // Present the scene.
+//            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+//            [self.view presentScene:customTargetPracticeScene transition:reveal];
         }
     }
     else if ([node.name isEqualToString:@"backToTargetGameMenuButton"] ||
@@ -184,6 +180,10 @@ NSString *gameName;
         // Present the scene.
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         [self.view presentScene:mainMenuScene transition:reveal];
+    }
+    else
+    {
+        [_tbv removeFromSuperview];
     }
 }
 

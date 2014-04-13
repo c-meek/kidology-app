@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <MessageUI/MessageUI.h>
 
 @interface MainMenuScene : SKScene
 @property (nonatomic) SKSpriteNode *babyGameButton;

@@ -47,6 +47,9 @@
     if ([node.name isEqualToString:@"backButton"] ||
              [node.name isEqualToString:@"backButtonLabel"])
     {
+        // reset button
+        _pressedBackButton.hidden = true;
+        _backButton.hidden = false;
         SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
         mainMenu.scaleMode = SKSceneScaleModeAspectFill;
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
@@ -85,6 +88,7 @@
     //get user's first and last name and therapist's email address from the app settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:@"3" forKey:@"numberOfTargets"];
+    [defaults setObject:@"3.2" forKey:@"delayBetweenTargets"];
     [defaults synchronize];
     NSLog(@"updating settings");
 }

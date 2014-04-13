@@ -25,7 +25,15 @@ extern NSUserDefaults *defaults;
         _numOfRotations = 0;
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         //set the total number of targets for this session
-        self.totalTargets = numTargets;
+        //get handedness from the user defaults
+        defaults = [NSUserDefaults standardUserDefaults];
+        [defaults synchronize];
+        self.totalTargets = [[defaults objectForKey:@"numberOfTargets"] integerValue];
+        if(_totalTargets == 0)
+        {
+            _totalTargets = 10;
+        }
+        NSLog(@"%d", _totalTargets);
         self.correctTouches = 0;
         // initialize the anchor to "not being touched" state
         self.anchored = NOT_TOUCHING;
@@ -102,6 +110,8 @@ extern NSUserDefaults *defaults;
         self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
         self.target.xScale = .67;
         self.target.yScale = .67;
+        NSLog(@"Radius : %f", _target.size.width/2);
+        NSLog(@"Position: (%f , %f", _target.position.x, _target.position.y);
     }
     else if (_gameMode == RANDOM)
     {
@@ -157,7 +167,7 @@ extern NSUserDefaults *defaults;
         _currentAction = SWIPE;
         _swipedOutside = true;
             
-        int direction = arc4random_uniform(4);
+        int direction = 3;//arc4random_uniform(4);
         if ( direction == 0)
         {
             [self.view addGestureRecognizer: swipeUpGesture ];
@@ -328,7 +338,6 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
-    NSLog(@"in handle rotation");
     bool allTouchedTarget =true;
     if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
@@ -339,8 +348,7 @@ extern NSUserDefaults *defaults;
             int x = 0;
             while (x < num_of_touches)
             {
-                bool isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:x
-                                                                                  inView:nil]];
+                bool isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:x  inView:nil]];
                 if (isTargetTouched)
                 {
                     
@@ -372,12 +380,12 @@ extern NSUserDefaults *defaults;
                 _numOfRotations ++;
                 if (_hasRotated > 0)      // THIS IS WHEN THE ROTATION IS CORRECT! (that means they has successfully spun the target for a little bit...
                 {
+                    [_rotateTarget runAction:_actionMoveDone];
                     NSLog(@"correct rotation!\n");
                     _correctTouches++;
                     [self rightAction];
                     [self.view removeGestureRecognizer:rotationGR ];
                     _isActionDone = true;
-                    [_rotateTarget runAction:_actionMoveDone];
                     [self addChild:_tapSreenLabel];
                 }
                 allTouchedTarget = true;
@@ -399,9 +407,11 @@ extern NSUserDefaults *defaults;
             {  /* do nothing for now*/ }
             else
             {
-                bool isTargetTouched = false;
-                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:0 inView:self.view]];
-                
+//                             [recognizer locationOfTouch:x  inView:nil]
+                CGPoint pt = [recognizer locationOfTouch:0 inView:self.view];
+                bool isTargetTouched = [self isTargetTouched:pt];
+                NSLog(@"isTargetTouched: %d, location: (%f, %f)",isTargetTouched, pt.x, pt.y);
+                NSLog(@"Target Posistion: (%f,%f), radius: %f", _target.position.x, _target.position.y, _target.size.width/2);
                 if (isTargetTouched)
                 {
                     _swipedOutside = false;
@@ -452,10 +462,12 @@ extern NSUserDefaults *defaults;
             {  /* do nothing for now*/ }
             else
             {
-                bool isTargetTouched = false;
-                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:0 inView:self.view]];
+                CGPoint pt = [recognizer locationOfTouch:0 inView:nil];
+                bool isTargetTouched = [self isTargetTouched:pt];
+                NSLog(@"isTargetTouched: %d, location: (%f, %f)",isTargetTouched, pt.x, pt.y);
+                NSLog(@"Target Posistion: (%f,%f)", _target.position.x, _target.position.y);
                 
-                if (isTargetTouched)
+                if (isTargetTouched && _swipedOutside == true)
                 {
                     _swipedOutside = false;
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Left On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
@@ -507,10 +519,12 @@ extern NSUserDefaults *defaults;
             {  /* do nothing for now*/ }
             else
             {
-                bool isTargetTouched = false;
-                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:0 inView:self.view]];
+                CGPoint pt = [recognizer locationOfTouch:0 inView:nil];
+                bool isTargetTouched = [self isTargetTouched:pt];
+                NSLog(@"isTargetTouched: %d, location: (%f, %f)",isTargetTouched, pt.x, pt.y);
+                NSLog(@"Target Posistion: (%f,%f)", _target.position.x, _target.position.y);
                 
-                if (isTargetTouched)
+                if (isTargetTouched && _swipedOutside == true)
                 {
                     _swipedOutside = false;
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Up On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
@@ -561,10 +575,12 @@ extern NSUserDefaults *defaults;
             {  /* do nothing for now*/ }
             else
             {
-                bool isTargetTouched = false;
-                isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:0 inView:self.view]];
+                CGPoint pt = [recognizer locationOfTouch:0 inView:nil];
+                bool isTargetTouched = [self isTargetTouched:pt];
+                NSLog(@"isTargetTouched: %d, location: (%f, %f)",isTargetTouched, pt.x, pt.y);
+                NSLog(@"Target Posistion: (%f,%f)", _target.position.x, _target.position.y);
                 
-                if (isTargetTouched)
+                if (isTargetTouched && _swipedOutside == true)
                 {
                     _swipedOutside = false;
                     currentTouch = [[LogEntry alloc] initWithType:@"Swiping Down On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
@@ -677,7 +693,14 @@ extern NSUserDefaults *defaults;
                 self.target.position = CGPointMake(-100,-100);
             }];
             //make a wait action
-            SKAction *wait = [SKAction waitForDuration:.314];
+            defaults = [NSUserDefaults standardUserDefaults];
+            [defaults synchronize];
+            float waitDelay = [[defaults objectForKey:@"delayBetweenTargets"] floatValue];
+            if(waitDelay == 0.0)
+            {
+                waitDelay = 3.2;
+            }
+            SKAction *wait = [SKAction waitForDuration:waitDelay];
             //make a "add" target action
             SKAction *addTarget = [SKAction runBlock:^{
                 [self displayTarget];
@@ -810,6 +833,12 @@ extern NSUserDefaults *defaults;
     //get handedness from the user defaults
     defaults = [NSUserDefaults standardUserDefaults];
     NSString *affectedHand = [defaults objectForKey:@"affectedHand"];
+    //handle default case
+//    if(0 == [affectedHand integerValue])
+//    {
+//        affectedHand = @"left";
+//    }
+    NSLog(@"affected hand %@", affectedHand);
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;

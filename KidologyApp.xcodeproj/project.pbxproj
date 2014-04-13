@@ -30,9 +30,14 @@
 		0FDEFA3818FAFE1600D458F9 /* Random_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA3218FAFE1600D458F9 /* Random_Pressed.png */; };
 		0FDEFA3B18FB080600D458F9 /* Actions.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA3918FB080600D458F9 /* Actions.png */; };
 		0FDEFA3C18FB080600D458F9 /* Actions_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA3A18FB080600D458F9 /* Actions_Pressed.png */; };
+		0FDEFA4218FB2E1700D458F9 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA4118FB2E1700D458F9 /* logo.png */; };
 		0FDF3AA318DA56A400FBEC85 /* CustomTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */; };
 		0FF78FC318EDD59100BD200D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FF78FC218EDD59100BD200D /* Settings.bundle */; };
 		7C5523F218EDB7D30042DEAB /* rotate_green_targetII.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */; };
+		7C9E74D418FB105100E2723B /* green_target_w_outward_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9E74D318FB105100E2723B /* green_target_w_outward_arrows.png */; };
+		7C9E74D618FB106300E2723B /* green_target_w_inward_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9E74D518FB106300E2723B /* green_target_w_inward_arrows.png */; };
+		7C9E74D818FB10CA00E2723B /* green_target_w_outward_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9E74D718FB10CA00E2723B /* green_target_w_outward_arrows.png */; };
+		7C9E74DA18FB10D000E2723B /* green_target_w_inward_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9E74D918FB10D000E2723B /* green_target_w_inward_arrows.png */; };
 		7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */; };
 		7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */; };
 		7CB23C4018C0020D007F409F /* Black.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CB23C3218C0020D007F409F /* Black.png */; };
@@ -63,7 +68,7 @@
 		B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAAD18A7ED7700D5C20C /* AppDelegate.m */; };
 		B96CAAB118A7ED7700D5C20C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B96CAAAF18A7ED7700D5C20C /* Main.storyboard */; };
 		B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB318A7ED7700D5C20C /* ViewController.m */; };
-		B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */; };
+		B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B96CAABA18A7ED7700D5C20C /* Images.xcassets */; };
 		B96CAAC218A7ED7700D5C20C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAAC118A7ED7700D5C20C /* XCTest.framework */; };
 		B96CAAC318A7ED7700D5C20C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAA9B18A7ED7700D5C20C /* Foundation.framework */; };
@@ -157,10 +162,15 @@
 		0FDEFA3218FAFE1600D458F9 /* Random_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Random_Pressed.png; sourceTree = "<group>"; };
 		0FDEFA3918FB080600D458F9 /* Actions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Actions.png; sourceTree = "<group>"; };
 		0FDEFA3A18FB080600D458F9 /* Actions_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Actions_Pressed.png; sourceTree = "<group>"; };
+		0FDEFA4118FB2E1700D458F9 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTargetPracticeScene.h; sourceTree = "<group>"; };
 		0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTargetPracticeScene.m; sourceTree = "<group>"; };
 		0FF78FC218EDD59100BD200D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate_green_targetII.png; sourceTree = "<group>"; };
+		7C9E74D318FB105100E2723B /* green_target_w_outward_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target_w_outward_arrows.png; sourceTree = "<group>"; };
+		7C9E74D518FB106300E2723B /* green_target_w_inward_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target_w_inward_arrows.png; sourceTree = "<group>"; };
+		7C9E74D718FB10CA00E2723B /* green_target_w_outward_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target_w_outward_arrows.png; sourceTree = "<group>"; };
+		7C9E74D918FB10D000E2723B /* green_target_w_inward_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target_w_inward_arrows.png; sourceTree = "<group>"; };
 		7CB23C2D18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Huge_Checkered_Background_[4096x3072].png"; sourceTree = "<group>"; };
 		7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BabyTargetPracticeScene.h; sourceTree = "<group>"; };
 		7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BabyTargetPracticeScene.m; sourceTree = "<group>"; };
@@ -358,12 +368,17 @@
 		7CB23C4F18C00284007F409F /* TargetGame */ = {
 			isa = PBXGroup;
 			children = (
+				7C9E74D318FB105100E2723B /* green_target_w_outward_arrows.png */,
+				7C9E74D918FB10D000E2723B /* green_target_w_inward_arrows.png */,
+				7C9E74D718FB10CA00E2723B /* green_target_w_outward_arrows.png */,
+				7C9E74D518FB106300E2723B /* green_target_w_inward_arrows.png */,
 				B9E5BE2F18F700930065B26D /* arrow.png */,
 				B9E5BE2D18F700010065B26D /* rotate_green_target.png */,
 				7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */,
 				0F9462C818BFFFC500E9E3BD /* targetPracticeBackground.png */,
 				B96CAAE118A81D6B00D5C20C /* green_target.png */,
 				0F7D547A18AD4EBA00F9593D /* purple_target.png */,
+				0FDEFA4118FB2E1700D458F9 /* logo.png */,
 				7CB76CC618B692CB0003A622 /* hand.png */,
 			);
 			name = TargetGame;
@@ -680,6 +695,8 @@
 				FD6B78CD18ED16CB0035CA95 /* kidologyapp-icon@2x.png in Resources */,
 				0FDEFA3318FAFE1600D458F9 /* Center.png in Resources */,
 				E89BFA8718F71564006C1959 /* settingsScreenLegacy.png in Resources */,
+				7C9E74D618FB106300E2723B /* green_target_w_inward_arrows.png in Resources */,
+				7C9E74DA18FB10D000E2723B /* green_target_w_inward_arrows.png in Resources */,
 				0FDEFA3B18FB080600D458F9 /* Actions.png in Resources */,
 				7CB23C4B18C0020D007F409F /* Red.png in Resources */,
 				E8DF543C18F58AB700B9D1D1 /* babyGameButtonPressed.png in Resources */,
@@ -690,6 +707,7 @@
 				0FDEFA3818FAFE1600D458F9 /* Random_Pressed.png in Resources */,
 				7CB23C4918C0020D007F409F /* Pink.png in Resources */,
 				7CB23C4218C0020D007F409F /* Brown.png in Resources */,
+				0FDEFA4218FB2E1700D458F9 /* logo.png in Resources */,
 				B96CAAA818A7ED7700D5C20C /* InfoPlist.strings in Resources */,
 				0F9462D618C0296A00E9E3BD /* anchor_green_left.png in Resources */,
 				E8DF544C18F58B8F00B9D1D1 /* targetGameButton.png in Resources */,
@@ -705,6 +723,8 @@
 				E89BFA8818F71564006C1959 /* settingsScreenLegacy@2x.png in Resources */,
 				FD6B78DE18ED19240035CA95 /* kidologyspotlight-icon@2x.png in Resources */,
 				7CB76CC718B692CB0003A622 /* hand.png in Resources */,
+				7C9E74D418FB105100E2723B /* green_target_w_outward_arrows.png in Resources */,
+				7C9E74D818FB10CA00E2723B /* green_target_w_outward_arrows.png in Resources */,
 				E89BFA8618F71564006C1959 /* settingsScreen@2x.png in Resources */,
 				7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */,
 				0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */,

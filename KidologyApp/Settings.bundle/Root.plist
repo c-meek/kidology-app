@@ -78,7 +78,19 @@
 			<key>Key</key>
 			<string>numberOfTargets</string>
 			<key>DefaultValue</key>
-			<string>5</string>
+			<string>10</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Delay Between Targets</string>
+			<key>Key</key>
+			<string>delayBetweenTargets</string>
+			<key>DefaultValue</key>
+			<string>3.2</string>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
 		</dict>
 	</array>
 	<key>StringsTable</key>
