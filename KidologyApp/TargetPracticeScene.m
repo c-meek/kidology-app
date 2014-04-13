@@ -330,7 +330,7 @@ extern NSUserDefaults *defaults;
     
     NSLog(@"in handle rotation");
     bool allTouchedTarget =true;
-    if (_anchored == TOUCHING)  // change this when proper testing can occure!
+    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == GESTURE)
         {
@@ -391,7 +391,7 @@ extern NSUserDefaults *defaults;
 
     LogEntry *currentTouch;
     
-    if (_anchored == TOUCHING)  // change this when proper testing can occure!
+    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == GESTURE)
         {
@@ -444,7 +444,7 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
-    if (_anchored == TOUCHING)  // change this when proper testing can occure!
+    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == GESTURE)
         {
@@ -499,7 +499,7 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
-    if (_anchored == TOUCHING)  // change this when proper testing can occure!
+    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == GESTURE)
         {
@@ -553,7 +553,7 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
-    if (_anchored == TOUCHING)  // change this when proper testing can occure!
+    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == GESTURE)
         {
