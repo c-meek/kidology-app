@@ -11,6 +11,8 @@
 @interface BabyTargetPracticeScene : SKScene
 @property (nonatomic) SKSpriteNode * target;
 @property (nonatomic) int totalTouches;
+@property (nonatomic) SKSpriteNode *backButton;
+@property (nonatomic) SKSpriteNode *backButtonPressed;
 -(id)initWithSize:(CGSize)size color:(NSString *)color;
 
 @end
