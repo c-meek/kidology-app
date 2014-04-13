@@ -76,6 +76,10 @@ NSString *gameName;
 
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
         {
+            // reset button
+            _backButtonPressed.hidden = true;
+            _backButton.hidden = false;
+            // go back to the main menu
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
             backToMain.scaleMode = SKSceneScaleModeAspectFill;
             [_tbv removeFromSuperview];
@@ -109,7 +113,7 @@ NSString *gameName;
              [node.name isEqualToString:@"gestureModeButton"])
     {
         // Create and configure the random "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:4 numTargets:3]; //added numTagets...
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:3 numTargets:3]; //added numTagets...
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene.

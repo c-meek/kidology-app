@@ -82,6 +82,9 @@
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         if([_backButton isEqual:touchedNode] || [_pressedBackButton isEqual:touchedNode])
         {
+            // reset button
+            _pressedBackButton.hidden = true;
+            _backButton.hidden = false;
             //go back to main menu
             SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
             mainMenu.scaleMode = SKSceneScaleModeAspectFill;

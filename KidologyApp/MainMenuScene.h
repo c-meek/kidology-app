@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <MessageUI/MessageUI.h>
 
 @interface MainMenuScene : SKScene
 @property (nonatomic) SKSpriteNode *babyGameButton;
@@ -19,4 +20,7 @@
 @property (nonatomic) SKSpriteNode *therapistMenuButtonPressed;
 @property (nonatomic) SKSpriteNode *settingsMenuButton;
 @property (nonatomic) SKSpriteNode *settingsMenuButtonPressed;
+@property (nonatomic) NSString *firstName;
+@property (nonatomic) NSString *lastName;
+@property (nonatomic) NSString *therapistEmail;
 @end
