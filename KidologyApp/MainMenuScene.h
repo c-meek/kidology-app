@@ -17,6 +17,4 @@
 @property (nonatomic) SKSpriteNode *fetchGameButtonPressed;
 @property (nonatomic) SKSpriteNode *therapistMenuButton;
 @property (nonatomic) SKSpriteNode *therapistMenuButtonPressed;
-@property (nonatomic) SKSpriteNode *settingsMenuButton;
-@property (nonatomic) SKSpriteNode *settingsMenuButtonPressed;
 @end

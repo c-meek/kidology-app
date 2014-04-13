@@ -10,4 +10,5 @@
 
 @interface MenuViewController : ViewController
 - (void)handleOpenURL:(NSURL *)url;
+- (void)loadScene;
 @end

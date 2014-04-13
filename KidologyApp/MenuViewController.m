@@ -70,10 +70,8 @@ bool isFirstLogin = true;
 
 - (void)handleOpenURL:(NSURL *)url {
     [self.navigationController popToRootViewControllerAnimated:YES];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Custom Game"
-                                                    message:@"Custom Game Saved.\n Open in Target Practice -> Custom Games"
-                                                   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alert show];
+
+
 }
 
 @end

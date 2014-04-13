@@ -28,6 +28,7 @@ NSString *gameName;
         [self addGestureModeButton];
         [self addTarget];
         [self addHandAnimation];
+        
     }
     return self;
 }
