@@ -105,7 +105,7 @@ NSString *gameName;
         // Present the scene.
         [self.view presentScene:targetPractice transition:reveal];
     }
-    else if ([node.name isEqualToString:@"gestureModeLabel"] ||
+    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
              [node.name isEqualToString:@"gestureModeButton"])
     {
         // Create and configure the random "target practice" scene.
@@ -116,7 +116,7 @@ NSString *gameName;
         [self.view presentScene:targetPractice transition:reveal];
     }
 
-    else if ([node.name isEqualToString:@"customModeLabel"] || [node.name isEqualToString:@"customModeButton"])
+    else if ([node.name isEqualToString:@"customModeButtonPressed"] || [node.name isEqualToString:@"customModeButton"])
     {
         if(nil == gameName && [_tbv superview] == nil)
         {
@@ -128,9 +128,13 @@ NSString *gameName;
             _tbv.delegate = self;
             _tbv.dataSource = self;
             [self.view addSubview:_tbv];
+            _customModeButton.hidden = false;
+            _customModeButtonPressed.hidden = true;
         }
         else
         {
+            _customModeButton.hidden = false;
+            _customModeButtonPressed.hidden = true;
             [_tbv removeFromSuperview];
         }
     }
