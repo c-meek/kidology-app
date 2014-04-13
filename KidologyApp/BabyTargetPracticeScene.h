@@ -11,6 +11,9 @@
 @interface BabyTargetPracticeScene : SKScene
 @property (nonatomic) SKSpriteNode * target;
 @property (nonatomic) int totalTouches;
+@property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
+@property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
+@property (nonatomic) float time;
 -(id)initWithSize:(CGSize)size color:(NSString *)color;
 
 @end
