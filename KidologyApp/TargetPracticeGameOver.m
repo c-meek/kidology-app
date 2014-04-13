@@ -126,8 +126,7 @@ NSString *gameName;
         
         if (mode != 4)
         {
-            SKScene * targetPracticeScene = [[TargetPracticeScene alloc] initWithSize:self.size
-                                                                        game_mode:mode];
+            SKScene * targetPracticeScene = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:mode numTargets:3];
             targetPracticeScene.scaleMode = SKSceneScaleModeAspectFill;
             
             // Present the scene.
