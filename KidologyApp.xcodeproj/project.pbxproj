@@ -30,6 +30,7 @@
 		0FDEFA3818FAFE1600D458F9 /* Random_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA3218FAFE1600D458F9 /* Random_Pressed.png */; };
 		0FDEFA3B18FB080600D458F9 /* Actions.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA3918FB080600D458F9 /* Actions.png */; };
 		0FDEFA3C18FB080600D458F9 /* Actions_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA3A18FB080600D458F9 /* Actions_Pressed.png */; };
+		0FDEFA4218FB2E1700D458F9 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA4118FB2E1700D458F9 /* logo.png */; };
 		0FDF3AA318DA56A400FBEC85 /* CustomTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */; };
 		0FF78FC318EDD59100BD200D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FF78FC218EDD59100BD200D /* Settings.bundle */; };
 		7C5523F218EDB7D30042DEAB /* rotate_green_targetII.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */; };
@@ -157,6 +158,7 @@
 		0FDEFA3218FAFE1600D458F9 /* Random_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Random_Pressed.png; sourceTree = "<group>"; };
 		0FDEFA3918FB080600D458F9 /* Actions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Actions.png; sourceTree = "<group>"; };
 		0FDEFA3A18FB080600D458F9 /* Actions_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Actions_Pressed.png; sourceTree = "<group>"; };
+		0FDEFA4118FB2E1700D458F9 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTargetPracticeScene.h; sourceTree = "<group>"; };
 		0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTargetPracticeScene.m; sourceTree = "<group>"; };
 		0FF78FC218EDD59100BD200D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				0F9462C818BFFFC500E9E3BD /* targetPracticeBackground.png */,
 				B96CAAE118A81D6B00D5C20C /* green_target.png */,
 				0F7D547A18AD4EBA00F9593D /* purple_target.png */,
+				0FDEFA4118FB2E1700D458F9 /* logo.png */,
 				7CB76CC618B692CB0003A622 /* hand.png */,
 			);
 			name = TargetGame;
@@ -690,6 +693,7 @@
 				0FDEFA3818FAFE1600D458F9 /* Random_Pressed.png in Resources */,
 				7CB23C4918C0020D007F409F /* Pink.png in Resources */,
 				7CB23C4218C0020D007F409F /* Brown.png in Resources */,
+				0FDEFA4218FB2E1700D458F9 /* logo.png in Resources */,
 				B96CAAA818A7ED7700D5C20C /* InfoPlist.strings in Resources */,
 				0F9462D618C0296A00E9E3BD /* anchor_green_left.png in Resources */,
 				E8DF544C18F58B8F00B9D1D1 /* targetGameButton.png in Resources */,
