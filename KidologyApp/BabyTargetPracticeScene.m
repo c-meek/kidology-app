@@ -50,7 +50,6 @@ if (self = [super initWithSize:size])
             _backButton.hidden = true;
             _backButtonPressed.hidden = false;
         }
-
     }
 }
 
@@ -60,7 +59,6 @@ if (self = [super initWithSize:size])
     self.lastUpdateTimeInterval = currentTime;
     [self updateWithTimeSinceLastUpdate:timeSinceLast];
     //    NSLog(@"%@", touchLog);
-    
 }
 
 
@@ -73,10 +71,10 @@ if (self = [super initWithSize:size])
     }
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     timeLabel.fontSize = 20;
-    timeLabel.fontColor = [SKColor colorWithRed:0.27 green:0.27 blue:0.27 alpha:1];
+    timeLabel.fontColor = [SKColor colorWithRed:0.96 green:0.79 blue:0.39 alpha:1];
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
-    timeLabel.position = CGPointMake(self.frame.size.width - 60, self.frame.size.height/2+200);
+    timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
     
  
     float r_time = roundf(self.time *100)/100.0;
@@ -107,7 +105,7 @@ if (self = [super initWithSize:size])
             [self hideTarget];
         }];
         //make a wait action
-        SKAction *wait = [SKAction waitForDuration:3];
+        SKAction *wait = [SKAction waitForDuration:2.5];
         //make a "add" target action
         SKAction *addTarget = [SKAction runBlock:^{
             [self displayTarget];
@@ -165,7 +163,6 @@ if (self = [super initWithSize:size])
     {
         SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
         backToMain.scaleMode = SKSceneScaleModeAspectFill;
-        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         [self.view presentScene:backToMain transition:reveal];
     }
 }
