@@ -25,7 +25,9 @@ extern NSUserDefaults *defaults;
         _numOfRotations = 0;
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         //set the total number of targets for this session
-        self.totalTargets = numTargets;
+        //get handedness from the user defaults
+        defaults = [NSUserDefaults standardUserDefaults];
+        self.totalTargets = [[defaults objectForKey:@"numberOfTargets"] integerValue];
         self.correctTouches = 0;
         // initialize the anchor to "not being touched" state
         self.anchored = NOT_TOUCHING;
@@ -677,7 +679,9 @@ extern NSUserDefaults *defaults;
                 self.target.position = CGPointMake(-100,-100);
             }];
             //make a wait action
-            SKAction *wait = [SKAction waitForDuration:.314];
+            defaults = [NSUserDefaults standardUserDefaults];
+            float waitDelay = [[defaults objectForKey:@"delayBetweenTargets"] floatValue];
+            SKAction *wait = [SKAction waitForDuration:waitDelay];
             //make a "add" target action
             SKAction *addTarget = [SKAction runBlock:^{
                 [self displayTarget];

@@ -105,8 +105,9 @@ if (self = [super initWithSize:size])
             [self hideTarget];
         }];
         //make a wait action
-        SKAction *wait = [SKAction waitForDuration:2.5];
-        //make a "add" target action
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        float waitDelay = [[defaults objectForKey:@"delayBetweenTargets"] floatValue];
+        SKAction *wait = [SKAction waitForDuration:waitDelay];        //make a "add" target action
         SKAction *addTarget = [SKAction runBlock:^{
             [self displayTarget];
         }];
