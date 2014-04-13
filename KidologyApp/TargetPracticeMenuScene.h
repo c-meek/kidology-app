@@ -10,18 +10,17 @@
 
 @interface TargetPracticeMenuScene : SKScene
 @property (nonatomic) SKSpriteNode *backButton;
-@property (nonatomic) SKSpriteNode *pressedBackButton;
-@property (nonatomic) SKLabelNode *backButtonLabel;
+@property (nonatomic) SKSpriteNode *backButtonPressed;
 @property (nonatomic) SKSpriteNode *centerModeButton;
-@property (nonatomic) SKLabelNode *centerModeButtonLabel;
+@property (nonatomic) SKSpriteNode *centerModeButtonPressed;
 @property (nonatomic) SKSpriteNode *randomModeButton;
-@property (nonatomic) SKLabelNode *randomModeButtonLabel;
+@property (nonatomic) SKSpriteNode *randomModeButtonPressed;
 @property (nonatomic) SKSpriteNode *gestureModeButton;
-@property (nonatomic) SKLabelNode *gestureModeButtonLabel;
+@property (nonatomic) SKSpriteNode *gestureModeButtonPressed;
 @property (nonatomic) SKSpriteNode * target;
 @property (nonatomic) SKSpriteNode * hand;
 @property (nonatomic) SKSpriteNode *customModeButton;
-@property (nonatomic) SKLabelNode *customModeLabel;
+@property (nonatomic) SKSpriteNode *customModeButtonPressed;
 @property (nonatomic) NSMutableArray *gameArray;
 @property (nonatomic) UITableView *tbv;
 
