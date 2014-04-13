@@ -39,33 +39,30 @@ NSString *gameName;
     SKNode *node = [self nodeAtPoint:position];
     
     
-    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backLabel"])
+    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
     {
         _backButton.hidden = true;
-        _pressedBackButton.hidden = false;
+        _backButtonPressed.hidden = false;
     }
-    
-    //Added another variable for Target Pratice call.
-    else if ([node.name isEqualToString:@"centerLabel"] ||
-             [node.name isEqualToString:@"centerButton"])
+    else if ([node.name isEqualToString:@"centerButtonPressed"] || [node.name isEqualToString:@"centerButton"])
     {
-        _centerModeButton.color = [SKColor yellowColor];
+        _centerModeButton.hidden = true;
+        _centerModeButtonPressed.hidden = false;
     }
-    
-    else if ([node.name isEqualToString:@"randomLabel"] ||
-             [node.name isEqualToString:@"randomButton"])
+    else if ([node.name isEqualToString:@"randomButtonPressed"] || [node.name isEqualToString:@"randomButton"])
     {
-        _randomModeButton.color = [SKColor yellowColor];
+        _randomModeButton.hidden = true;
+        _randomModeButtonPressed.hidden = false;
     }
-    else if ([node.name isEqualToString:@"customModeLabel"] ||
-             [node.name isEqualToString:@"customModeButton"])
+    else if ([node.name isEqualToString:@"customModeButtonPressed"] || [node.name isEqualToString:@"customModeButton"])
     {
-        _customModeButton.color = [SKColor yellowColor];
+        _customModeButton.hidden = true;
+        _customModeButtonPressed.hidden = false;
     }
-    else if ([node.name isEqualToString:@"gestureModeLabel"] ||
-             [node.name isEqualToString:@"gestureModeButton"])
+    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] || [node.name isEqualToString:@"gestureModeButton"])
     {
-        _gestureModeButton.color = [SKColor yellowColor];
+        _gestureModeButton.hidden = true;
+        _gestureModeButtonPressed.hidden = false;
     }
 
 }
@@ -77,7 +74,7 @@ NSString *gameName;
     SKNode *node = [self nodeAtPoint:position];
     SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
 
-    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backLabel"])
+    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
         {
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
             backToMain.scaleMode = SKSceneScaleModeAspectFill;
@@ -86,7 +83,7 @@ NSString *gameName;
             [self.view presentScene:backToMain transition:reveal];
         }
     //Added another variable for Target Practice call.
-    else if ([node.name isEqualToString:@"centerLabel"] ||
+    else if ([node.name isEqualToString:@"centerButtonPressed"] ||
              [node.name isEqualToString:@"centerButton"])
     {
         NSLog(@"hit center button");
@@ -98,7 +95,7 @@ NSString *gameName;
         [self.view presentScene:targetPractice transition:reveal];
     }
     
-    else if ([node.name isEqualToString:@"randomLabel"] ||
+    else if ([node.name isEqualToString:@"randomButtonPressed"] ||
         [node.name isEqualToString:@"randomButton"])
     {
         // Create and configure the random "target practice" scene.
@@ -108,7 +105,7 @@ NSString *gameName;
         // Present the scene.
         [self.view presentScene:targetPractice transition:reveal];
     }
-    else if ([node.name isEqualToString:@"gestureModeLabel"] ||
+    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
              [node.name isEqualToString:@"gestureModeButton"])
     {
         // Create and configure the random "target practice" scene.
@@ -119,7 +116,7 @@ NSString *gameName;
         [self.view presentScene:targetPractice transition:reveal];
     }
 
-    else if ([node.name isEqualToString:@"customModeLabel"] || [node.name isEqualToString:@"customModeButton"])
+    else if ([node.name isEqualToString:@"customModeButtonPressed"] || [node.name isEqualToString:@"customModeButton"])
     {
         if(nil == gameName && [_tbv superview] == nil)
         {
@@ -131,20 +128,28 @@ NSString *gameName;
             _tbv.delegate = self;
             _tbv.dataSource = self;
             [self.view addSubview:_tbv];
+            _customModeButton.hidden = false;
+            _customModeButtonPressed.hidden = true;
         }
         else
         {
+            _customModeButton.hidden = false;
+            _customModeButtonPressed.hidden = true;
             [_tbv removeFromSuperview];
         }
     }
     else
     {
-        _pressedBackButton.hidden = true;
         _backButton.hidden = false;
-        _centerModeButton.color = [SKColor redColor];
-        _gestureModeButton.color = [SKColor redColor];
-        _customModeButton.color = [SKColor redColor];
-        _randomModeButton.color = [SKColor redColor];
+        _backButtonPressed.hidden = true;
+        _centerModeButton.hidden = false;
+        _centerModeButtonPressed.hidden = true;
+        _randomModeButton.hidden = false;
+        _randomModeButtonPressed.hidden = true;
+        _customModeButton.hidden = false;
+        _customModeButtonPressed.hidden = true;
+        _gestureModeButton.hidden = false;
+        _gestureModeButtonPressed.hidden = true;
         [_tbv removeFromSuperview];
     }
 }
@@ -159,18 +164,68 @@ NSString *gameName;
         SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
         
         // If a touch was off the back button but has moved onto it
-        if (!([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
-            ([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
+        if (!([_backButton isEqual:previousNode] || [_backButtonPressed isEqual:previousNode]) &&
+            ([_backButton isEqual:currentNode] || [_backButtonPressed isEqual:currentNode]))
         {
-            _pressedBackButton.hidden = false;
+            _backButtonPressed.hidden = false;
             _backButton.hidden = true;
         }
-        else if (([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
-                 !([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
+        else if (([_backButton isEqual:previousNode] || [_backButtonPressed isEqual:previousNode]) &&
+                 !([_backButton isEqual:currentNode] || [_backButtonPressed isEqual:currentNode]))
         {
-            _pressedBackButton.hidden = true;
+            _backButtonPressed.hidden = true;
             _backButton.hidden = false;
         }
+        else if (!([_centerModeButton isEqual:previousNode] || [_centerModeButtonPressed isEqual:previousNode]) &&
+                 ([_centerModeButton isEqual:currentNode] || [_centerModeButtonPressed isEqual:currentNode]))
+        {
+            _centerModeButtonPressed.hidden = false;
+            _centerModeButton.hidden = true;
+        }
+        else if (([_centerModeButton isEqual:previousNode] || [_centerModeButtonPressed isEqual:previousNode]) &&
+                 !([_centerModeButton isEqual:currentNode] || [_centerModeButtonPressed  isEqual:currentNode]))
+        {
+            _centerModeButtonPressed .hidden = true;
+            _centerModeButton.hidden = false;
+        }
+        else if (!([_randomModeButton isEqual:previousNode] || [_randomModeButtonPressed isEqual:previousNode]) &&
+                 ([_randomModeButton isEqual:currentNode] || [_randomModeButtonPressed isEqual:currentNode]))
+        {
+            _randomModeButtonPressed.hidden = false;
+            _randomModeButton.hidden = true;
+        }
+        else if (([_randomModeButton isEqual:previousNode] || [_randomModeButtonPressed isEqual:previousNode]) &&
+                 !([_randomModeButton isEqual:currentNode] || [_randomModeButtonPressed  isEqual:currentNode]))
+        {
+            _randomModeButtonPressed .hidden = true;
+            _randomModeButton.hidden = false;
+        }
+        else if (!([_customModeButton isEqual:previousNode] || [_customModeButtonPressed isEqual:previousNode]) &&
+                 ([_customModeButton isEqual:currentNode] || [_customModeButtonPressed isEqual:currentNode]))
+        {
+            _customModeButtonPressed.hidden = false;
+            _customModeButton.hidden = true;
+        }
+        else if (([_customModeButton isEqual:previousNode] || [_customModeButtonPressed isEqual:previousNode]) &&
+                 !([_customModeButton isEqual:currentNode] || [_customModeButtonPressed  isEqual:currentNode]))
+        {
+            _customModeButtonPressed.hidden = true;
+            _customModeButton.hidden = false;
+        }
+        else if (!([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
+                 ([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed isEqual:currentNode]))
+        {
+            _gestureModeButtonPressed.hidden = false;
+            _gestureModeButton.hidden = true;
+        }
+        else if (([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
+                 !([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed  isEqual:currentNode]))
+        {
+            _gestureModeButtonPressed .hidden = true;
+            _gestureModeButton.hidden = false;
+        }
+
+
     }
 }
 
@@ -220,82 +275,85 @@ NSString *gameName;
     _backButton.yScale = .5;
     [self addChild:_backButton];
     
-    _pressedBackButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
-    _pressedBackButton.position = CGPointMake(100, self.frame.size.height/2+235);
-    _pressedBackButton.name = @"backButton";
-    _pressedBackButton.hidden = true;
-    _pressedBackButton.xScale = .5;
-    _pressedBackButton.yScale = .5;
-    [self addChild:_pressedBackButton];
+    _backButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
+    _backButtonPressed.position = CGPointMake(100, self.frame.size.height/2+235);
+    _backButtonPressed.name = @"backButtonPressed";
+    _backButtonPressed.hidden = true;
+    _backButtonPressed.xScale = .5;
+    _backButtonPressed.yScale = .5;
+    [self addChild:_backButtonPressed];
 }
 
 -(void)addCenterModeButton
 {
-    _centerModeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
+    _centerModeButton = [[SKSpriteNode alloc] initWithImageNamed:@"Center"];
     _centerModeButton.position = CGPointMake(self.frame.size.width/4, self.frame.size.height/2-250);
     _centerModeButton.name = @"centerButton";
+    _centerModeButton.xScale = .4;
+    _centerModeButton.yScale = .4;
     [self addChild:_centerModeButton];
     
-    _centerModeButtonLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
-    _centerModeButtonLabel.fontSize = 35;
-    _centerModeButtonLabel.fontColor = [SKColor whiteColor];
-    _centerModeButtonLabel.position = CGPointMake(self.frame.size.width/4, self.frame.size.height/2-250);
-    _centerModeButtonLabel.name = @"centerLabel";
-    _centerModeButtonLabel.text = @"Center";
-    _centerModeButtonLabel.verticalAlignmentMode =1;
-    [self addChild:_centerModeButtonLabel];
+    _centerModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Center_Pressed"];
+    _centerModeButtonPressed.position = CGPointMake(self.frame.size.width/4, self.frame.size.height/2-250);
+    _centerModeButtonPressed.name = @"centerButtonPressed";
+    _centerModeButtonPressed.xScale = .4;
+    _centerModeButtonPressed.yScale = .4;
+    _centerModeButtonPressed.hidden = true;
+    [self addChild:_centerModeButtonPressed];
 }
 
 -(void)addRandomModeButton
 {
-    _randomModeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
+    _randomModeButton = [[SKSpriteNode alloc] initWithImageNamed:@"Random"];
     _randomModeButton.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2-250);
     _randomModeButton.name = @"randomButton";
+    _randomModeButton.xScale = .4;
+    _randomModeButton.yScale = .4;
     [self addChild:_randomModeButton];
     
-    _randomModeButtonLabel =[SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
-    _randomModeButtonLabel.fontSize = 35;
-    _randomModeButtonLabel.fontColor = [SKColor whiteColor];
-    _randomModeButtonLabel.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2-250);
-    _randomModeButtonLabel.name = @"randomLabel";
-    _randomModeButtonLabel.text = @"Random";
-    _randomModeButtonLabel.verticalAlignmentMode = 1;
-    [self addChild:_randomModeButtonLabel];
+    _randomModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Random_Pressed"];
+    _randomModeButtonPressed.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2-250);
+    _randomModeButtonPressed.name = @"randomButtonPressed";
+    _randomModeButtonPressed.xScale = .4;
+    _randomModeButtonPressed.yScale = .4;
+    _randomModeButtonPressed.hidden = true;
+    [self addChild:_randomModeButtonPressed];
 }
 
 -(void)addCustomModeButton
 {
-    _customModeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
-    _customModeButton.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2 - 200);
+    _customModeButton = [[SKSpriteNode alloc] initWithImageNamed:@"Custom"];
+    _customModeButton.position = CGPointMake(self.frame.size.width/4*2, self.frame.size.height/2 - 250);
     _customModeButton.name = @"customModeButton";
+    _customModeButton.xScale = .45;
+    _customModeButton.yScale = .45;
     [self addChild:_customModeButton];
     
-    _customModeLabel = [SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
-    _customModeLabel.fontSize = 35;
-    _customModeLabel.fontColor = [SKColor whiteColor];
-    _customModeLabel.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2-200);
-    _customModeLabel.name = @"customModeLabel";
-    _customModeLabel.text = @"Custom";
-    _customModeLabel.verticalAlignmentMode = 1;
-    [self addChild:_customModeLabel];
+    _customModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Custom_Pressed"];
+    _customModeButtonPressed.position = CGPointMake(self.frame.size.width/4*2, self.frame.size.height/2 - 250);
+    _customModeButtonPressed.name = @"customModeButtonPressed";
+    _customModeButtonPressed.xScale = .45;
+    _customModeButtonPressed.yScale = .45;
+    _customModeButtonPressed.hidden = true;
+    [self addChild:_customModeButtonPressed];
 }
 
 -(void)addGestureModeButton
 {
-    _gestureModeButton = [[SKSpriteNode alloc] initWithColor:[SKColor redColor] size:CGSizeMake(140, 40)];
-    _gestureModeButton.position = CGPointMake(self.frame.size.width/4*2, self.frame.size.height/2-250);
+    _gestureModeButton = [[SKSpriteNode alloc] initWithImageNamed:@"Actions"];
+    _gestureModeButton.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2-200);
     _gestureModeButton.name = @"gestureModeButton";
+    _gestureModeButton.xScale = .4;
+    _gestureModeButton.yScale = .4;
     [self addChild:_gestureModeButton];
     
-    _gestureModeButtonLabel =[SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
-    _gestureModeButtonLabel.fontSize = 35;
-    _gestureModeButtonLabel.fontColor = [SKColor whiteColor];
-    _gestureModeButtonLabel.position = CGPointMake(self.frame.size.width/4*2,
-                                                   self.frame.size.height/2-250);
-    _gestureModeButtonLabel.name = @"gestureModeLabel";
-    _gestureModeButtonLabel.text = @"Actions";
-    _gestureModeButtonLabel.verticalAlignmentMode = 1;
-    [self addChild:_gestureModeButtonLabel];
+    _gestureModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Actions_Pressed"];
+    _gestureModeButtonPressed.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2-200);
+    _gestureModeButtonPressed.name = @"gestureModeButton";
+    _gestureModeButtonPressed.xScale = .4;
+    _gestureModeButtonPressed.yScale = .4;
+    _gestureModeButtonPressed.hidden = true;
+    [self addChild:_gestureModeButtonPressed];
 }
 
 -(void)addTarget

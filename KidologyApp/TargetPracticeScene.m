@@ -113,7 +113,7 @@ extern NSUserDefaults *defaults;
         float randomScale = ((min + arc4random() % (max-min))) * .01;
         _target.xScale = randomScale;
         _target.yScale = randomScale;
-        int x_pos = .75 * ((rand() % (int)self.size.width)/2)-(_target.size.width/2);
+        int x_pos = .75 * ((arc4random_uniform((int)self.size.width)/2)-(_target.size.width/2));
         int pos_neg = (rand() % 1);
         if (pos_neg == 0)
         {
@@ -123,8 +123,8 @@ extern NSUserDefaults *defaults;
         {
             x_pos = self.frame.size.width/2 - x_pos;
         }
-        int y_pos = .75 * ((rand() % (int)self.size.height)/2)-(_target.size.height/2);
-        pos_neg = (rand() % 1);
+        int y_pos = .75 * ((arc4random_uniform((int)self.size.height)/2)-(_target.size.height/2));
+        pos_neg = arc4random_uniform(2);
         if (pos_neg == 0)
         {
             y_pos = self.frame.size.height/2 + y_pos;
@@ -145,7 +145,7 @@ extern NSUserDefaults *defaults;
     self.target.xScale = .67;
     self.target.yScale = .67;
 
-    int x = (rand() % 2); // REMEMBER TO CHANGE THIS TO 3 WHEN ZOOM IS COMPLETE
+    int x = arc4random_uniform(2); // REMEMBER TO CHANGE THIS TO 3 WHEN ZOOM IS COMPLETE
    // NSLog(@"Action Num %d\n",x);
     if (x == 0)
     {
@@ -157,7 +157,7 @@ extern NSUserDefaults *defaults;
         _currentAction = SWIPE;
         _swipedOutside = true;
             
-        int direction = (rand() % 4);
+        int direction = arc4random_uniform(4);
         if ( direction == 0)
         {
             [self.view addGestureRecognizer: swipeUpGesture ];
@@ -195,7 +195,7 @@ extern NSUserDefaults *defaults;
         
         _currentAction = ROTATE;
         _hasRotated = 0;
-        int direction = (rand() % 2);
+        int direction = arc4random_uniform(2);
         if (direction == 0)
         {
             _actionDirection = CLOCKWISE;
@@ -208,7 +208,7 @@ extern NSUserDefaults *defaults;
     else if ( x == 2)
     {
         _currentAction = ZOOM;
-        int direction = (rand() % 2);
+        int direction = arc4random_uniform(2);
         if (direction == 0)
         {
             _actionDirection = IN;
@@ -330,7 +330,7 @@ extern NSUserDefaults *defaults;
     
     NSLog(@"in handle rotation");
     bool allTouchedTarget =true;
-    if (_anchored == TOUCHING)  // change this when proper testing can occure!
+    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == GESTURE)
         {
@@ -391,7 +391,7 @@ extern NSUserDefaults *defaults;
 
     LogEntry *currentTouch;
     
-    if (_anchored == TOUCHING)  // change this when proper testing can occure!
+    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == GESTURE)
         {
@@ -444,7 +444,7 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
-    if (_anchored == TOUCHING)  // change this when proper testing can occure!
+    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == GESTURE)
         {
@@ -499,7 +499,7 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
-    if (_anchored == TOUCHING)  // change this when proper testing can occure!
+    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == GESTURE)
         {
@@ -553,7 +553,7 @@ extern NSUserDefaults *defaults;
     
     LogEntry *currentTouch;
     
-    if (_anchored == TOUCHING)  // change this when proper testing can occure!
+    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
     {
         if (_gameMode == GESTURE)
         {
