@@ -347,15 +347,13 @@ NSString *gameName;
     _gestureModeButton.yScale = .4;
     [self addChild:_gestureModeButton];
     
-    _gestureModeButtonLabel =[SKLabelNode labelNodeWithFontNamed:@"Papyrus"];
-    _gestureModeButtonLabel.fontSize = 35;
-    _gestureModeButtonLabel.fontColor = [SKColor whiteColor];
-    _gestureModeButtonLabel.position = CGPointMake(self.frame.size.width/4*2,
-                                                   self.frame.size.height/2-250);
-    _gestureModeButtonLabel.name = @"gestureModeLabel";
-    _gestureModeButtonLabel.text = @"Gesture";
-    _gestureModeButtonLabel.verticalAlignmentMode = 1;
-    [self addChild:_gestureModeButtonLabel];
+    _gestureModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Actions_Pressed"];
+    _gestureModeButtonPressed.position = CGPointMake(self.frame.size.width/4*3, self.frame.size.height/2-200);
+    _gestureModeButtonPressed.name = @"gestureModeButton";
+    _gestureModeButtonPressed.xScale = .4;
+    _gestureModeButtonPressed.yScale = .4;
+    _gestureModeButtonPressed.hidden = true;
+    [self addChild:_gestureModeButtonPressed];
 }
 
 -(void)addTarget
