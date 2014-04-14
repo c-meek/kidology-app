@@ -33,6 +33,7 @@
         [self loadSettingsInfo];
         // check user name and add user name label to corner
         [self addUserInfo];
+        [self addToNotificationCenter];
 
     }
     return self;
@@ -41,7 +42,14 @@
 // check user name and therapist email before allowing to play a game
 - (void)didMoveToView:(SKView *)view
 {
+    NSLog(@"moved to main menu view");
+    [self loadSettingsInfo];
     [self checkNameAndEmail];
+}
+
+-(void)willMoveFromView:(SKView *)view
+{
+    [self removeFromNotificationCenter];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -337,8 +345,6 @@
 -(void)addUserInfo
 {
     // get user's first and last names + therapist email from settings bundle
-
-    
     NSString *lastInitial = [_lastName substringToIndex:1];
     lastInitial = [lastInitial stringByAppendingString:@"."];
     NSString *wholeName = [_firstName stringByAppendingString:lastInitial];
@@ -352,6 +358,24 @@
     usernameLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 200,
                                          CGRectGetMidY(self.frame)+ 250);
     [self addChild:usernameLabel];
+}
+
+-(void)addToNotificationCenter
+{
+    NSLog(@"adding to notification center");
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appBecameActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+}
+
+-(void)removeFromNotificationCenter
+{
+    NSLog(@"removing from notification center");
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidBecomeActiveNotification
+                                                  object:nil];
 }
 
 // ------------------------------------------------------------------------------------
@@ -583,6 +607,15 @@
     _firstName = [defaults objectForKey:@"firstName"];
     _lastName = [defaults objectForKey:@"lastName"];
     _therapistEmail = [defaults objectForKey:@"therapistEmail"];
+    NSLog(@"affected hands is %@", [defaults objectForKey:@"affectedHand"]);
+}
+
+-(void)appBecameActive:(NSNotification *)notification
+{
+    NSLog(@"updating settings info on activate");
+    [[self childNodeWithName:@"usernameLabel"] removeFromParent];
+    [self loadSettingsInfo];
+    [self addUserInfo];
 }
 
 

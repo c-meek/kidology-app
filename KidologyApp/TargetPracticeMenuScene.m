@@ -29,8 +29,14 @@ NSString *gameName;
 //        [self addTarget];
 //        [self addHandAnimation];
         [self addLogo];
+        [self addToNotificationCenter];
     }
     return self;
+}
+
+-(void)willMoveFromView:(SKView *)view
+{
+    [self removeFromNotificationCenter];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -247,7 +253,9 @@ NSString *gameName;
 {
     SKLabelNode *selectModeLabel= [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     selectModeLabel.fontSize = 35;
-    selectModeLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    selectModeLabel.fontColor = [SKColor darkTextColor];
+
+//    selectModeLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
     selectModeLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 210);
     selectModeLabel.text = @"Select Your Game Mode:";
     [self addChild:selectModeLabel];
@@ -393,6 +401,24 @@ NSString *gameName;
     [_hand runAction: [SKAction sequence:@[moveHandOver, pressButton, wait, actionMoveDone]]];
 }
 
+-(void)addToNotificationCenter
+{
+    NSLog(@"adding to notification center");
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appMovedtoBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+}
+
+-(void)removeFromNotificationCenter
+{
+    NSLog(@"removing from notification center");
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidEnterBackgroundNotification
+                                                  object:nil];
+}
+
 -(void)addGameFilesToArray
 {
     _gameArray = [[NSMutableArray alloc]init];
@@ -460,6 +486,16 @@ NSString *gameName;
 
 {
     return @"SELECT A GAME";
+}
+
+-(void)appMovedtoBackground:(NSNotification *)notification
+{
+    NSLog(@"app moved to background");
+    if (_tbv != nil)
+    {
+        NSLog(@"removing tbv");
+        [_tbv removeFromSuperview];
+    }
 }
 
 @end

@@ -70,8 +70,6 @@ bool isFirstLogin = true;
 
 - (void)handleOpenURL:(NSURL *)url {
     [self.navigationController popToRootViewControllerAnimated:YES];
-
-
 }
 
 @end
