@@ -112,6 +112,7 @@ NSString *gameName;
     else if ([node.name isEqualToString:@"randomButtonPressed"] ||
         [node.name isEqualToString:@"randomButton"])
     {
+        NSLog(@"making random game");
         // Create and configure the random "target practice" scene.
         SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
