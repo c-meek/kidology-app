@@ -16,7 +16,6 @@
 @implementation TargetPracticeScene
 
 NSMutableArray *touchLog;
-extern NSUserDefaults *defaults;
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode
 {
     if (self = [super initWithSize:size])
@@ -27,6 +26,7 @@ extern NSUserDefaults *defaults;
         [defaults synchronize];
         self.totalTargets = [[defaults objectForKey:@"numberOfTargets"] integerValue];
         self.delayBetweenTargets = [[defaults objectForKey:@"delayBetweenTargets"] integerValue];
+        _affectedHand = [defaults objectForKey:@"affectedHand"];
         NSLog(@"total targets is %d", self.totalTargets);
         NSLog(@"delay between is %d", self.delayBetweenTargets);
 
@@ -405,7 +405,6 @@ extern NSUserDefaults *defaults;
 {
     SKLabelNode * trackerLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     trackerLabel.fontSize = 20;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString * text = [NSString stringWithFormat:@"%d/%d", _correctTouches, _totalTargets];
     trackerLabel.text = text;
     trackerLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
@@ -508,7 +507,7 @@ extern NSUserDefaults *defaults;
     _anchor.xScale = .3;
     _anchor.yScale = .3;
 
-    if([[defaults objectForKey:@"affectedHand"] isEqualToString:@"right"]) //if right hand affected
+    if([_affectedHand isEqualToString:@"right"]) //if right hand affected
     {
         _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
         

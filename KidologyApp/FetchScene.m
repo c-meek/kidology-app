@@ -154,7 +154,6 @@
     [self moveDogOffScreen:positions[0] withYPosition:positions[1]];
     //move both onscreen
     [self moveBackDogAndBall];
-    
 }
 
 // generate random direction to move the dog and ball along

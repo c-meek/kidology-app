@@ -59,6 +59,8 @@ typedef enum {
     @property (nonatomic) int correctTouches;
     @property (nonatomic) int totalTargets;
     @property (nonatomic) int delayBetweenTargets;
+    @property (nonatomic) NSString *affectedHand;
+
     @property (nonatomic) float time;
     @property (nonatomic) float time_not_anchored;
     @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;

@@ -10,6 +10,7 @@
 #import "TargetPracticeScene.h"
 #import "MainMenuScene.h"
 #import "CustomTargetPracticeScene.h"
+#import "GestureTargetPracticeScene.h"
 #import "UtilityClass.h"
 
 NSString *gameName;
@@ -26,8 +27,8 @@ NSString *gameName;
         [self addCenterModeButton];
         [self addRandomModeButton];
         [self addCustomModeButton];
+        [self addGestureModeButton];
 //        [self addInstructionLabel];
-//        [self addGestureModeButton];
 //        [self addTarget];
 //        [self addHandAnimation];
         [self addLogo];
@@ -68,11 +69,11 @@ NSString *gameName;
         _customModeButton.hidden = true;
         _customModeButtonPressed.hidden = false;
     }
-//    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] || [node.name isEqualToString:@"gestureModeButton"])
-//    {
-//        _gestureModeButton.hidden = true;
-//        _gestureModeButtonPressed.hidden = false;
-//    }
+    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] || [node.name isEqualToString:@"gestureModeButton"])
+    {
+        _gestureModeButton.hidden = true;
+        _gestureModeButtonPressed.hidden = false;
+    }
 
 }
 
@@ -120,16 +121,16 @@ NSString *gameName;
         // Present the scene.
         [self.view presentScene:targetPractice transition:reveal];
     }
-//    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
-//             [node.name isEqualToString:@"gestureModeButton"])
-//    {
-//        // Create and configure the random "target practice" scene.
-//        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:3 numTargets:3]; //added numTagets...
-//        targetPractice.scaleMode = SKSceneScaleModeAspectFill;
-//        [_tbv removeFromSuperview];
-//        // Present the scene.
-//        [self.view presentScene:targetPractice transition:reveal];
-//    }
+    else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
+             [node.name isEqualToString:@"gestureModeButton"])
+    {
+        // Create and configure the random "target practice" scene.
+        SKScene *gesturePractice = [[GestureTargetPracticeScene alloc] initWithSize:self.size numberOfTargets:3];
+        gesturePractice.scaleMode = SKSceneScaleModeAspectFill;
+        [_tbv removeFromSuperview];
+        // Present the scene
+        [self.view presentScene:gesturePractice transition:reveal];
+    }
 
     else if ([node.name isEqualToString:@"customModeButtonPressed"] || [node.name isEqualToString:@"customModeButton"])
     {

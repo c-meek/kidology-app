@@ -86,6 +86,7 @@
 		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
 		E842B6CE18FC8AF7000610A0 /* Quit_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = E842B6CD18FC8AF7000610A0 /* Quit_Button.png */; };
 		E842B6D018FC8AFB000610A0 /* Quit_Button_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E842B6CF18FC8AFB000610A0 /* Quit_Button_Pressed.png */; };
+		E842B6D318FC9587000610A0 /* GestureTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E842B6D218FC9587000610A0 /* GestureTargetPracticeScene.m */; };
 		E89BFA8518F71564006C1959 /* settingsScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8118F71564006C1959 /* settingsScreen.png */; };
 		E89BFA8618F71564006C1959 /* settingsScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8218F71564006C1959 /* settingsScreen@2x.png */; };
 		E89BFA8718F71564006C1959 /* settingsScreenLegacy.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8318F71564006C1959 /* settingsScreenLegacy.png */; };
@@ -235,6 +236,8 @@
 		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
 		E842B6CD18FC8AF7000610A0 /* Quit_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quit_Button.png; sourceTree = "<group>"; };
 		E842B6CF18FC8AFB000610A0 /* Quit_Button_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quit_Button_Pressed.png; sourceTree = "<group>"; };
+		E842B6D118FC9587000610A0 /* GestureTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureTargetPracticeScene.h; sourceTree = "<group>"; };
+		E842B6D218FC9587000610A0 /* GestureTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureTargetPracticeScene.m; sourceTree = "<group>"; };
 		E89BFA8118F71564006C1959 /* settingsScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsScreen.png; sourceTree = "<group>"; };
 		E89BFA8218F71564006C1959 /* settingsScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsScreen@2x.png"; sourceTree = "<group>"; };
 		E89BFA8318F71564006C1959 /* settingsScreenLegacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsScreenLegacy.png; sourceTree = "<group>"; };
@@ -470,6 +473,8 @@
 				7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */,
 				B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */,
 				B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */,
+				E842B6D118FC9587000610A0 /* GestureTargetPracticeScene.h */,
+				E842B6D218FC9587000610A0 /* GestureTargetPracticeScene.m */,
 				0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */,
 				0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */,
 				B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */,
@@ -805,6 +810,7 @@
 				B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */,
 				E8F0BC2C18F6289C0021BB55 /* zip.c in Sources */,
 				B96CAAAA18A7ED7700D5C20C /* main.m in Sources */,
+				E842B6D318FC9587000610A0 /* GestureTargetPracticeScene.m in Sources */,
 				E8A34CEA18F276AD006F6D1B /* TherapistMenuScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
