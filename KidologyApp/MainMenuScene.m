@@ -95,6 +95,8 @@
     if ([node.name isEqualToString:@"babyGameButton"] ||
         [node.name isEqualToString:@"babyGameButtonPressed"])
     {
+        [_tbv removeFromSuperview];
+
         // reset the button
         _babyGameButton.hidden = false;
         _babyGameButtonPressed.hidden = true;
@@ -118,6 +120,8 @@
     else if ([node.name isEqualToString:@"targetGameButton"] ||
              [node.name isEqualToString:@"targetGameButtonPressed"])
     {
+        [_tbv removeFromSuperview];
+
         // reset the button
         _targetGameButton.hidden = false;
         _targetGameButtonPressed.hidden = true;
@@ -136,6 +140,8 @@
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
              [node.name isEqualToString:@"fetchGameButtonPressed"])
     {
+        [_tbv removeFromSuperview];
+
         // reset the button
         _fetchGameButton.hidden = false;
         _fetchGameButtonPressed.hidden = true;
@@ -154,6 +160,8 @@
     else if ([node.name isEqualToString:@"therapistMenuButton"] ||
              [node.name isEqualToString:@"therapistMenuButtonPressed"])
     {
+        [_tbv removeFromSuperview];
+
         // reset the button
         _therapistMenuButton.hidden = false;
         _therapistMenuButtonPressed.hidden = true;
@@ -162,13 +170,12 @@
         if ([UtilityClass checkSettings])
             return;
 
-        NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]   stringByAppendingPathComponent:@"logs"];
-        [self listFileAtPath:folderPath];
-        NSString *zipFile = [self zipFilesAtPath:folderPath];
-        [self emailZipFile:zipFile];
+        [self displayAlertView];
     }
     else
     {
+        [_tbv removeFromSuperview];
+
         _targetGameButton.hidden = false;
         _targetGameButtonPressed.hidden = true;
         _babyGameButton.hidden = false;
@@ -408,23 +415,73 @@
 //                             DATA CHECKING LOGIC
 // ------------------------------------------------------------------------------------
 
+-(void)displayAlertView
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Send Log Files To Therapist" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    [actionSheet addButtonWithTitle:@"Send Recent Games"];
+    [actionSheet addButtonWithTitle:@"Send Older Games"];
+//    [actionSheet addButtonWithTitle:@"Cancel"];
+//    [actionSheet setCancelButtonIndex:2];
+//    NSLog(@"cancel button  is %@",[actionSheet buttonTitleAtIndex:2]);
 
-// present settings menu scene when alert view closed
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    if(buttonIndex == 0)
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Send Log Files"
+//                                                    message:@"Send Recent Games or Older Game Files?"
+//                                                   delegate:self
+//                                          cancelButtonTitle:@"Recent Games"
+//                                          otherButtonTitles:  @"Older Game Files", nil];
+//    [alert show];
+//    [alert release];
+    [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+}
+
+- (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if (buttonIndex == 0)
+    {
+        NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]   stringByAppendingPathComponent:@"logs"];
+        //        [self listFileAtPath:folderPath];
+        NSString *zipFile = [self zipFilesAtPath:folderPath];
+        if ([zipFile isEqualToString:@"No files to compress"])
+        {
+            //[popup release];
+
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                            message:@"No recent game files.\n Maybe they were already added to Older Games?"
+                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+            [alert release];
+        }
+        else
+        {
+            [self emailZipFile:zipFile];
+        }
+    }
+    else if (buttonIndex == 1)
+    {
+        if ([_tbv superview] == nil)
+        {
+            [self addZipFilesToArray];
+            _tbv = [[UITableView alloc] initWithFrame:CGRectMake(250, 200, self.frame.size.height/2, self.frame.size.width/2)];
+            _tbv.delegate = self;
+            _tbv.dataSource = self;
+            [self.view addSubview:_tbv];
+        }
+        else
+            NSLog(@"tbv is not nil");
+    }
+//    else // buttonIndex == 2
 //    {
-//        // in the old days you could redirect to the settings app, but no more...
-//        // instead, redirect to our settings menu scene
-//        // Create and configure the "settings menu" scene.
-//        SKScene * settingsMenu = [[SettingsMenuScene alloc] initWithSize:self.size];
-//        settingsMenu.scaleMode = SKSceneScaleModeAspectFill;
-//        
-//        // Present the scene
-//        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-//        [self.view presentScene:settingsMenu transition:reveal];
+//        [popup removeFromSuperview];
 //    }
-//}
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 0)
+    {
+    }
+    
+}
 
 -(bool)nodeIsButton:(NSString *)previousNodeName
 {
@@ -491,6 +548,12 @@
     }
     NSLog(@"compressing...");
     BOOL successCompressing = [archiver CloseZipFile2];
+    if ([_logFiles count] == 0)
+    {
+        NSError *error;
+        BOOL success = [fileManager removeItemAtPath:archivePath error:&error];
+        archivePath = @"No files to compress";
+    }
     if (successCompressing)
     {
         NSLog(@"successful compression! ");
@@ -538,7 +601,25 @@
         case MFMailComposeResultCancelled:
             break;
         case MFMailComposeResultSaved:
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email"
+                                                            message:@"Email Succesfully Saved To Drafts!\n Please send it soon!"
+                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+            [alert release];
+            
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            for (NSString *file in _logFiles)
+            {
+                NSError *error;
+                BOOL success = [fileManager removeItemAtPath:file error:&error];
+                if(!success)
+                    NSLog(@"unable to delete file %@ because %@", file, [error description]);
+                else
+                    NSLog(@"sucessfully deleted file %@", file);
+            }
             break;
+        }
         case MFMailComposeResultSent:
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email"
@@ -576,22 +657,22 @@
 }
 
 
--(NSArray *)listFileAtPath:(NSString *)path
-{
-    //-----> LIST ALL FILES <-----//
-    NSLog(@"LISTING ALL FILES FOUND");
-    
-    int count;
-    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
-    for (count = 0; count < (int)[directoryContent count]; count++)
-    {
-        NSString *file = [directoryContent objectAtIndex:count];
-        NSLog(@"File %d: %@", (count + 1), file);
-    }
-    NSLog(@"found %d files", count);
-    
-    return directoryContent;
-}
+//-(NSArray *)listFileAtPath:(NSString *)path
+//{
+//    //-----> LIST ALL FILES <-----//
+//    NSLog(@"LISTING ALL FILES FOUND");
+//    
+//    int count;
+//    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
+//    for (count = 0; count < (int)[directoryContent count]; count++)
+//    {
+//        NSString *file = [directoryContent objectAtIndex:count];
+//        NSLog(@"File %d: %@", (count + 1), file);
+//    }
+//    NSLog(@"found %d files", count);
+//    
+//    return directoryContent;
+//}
 
 -(void)loadSettingsInfo
 {
@@ -609,6 +690,69 @@
     [[self childNodeWithName:@"usernameLabel"] removeFromParent];
     [self loadSettingsInfo];
     [self addUserInfo];
+}
+
+-(void)addZipFilesToArray
+{
+    _zipFilesArray = [[NSMutableArray alloc]init];
+    NSString *extension = @"zip";
+    //NSString *resPath = [[NSBundle mainBundle] resourcePath];
+    
+    NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"logs"];
+    // make the folder if it doesn't already exist
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
+    
+    NSString *file;
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:&error];
+    for(file in files)
+    {
+        if([[file pathExtension] isEqualToString:extension])
+        {
+            [_zipFilesArray addObject:file];
+        }
+    }
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _zipFilesArray.count;
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    cell.textLabel.text = [self.zipFilesArray objectAtIndex:indexPath.row];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *zipFileName = [self.zipFilesArray objectAtIndex:indexPath.row];
+    [_tbv removeFromSuperview];
+    [self emailZipFile:zipFileName];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+
+{
+    return @"SELECT A ZIP FILE";
 }
 
 

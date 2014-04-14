@@ -18,8 +18,6 @@
     NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
     NSString *lastName = [defaults objectForKey:@"lastName"];
     NSString *therapistEmail = [defaults objectForKey:@"therapistEmail"];
-    NSLog(@"delay before conversion %@", [defaults objectForKey:@"delayBetweenTargets"]);
-    NSLog(@"numtargets before conversion %@", [defaults objectForKey:@"numberOfTargets"]);
     
     // trim any leading or trailing whitespace
     firstName = [firstName stringByTrimmingCharactersInSet:
@@ -29,10 +27,8 @@
     therapistEmail = [therapistEmail stringByTrimmingCharactersInSet:
                       [NSCharacterSet whitespaceCharacterSet]];
     
-    NSLog(@"creating message");
     // alert when one of these fields is empty/incomplete
     NSString *message = @"";
-    NSLog(@"created message %@", message);
 
     if (firstName == NULL || firstName.length == 0 ||
         lastName  == NULL || lastName.length  == 0)

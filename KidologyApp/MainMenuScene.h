@@ -22,7 +22,8 @@
 @property (nonatomic) NSString *lastName;
 @property (nonatomic) NSString *therapistEmail;
 @property (nonatomic) NSMutableArray *logFiles;
-
+@property (nonatomic) NSMutableArray *zipFilesArray;
+@property (nonatomic) UITableView *tbv;
 
 
 
