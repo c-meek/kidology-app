@@ -11,10 +11,8 @@
 #import "TargetPracticeMenuScene.h"
 #import "FetchScene.h"
 #import "TherapistMenuScene.h"
-#import "SettingsMenuScene.h"
-#import "MenuViewController.h"
+#import "UtilityClass.h"
 
-#import "SetupViewController.h"
 #import "ZipArchive.h"
 #import <MessageUI/MFMailComposeViewController.h>
 
@@ -44,7 +42,7 @@
 {
     NSLog(@"moved to main menu view");
     [self loadSettingsInfo];
-    [self checkNameAndEmail];
+    [UtilityClass checkSettings];
 }
 
 -(void)willMoveFromView:(SKView *)view
@@ -100,6 +98,15 @@
         // reset the button
         _babyGameButton.hidden = false;
         _babyGameButtonPressed.hidden = true;
+        
+        NSLog(@"checking settings");
+        // check if any required settings are missing
+        if ([UtilityClass checkSettings])
+        {
+            NSLog(@"missing a setting");
+            return;
+        }
+
         // Create and configure the "baby game" scene.
         SKScene * babyGame = [[BabyMenuScene alloc] initWithSize:self.size];
         babyGame.scaleMode = SKSceneScaleModeAspectFill;
@@ -114,6 +121,11 @@
         // reset the button
         _targetGameButton.hidden = false;
         _targetGameButtonPressed.hidden = true;
+        
+        // check if any required settings are missing
+        if ([UtilityClass checkSettings])
+            return;
+
         // Create and configure the "game menu" scene.
         SKScene * targetGame = [[TargetPracticeMenuScene alloc] initWithSize:self.size];
         targetGame.scaleMode = SKSceneScaleModeAspectFill;
@@ -127,6 +139,11 @@
         // reset the button
         _fetchGameButton.hidden = false;
         _fetchGameButtonPressed.hidden = true;
+        
+        // check if any required settings are missing
+        if ([UtilityClass checkSettings])
+            return;
+
         // Create and configure the fetch game menu scene.
         SKScene * fetchGame = [[FetchScene alloc] initWithSize:self.size];
         fetchGame.scaleMode = SKSceneScaleModeAspectFill;
@@ -140,11 +157,15 @@
         // reset the button
         _therapistMenuButton.hidden = false;
         _therapistMenuButtonPressed.hidden = true;
+        
+        // check if any required settings are missing
+        if ([UtilityClass checkSettings])
+            return;
+
         NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]   stringByAppendingPathComponent:@"logs"];
         [self listFileAtPath:folderPath];
         NSString *zipFile = [self zipFilesAtPath:folderPath];
         [self emailZipFile:zipFile];
-        
     }
     else
     {
@@ -347,7 +368,8 @@
     // get user's first and last names + therapist email from settings bundle
     NSString *lastInitial = [_lastName substringToIndex:1];
     lastInitial = [lastInitial stringByAppendingString:@"."];
-    NSString *wholeName = [_firstName stringByAppendingString:lastInitial];
+    NSString *wholeName = [[_firstName stringByAppendingString:@" "]
+                           stringByAppendingString:lastInitial];
     NSString *usernameLabelText = [[@"Playing as " stringByAppendingString:@" "]
                                    stringByAppendingString:wholeName];
     SKLabelNode *usernameLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -382,60 +404,23 @@
 //                             DATA CHECKING LOGIC
 // ------------------------------------------------------------------------------------
 
--(void)checkNameAndEmail
-{
-    // get user's first and last names + therapist email from settings bundle
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
-    NSString *lastName = [defaults objectForKey:@"lastName"];
-    NSString *therapistEmail = [defaults objectForKey:@"therapistEmail"];
-    
-    // trim any leading or trailing whitespace
-    firstName = [firstName stringByTrimmingCharactersInSet:
-                 [NSCharacterSet whitespaceCharacterSet]];
-    lastName = [lastName stringByTrimmingCharactersInSet:
-                [NSCharacterSet whitespaceCharacterSet]];
-    therapistEmail = [therapistEmail stringByTrimmingCharactersInSet:
-                      [NSCharacterSet whitespaceCharacterSet]];
-    
-    // alert when one of these fields is empty/incomplete
-    NSString *message = @"";
-    if (firstName == NULL || firstName.length == 0 ||
-        lastName  == NULL || lastName.length  == 0)
-    {
-        message = @"You have not provided a first and/or last name!";
-    }
-    else if (therapistEmail  == NULL || therapistEmail.length  == 0)
-    {
-        message = @"You have not provided an e-mail address for your therapist.";
-    }
-    if (message.length > 0)
-    {
-        UIAlertView *mustUpdateNameAlert = [[UIAlertView alloc]initWithTitle:@"ERROR:"
-                                                                     message:message
-                                                                    delegate:self
-                                                           cancelButtonTitle:@"Close"
-                                                           otherButtonTitles:nil];
-        [mustUpdateNameAlert show];
-    }
-}
 
 // present settings menu scene when alert view closed
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(buttonIndex == 0)
-    {
-        // in the old days you could redirect to the settings app, but no more...
-        // instead, redirect to our settings menu scene
-        // Create and configure the "settings menu" scene.
-        SKScene * settingsMenu = [[SettingsMenuScene alloc] initWithSize:self.size];
-        settingsMenu.scaleMode = SKSceneScaleModeAspectFill;
-        
-        // Present the scene
-        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-        [self.view presentScene:settingsMenu transition:reveal];
-    }
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if(buttonIndex == 0)
+//    {
+//        // in the old days you could redirect to the settings app, but no more...
+//        // instead, redirect to our settings menu scene
+//        // Create and configure the "settings menu" scene.
+//        SKScene * settingsMenu = [[SettingsMenuScene alloc] initWithSize:self.size];
+//        settingsMenu.scaleMode = SKSceneScaleModeAspectFill;
+//        
+//        // Present the scene
+//        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+//        [self.view presentScene:settingsMenu transition:reveal];
+//    }
+//}
 
 -(bool)nodeIsButton:(NSString *)previousNodeName
 {
@@ -453,8 +438,10 @@
 
 -(NSString *)zipFilesAtPath:(NSString *)path
 {
+    // clear array of log files
+    [_logFiles removeAllObjects];
     NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
-    [DateFormatter setDateFormat:@"MM-dd-yyyy"];
+    [DateFormatter setDateFormat:@"MM-dd-yyyy_HH-mm"];
     NSString *currentDate = [DateFormatter stringFromDate:[NSDate date]];
     NSString *zipFileName = [[[[[_firstName stringByAppendingString:@"_"]
                                 stringByAppendingString:_lastName]
@@ -477,7 +464,7 @@
     [archiver CreateZipFile2:archivePath];
     NSLog(@"num paths found is %d", [subpaths count]);
     int i = 0;
-    NSMutableArray *csvfiles = [[NSMutableArray alloc] initWithCapacity:[subpaths count]];
+    _logFiles = [[NSMutableArray alloc] initWithCapacity:[subpaths count]];
     for(NSString *subpath in subpaths)
     {
         NSLog(@"subpath %d is %@", i, subpath);
@@ -494,7 +481,7 @@
         }
         if([fileManager fileExistsAtPath:longPath isDirectory:&isDir] && !isDir)
         {
-            [csvfiles addObject:longPath];
+            [_logFiles addObject:longPath];
             [archiver addFileToZip:longPath newname:subpath];
         }
     }
@@ -502,15 +489,6 @@
     BOOL successCompressing = [archiver CloseZipFile2];
     if (successCompressing)
     {
-        for (NSString *file in csvfiles)
-        {
-            NSError *error;
-            BOOL success = [fileManager removeItemAtPath:file error:&error];
-            if(!success)
-                NSLog(@"unable to delete file %@ because %@", file, [error description]);
-            else
-                NSLog(@"sucessfully deleted file %@", file);
-        }
         NSLog(@"successful compression! ");
         return archivePath;
     }
@@ -537,8 +515,8 @@
     
     // populate the fields
     [composer setToRecipients:recipients];
-    [composer setSubject:@"testing out app2"];
-    [composer setMessageBody:@"Hello, here are my game files from today" isHTML:NO];
+    [composer setSubject:@"re: My game logs from KidologyApp"];
+    [composer setMessageBody:@"Hello,\n Attached are my game log files from today" isHTML:NO];
     NSData *zipData = [NSData dataWithContentsOfFile:zipFilePath];
     [composer addAttachmentData:zipData mimeType:@"application/zip" fileName:zipFile];
     composer.navigationBar.barStyle = UIBarStyleBlack;
@@ -564,6 +542,17 @@
                                                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [alert show];
             [alert release];
+            
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            for (NSString *file in _logFiles)
+            {
+                NSError *error;
+                BOOL success = [fileManager removeItemAtPath:file error:&error];
+                if(!success)
+                    NSLog(@"unable to delete file %@ because %@", file, [error description]);
+                else
+                    NSLog(@"sucessfully deleted file %@", file);
+            }
             
             break;
         }
@@ -602,12 +591,11 @@
 
 -(void)loadSettingsInfo
 {
-    //get user's first and last name and therapist's email address from the app settings
+    //get user's settings from the app settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     _firstName = [defaults objectForKey:@"firstName"];
     _lastName = [defaults objectForKey:@"lastName"];
     _therapistEmail = [defaults objectForKey:@"therapistEmail"];
-    NSLog(@"affected hands is %@", [defaults objectForKey:@"affectedHand"]);
 }
 
 -(void)appBecameActive:(NSNotification *)notification

@@ -48,21 +48,23 @@ typedef enum {
         UISwipeGestureRecognizer* swipeDownGesture;
     }
 
-    @property (nonatomic) SKSpriteNode * anchorPanel;
     @property (nonatomic) SKSpriteNode * target;
     @property (nonatomic) SKLabelNode *targetsLabel;
     @property (nonatomic) SKLabelNode *tapSreenLabel;
+    @property (nonatomic) SKSpriteNode *anchor;
+    @property (nonatomic) SKSpriteNode *pressedAnchor;
+    @property (nonatomic) SKSpriteNode *quitButton;
     @property (nonatomic) int totalTouches;
     @property (nonatomic) int correctTouches;
     @property (nonatomic) int totalTargets;
+    @property (nonatomic) int delayBetweenTargets;
     @property (nonatomic) float time;
     @property (nonatomic) float time_not_anchored;
     @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
     @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
     @property (nonatomic) Mode gameMode;
     @property (nonatomic) AnchorStatus anchored;
-    @property (nonatomic) SKSpriteNode *anchor;
-    @property (nonatomic) SKSpriteNode *pressedAnchor;
+
     @property (nonatomic) int numOfRotations;
     @property (nonatomic) ActionType currentAction;
     @property (nonatomic) Direction actionDirection;
@@ -76,5 +78,5 @@ typedef enum {
     @property (nonatomic) Boolean swipedOutside;
 //.........................................................................
 
--(id)initWithSize:(CGSize)size game_mode:(int)game_mode numTargets:(int)numTargets; //added numTagets...
+-(id)initWithSize:(CGSize)size game_mode:(int)game_mode;
 @end

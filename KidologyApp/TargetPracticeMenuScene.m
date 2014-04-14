@@ -10,21 +10,23 @@
 #import "TargetPracticeScene.h"
 #import "MainMenuScene.h"
 #import "CustomTargetPracticeScene.h"
+#import "UtilityClass.h"
 
 NSString *gameName;
 @implementation TargetPracticeMenuScene
 
--(id)initWithSize:(CGSize)size {
+-(id)initWithSize:(CGSize)size
+{
     if (self = [super initWithSize:size]) {
         gameName = nil;
-
+        
         [self addBackground];
-//        [self addInstructionLabel];
         [self addSelectModeLabel];
         [self addBackButton];
         [self addCenterModeButton];
         [self addRandomModeButton];
         [self addCustomModeButton];
+//        [self addInstructionLabel];
 //        [self addGestureModeButton];
 //        [self addTarget];
 //        [self addHandAnimation];
@@ -86,6 +88,7 @@ NSString *gameName;
             // reset button
             _backButtonPressed.hidden = true;
             _backButton.hidden = false;
+            
             // go back to the main menu
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
             backToMain.scaleMode = SKSceneScaleModeAspectFill;
@@ -99,7 +102,7 @@ NSString *gameName;
     {
         NSLog(@"hit center button");
         // Create and configure the center "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1 numTargets:3]; //added numTagets...
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:0];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         // Present the scene.
         [_tbv removeFromSuperview];
@@ -110,7 +113,7 @@ NSString *gameName;
         [node.name isEqualToString:@"randomButton"])
     {
         // Create and configure the random "target practice" scene.
-        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:2 numTargets:3]; //added numTagets...
+        SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene.
@@ -497,5 +500,47 @@ NSString *gameName;
         [_tbv removeFromSuperview];
     }
 }
+
+-(BOOL)checkSettings
+{
+    bool missingField = false;
+    // get user's first and last names + therapist email from settings bundle
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
+    NSString *lastName = [defaults objectForKey:@"lastName"];
+    NSString *therapistEmail = [defaults objectForKey:@"therapistEmail"];
+    
+    // trim any leading or trailing whitespace
+    firstName = [firstName stringByTrimmingCharactersInSet:
+                 [NSCharacterSet whitespaceCharacterSet]];
+    lastName = [lastName stringByTrimmingCharactersInSet:
+                [NSCharacterSet whitespaceCharacterSet]];
+    therapistEmail = [therapistEmail stringByTrimmingCharactersInSet:
+                      [NSCharacterSet whitespaceCharacterSet]];
+    
+    // alert when one of these fields is empty/incomplete
+    NSString *message = @"";
+    if (firstName == NULL || firstName.length == 0 ||
+        lastName  == NULL || lastName.length  == 0)
+    {
+        message = @"You have not provided a first and/or last name!";
+    }
+    else if (therapistEmail  == NULL || therapistEmail.length  == 0)
+    {
+        message = @"You have not provided an e-mail address for your therapist.";
+    }
+    if (message.length > 0)
+    {
+        missingField = true;
+        UIAlertView *mustUpdateNameAlert = [[UIAlertView alloc]initWithTitle:@"ERROR:"
+                                                                     message:message
+                                                                    delegate:self
+                                                           cancelButtonTitle:@"Close"
+                                                           otherButtonTitles:nil];
+        [mustUpdateNameAlert show];
+    }
+    return  missingField;
+}
+
 
 @end

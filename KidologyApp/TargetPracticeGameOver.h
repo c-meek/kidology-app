@@ -9,7 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface TargetPracticeGameOver : SKScene
--(id)initWithSize:(CGSize)size targets:(int)targets;
+-(id)initWithSize:(CGSize)size targetsHit:(int)targetsHit totalTargets:(int)totalTargets;
 @property (nonatomic) SKSpriteNode *playAgainButton;
 @property (nonatomic) SKSpriteNode *playAgainButtonPressed;
 @property (nonatomic) SKSpriteNode *backToTargetGameMenuButton;

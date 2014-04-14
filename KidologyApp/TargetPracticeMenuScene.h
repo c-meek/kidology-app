@@ -23,5 +23,4 @@
 @property (nonatomic) SKSpriteNode *customModeButtonPressed;
 @property (nonatomic) NSMutableArray *gameArray;
 @property (nonatomic) UITableView *tbv;
-
 @end

@@ -62,7 +62,7 @@
 			<key>Key</key>
 			<string>affectedHand</string>
 			<key>DefaultValue</key>
-			<string>Left</string>
+			<string>left</string>
 			<key>Titles</key>
 			<array>
 				<string>Left</string>
@@ -70,33 +70,71 @@
 			</array>
 			<key>Values</key>
 			<array>
-				<string>Left</string>
-				<string>Right</string>
+				<string>left</string>
+				<string>right</string>
 			</array>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-			<key>KeyboardType</key>
-			<string>NumberPad</string>
+			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
-			<string>Number of Targets</string>
+			<string>Number of Targets Per Round</string>
 			<key>Key</key>
 			<string>numberOfTargets</string>
 			<key>DefaultValue</key>
-			<string>10</string>
+			<integer>5</integer>
+			<key>Titles</key>
+			<array>
+				<string>1</string>
+				<string>3</string>
+				<string>5</string>
+				<string>7</string>
+				<string>10</string>
+				<string>15</string>
+				<string>20</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>1</integer>
+				<integer>3</integer>
+				<integer>5</integer>
+				<integer>7</integer>
+				<integer>10</integer>
+				<integer>15</integer>
+				<integer>20</integer>
+			</array>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
+			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
 			<string>Delay Between Targets</string>
 			<key>Key</key>
 			<string>delayBetweenTargets</string>
 			<key>DefaultValue</key>
-			<string>3.2</string>
-			<key>KeyboardType</key>
-			<string>NumberPad</string>
+			<integer>2</integer>
+			<key>Titles</key>
+			<array>
+				<string>1 second</string>
+				<string>2 seconds</string>
+				<string>3 seconds</string>
+				<string>5 seconds</string>
+				<string>10 seconds</string>
+				<string>15 seconds</string>
+				<string>30 seconds</string>
+				<string>60 seconds</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+				<integer>5</integer>
+				<integer>10</integer>
+				<integer>15</integer>
+				<integer>30</integer>
+				<integer>60</integer>
+			</array>
 		</dict>
 	</array>
 	<key>StringsTable</key>

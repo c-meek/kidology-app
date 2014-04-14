@@ -210,7 +210,8 @@ NSMutableArray *touchLog;
             {
                 SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
                 SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size
-                                                                               targets:self.totalTargets];
+                                                                               targetsHit:self.correctTouches
+                                                                          totalTargets:self.totalTargets];
                 // pass the game type and touch log to the "game over" scene
                 NSString *mode = @"custom";
                 [gameOverScene.userData setObject:mode forKey:@"gameMode"];

@@ -21,5 +21,10 @@
 @property (nonatomic) NSString *firstName;
 @property (nonatomic) NSString *lastName;
 @property (nonatomic) NSString *therapistEmail;
+@property (nonatomic) NSMutableArray *logFiles;
+
+
+
+
 
 @end

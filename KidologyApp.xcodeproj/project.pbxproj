@@ -85,13 +85,13 @@
 		B9E5BE3018F700930065B26D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2F18F700930065B26D /* arrow.png */; };
 		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
 		E813050318FB1CC200862935 /* fetchBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E813050218FB1CC200862935 /* fetchBackground.png */; };
-		E8969EDB18F8B7ED00EC65E2 /* SettingsMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E8969EDA18F8B7ED00EC65E2 /* SettingsMenuScene.m */; };
 		E89BFA8518F71564006C1959 /* settingsScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8118F71564006C1959 /* settingsScreen.png */; };
 		E89BFA8618F71564006C1959 /* settingsScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8218F71564006C1959 /* settingsScreen@2x.png */; };
 		E89BFA8718F71564006C1959 /* settingsScreenLegacy.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8318F71564006C1959 /* settingsScreenLegacy.png */; };
 		E89BFA8818F71564006C1959 /* settingsScreenLegacy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8418F71564006C1959 /* settingsScreenLegacy@2x.png */; };
 		E8A34CEA18F276AD006F6D1B /* TherapistMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A34CE918F276AD006F6D1B /* TherapistMenuScene.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8A34CEC18F27984006F6D1B /* therapistScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E8A34CEB18F27984006F6D1B /* therapistScreen.png */; };
+		E8A3D73218FB8BCB0088B300 /* UtilityClass.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A3D73118FB8BCB0088B300 /* UtilityClass.m */; };
 		E8DF543C18F58AB700B9D1D1 /* babyGameButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E8DF543A18F58AB700B9D1D1 /* babyGameButtonPressed.png */; };
 		E8DF543D18F58AB700B9D1D1 /* babyGameButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E8DF543B18F58AB700B9D1D1 /* babyGameButton.png */; };
 		E8DF544018F58AC000B9D1D1 /* fetchGameButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E8DF543E18F58AC000B9D1D1 /* fetchGameButtonPressed.png */; };
@@ -231,8 +231,6 @@
 		B9FC0CFE18E4994D006F2AEF /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogEntry.h; sourceTree = "<group>"; };
 		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
 		E813050218FB1CC200862935 /* fetchBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fetchBackground.png; sourceTree = "<group>"; };
-		E8969ED918F8B7ED00EC65E2 /* SettingsMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsMenuScene.h; path = ../SettingsMenuScene.h; sourceTree = "<group>"; };
-		E8969EDA18F8B7ED00EC65E2 /* SettingsMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsMenuScene.m; path = ../SettingsMenuScene.m; sourceTree = "<group>"; };
 		E89BFA8118F71564006C1959 /* settingsScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsScreen.png; sourceTree = "<group>"; };
 		E89BFA8218F71564006C1959 /* settingsScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsScreen@2x.png"; sourceTree = "<group>"; };
 		E89BFA8318F71564006C1959 /* settingsScreenLegacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsScreenLegacy.png; sourceTree = "<group>"; };
@@ -240,6 +238,8 @@
 		E8A34CE818F276AD006F6D1B /* TherapistMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TherapistMenuScene.h; sourceTree = "<group>"; };
 		E8A34CE918F276AD006F6D1B /* TherapistMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TherapistMenuScene.m; sourceTree = "<group>"; };
 		E8A34CEB18F27984006F6D1B /* therapistScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = therapistScreen.png; sourceTree = "<group>"; };
+		E8A3D73018FB8BCB0088B300 /* UtilityClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilityClass.h; sourceTree = "<group>"; };
+		E8A3D73118FB8BCB0088B300 /* UtilityClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UtilityClass.m; sourceTree = "<group>"; };
 		E8DF543A18F58AB700B9D1D1 /* babyGameButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = babyGameButtonPressed.png; sourceTree = "<group>"; };
 		E8DF543B18F58AB700B9D1D1 /* babyGameButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = babyGameButton.png; sourceTree = "<group>"; };
 		E8DF543E18F58AC000B9D1D1 /* fetchGameButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fetchGameButtonPressed.png; sourceTree = "<group>"; };
@@ -441,38 +441,38 @@
 			isa = PBXGroup;
 			children = (
 				B96CAAD718A7ED8400D5C20C /* iPad */,
-				0F7D547F18AD54DF00F9593D /* FetchScene.h */,
-				0F7D548018AD54DF00F9593D /* FetchScene.m */,
 				B96CAAAC18A7ED7700D5C20C /* AppDelegate.h */,
 				B96CAAAD18A7ED7700D5C20C /* AppDelegate.m */,
-				B96CAAAF18A7ED7700D5C20C /* Main.storyboard */,
-				0FF78FC218EDD59100BD200D /* Settings.bundle */,
-				B96CAAB218A7ED7700D5C20C /* ViewController.h */,
-				B96CAAB318A7ED7700D5C20C /* ViewController.m */,
-				B96CAAB518A7ED7700D5C20C /* MainMenuScene.h */,
-				B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */,
-				E8969ED918F8B7ED00EC65E2 /* SettingsMenuScene.h */,
-				E8969EDA18F8B7ED00EC65E2 /* SettingsMenuScene.m */,
-				E8A34CE818F276AD006F6D1B /* TherapistMenuScene.h */,
-				E8A34CE918F276AD006F6D1B /* TherapistMenuScene.m */,
-				0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */,
-				0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */,
-				B94A54AF18C00DC100E92932 /* BabyMenuScene.h */,
-				B94A54B018C00DC100E92932 /* BabyMenuScene.m */,
-				7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */,
-				7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */,
-				B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */,
-				B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */,
-				B9FC0CFE18E4994D006F2AEF /* LogEntry.h */,
-				B9FC0CFF18E4994D006F2AEF /* LogEntry.m */,
-				7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */,
-				7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */,
-				B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */,
-				B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */,
 				B9D70C8A18C639FB000C12F1 /* SetupViewController.h */,
 				B9D70C8B18C639FB000C12F1 /* SetupViewController.m */,
 				B9D70C8D18C64587000C12F1 /* MenuViewController.h */,
 				B9D70C8E18C64587000C12F1 /* MenuViewController.m */,
+				B96CAAB218A7ED7700D5C20C /* ViewController.h */,
+				B96CAAB318A7ED7700D5C20C /* ViewController.m */,
+				B96CAAAF18A7ED7700D5C20C /* Main.storyboard */,
+				0FF78FC218EDD59100BD200D /* Settings.bundle */,
+				B96CAAB518A7ED7700D5C20C /* MainMenuScene.h */,
+				B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */,
+				E8A34CE818F276AD006F6D1B /* TherapistMenuScene.h */,
+				E8A34CE918F276AD006F6D1B /* TherapistMenuScene.m */,
+				B94A54AF18C00DC100E92932 /* BabyMenuScene.h */,
+				B94A54B018C00DC100E92932 /* BabyMenuScene.m */,
+				7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */,
+				7CB23C3018BFFEB4007F409F /* BabyTargetPracticeScene.m */,
+				7CB76CC318B66C030003A622 /* TargetPracticeMenuScene.h */,
+				7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */,
+				B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */,
+				B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */,
+				0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */,
+				0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */,
+				B9938EBD18A9A5C40004890B /* TargetPracticeGameOver.h */,
+				B9938EBE18A9A5C40004890B /* TargetPracticeGameOver.m */,
+				0F7D547F18AD54DF00F9593D /* FetchScene.h */,
+				0F7D548018AD54DF00F9593D /* FetchScene.m */,
+				E8A3D73018FB8BCB0088B300 /* UtilityClass.h */,
+				E8A3D73118FB8BCB0088B300 /* UtilityClass.m */,
+				B9FC0CFE18E4994D006F2AEF /* LogEntry.h */,
+				B9FC0CFF18E4994D006F2AEF /* LogEntry.m */,
 				E8F0BC1D18F6289C0021BB55 /* minizip */,
 				E8F0BC2718F6289C0021BB55 /* ZipArchive.h */,
 				E8F0BC2818F6289C0021BB55 /* ZipArchive.mm */,
@@ -775,8 +775,8 @@
 				0F7D548118AD54DF00F9593D /* FetchScene.m in Sources */,
 				7CB76CC518B66C190003A622 /* TargetPracticeMenuScene.m in Sources */,
 				E8F0BC2A18F6289C0021BB55 /* mztools.c in Sources */,
-				E8969EDB18F8B7ED00EC65E2 /* SettingsMenuScene.m in Sources */,
 				B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */,
+				E8A3D73218FB8BCB0088B300 /* UtilityClass.m in Sources */,
 				B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */,
 				E8F0BC2B18F6289C0021BB55 /* unzip.c in Sources */,
 				B9D70C8C18C639FB000C12F1 /* SetupViewController.m in Sources */,

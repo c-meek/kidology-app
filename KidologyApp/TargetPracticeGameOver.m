@@ -17,16 +17,17 @@
 
 NSString *gameName;
 
--(id)initWithSize:(CGSize)size targets:(int)targets
+-(id)initWithSize:(CGSize)size targetsHit:(int)targetsHit totalTargets:(int)totalTargets
 {
     if (self = [super initWithSize:size])
     {
         gameName = nil;
         [self addBackground];
-        [self addMessage:targets];
+        [self addMessage:targetsHit totalTargets:totalTargets];
         [self addPlayAgainButton];
         [self addBackToTargetGameMenuButton];
         [self addBackToMainMenuButton];
+        [self doLogging];
     }
     return self;
 }
@@ -50,50 +51,6 @@ NSString *gameName;
     {
         _backToMainMenuButton.color = [SKColor yellowColor];
     }
-    
-    NSMutableArray *log;
-    SKScene *scene = [self.view scene];
-    log = [scene.userData objectForKey:@"touchLog"];
-
-    
-    NSString * output = [[NSString alloc] init];
-    output = [output stringByAppendingString:@"Type,Time,Touch Location X, Touch Location Y, Target Location X, Target Location Y, Target Radius\n"];
-    for (int i=0;i<log.count;i++)
-    {
-        LogEntry *entry = log[i];
-        //NSLog(@"%d,%f,%f", entry.type, entry.targetLocation.x,entry.targetLocation.y);
-        //NSString * type = typeArray[entry.type];
-             //NSString * type = @"a";
-        output = [output stringByAppendingString:[NSString stringWithFormat:@"%@,%f,%f,%f,%f,%f,%f\n", entry.type, entry.time, entry.touchLocation.x, entry.touchLocation.y, entry.targetLocation.x, entry.targetLocation.y, entry.targetRadius]];
-        // get the documents directory
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"logs"];
-        // make the folder if it doesn't already exist
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
-            [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
-        [[NSFileManager defaultManager] createFileAtPath:folderPath contents:nil attributes:nil];
-
-        // make a file name from the player name and the current date/time (dd/mm/yy hh:mm:ss timezone)
-        NSString *nameString = [NSString stringWithFormat:@"%@_%@_",[[NSUserDefaults standardUserDefaults] stringForKey:@"firstName"] , [[NSUserDefaults standardUserDefaults] stringForKey:@"lastName"]];
-        NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
-                                                              dateStyle:NSDateFormatterMediumStyle
-                                                              timeStyle:NSDateFormatterMediumStyle];
-        // take out spaces
-        dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
-        // replace colons with hyphens
-        dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@"-"];
-        // replace slashes with hyphens
-        dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
-        NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
-        NSString *fileName = [NSString stringWithFormat:@"%@/%@%@-%@.csv", folderPath, nameString, dateString, gameModeString];
-        NSLog(@"%@", fileName);
-        //NSLog(@"%@", output);
-        
-        [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];
-    }
-
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -129,7 +86,7 @@ NSString *gameName;
         
         if (mode != 4)
         {
-            SKScene * targetPracticeScene = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:mode numTargets:3];
+            SKScene * targetPracticeScene = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:mode];
             targetPracticeScene.scaleMode = SKSceneScaleModeAspectFill;
             
             // Present the scene.
@@ -221,11 +178,11 @@ NSString *gameName;
     [self addChild:bgImage];
 }
 
--(void)addMessage:(int)numOfTargets
+-(void)addMessage:(int)targetsHit totalTargets:(int)totalTargets
 {
     self.userData = [NSMutableDictionary dictionary];
     self.backgroundColor = [SKColor grayColor];
-    NSString * messageText = [NSString stringWithFormat:@"Complete! You hit all %d targets!", numOfTargets];
+    NSString * messageText = [NSString stringWithFormat:@"You hit %d of %d targets!", targetsHit, totalTargets];
     SKLabelNode * message = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     message.text = messageText;
     message.fontSize = 30;
@@ -312,7 +269,52 @@ NSString *gameName;
             [_gameArray addObject:file];
         }
     }
+}
+
+-(void)doLogging
+{
+    NSMutableArray *log;
+    SKScene *scene = [self.view scene];
+    log = [scene.userData objectForKey:@"touchLog"];
     
+    
+    NSString * output = [[NSString alloc] init];
+    output = [output stringByAppendingString:@"Type,Time,Touch Location X, Touch Location Y, Target Location X, Target Location Y, Target Radius\n"];
+    for (int i=0;i<log.count;i++)
+    {
+        LogEntry *entry = log[i];
+        //NSLog(@"%d,%f,%f", entry.type, entry.targetLocation.x,entry.targetLocation.y);
+        //NSString * type = typeArray[entry.type];
+        //NSString * type = @"a";
+        output = [output stringByAppendingString:[NSString stringWithFormat:@"%@,%f,%f,%f,%f,%f,%f\n", entry.type, entry.time, entry.touchLocation.x, entry.touchLocation.y, entry.targetLocation.x, entry.targetLocation.y, entry.targetRadius]];
+        // get the documents directory
+        //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        //        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"logs"];
+        // make the folder if it doesn't already exist
+        NSError *error = nil;
+        if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
+            [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
+        [[NSFileManager defaultManager] createFileAtPath:folderPath contents:nil attributes:nil];
+        
+        // make a file name from the player name and the current date/time (dd/mm/yy hh:mm:ss timezone)
+        NSString *nameString = [NSString stringWithFormat:@"%@_%@_",[[NSUserDefaults standardUserDefaults] stringForKey:@"firstName"] , [[NSUserDefaults standardUserDefaults] stringForKey:@"lastName"]];
+        NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
+                                                              dateStyle:NSDateFormatterMediumStyle
+                                                              timeStyle:NSDateFormatterMediumStyle];
+        // take out spaces
+        dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
+        // replace colons with hyphens
+        dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@"-"];
+        // replace slashes with hyphens
+        dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+        NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
+        NSString *fileName = [NSString stringWithFormat:@"%@/%@%@-%@.csv", folderPath, nameString, dateString, gameModeString];
+        NSLog(@"%@", fileName);
+        //NSLog(@"%@", output);
+        
+        [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];
+    }
 }
 
 #pragma mark - Table view data source

@@ -11,10 +11,10 @@
 
 @implementation BabyTargetPracticeScene
 
--(id)initWithSize:(CGSize)size color:(NSString *)color
-{
+-(id)initWithSize:(CGSize)size color:(NSString *)color delayBetweenTargets:(int)delayBetweenTargets;{
 if (self = [super initWithSize:size])
     {
+        self.targetsHit = 0;
         SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"Huge_Checkered_Background_[4096x3072]"];
         [self addChild:bgImage];
         
@@ -24,7 +24,6 @@ if (self = [super initWithSize:size])
         _target.position = CGPointMake(self.size.width/2, self.size.height/2);
         [self addChild:_target];
         [self addBackButton];
-        
     }
     return self;
 }
@@ -88,8 +87,6 @@ if (self = [super initWithSize:size])
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
 }
 
-
-
 -(void)targetTouch:(CGPoint)touchLocation
 {
     //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
@@ -101,17 +98,14 @@ if (self = [super initWithSize:size])
     
     if(leftHandSide <= rightHandSide) // If the touch is on the target
     {
+        self.targetsHit ++;
         SKAction *deleteTarget = [SKAction runBlock:^{
             [self hideTarget];
         }];
         //make a wait action
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        float waitDelay = [[defaults objectForKey:@"delayBetweenTargets"] floatValue];
-        if(waitDelay == 0.0)
-        {
-            waitDelay = 3.2;
-        }
-        SKAction *wait = [SKAction waitForDuration:waitDelay];        //make a "add" target action
+        int delayBetweenTargets = [[defaults objectForKey:@"delayBetweenTargets"] integerValue];
+        SKAction *wait = [SKAction waitForDuration:delayBetweenTargets];
         SKAction *addTarget = [SKAction runBlock:^{
             [self displayTarget];
         }];

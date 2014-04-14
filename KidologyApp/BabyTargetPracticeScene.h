@@ -16,6 +16,6 @@
 @property (nonatomic) float time;
 @property (nonatomic) SKSpriteNode *backButton;
 @property (nonatomic) SKSpriteNode *backButtonPressed;
+@property (nonatomic) int targetsHit;
 -(id)initWithSize:(CGSize)size color:(NSString *)color;
-
 @end
