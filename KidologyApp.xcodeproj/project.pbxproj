@@ -343,7 +343,6 @@
 			children = (
 				E8DF544218F58B7800B9D1D1 /* mainMenuBackground.png */,
 				E8A34CEB18F27984006F6D1B /* therapistScreen.png */,
-				E8DF543918F58AA100B9D1D1 /* Buttons */,
 			);
 			name = "Menu Screens";
 			path = KidologyApp;
@@ -404,6 +403,7 @@
 		B96CAA8F18A7ED7700D5C20C = {
 			isa = PBXGroup;
 			children = (
+				E8DF543918F58AA100B9D1D1 /* Buttons */,
 				E89BFA8018F71531006C1959 /* Splashscreens */,
 				0FF78FC418EDE3DC00BD200D /* Menu Screens */,
 				FD6B78D018ED19040035CA95 /* icons */,
@@ -568,6 +568,7 @@
 				E842B6CF18FC8AFB000610A0 /* Quit_Button_Pressed.png */,
 			);
 			name = Buttons;
+			path = KidologyApp;
 			sourceTree = "<group>";
 		};
 		E8F0BC1D18F6289C0021BB55 /* minizip */ = {

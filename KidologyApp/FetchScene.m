@@ -26,7 +26,7 @@
         [self displayBall];
         [self addChild:self.ball];
         [self addInstruction];
-        [self addBackButton];
+        [self addQuitButton];
         // [self addToNotificationCenter];
     }
     return self;
@@ -67,25 +67,6 @@
     }
 }
 
--(void)addBackButton
-{
-    //Back Button!
-    _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
-    _backButton.position = CGPointMake(100, self.frame.size.height/2+235);
-    _backButton.name = @"backButton";
-    _backButton.xScale = .5;
-    _backButton.yScale = .5;
-    [self addChild:_backButton];
-    
-    //Pressed Back Button!
-    _pressedBackButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
-    _pressedBackButton.position = CGPointMake(100, self.frame.size.height/2+235);
-    _pressedBackButton.name = @"backButton";
-    _pressedBackButton.hidden = true;
-    _pressedBackButton.xScale = .5;
-    _pressedBackButton.yScale = .5;
-    [self addChild:_pressedBackButton];
-}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -93,10 +74,11 @@
     {
         CGPoint location = [touch locationInNode:self];
         SKNode *node = [self nodeAtPoint:location];
-        if([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"pressedBackButton"])
+        if([node.name isEqualToString:@"quitButton"] ||
+           [node.name isEqualToString:@"pressedQuitButton"])
         {
-            _backButton.hidden = true;
-            _pressedBackButton.hidden = false;
+            _quitButton.hidden = true;
+            _quitButtonPressed.hidden = false;
         }
     }
 }
@@ -118,18 +100,18 @@
         {
             [self dogTouch];
         }
-        else if([_backButton isEqual:touchedNode] || [_pressedBackButton isEqual:touchedNode])
+        else if([_quitButton isEqual:touchedNode] || [_quitButtonPressed isEqual:touchedNode])
         {
             // reset button
-            _pressedBackButton.hidden = true;
-            _backButton.hidden = false;
+            _quitButtonPressed.hidden = true;
+            _quitButton.hidden = false;
             // go back to the main menu
             [self goToMainScreen];
         }
         else
         {
-            _pressedBackButton.hidden = true;
-            _backButton.hidden = false;
+            _quitButtonPressed.hidden = true;
+            _quitButton.hidden = false;
         }
     }
 }
@@ -144,17 +126,18 @@
         SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
         
         // If a touch was off the back button but has moved onto it
-        if (!([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
-            ([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
+        if (!([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
+            ([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
         {
-            _pressedBackButton.hidden = false;
-            _backButton.hidden = true;
+            _quitButtonPressed.hidden = false;
+            _quitButton.hidden = true;
         }
-        else if (([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
-                 !([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
+        else if (([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
+                 !([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
         {
-            _pressedBackButton.hidden = true;
-            _backButton.hidden = false;
+            // touch was on quit button but moved off
+            _quitButtonPressed.hidden = true;
+            _quitButton.hidden = false;
         }
     }
 }
@@ -298,6 +281,24 @@
     
     SKAction *fadeAway = [SKAction fadeOutWithDuration:4];
     [instructionLabel2 runAction:fadeAway];
+}
+
+-(void)addQuitButton
+{
+    _quitButton = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button"];
+    _quitButton.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButton.name = @"quitButton";
+    _quitButton.xScale = .5;
+    _quitButton.yScale = .5;
+    [self addChild:_quitButton];
+    
+    _quitButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button_Pressed"];
+    _quitButtonPressed.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButtonPressed.name = @"quitButtonPressed";
+    _quitButtonPressed.hidden = true;
+    _quitButtonPressed.xScale = .5;
+    _quitButtonPressed.yScale = .5;
+    [self addChild:_quitButtonPressed];
 }
 
 //-(void)addToNotificationCenter

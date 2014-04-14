@@ -107,10 +107,10 @@ extern NSUserDefaults *defaults;
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
     if ([node.name isEqualToString:@"quitButton"] ||
-        [node.name isEqualToString:@"quitButtonLabel"])
+        [node.name isEqualToString:@"quitButtonPressed"])
     {
-        _quitButton.color = [SKColor yellowColor];
-        return;
+        _quitButton.hidden = true;
+        _quitButtonPressed.hidden = false;
     }
 
     
@@ -160,10 +160,10 @@ extern NSUserDefaults *defaults;
 
         SKNode *node = [self nodeAtPoint:positionInScene];
         if ([node.name isEqualToString:@"quitButton"] ||
-            [node.name isEqualToString:@"quitButtonLabel"])
+            [node.name isEqualToString:@"quitButtonPressed"])
         {
-            _quitButton.color = [SKColor redColor];
-            NSLog(@"number of Targets is %d", self.totalTargets);
+            _quitButton.hidden = false;
+            _quitButtonPressed.hidden = true;
             [self endGame:self.correctTouches totalTargets:self.totalTargets];
         }
         if ([self isAnchorTouch:positionInScene])
@@ -182,7 +182,23 @@ extern NSUserDefaults *defaults;
     for (UITouch *touch in [touches allObjects]) {
     	CGPoint currentLocation  = [touch locationInNode:self];
         CGPoint previousLocation = [touch previousLocationInNode:self];
+        SKNode *currentNode = [self nodeAtPoint:currentLocation];
+        SKNode *previousNode = [self nodeAtPoint:previousLocation];
         
+        // If a touch was off the back button but has moved onto it
+        if (!([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
+            ([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
+        {
+            _quitButtonPressed.hidden = false;
+            _quitButton.hidden = true;
+        }
+        else if (([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
+                 !([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
+        {
+            // touch was on quit button but moved off
+            _quitButtonPressed.hidden = true;
+            _quitButton.hidden = false;
+        }
         
         // If a touch was on the anchor but has moved off
         if ([self isAnchorTouch:previousLocation] &&
@@ -450,21 +466,20 @@ extern NSUserDefaults *defaults;
 
 -(void)addQuitButton
 {
-    SKSpriteNode *quitButton = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(100, 50)];
-    quitButton.position = CGPointMake(100,
-                                      self.frame.size.height/2+235);
-    quitButton.name = @"quitButton";
-    [self addChild:quitButton];
+    _quitButton = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button"];
+    _quitButton.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButton.name = @"quitButton";
+    _quitButton.xScale = .5;
+    _quitButton.yScale = .5;
+    [self addChild:_quitButton];
     
-    NSString *quitButtonText = [NSString stringWithFormat:@"Quit Game"];
-    SKLabelNode *quitGameLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    quitGameLabel.text = quitButtonText;
-    quitGameLabel.name = @"quitGameLabel";
-    quitGameLabel.fontSize = 20;
-    quitGameLabel.fontColor = [SKColor whiteColor];
-    quitGameLabel.position = CGPointMake(100,
-                                         self.frame.size.height/2+235);
-    [self addChild:quitGameLabel];
+    _quitButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button_Pressed"];
+    _quitButtonPressed.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButtonPressed.name = @"quitButtonPressed";
+    _quitButtonPressed.hidden = true;
+    _quitButtonPressed.xScale = .5;
+    _quitButtonPressed.yScale = .5;
+    [self addChild:_quitButtonPressed];
 }
 
 -(void)endGame:(int)targetsHit totalTargets:(int)totalTargets
@@ -476,7 +491,7 @@ extern NSUserDefaults *defaults;
     NSLog(@"end game has touch log count %d", touchLog.count);
     [gameOverScene.userData setObject:mode forKey:@"gameMode"];
     [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
-    [self.view presentScene:gameOverScene transition: reveal];
+    [self.view presentScene:gameOverScene transition:reveal];
 }
 
 -(void)initializeAnchor

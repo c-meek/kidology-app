@@ -24,19 +24,9 @@
         _target.yScale = .70;
         _target.position = CGPointMake(self.size.width/2, self.size.height/2);
         [self addChild:_target];
-        [self addBackButton];
+        [self addQuitButton];
     }
     return self;
-}
-
--(void)displayTarget
-{
-    self.target.position = CGPointMake(self.size.width/2, self.size.height/2);
-}
-
--(void)hideTarget
-{
-    self.target.position = CGPointMake(self.size.width/2*(-1), self.size.height/2*(-1));
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -45,10 +35,57 @@
         CGPoint position = [touch locationInNode:self];
         SKNode *node = [self nodeAtPoint:position];
         [self targetTouch:position];
-        if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
+        if ([node.name isEqualToString:@"quitButton"] || [node.name isEqualToString:@"quitButtonPressed"])
         {
-            _backButton.hidden = true;
-            _backButtonPressed.hidden = false;
+            _quitButton.hidden = true;
+            _quitButtonPressed.hidden = false;
+        }
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch begins */
+    UITouch *touch = [touches anyObject];
+    CGPoint position = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:position];
+    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+    
+    if ([node.name isEqualToString:@"quitButton"] || [node.name isEqualToString:@"quitButtonPressed"])
+    {
+        // reset button
+        _quitButtonPressed.hidden = true;
+        _quitButton.hidden = false;
+        
+        // go back to the main menu
+        SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
+        backToMain.scaleMode = SKSceneScaleModeAspectFill;
+        [self.view presentScene:backToMain transition:reveal];
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    for (UITouch *touch in [touches allObjects]) {
+    	CGPoint currentLocation  = [touch locationInNode:self];
+        CGPoint previousLocation = [touch previousLocationInNode:self];
+        SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
+        SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
+        
+        // If a touch was off the back button but has moved onto it
+        if (!([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
+            ([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
+        {
+            _quitButtonPressed.hidden = false;
+            _quitButton.hidden = true;
+        }
+        else if (([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
+                 !([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
+        {
+            // touch was on quit button but moved off
+            _quitButtonPressed.hidden = true;
+            _quitButton.hidden = false;
         }
     }
 }
@@ -126,67 +163,34 @@
     }
 }
 
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+
+
+-(void)displayTarget
 {
-    /* Called when a touch moves/slides */
-    for (UITouch *touch in [touches allObjects]) {
-    	CGPoint currentLocation  = [touch locationInNode:self];
-        CGPoint previousLocation = [touch previousLocationInNode:self];
-        SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
-        SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
-        
-        // If a touch was off the back button but has moved onto it
-        if (!([_backButton isEqual:previousNode] || [_backButtonPressed isEqual:previousNode]) &&
-            ([_backButton isEqual:currentNode] || [_backButtonPressed isEqual:currentNode]))
-        {
-            _backButtonPressed.hidden = false;
-            _backButton.hidden = true;
-        }
-        else if (([_backButton isEqual:previousNode] || [_backButtonPressed isEqual:previousNode]) &&
-                 !([_backButton isEqual:currentNode] || [_backButtonPressed isEqual:currentNode]))
-        {
-            _backButtonPressed.hidden = true;
-            _backButton.hidden = false;
-        }
-    }
+    self.target.position = CGPointMake(self.size.width/2, self.size.height/2);
 }
 
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)hideTarget
 {
-    /* Called when a touch begins */
-    UITouch *touch = [touches anyObject];
-    CGPoint position = [touch locationInNode:self];
-    SKNode *node = [self nodeAtPoint:position];
-    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-    
-    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
-    {
-        // reset button
-        _backButtonPressed.hidden = true;
-        _backButton.hidden = false;
-        // go back to the main menu
-        SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
-        backToMain.scaleMode = SKSceneScaleModeAspectFill;
-        [self.view presentScene:backToMain transition:reveal];
-    }
+    self.target.position = CGPointMake(self.size.width/2*(-1), self.size.height/2*(-1));
 }
 
--(void)addBackButton
+-(void)addQuitButton
 {
-    _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
-    _backButton.position = CGPointMake(100, self.frame.size.height/2+235);
-    _backButton.name = @"backButton";
-    _backButton.xScale = .5;
-    _backButton.yScale = .5;
-    [self addChild:_backButton];
+    _quitButton = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button"];
+    _quitButton.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButton.name = @"quitButton";
+    _quitButton.xScale = .5;
+    _quitButton.yScale = .5;
+    [self addChild:_quitButton];
     
-    _backButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
-    _backButtonPressed.position = CGPointMake(100, self.frame.size.height/2+235);
-    _backButtonPressed.name = @"backButtonPressed";
-    _backButtonPressed.hidden = true;
-    _backButtonPressed.xScale = .5;
-    _backButtonPressed.yScale = .5;
-    [self addChild:_backButtonPressed];
+    _quitButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button_Pressed"];
+    _quitButtonPressed.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButtonPressed.name = @"quitButtonPressed";
+    _quitButtonPressed.hidden = true;
+    _quitButtonPressed.xScale = .5;
+    _quitButtonPressed.yScale = .5;
+    [self addChild:_quitButtonPressed];
 }
 
 @end

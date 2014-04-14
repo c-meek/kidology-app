@@ -20,7 +20,7 @@ NSMutableArray *touchLog;
 {
     if(self = [super initWithSize:size])
     {
-        NSLog(@"%@", gameName);
+        NSLog(@"custom game file: %@", gameName);
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         [self addBackground];
         //read input from custom text file
@@ -37,9 +37,84 @@ NSMutableArray *touchLog;
         // initialize the anchor to "not being touched" state
         self.anchored = NOT_TOUCHING;
         [self initializeAnchor];
+        [self addQuitButton];
         _time = 0;
     }
     return self;
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    /* Called when a touch begins */
+    //test whether the target has been touched
+    for (UITouch *touch in [touches allObjects]) {
+        /* Called when a touch begins */
+        CGPoint positionInScene = [touch locationInNode:self];
+        //test whether the target has been touched
+        if ([self isAnchorTouch:positionInScene] == false) // If the touch isn't on the anchor,
+        {
+            [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
+        }
+        else{ // If it is on the anchor,
+            _anchored = TOUCHING; // make note of that.
+            _anchor.hidden = TRUE;
+            _pressedAnchor.hidden = FALSE;
+        }
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    /* Called when a touch ends */
+    for (UITouch *touch in [touches allObjects]) {
+        CGPoint positionInScene = [touch locationInNode:self];
+        SKNode *node = [self nodeAtPoint:positionInScene];
+        if ([node.name isEqualToString:@"quitButton"] ||
+            [node.name isEqualToString:@"quitButtonPressed"])
+        {
+            _quitButton.hidden = false;
+            _quitButtonPressed.hidden = true;
+            [self endGame:self.correctTouches totalTargets:self.totalTargets];
+        }
+
+        // If a touch on the anchor is ending,
+        if ([self isAnchorTouch:positionInScene] == true)
+        {
+            _anchored = NOT_TOUCHING; // make note of that.
+            _anchor.hidden = FALSE;         // Tien was here and the next line
+            _pressedAnchor.hidden = TRUE;
+        }
+        else
+        {
+            _anchor.hidden = TRUE;
+            _pressedAnchor.hidden = FALSE;
+        }
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    for (UITouch *touch in [touches allObjects]) {
+    	CGPoint currentLocation  = [touch locationInNode:self];
+        CGPoint previousLocation = [touch previousLocationInNode:self];
+        
+        // If a touch was on the anchor but has moved off
+        if ([self isAnchorTouch:previousLocation] &&
+            ![self isAnchorTouch:currentLocation])
+        {
+            _anchored = NOT_TOUCHING;       // update _achored
+            _anchor.hidden = FALSE;         // display red anchor image
+            _pressedAnchor.hidden = TRUE;   // hide green anchor image
+        }
+        else if (![self isAnchorTouch:previousLocation] &&
+                 [self isAnchorTouch:currentLocation])
+        {
+            // it wasn't an anchor touch but now it has moved onto the anchor
+            _anchored = TOUCHING;           // update _anchored
+            _anchor.hidden = TRUE;          // hide red anchor image
+            _pressedAnchor.hidden = FALSE;  // display green anchor image
+        }
+        // else, it's a non-anchor touch and nothing needs done
+    }
 }
 
 -(void)displayTarget
@@ -94,6 +169,24 @@ NSMutableArray *touchLog;
     [self addChild:bgImage];
 }
 
+-(void)addQuitButton
+{
+    _quitButton = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button"];
+    _quitButton.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButton.name = @"quitButton";
+    _quitButton.xScale = .5;
+    _quitButton.yScale = .5;
+    [self addChild:_quitButton];
+    
+    _quitButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button_Pressed"];
+    _quitButtonPressed.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButtonPressed.name = @"quitButtonPressed";
+    _quitButtonPressed.hidden = true;
+    _quitButtonPressed.xScale = .5;
+    _quitButtonPressed.yScale = .5;
+    [self addChild:_quitButtonPressed];
+}
+
 -(Boolean)isAnchorTouch:(CGPoint)touchLocation
 {
     Boolean result;
@@ -113,69 +206,8 @@ NSMutableArray *touchLog;
     }
     return result;
 }
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
-    //test whether the target has been touched
-    for (UITouch *touch in [touches allObjects]) {
-        /* Called when a touch begins */
-        CGPoint positionInScene = [touch locationInNode:self];
-        //test whether the target has been touched
-        if ([self isAnchorTouch:positionInScene] == false) // If the touch isn't on the anchor,
-        {
-            [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
-        }
-        else{ // If it is on the anchor,
-            _anchored = TOUCHING; // make note of that.
-            _anchor.hidden = TRUE;
-            _pressedAnchor.hidden = FALSE;
-        }
-    }
-}
 
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch ends */
-    for (UITouch *touch in [touches allObjects]) {
-        CGPoint positionInScene = [touch locationInNode:self];
-        if ([self isAnchorTouch:positionInScene] == true) // If a touch on the anchor is ending,
-        {
-            _anchored = NOT_TOUCHING; // make note of that.
-            _anchor.hidden = FALSE;         // Tien was here and the next line
-            _pressedAnchor.hidden = TRUE;
-        }
-        else
-        {
-            _anchor.hidden = TRUE;
-            _pressedAnchor.hidden = FALSE;
-        }
-    }
-}
 
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    /* Called when a touch moves/slides */
-    for (UITouch *touch in [touches allObjects]) {
-    	CGPoint currentLocation  = [touch locationInNode:self];
-        CGPoint previousLocation = [touch previousLocationInNode:self];
-        
-        // If a touch was on the anchor but has moved off
-        if ([self isAnchorTouch:previousLocation] &&
-            ![self isAnchorTouch:currentLocation])
-        {
-            _anchored = NOT_TOUCHING;       // update _achored
-            _anchor.hidden = FALSE;         // display red anchor image
-            _pressedAnchor.hidden = TRUE;   // hide green anchor image
-        }
-        else if (![self isAnchorTouch:previousLocation] &&
-                 [self isAnchorTouch:currentLocation])
-        {
-            // it wasn't an anchor touch but now it has moved onto the anchor
-            _anchored = TOUCHING;           // update _anchored
-            _anchor.hidden = TRUE;          // hide red anchor image
-            _pressedAnchor.hidden = FALSE;  // display green anchor image
-        }
-        // else, it's a non-anchor touch and nothing needs done
-    }
-}
 
 -(void)targetTouch:(CGPoint)touchLocation
 {
@@ -208,15 +240,16 @@ NSMutableArray *touchLog;
             //check to see if the total number of targets have been touched, then show the ending screen
             if(self.totalTargets <= self.correctTouches)
             {
-                SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
-                SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size
-                                                                               targetsHit:self.correctTouches
-                                                                          totalTargets:self.totalTargets];
-                // pass the game type and touch log to the "game over" scene
-                NSString *mode = @"custom";
-                [gameOverScene.userData setObject:mode forKey:@"gameMode"];
-                [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
-                [self.view presentScene:gameOverScene transition: reveal];
+                [self endGame:self.correctTouches totalTargets:self.totalTargets];
+//                SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
+//                SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size
+//                                                                               targetsHit:self.correctTouches
+//                                                                          totalTargets:self.totalTargets];
+//                // pass the game type and touch log to the "game over" scene
+//                NSString *mode = @"custom";
+//                [gameOverScene.userData setObject:mode forKey:@"gameMode"];
+//                [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
+//                [self.view presentScene:gameOverScene transition: reveal];
             }
             //combine all the actions into a sequence
             SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
@@ -325,5 +358,18 @@ NSMutableArray *touchLog;
     
     _anchor.name = @"anchor";
     [self addChild:_anchor];
+}
+
+
+-(void)endGame:(int)targetsHit totalTargets:(int)totalTargets
+{
+    SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
+    SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targetsHit:targetsHit totalTargets:totalTargets];
+    // pass the game type and touch log to "game over" scene
+    NSString *mode = @"custom";
+    NSLog(@"end game has touch log count %d", touchLog.count);
+    [gameOverScene.userData setObject:mode forKey:@"gameMode"];
+    [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
+    [self.view presentScene:gameOverScene transition:reveal];
 }
 @end

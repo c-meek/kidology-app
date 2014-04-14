@@ -14,8 +14,7 @@
 @property (nonatomic) int totalTargets;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
-@property (nonatomic) SKSpriteNode *backButton;
-@property (nonatomic) SKSpriteNode *pressedBackButton;
-@property (nonatomic) SKLabelNode * backButtonLabel;
+@property (nonatomic) SKSpriteNode *quitButton;
+@property (nonatomic) SKSpriteNode *quitButtonPressed;
 @property (strong, nonatomic) SKAction *playMySound;
 @end

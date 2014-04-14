@@ -54,6 +54,7 @@ typedef enum {
     @property (nonatomic) SKSpriteNode *anchor;
     @property (nonatomic) SKSpriteNode *pressedAnchor;
     @property (nonatomic) SKSpriteNode *quitButton;
+    @property (nonatomic) SKSpriteNode *quitButtonPressed;
     @property (nonatomic) int totalTouches;
     @property (nonatomic) int correctTouches;
     @property (nonatomic) int totalTargets;
