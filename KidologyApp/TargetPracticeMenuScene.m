@@ -406,7 +406,7 @@ NSString *gameName;
 
 -(void)addToNotificationCenter
 {
-    NSLog(@"adding to notification center");
+    NSLog(@"adding  target menu to notification center");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appMovedtoBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
@@ -415,7 +415,7 @@ NSString *gameName;
 
 -(void)removeFromNotificationCenter
 {
-    NSLog(@"removing from notification center");
+    NSLog(@"removing target menu from notification center");
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidEnterBackgroundNotification

@@ -136,6 +136,20 @@
 				<integer>60</integer>
 			</array>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Enable Sound</string>
+			<key>Key</key>
+			<string>enableSound</string>
+			<key>FalseValue</key>
+			<false/>
+			<key>TrueValue</key>
+			<true/>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

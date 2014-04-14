@@ -29,8 +29,11 @@
     therapistEmail = [therapistEmail stringByTrimmingCharactersInSet:
                       [NSCharacterSet whitespaceCharacterSet]];
     
+    NSLog(@"creating message");
     // alert when one of these fields is empty/incomplete
     NSString *message = @"";
+    NSLog(@"created message %@", message);
+
     if (firstName == NULL || firstName.length == 0 ||
         lastName  == NULL || lastName.length  == 0)
     {

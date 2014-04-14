@@ -366,8 +366,12 @@
 -(void)addUserInfo
 {
     // get user's first and last names + therapist email from settings bundle
-    NSString *lastInitial = [_lastName substringToIndex:1];
-    lastInitial = [lastInitial stringByAppendingString:@"."];
+    NSString *lastInitial = @"";
+    if (_lastName.length > 0)
+    {
+        lastInitial = [_lastName substringToIndex:1];
+        lastInitial = [lastInitial stringByAppendingString:@"."];
+    }
     NSString *wholeName = [[_firstName stringByAppendingString:@" "]
                            stringByAppendingString:lastInitial];
     NSString *usernameLabelText = [[@"Playing as " stringByAppendingString:@" "]
@@ -384,7 +388,7 @@
 
 -(void)addToNotificationCenter
 {
-    NSLog(@"adding to notification center");
+    NSLog(@"adding main menu to notification center");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appBecameActive:)
                                                  name:UIApplicationDidBecomeActiveNotification
@@ -393,7 +397,7 @@
 
 -(void)removeFromNotificationCenter
 {
-    NSLog(@"removing from notification center");
+    NSLog(@"removing main menu from notification center");
 
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidBecomeActiveNotification
@@ -538,7 +542,7 @@
         case MFMailComposeResultSent:
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email"
-                                                            message:@"Email Successfully Sent!"
+                                                            message:@"Email Succesfully Sent To Outbox!\n Go to Mail to make sure it sends!"
                                                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [alert show];
             [alert release];
@@ -593,6 +597,7 @@
 {
     //get user's settings from the app settings
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
     _firstName = [defaults objectForKey:@"firstName"];
     _lastName = [defaults objectForKey:@"lastName"];
     _therapistEmail = [defaults objectForKey:@"therapistEmail"];

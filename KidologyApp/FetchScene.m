@@ -27,9 +27,15 @@
         [self addChild:self.ball];
         [self addInstruction];
         [self addBackButton];
+        // [self addToNotificationCenter];
     }
     return self;
 }
+
+//-(void)willMoveFromView:(SKView *)view
+//{
+//    [self removeFromNotificationCenter];
+//}
 
 -(void)addBackground
 {
@@ -53,6 +59,12 @@
     self.dog.xScale = -.13;
     self.dog.yScale = .13;
     self.dog.position = CGPointMake(self.frame.size.width/2 - 200, self.frame.size.height/2-170);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+    if (enableSound)
+    {
+        [self runAction:[SKAction playSoundFileNamed:@"dog_bark.mp3" waitForCompletion:NO]];
+    }
 }
 
 -(void)addBackButton
@@ -160,7 +172,6 @@
     //move both onscreen
     [self moveBackDogAndBall];
     
-    
 }
 
 // generate random direction to move the dog and ball along
@@ -242,6 +253,9 @@
     
     SKAction * seq = [SKAction sequence:@[wait, move]];
     [_dog runAction:seq];
+    NSLog(@"about to play sounds");
+   
+
 }
 
 -(void)moveBackDogAndBall
@@ -254,8 +268,7 @@
     SKAction * moveDog = [SKAction moveTo:CGPointMake(self.frame.size.width/2 - 200, self.frame.size.height/2-170) duration:1];
     //replace ball
     SKAction * ballReappear = [SKAction runBlock:^{ [self displayBall]; }];
-    
-    SKAction * sequ = [SKAction sequence:@[wait, moveDog, wait2, ballReappear]];
+    SKAction *sequ = [SKAction sequence:@[wait, moveDog, wait2, ballReappear]];
     [_dog runAction:sequ];
 }
 
@@ -286,5 +299,28 @@
     SKAction *fadeAway = [SKAction fadeOutWithDuration:4];
     [instructionLabel2 runAction:fadeAway];
 }
+
+//-(void)addToNotificationCenter
+//{
+//    NSLog(@"adding fetch scene to notification center");
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(appMovedBackground:)
+//                                                 name:UIApplicationDidEnterBackgroundNotification
+//                                               object:nil];
+//}
+//
+//-(void)removeFromNotificationCenter
+//{
+//    NSLog(@"removing fetch scene from notification center");
+//    
+//    [[NSNotificationCenter defaultCenter] removeObserver:self
+//                                                    name:UIApplicationDidEnterBackgroundNotification
+//                                                  object:nil];
+//}
+//
+//-(void)appMovedBackground:(NSNotification *)notification
+//{
+//    [self goToMainScreen];
+//}
 
 @end

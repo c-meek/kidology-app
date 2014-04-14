@@ -11,8 +11,9 @@
 
 @implementation BabyTargetPracticeScene
 
--(id)initWithSize:(CGSize)size color:(NSString *)color delayBetweenTargets:(int)delayBetweenTargets;{
-if (self = [super initWithSize:size])
+-(id)initWithSize:(CGSize)size color:(NSString *)color
+{
+    if (self = [super initWithSize:size])
     {
         self.targetsHit = 0;
         SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"Huge_Checkered_Background_[4096x3072]"];

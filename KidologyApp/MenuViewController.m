@@ -31,12 +31,13 @@ bool isFirstLogin = true;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
+    [defaults synchronize];
+    NSString *firstName = [defaults objectForKey:@"firstName"];
     NSString *lastName = [defaults objectForKey:@"lastName"];
     NSString *therapistEmail = [defaults objectForKey:@"therapistEmail"];
-    if (firstName == NULL || firstName.length == 0 ||
-        lastName  == NULL || lastName.length  == 0 ||
-        therapistEmail  == NULL || therapistEmail.length  == 0)
+    if ((firstName == NULL || firstName.length == 0) &&
+        (lastName  == NULL || lastName.length  == 0) &&
+        (therapistEmail  == NULL || therapistEmail.length  == 0))
     {
         [self performSegueWithIdentifier:@"setupSegue" sender:self];
     }

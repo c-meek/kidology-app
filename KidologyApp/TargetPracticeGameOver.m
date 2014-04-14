@@ -27,9 +27,13 @@ NSString *gameName;
         [self addPlayAgainButton];
         [self addBackToTargetGameMenuButton];
         [self addBackToMainMenuButton];
-        [self doLogging];
     }
     return self;
+}
+
+-(void)didMoveToView:(SKView *)view
+{
+    [self doLogging];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -118,6 +122,7 @@ NSString *gameName;
     else if ([node.name isEqualToString:@"backToTargetGameMenuButton"] ||
              [node.name isEqualToString:@"backToTargetGameMenuLabel"])
     {
+        _backToTargetGameMenuButton.color = [SKColor blackColor];
         NSLog(@"going back to target game menu");
         // Create and configure the "main menu" scene.
         SKScene * targetPraticeMenuScene = [[TargetPracticeMenuScene alloc] initWithSize:self.size];
@@ -273,13 +278,36 @@ NSString *gameName;
 
 -(void)doLogging
 {
-    NSMutableArray *log;
+    NSLog(@"in do logging");
     SKScene *scene = [self.view scene];
-    log = [scene.userData objectForKey:@"touchLog"];
-    
+    NSMutableArray *log = [scene.userData objectForKey:@"touchLog"];
     
     NSString * output = [[NSString alloc] init];
     output = [output stringByAppendingString:@"Type,Time,Touch Location X, Touch Location Y, Target Location X, Target Location Y, Target Radius\n"];
+    NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"logs"];
+    // make the folder if it doesn't already exist
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
+    [[NSFileManager defaultManager] createFileAtPath:folderPath contents:nil attributes:nil];
+    
+    // make a file name from the player name and the current date/time (dd/mm/yy hh:mm:ss timezone)
+    NSString *nameString = [NSString stringWithFormat:@"%@_%@_",[[NSUserDefaults standardUserDefaults] stringForKey:@"firstName"] , [[NSUserDefaults standardUserDefaults] stringForKey:@"lastName"]];
+    NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
+                                                          dateStyle:NSDateFormatterMediumStyle
+                                                          timeStyle:NSDateFormatterMediumStyle];
+    // take out spaces
+    dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    // replace colons with hyphens
+    dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@"-"];
+    // replace slashes with hyphens
+    dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+    NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
+    NSString *fileName = [NSString stringWithFormat:@"%@/%@%@-%@.csv", folderPath, nameString, dateString, gameModeString];
+    NSLog(@"file name is %@", fileName);
+    //NSLog(@"%@", output);
+    
+    NSLog(@"log count is %d", log.count);
     for (int i=0;i<log.count;i++)
     {
         LogEntry *entry = log[i];
@@ -290,28 +318,6 @@ NSString *gameName;
         // get the documents directory
         //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         //        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"logs"];
-        // make the folder if it doesn't already exist
-        NSError *error = nil;
-        if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
-            [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
-        [[NSFileManager defaultManager] createFileAtPath:folderPath contents:nil attributes:nil];
-        
-        // make a file name from the player name and the current date/time (dd/mm/yy hh:mm:ss timezone)
-        NSString *nameString = [NSString stringWithFormat:@"%@_%@_",[[NSUserDefaults standardUserDefaults] stringForKey:@"firstName"] , [[NSUserDefaults standardUserDefaults] stringForKey:@"lastName"]];
-        NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
-                                                              dateStyle:NSDateFormatterMediumStyle
-                                                              timeStyle:NSDateFormatterMediumStyle];
-        // take out spaces
-        dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
-        // replace colons with hyphens
-        dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@"-"];
-        // replace slashes with hyphens
-        dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
-        NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
-        NSString *fileName = [NSString stringWithFormat:@"%@/%@%@-%@.csv", folderPath, nameString, dateString, gameModeString];
-        NSLog(@"%@", fileName);
-        //NSLog(@"%@", output);
         
         [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];
     }

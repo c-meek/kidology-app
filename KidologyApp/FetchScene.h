@@ -17,4 +17,5 @@
 @property (nonatomic) SKSpriteNode *backButton;
 @property (nonatomic) SKSpriteNode *pressedBackButton;
 @property (nonatomic) SKLabelNode * backButtonLabel;
+@property (strong, nonatomic) SKAction *playMySound;
 @end

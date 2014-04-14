@@ -84,7 +84,6 @@
 		B9E5BE2E18F700010065B26D /* rotate_green_target.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2D18F700010065B26D /* rotate_green_target.png */; };
 		B9E5BE3018F700930065B26D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2F18F700930065B26D /* arrow.png */; };
 		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
-		E813050318FB1CC200862935 /* fetchBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E813050218FB1CC200862935 /* fetchBackground.png */; };
 		E89BFA8518F71564006C1959 /* settingsScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8118F71564006C1959 /* settingsScreen.png */; };
 		E89BFA8618F71564006C1959 /* settingsScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8218F71564006C1959 /* settingsScreen@2x.png */; };
 		E89BFA8718F71564006C1959 /* settingsScreenLegacy.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8318F71564006C1959 /* settingsScreenLegacy.png */; };
@@ -103,6 +102,7 @@
 		E8DF544C18F58B8F00B9D1D1 /* targetGameButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E8DF544718F58B8F00B9D1D1 /* targetGameButton.png */; };
 		E8DF544D18F58B8F00B9D1D1 /* therapistMenuButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E8DF544818F58B8F00B9D1D1 /* therapistMenuButtonPressed.png */; };
 		E8DF544F18F58B9400B9D1D1 /* therapistMenuButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E8DF544E18F58B9400B9D1D1 /* therapistMenuButton.png */; };
+		E8E5752418FC352E00B2AF1C /* dog_bark.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E8E5752318FC352E00B2AF1C /* dog_bark.mp3 */; };
 		E8F0BC0B18F600D30021BB55 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E8F0BC0A18F600D30021BB55 /* libz.dylib */; };
 		E8F0BC2918F6289C0021BB55 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = E8F0BC1F18F6289C0021BB55 /* ioapi.c */; };
 		E8F0BC2A18F6289C0021BB55 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = E8F0BC2118F6289C0021BB55 /* mztools.c */; };
@@ -231,7 +231,6 @@
 		B9E5BE2F18F700930065B26D /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		B9FC0CFE18E4994D006F2AEF /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogEntry.h; sourceTree = "<group>"; };
 		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
-		E813050218FB1CC200862935 /* fetchBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fetchBackground.png; sourceTree = "<group>"; };
 		E89BFA8118F71564006C1959 /* settingsScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsScreen.png; sourceTree = "<group>"; };
 		E89BFA8218F71564006C1959 /* settingsScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsScreen@2x.png"; sourceTree = "<group>"; };
 		E89BFA8318F71564006C1959 /* settingsScreenLegacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsScreenLegacy.png; sourceTree = "<group>"; };
@@ -252,6 +251,7 @@
 		E8DF544718F58B8F00B9D1D1 /* targetGameButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = targetGameButton.png; sourceTree = "<group>"; };
 		E8DF544818F58B8F00B9D1D1 /* therapistMenuButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = therapistMenuButtonPressed.png; sourceTree = "<group>"; };
 		E8DF544E18F58B9400B9D1D1 /* therapistMenuButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = therapistMenuButton.png; sourceTree = "<group>"; };
+		E8E5752318FC352E00B2AF1C /* dog_bark.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dog_bark.mp3; sourceTree = "<group>"; };
 		E8F0BC0818F5FED40021BB55 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		E8F0BC0A18F600D30021BB55 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E8F0BC1E18F6289C0021BB55 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
@@ -390,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				FD5519C718FB98D00061BEF8 /* fetch_background.png */,
+				E8E5752318FC352E00B2AF1C /* dog_bark.mp3 */,
 				0F423CAA18AD5D2200EE5F4E /* dog.png */,
 				0F423CAE18AD61EC00EE5F4E /* tennis.png */,
 			);
@@ -747,6 +748,7 @@
 				0FDEFA3C18FB080600D458F9 /* Actions_Pressed.png in Resources */,
 				7CB23C4418C0020D007F409F /* Gray.png in Resources */,
 				FD6B78DD18ED19240035CA95 /* kidologyspotlight-icon.png in Resources */,
+				E8E5752418FC352E00B2AF1C /* dog_bark.mp3 in Resources */,
 				0FB5157118F463CE005C309C /* test.csv in Resources */,
 				FD6B78DF18ED19240035CA95 /* kidologyspotlight-legacy.png in Resources */,
 				7CB23C4C18C0020D007F409F /* White.png in Resources */,

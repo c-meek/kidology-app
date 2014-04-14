@@ -285,24 +285,25 @@ extern NSUserDefaults *defaults;
     return isInLocation;
 }
 
-//-(void)rightAction
-//{
-//    if(self.numberOfTargets <= self.correctTouches)
-//    {
-//        //NSLog(@"Correct Touches: %d\n", self.correctTouches);
-//        SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
-//        SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targets:self.numberOfTargets];
-//        // pass the game type and touch log to "game over" scene
-//        NSString *mode = [self getGameMode:_gameMode];
-//        [gameOverScene.userData setObject:mode forKey:@"gameMode"];
-//        [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
-//        [self.view presentScene:gameOverScene transition: reveal];
-//    }
-//    else
-//    {
-//        [self displayActionTarget];
-//    }
-//}
+-(void)rightAction
+{
+    if(self.totalTargets <= self.correctTouches)
+    {
+        //NSLog(@"Correct Touches: %d\n", self.correctTouches);
+        SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
+        SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targetsHit:self.correctTouches
+                                                                  totalTargets:self.totalTargets ];
+        // pass the game type and touch log to "game over" scene
+        NSString *mode = [self getGameMode:_gameMode];
+        [gameOverScene.userData setObject:mode forKey:@"gameMode"];
+        [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
+        [self.view presentScene:gameOverScene transition: reveal];
+    }
+    else
+    {
+        [self displayActionTarget];
+    }
+}
 
 -(void)targetTouch:(CGPoint)touchLocation
 {
@@ -324,6 +325,8 @@ extern NSUserDefaults *defaults;
         //currentTouch.targetRadius = radius;
         if (_anchored == TOUCHING) // the anchor is currently being touched
         {
+            NSLog(@"adding anchored touch to log");
+
             currentTouch = [[LogEntry alloc] initWithType:@"Target" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
             //currentTouch.type = TARGET;
             _correctTouches++;
@@ -350,6 +353,7 @@ extern NSUserDefaults *defaults;
         }
         else // the anchor is not currently being touched
         {
+            NSLog(@"adding unanchored touch to log");
             currentTouch = [[LogEntry alloc] initWithType:@"Unanchored target" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
             //currentTouch.type = UNANCHORED_TARGET;
         }
@@ -447,7 +451,7 @@ extern NSUserDefaults *defaults;
 -(void)addQuitButton
 {
     SKSpriteNode *quitButton = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(100, 50)];
-    quitButton.position = CGPointMake(self.frame.size.width - 100,
+    quitButton.position = CGPointMake(100,
                                       self.frame.size.height/2+235);
     quitButton.name = @"quitButton";
     [self addChild:quitButton];
@@ -458,7 +462,7 @@ extern NSUserDefaults *defaults;
     quitGameLabel.name = @"quitGameLabel";
     quitGameLabel.fontSize = 20;
     quitGameLabel.fontColor = [SKColor whiteColor];
-    quitGameLabel.position = CGPointMake(self.frame.size.width - 100,
+    quitGameLabel.position = CGPointMake(100,
                                          self.frame.size.height/2+235);
     [self addChild:quitGameLabel];
 }
@@ -469,6 +473,7 @@ extern NSUserDefaults *defaults;
     SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targetsHit:targetsHit totalTargets:totalTargets];
     // pass the game type and touch log to "game over" scene
     NSString *mode = [self getGameMode:_gameMode];
+    NSLog(@"end game has touch log count %d", touchLog.count);
     [gameOverScene.userData setObject:mode forKey:@"gameMode"];
     [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
     [self.view presentScene:gameOverScene transition: reveal];

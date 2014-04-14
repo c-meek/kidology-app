@@ -182,46 +182,4 @@
     /* Called before each frame is rendered */
 }
 
--(BOOL)checkSettings
-{
-    bool missingField = false;
-    // get user's first and last names + therapist email from settings bundle
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
-    NSString *lastName = [defaults objectForKey:@"lastName"];
-    NSString *therapistEmail = [defaults objectForKey:@"therapistEmail"];
-    
-    // trim any leading or trailing whitespace
-    firstName = [firstName stringByTrimmingCharactersInSet:
-                 [NSCharacterSet whitespaceCharacterSet]];
-    lastName = [lastName stringByTrimmingCharactersInSet:
-                [NSCharacterSet whitespaceCharacterSet]];
-    therapistEmail = [therapistEmail stringByTrimmingCharactersInSet:
-                      [NSCharacterSet whitespaceCharacterSet]];
-    
-    // alert when one of these fields is empty/incomplete
-    NSString *message = @"";
-    if (firstName == NULL || firstName.length == 0 ||
-        lastName  == NULL || lastName.length  == 0)
-    {
-        message = @"You have not provided a first and/or last name!";
-    }
-    else if (therapistEmail  == NULL || therapistEmail.length  == 0)
-    {
-        message = @"You have not provided an e-mail address for your therapist.";
-    }
-    if (message.length > 0)
-    {
-        missingField = true;
-        UIAlertView *mustUpdateNameAlert = [[UIAlertView alloc]initWithTitle:@"ERROR:"
-                                                                     message:message
-                                                                    delegate:self
-                                                           cancelButtonTitle:@"Close"
-                                                           otherButtonTitles:nil];
-        [mustUpdateNameAlert show];
-    }
-    return  missingField;
-}
-
-
 @end
