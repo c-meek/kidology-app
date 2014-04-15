@@ -215,13 +215,13 @@ NSMutableArray *touchLog;
         //      set the target to appear at random locations
         //      int x_pos = (rand() % (int)self.size.width)*.8;
         //      randomize size of target
-        int min = 30;
-        int max = 67;
+        int min = 7;
+        int max = 50;
         float randomScale = ((min + arc4random() % (max-min))) * .01;
         _target.xScale = randomScale;
         _target.yScale = randomScale;
-        int x_pos = .75 * ((arc4random_uniform((int)self.size.width)/2)-(_target.size.width/2));
-        int pos_neg = (rand() % 1);
+        int x_pos = (.75 * (arc4random_uniform((int)self.size.width)/2) )-(_target.size.width/2);
+        int pos_neg = arc4random_uniform(2);
         if (pos_neg == 0)
         {
             x_pos = self.frame.size.width/2 + x_pos;
@@ -230,7 +230,7 @@ NSMutableArray *touchLog;
         {
             x_pos = self.frame.size.width/2 - x_pos;
         }
-        int y_pos = .75 * ((arc4random_uniform((int)self.size.height)/2)-(_target.size.height/2));
+        int y_pos = (.75 * (arc4random_uniform((int)self.size.height)/2) )-(_target.size.height/2);
         pos_neg = arc4random_uniform(2);
         if (pos_neg == 0)
         {
