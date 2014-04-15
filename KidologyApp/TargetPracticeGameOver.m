@@ -74,23 +74,23 @@ NSString *gameName;
         NSLog(@"game mode is %@", gameMode);
         if ([gameMode isEqualToString: @"center"])
         {
-            mode = 1;
+            mode = 0;
         }
         else if ([gameMode isEqualToString: @"random"])
         {
-            mode = 2;
+            mode = 1;
         }
         else if ([gameMode isEqualToString: @"gesture"])
         {
-            mode = 3;
+            mode = 2;
         }
         else if ([gameMode isEqualToString: @"custom"])
         {
-            mode = 4;
+            mode = 3;
         }
         NSLog(@"mode is %d",mode);
         
-        if (mode != 4)
+        if (mode != 3)
         {
             SKScene * targetPracticeScene = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:mode];
             targetPracticeScene.scaleMode = SKSceneScaleModeAspectFill;
@@ -99,7 +99,7 @@ NSString *gameName;
             SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
             [self.view presentScene:targetPracticeScene transition:reveal];
         }
-        else if (mode == 4)
+        else // if (mode == 3)
         {
             if(nil == gameName && [_tbv superview] == nil)
             {
