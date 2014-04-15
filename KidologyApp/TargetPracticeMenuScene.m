@@ -27,7 +27,7 @@ NSString *gameName;
         [self addCenterModeButton];
         [self addRandomModeButton];
         [self addCustomModeButton];
-        [self addGestureModeButton];
+//        [self addGestureModeButton];
 //        [self addInstructionLabel];
 //        [self addTarget];
 //        [self addHandAnimation];
