@@ -138,6 +138,32 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Default Target Size</string>
+			<key>Key</key>
+			<string>defaultTargetSize</string>
+			<key>DefaultValue</key>
+			<string>0.45</string>
+			<key>Titles</key>
+			<array>
+				<string>Really Small</string>
+				<string>Small</string>
+				<string>Medium</string>
+				<string>Big</string>
+				<string>Really Big</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<real>0.15</real>
+				<string>0.30</string>
+				<string>0.45</string>
+				<string>0.60</string>
+				<string>0.75</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
 			<string>Enable Sound</string>

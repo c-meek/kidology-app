@@ -15,13 +15,19 @@
 {
     if (self = [super initWithSize:size])
     {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults synchronize];
+        _delayBetweenTargets = [[defaults objectForKey:@"delayBetweenTargets"] integerValue];
+        _targetSize = [[defaults objectForKey:@"defaultTargetSize"] floatValue];
+        NSLog(@"target size is %f", _targetSize);
+
         self.targetsHit = 0;
         SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"Huge_Checkered_Background_[4096x3072]"];
         [self addChild:bgImage];
         
         _target = [SKSpriteNode spriteNodeWithImageNamed:color];
-        _target.xScale = .70;
-        _target.yScale = .70;
+        _target.xScale = _targetSize;
+        _target.yScale = _targetSize;
         _target.position = CGPointMake(self.size.width/2, self.size.height/2);
         [self addChild:_target];
         [self addQuitButton];
@@ -141,9 +147,7 @@
             [self hideTarget];
         }];
         //make a wait action
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        int delayBetweenTargets = [[defaults objectForKey:@"delayBetweenTargets"] integerValue];
-        SKAction *wait = [SKAction waitForDuration:delayBetweenTargets];
+                SKAction *wait = [SKAction waitForDuration:_delayBetweenTargets];
         SKAction *addTarget = [SKAction runBlock:^{
             [self displayTarget];
         }];

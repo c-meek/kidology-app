@@ -10,8 +10,7 @@
 
 typedef enum {
     CENTER,
-    RANDOM,
-    GESTURE
+    RANDOM
 } Mode;
 
 
@@ -20,34 +19,8 @@ typedef enum {
     NOT_TOUCHING
 } AnchorStatus;
 
-typedef enum {
-    SWIPE,
-    ROTATE,
-    ZOOM,
-    DRAG //Not implemented yet
-} ActionType;
 
-typedef enum {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    CLOCKWISE,
-    COUNTER_CLOCKWISE,
-    IN,
-    OUT
-} Direction;
-
-
-@interface TargetPracticeScene : SKScene <UIGestureRecognizerDelegate>
-    {
-        UIRotationGestureRecognizer* rotationGR;
-        UISwipeGestureRecognizer* swipeRightGesture;
-        UISwipeGestureRecognizer* swipeLeftGesture;
-        UISwipeGestureRecognizer* swipeUpGesture;
-        UISwipeGestureRecognizer* swipeDownGesture;
-    }
-
+@interface TargetPracticeScene : SKScene
     @property (nonatomic) SKSpriteNode * target;
     @property (nonatomic) SKLabelNode *targetsLabel;
     @property (nonatomic) SKLabelNode *tapSreenLabel;
@@ -60,7 +33,7 @@ typedef enum {
     @property (nonatomic) int totalTargets;
     @property (nonatomic) int delayBetweenTargets;
     @property (nonatomic) NSString *affectedHand;
-
+    @property (nonatomic) float targetSize;
     @property (nonatomic) float time;
     @property (nonatomic) float time_not_anchored;
     @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
@@ -68,17 +41,6 @@ typedef enum {
     @property (nonatomic) Mode gameMode;
     @property (nonatomic) AnchorStatus anchored;
 
-    @property (nonatomic) int numOfRotations;
-    @property (nonatomic) ActionType currentAction;
-    @property (nonatomic) Direction actionDirection;
-    @property (nonatomic) SKSpriteNode *rotateTarget;
-    @property (nonatomic) SKSpriteNode *arrow;
-    @property (nonatomic) SKAction * actionMoveDone;
-
-//....just global varibles to keep track of stuff for certain procedures...
-    @property (nonatomic) Boolean isActionDone;
-    @property (nonatomic) int hasRotated;
-    @property (nonatomic) Boolean swipedOutside;
 //.........................................................................
 
 -(id)initWithSize:(CGSize)size game_mode:(int)game_mode;

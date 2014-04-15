@@ -17,5 +17,8 @@
 @property (nonatomic) SKSpriteNode *quitButton;
 @property (nonatomic) SKSpriteNode *quitButtonPressed;
 @property (nonatomic) int targetsHit;
+@property (nonatomic) int delayBetweenTargets;
+@property (nonatomic) float targetSize;
+
 -(id)initWithSize:(CGSize)size color:(NSString *)color;
 @end

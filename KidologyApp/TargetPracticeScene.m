@@ -21,14 +21,13 @@ NSMutableArray *touchLog;
     if (self = [super initWithSize:size])
     {
         // initialize variables
-        _numOfRotations = 0;
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults synchronize];
         self.totalTargets = [[defaults objectForKey:@"numberOfTargets"] integerValue];
         self.delayBetweenTargets = [[defaults objectForKey:@"delayBetweenTargets"] integerValue];
         _affectedHand = [defaults objectForKey:@"affectedHand"];
-        NSLog(@"total targets is %d", self.totalTargets);
-        NSLog(@"delay between is %d", self.delayBetweenTargets);
+        _targetSize = [[defaults objectForKey:@"defaultTargetSize"] floatValue];
+        NSLog(@"target size is %f", _targetSize);
 
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         self.correctTouches = 0;
@@ -47,56 +46,11 @@ NSMutableArray *touchLog;
         if (game_mode == 0) {
             _gameMode = CENTER;
         }
-        if (game_mode == 1) {
+        else if (game_mode == 1) {
             _gameMode = RANDOM;
         }
-        if (game_mode == 3)
-        {
-            _gameMode = GESTURE;
-        }
- 
-        
-        // STUFF FOR GESTURES
-        
-        _isActionDone = true;
-        _actionMoveDone =[SKAction removeFromParent];
-        //swipe right gesture…
-        swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeRight:)];
-        [swipeRightGesture setDirection: UISwipeGestureRecognizerDirectionRight];
-        
-        //swipe left gesture…
-        swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeLeft:)];
-        [swipeLeftGesture setDirection: UISwipeGestureRecognizerDirectionLeft];
-        
-        //swipe up gesture…
-        swipeUpGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeUp:)];
-        [swipeUpGesture setDirection: UISwipeGestureRecognizerDirectionUp];
-        
-        
-        //swipe down gesture…
-        swipeDownGesture = [[UISwipeGestureRecognizer alloc] initWithTarget: self action:@selector( handleSwipeDown:)];
-        [swipeDownGesture setDirection: UISwipeGestureRecognizerDirectionDown];
-        
-        
-        //And the rotation gesture will detect a two finger rotation
-        rotationGR = [[ UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(handleRotation:)];
-        
-        _tapSreenLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-        _tapSreenLabel.fontSize = 50;
-        _tapSreenLabel.fontColor = [SKColor orangeColor];
-        _tapSreenLabel.position = CGPointMake(self.size.width/2, self.size.height/2);
-        _tapSreenLabel.text = @"Tap Screen for action!";
-        
-        //set properties of target
-        if (_gameMode != GESTURE)
-        {
-            [self displayTarget];
-        }
-        else
-        {
-            [self addChild:_tapSreenLabel];
-            [self displayActionTarget];
-        }
+
+        [self displayTarget];
     }
     return self;
 }
@@ -111,23 +65,6 @@ NSMutableArray *touchLog;
     {
         _quitButton.hidden = true;
         _quitButtonPressed.hidden = false;
-    }
-
-    
-    if (_gameMode == GESTURE && _isActionDone == true)
-    {
-        NSLog(@"touches began! \n");
-        [self displayActionTarget];
-        [_tapSreenLabel runAction:_actionMoveDone];
-        _isActionDone = false;
-        if (_currentAction == SWIPE)
-        {
-            [self addChild:_arrow];
-        }
-        else if (_currentAction == ROTATE)
-        {
-            [self addChild:_rotateTarget];
-        }
     }
     /* Called when a touch begins */
     //test whether the target has been touched
@@ -156,11 +93,11 @@ NSMutableArray *touchLog;
             //{PANEL, self.time, CGPointMake(touchLocation.x, touchLocation.y), CGPointMake(self.target.position.x, self.target.position.y), self.target.size.width / 2};
             [touchLog addObject:currentTouch];
         }
-       else if (_gameMode != GESTURE)
-       {
-           // If the touch isn't on the anchor
+        else
+        {
+            // If the touch isn't on the anchor
             [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
-       }
+        }
     }
 }
 
@@ -268,8 +205,8 @@ NSMutableArray *touchLog;
     {
         //set target to middle of screen
         self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-        self.target.xScale = .67;
-        self.target.yScale = .67;
+        self.target.xScale = _targetSize;
+        self.target.yScale = _targetSize;
         NSLog(@"Radius : %f", _target.size.width/2);
         NSLog(@"Position: (%f , %f", _target.position.x, _target.position.y);
     }
@@ -308,45 +245,6 @@ NSMutableArray *touchLog;
     
 }
 
--(bool)isTargetTouched:(CGPoint)touchLocation
-{
-    bool isInLocation = false;
-    double xDifference = touchLocation.x - self.target.position.x;
-    double yDifference = touchLocation.y - self.target.position.y;
-    double radius = self.target.size.width / 2;
-    double distanceFromCenter = sqrt(pow(xDifference, 2) + pow(yDifference, 2));
-
-//    double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
-//    double rightHandSide = pow(radius, 2);
-//    
-//    if (leftHandSide <= rightHandSide) {
-    if (distanceFromCenter <= radius)
-    {
-        isInLocation = true;
-    }
-    return isInLocation;
-}
-
--(void)rightAction
-{
-    if(self.totalTargets <= self.correctTouches)
-    {
-        //NSLog(@"Correct Touches: %d\n", self.correctTouches);
-        SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
-        SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targetsHit:self.correctTouches
-                                                                  totalTargets:self.totalTargets ];
-        // pass the game type and touch log to "game over" scene
-        NSString *mode = [self getGameMode:_gameMode];
-        [gameOverScene.userData setObject:mode forKey:@"gameMode"];
-        [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
-        [self.view presentScene:gameOverScene transition: reveal];
-    }
-    else
-    {
-        [self displayActionTarget];
-    }
-}
-
 -(void)targetTouch:(CGPoint)touchLocation
 {
     _totalTouches++;
@@ -361,6 +259,7 @@ NSMutableArray *touchLog;
     LogEntry *currentTouch;
     
 //    if(leftHandSide <= rightHandSide) // If the touch is on the target
+    NSLog(@"distance from center is %f   radius is %f", distanceFromCenter, radius);
     if (distanceFromCenter <= radius)
     {
         
@@ -547,7 +446,6 @@ NSMutableArray *touchLog;
 
 -(void)initializeAnchor
 {
-
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;
@@ -590,379 +488,7 @@ NSMutableArray *touchLog;
     {
         gameMode = @"random";
     }
-    else if (game_mode == GESTURE)
-    {
-        gameMode = @"action";
-    }
     return gameMode;
-}
-
--(void)displayActionTarget
-{
-    
-    self.target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-    self.target.xScale = .67;
-    self.target.yScale = .67;
-    
-    int x = arc4random_uniform(2); // REMEMBER TO CHANGE THIS TO 3 WHEN ZOOM IS COMPLETE
-                                   // NSLog(@"Action Num %d\n",x);
-    if (x == 0)
-    {
-        
-        SKAction *rotate90 = [SKAction rotateByAngle:-3.14/2 duration:0];
-        SKAction *negRotate90 = [SKAction rotateByAngle:3.14/2 duration:0];
-        _arrow = [SKSpriteNode spriteNodeWithImageNamed:@"arrow"];
-        _arrow.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-        _currentAction = SWIPE;
-        _swipedOutside = true;
-        
-        int direction = 3;//arc4random_uniform(4);
-        if ( direction == 0)
-        {
-            [self.view addGestureRecognizer: swipeUpGesture ];
-            [_arrow runAction:negRotate90];
-            _actionDirection = UP;
-        }
-        else if ( direction == 1)
-        {
-            [self.view addGestureRecognizer: swipeDownGesture ];
-            [_arrow runAction:rotate90];
-            _actionDirection = DOWN;
-        }
-        else if (direction == 2)
-        {
-            [self.view addGestureRecognizer: swipeLeftGesture ];
-            [_arrow runAction:negRotate90];
-            [_arrow runAction:negRotate90];
-            _actionDirection = LEFT;
-        }
-        else if (direction == 3)
-        {
-            [self.view addGestureRecognizer: swipeRightGesture ];
-            _actionDirection = RIGHT;
-        }
-    }
-    else if ( x == 1)
-    {
-        
-        [self.view addGestureRecognizer:rotationGR];
-        
-        _rotateTarget = [SKSpriteNode spriteNodeWithImageNamed:@"rotate_green_target"];
-        _rotateTarget.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-        _rotateTarget.xScale = .67;
-        _rotateTarget.yScale = .67;
-        
-        _currentAction = ROTATE;
-        _hasRotated = 0;
-        int direction = arc4random_uniform(2);
-        if (direction == 0)
-        {
-            _actionDirection = CLOCKWISE;
-        }
-        else if (direction == 1)
-        {
-            _actionDirection = COUNTER_CLOCKWISE;
-        }
-    }
-    else if ( x == 2)
-    {
-        _currentAction = ZOOM;
-        int direction = arc4random_uniform(2);
-        if (direction == 0)
-        {
-            _actionDirection = IN;
-        }
-        else if (direction == 1)
-        {
-            _actionDirection = OUT;
-        }
-        
-    }
-}
-
--(void) handleRotation: (UIRotationGestureRecognizer *) recognizer
-{
-    
-//    LogEntry *currentTouch;
-//    
-//    bool allTouchedTarget =true;
-//    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
-//    {
-//        if (_gameMode == GESTURE)
-//        {
-//            NSUInteger num_of_touches = [recognizer numberOfTouches];
-//            
-//            int x = 0;
-//            while (x < num_of_touches)
-//            {
-//                bool isTargetTouched = [self isTargetTouched:[recognizer locationOfTouch:x  inView:nil]];
-//                if (isTargetTouched)
-//                {
-//                    
-//                    NSString *touch_type = [NSString stringWithFormat:@"Rotation%d Touch%d - On Target", _numOfRotations, x+1];
-//                    currentTouch = [[LogEntry alloc] initWithType:touch_type time:self.time touchLocation:[recognizer locationOfTouch:x inView:nil] targetLocation:self.target.position targetRadius:_target.size.width/2];
-//                    x++;
-//                    [touchLog addObject:currentTouch];
-//                }
-//                else
-//                {
-//                    NSString *touch_type = [NSString stringWithFormat:@"Rotation%d Touch%d - Off Target", _numOfRotations, x+1];
-//                    currentTouch = [[LogEntry alloc] initWithType:touch_type time:self.time touchLocation:[recognizer locationOfTouch:x inView:nil] targetLocation:self.target.position targetRadius:_target.size.width/2];
-//                    x++;
-//                    allTouchedTarget = false;
-//                    [touchLog addObject:currentTouch];
-//                }
-//            }
-//            
-//            if (allTouchedTarget)
-//            {
-//                CGFloat rotation = recognizer.rotation;
-//                SKAction * spinaction = [SKAction rotateByAngle:-rotation/60 duration:1/60];
-//                [_rotateTarget runAction:[SKAction sequence:@[spinaction]]];
-//                _hasRotated ++;
-//            }
-//            
-//            if ( recognizer.state == UIGestureRecognizerStateEnded )
-//            {
-//                _numOfRotations ++;
-//                if (_hasRotated > 0)      // THIS IS WHEN THE ROTATION IS CORRECT! (that means they has successfully spun the target for a little bit...
-//                {
-//                    [_rotateTarget runAction:_actionMoveDone];
-//                    NSLog(@"correct rotation!\n");
-//                    _correctTouches++;
-//                    // [self rightAction];
-//                    [self.view removeGestureRecognizer:rotationGR ];
-//                    _isActionDone = true;
-//                    [self addChild:_tapSreenLabel];
-//                }
-//                allTouchedTarget = true;
-//                NSLog(@"rotation has actually ended");
-//            }
-//        }
-//    }
-}
-
--(void) handleSwipeRight:( UISwipeGestureRecognizer *) recognizer {
-    
-//    LogEntry *currentTouch;
-//    
-//    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
-//    {
-//        if (_gameMode == GESTURE)
-//        {
-//            if ( recognizer.numberOfTouches == 2)
-//            {  /* do nothing for now*/ }
-//            else
-//            {
-//                //                             [recognizer locationOfTouch:x  inView:nil]
-//                CGPoint pt = [recognizer locationOfTouch:0 inView:self.view];
-//                bool isTargetTouched = [self isTargetTouched:pt];
-//                NSLog(@"isTargetTouched: %d, location: (%f, %f)",isTargetTouched, pt.x, pt.y);
-//                NSLog(@"Target Posistion: (%f,%f), radius: %f", _target.position.x, _target.position.y, _target.size.width/2);
-//                if (isTargetTouched)
-//                {
-//                    _swipedOutside = false;
-//                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Right On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
-//                    [touchLog addObject:currentTouch];
-//                    
-//                    
-//                    SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x + 200 , _target.position.y) duration:1];
-//                    [_target runAction:moveaction];
-//                    
-//                }
-//                else
-//                {
-//                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Right Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
-//                    [touchLog addObject:currentTouch];
-//                }
-//                
-//                if ( recognizer.state == UIGestureRecognizerStateEnded )
-//                {
-//                    if (_swipedOutside == false)
-//                    {
-//                        NSLog(@"Swipe right correct! has_touch_outside: %d\n", _swipedOutside);
-//                        
-//                        [_arrow runAction:_actionMoveDone];
-//                        _correctTouches++;
-//                        
-//                        [self.view removeGestureRecognizer:swipeUpGesture ];
-//                        _isActionDone = true;
-//                        [self addChild:_tapSreenLabel];
-//                    }
-//                    NSLog(@"Swipe has actually ended");
-//                }
-//            }
-//        }
-//    }
-//    
-}
-
--(void) handleSwipeLeft:( UISwipeGestureRecognizer *) recognizer {
-    
-//    LogEntry *currentTouch;
-//    
-//    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
-//    {
-//        if (_gameMode == GESTURE)
-//        {
-//            if ( recognizer.numberOfTouches == 2)
-//            {  /* do nothing for now*/ }
-//            else
-//            {
-//                CGPoint pt = [recognizer locationOfTouch:0 inView:nil];
-//                bool isTargetTouched = [self isTargetTouched:pt];
-//                NSLog(@"isTargetTouched: %d, location: (%f, %f)",isTargetTouched, pt.x, pt.y);
-//                NSLog(@"Target Posistion: (%f,%f)", _target.position.x, _target.position.y);
-//                
-//                if (isTargetTouched && _swipedOutside == true)
-//                {
-//                    _swipedOutside = false;
-//                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Left On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
-//                    [touchLog addObject:currentTouch];
-//                    
-//                    
-//                    SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x -200 , _target.position.y) duration:1];
-//                    [_target runAction:moveaction];
-//                    
-//                }
-//                else
-//                {
-//                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Down Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
-//                    [touchLog addObject:currentTouch];
-//                }
-//                
-//                if ( recognizer.state == UIGestureRecognizerStateEnded )
-//                {
-//                    if (_swipedOutside == false)
-//                    {
-//                        NSLog(@"Swipe left correct! has_touch_outside: %d\n", _swipedOutside);
-//                        
-//                        [_arrow runAction:_actionMoveDone];
-//                        _correctTouches++;
-//                        
-//                        //[self rightAction];
-//                        [self.view removeGestureRecognizer:swipeUpGesture ];
-//                        _isActionDone = true;
-//                        [self addChild:_tapSreenLabel];
-//                    }
-//                    NSLog(@"Swipe has actually ended");
-//                }
-//            }
-//        }
-//    }
-    
-}
-
-
--(void) handleSwipeUp:( UISwipeGestureRecognizer *) recognizer {
-    
-//    LogEntry *currentTouch;
-//    
-//    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
-//    {
-//        if (_gameMode == GESTURE)
-//        {
-//            if ( recognizer.numberOfTouches == 2)
-//            {  /* do nothing for now*/ }
-//            else
-//            {
-//                CGPoint pt = [recognizer locationOfTouch:0 inView:nil];
-//                bool isTargetTouched = [self isTargetTouched:pt];
-//                NSLog(@"isTargetTouched: %d, location: (%f, %f)",isTargetTouched, pt.x, pt.y);
-//                NSLog(@"Target Posistion: (%f,%f)", _target.position.x, _target.position.y);
-//                
-//                if (isTargetTouched && _swipedOutside == true)
-//                {
-//                    _swipedOutside = false;
-//                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Up On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
-//                    [touchLog addObject:currentTouch];
-//                    
-//                    
-//                    SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x , _target.position.y +200) duration:1];
-//                    [_target runAction:moveaction];
-//                    
-//                }
-//                else
-//                {
-//                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Up Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
-//                    [touchLog addObject:currentTouch];
-//                }
-//                
-//                if ( recognizer.state == UIGestureRecognizerStateEnded )
-//                {
-//                    if (_swipedOutside == false)
-//                    {
-//                        NSLog(@"Swipe up correct! has_touch_outside: %d\n", _swipedOutside);
-//                        
-//                        [_arrow runAction:_actionMoveDone];
-//                        _correctTouches++;
-//                        
-//                        //[self rightAction];
-//                        [self.view removeGestureRecognizer:swipeUpGesture ];
-//                        _isActionDone = true;
-//                        [self addChild:_tapSreenLabel];
-//                    }
-//                    NSLog(@"Swipe has actually ended");
-//                }
-//            }
-//        }
-//    }
-//    
-}
-
--(void) handleSwipeDown:( UISwipeGestureRecognizer *) recognizer {
-    
-//    LogEntry *currentTouch;
-//    
-//    if (true)//_anchored == TOUCHING)  // change this when proper testing can occure!
-//    {
-//        if (_gameMode == GESTURE)
-//        {
-//            if ( recognizer.numberOfTouches == 2)
-//            {  /* do nothing for now*/ }
-//            else
-//            {
-//                CGPoint pt = [recognizer locationOfTouch:0 inView:nil];
-//                bool isTargetTouched = [self isTargetTouched:pt];
-//                NSLog(@"isTargetTouched: %d, location: (%f, %f)",isTargetTouched, pt.x, pt.y);
-//                NSLog(@"Target Posistion: (%f,%f)", _target.position.x, _target.position.y);
-//                
-//                if (isTargetTouched && _swipedOutside == true)
-//                {
-//                    _swipedOutside = false;
-//                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Down On target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
-//                    [touchLog addObject:currentTouch];
-//                    
-//                    
-//                    SKAction * moveaction = [SKAction moveTo:CGPointMake(_target.position.x , _target.position.y -200) duration:1];
-//                    [_target runAction:moveaction];
-//                    
-//                }
-//                else
-//                {
-//                    currentTouch = [[LogEntry alloc] initWithType:@"Swiping Down Off target" time:self.time touchLocation:[recognizer locationOfTouch:0 inView:self.view] targetLocation:self.target.position targetRadius:_target.size.width/2];
-//                    [touchLog addObject:currentTouch];
-//                }
-//                
-//                if ( recognizer.state == UIGestureRecognizerStateEnded )
-//                {
-//                    if (_swipedOutside == false)
-//                    {
-//                        NSLog(@"Swipe down correct! has_touch_outside: %d\n", _swipedOutside);
-//                        
-//                        [_arrow runAction:_actionMoveDone];
-//                        _correctTouches++;
-//                        
-//                        //[self rightAction];
-//                        [self.view removeGestureRecognizer:swipeUpGesture ];
-//                        _isActionDone = true;
-//                        [self addChild:_tapSreenLabel];
-//                    }
-//                    NSLog(@"Swipe has actually ended");
-//                }
-//            }
-//        }
-//    }
 }
 
 @end

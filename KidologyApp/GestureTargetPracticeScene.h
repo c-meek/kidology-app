@@ -10,29 +10,23 @@
 #import "TargetPracticeScene.h"
 
 
-//typedef enum {
-//    TOUCHING,
-//    NOT_TOUCHING
-//} AnchorStatus;
+typedef enum {
+    SWIPE,
+    ROTATE,
+    ZOOM,
+    DRAG //Not implemented yet
+} ActionType;
 
-//typedef enum {
-//    SWIPE,
-//    ROTATE,
-//    ZOOM,
-//    DRAG //Not implemented yet
-//} GestureType;
-//
-//typedef enum {
-//    UP,
-//    DOWN,
-//    LEFT,
-//    RIGHT,
-//    CLOCKWISE,
-//    COUNTER_CLOCKWISE,
-//    IN,
-//    OUT
-//} Direction;
-
+typedef enum {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    CLOCKWISE,
+    COUNTER_CLOCKWISE,
+    IN,
+    OUT
+} Direction;
 
 @interface GestureTargetPracticeScene : SKScene <UIGestureRecognizerDelegate>
 {
