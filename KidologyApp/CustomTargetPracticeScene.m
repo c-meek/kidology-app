@@ -50,7 +50,7 @@ NSMutableArray *touchLog;
         /* Called when a touch begins */
         CGPoint positionInScene = [touch locationInNode:self];
         //test whether the target has been touched
-        if ([self isAnchorTouch:positionInScene] == false) // If the touch isn't on the anchor,
+        if (![self isAnchorTouch:positionInScene]) // If the touch isn't on the anchor,
         {
             [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
         }
@@ -58,6 +58,16 @@ NSMutableArray *touchLog;
             _anchored = TOUCHING; // make note of that.
             _anchor.hidden = TRUE;
             _pressedAnchor.hidden = FALSE;
+            LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Anchor Press"
+                                                               time:self.time
+                                                      anchorPressed:YES
+                                                         targetsHit:self.correctTouches
+                                                 distanceFromCenter:@"NA"
+                                                      touchLocation:CGPointMake(positionInScene.x, positionInScene.y)
+                                                     targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
+                                                       targetRadius:(self.target.size.width/2)
+                                                     targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
+            [touchLog addObject:currentTouch];
         }
     }
 }
@@ -81,12 +91,22 @@ NSMutableArray *touchLog;
             _anchored = NOT_TOUCHING; // make note of that.
             _anchor.hidden = FALSE;         // Tien was here and the next line
             _pressedAnchor.hidden = TRUE;
+            LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Anchor Release"
+                                                               time:self.time
+                                                      anchorPressed:YES
+                                                         targetsHit:self.correctTouches
+                                                 distanceFromCenter:@"NA"
+                                                      touchLocation:CGPointMake(positionInScene.x, positionInScene.y)
+                                                     targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
+                                                       targetRadius:(self.target.size.width/2)
+                                                     targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
+            [touchLog addObject:currentTouch];
         }
-        else
-        {
-            _anchor.hidden = TRUE;
-            _pressedAnchor.hidden = FALSE;
-        }
+//        else
+//        {
+//            _anchor.hidden = TRUE;
+//            _pressedAnchor.hidden = FALSE;
+//        }
     }
 }
 
@@ -194,8 +214,7 @@ NSMutableArray *touchLog;
     SKNode *node = [self nodeAtPoint:touchLocation];
     if ([node.name isEqualToString:@"pressedAnchor"] || [node.name isEqualToString:@"anchor"])
     {
-        LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Panel" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:(self.target.size.width/2)];
-        [touchLog addObject:currentTouch];
+
         //        NSLog(@"anchor panel is being touched.");
         result = true;
     }
@@ -216,17 +235,28 @@ NSMutableArray *touchLog;
     double xDifference = touchLocation.x - self.target.position.x;
     double yDifference = touchLocation.y - self.target.position.y;
     double radius = self.target.size.width / 2;
-    double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
-    double rightHandSide = pow(radius, 2);
+    double distanceFromCenter = sqrt(pow(xDifference, 2) + pow(yDifference, 2));
+//    double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
+//    double rightHandSide = pow(radius, 2);
     LogEntry * currentTouch;
     
-    if(leftHandSide <= rightHandSide) // If the touch is on the target
+//    if(leftHandSide <= rightHandSide) // If the touch is on the target
+    if (distanceFromCenter <= radius)
     {
         if (_anchored == TOUCHING) // the anchor is currently being touched
         {
-            currentTouch = [[LogEntry alloc] initWithType:@"Target" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
-            //currentTouch.type = TARGET;
             _correctTouches++;
+            currentTouch = [[LogEntry alloc] initWithType:@"On Target"
+                                                     time:self.time
+                                            anchorPressed:YES
+                                               targetsHit:self.correctTouches
+                                       distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
+                                            touchLocation:CGPointMake(touchLocation.x, touchLocation.y)
+                                           targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
+                                             targetRadius:radius
+                                           targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
+            [touchLog addObject:currentTouch]; // log the touch
+            //currentTouch.type = TARGET;
             //make a "delete" target action
             SKAction *deleteTarget = [SKAction runBlock:^{
                 self.target.position = CGPointMake(-100,-100);
@@ -257,19 +287,34 @@ NSMutableArray *touchLog;
             _targetIterator = _targetIterator + 1;
             //run the actions in sequential order
             [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
-            [touchLog addObject:currentTouch]; // log the touch
 
         }
         else // the anchor is not currently being touched
         {
-            currentTouch = [[LogEntry alloc] initWithType:@"Unanchored target" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:radius];
+            currentTouch = [[LogEntry alloc] initWithType:@"On Target"
+                                                     time:self.time
+                                            anchorPressed:NO
+                                               targetsHit:self.correctTouches
+                                       distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
+                                            touchLocation:CGPointMake(touchLocation.x, touchLocation.y)
+                                           targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
+                                             targetRadius:radius
+                                           targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
             //currentTouch.type = UNANCHORED_TARGET;
             [touchLog addObject:currentTouch]; // log the touch
         }
     }
     else
     {
-        currentTouch = [[LogEntry alloc] initWithType:@"Whitespace" time:self.time touchLocation:CGPointMake(touchLocation.x, touchLocation.y) targetLocation:CGPointMake(self.target.position.x, self.target.position.y) targetRadius:(self.target.size.width / 2)];
+        currentTouch = [[LogEntry alloc] initWithType:@"Off Target"
+                                                 time:self.time
+                                        anchorPressed:(_anchored == TOUCHING)
+                                           targetsHit:self.correctTouches
+                                   distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
+                                        touchLocation:CGPointMake(touchLocation.x, touchLocation.y)
+                                       targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
+                                         targetRadius:(self.target.size.width / 2)
+                                       targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
         [touchLog addObject:currentTouch];
     }
 }

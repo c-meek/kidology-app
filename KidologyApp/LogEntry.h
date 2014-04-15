@@ -10,9 +10,16 @@
 
 @interface LogEntry : NSObject
 @property (nonatomic) NSString *type;
+@property (nonatomic) NSString *distanceFromCenter;
+@property (nonatomic) BOOL anchorPressed;
+@property (nonatomic) BOOL targetOnScreen;
 @property (nonatomic) float time;
+@property (nonatomic) float targetRadius;
+@property (nonatomic) int targetsHit;
 @property (nonatomic) CGPoint touchLocation;
 @property (nonatomic) CGPoint targetLocation;
-@property (nonatomic) float targetRadius;
--(id)initWithType:(NSString*)type time:(float)time touchLocation:(CGPoint)touchLocation targetLocation:(CGPoint)targetLocation targetRadius:(float)targetRadius;
+-(id)initWithType:(NSString*)type time:(float)time anchorPressed:(bool)anchorPressed targetsHit:(int)targetsHit
+    distanceFromCenter:(NSString *)distanceFromCenter touchLocation:(CGPoint)touchLocation
+    targetLocation:(CGPoint)targetLocation targetRadius:(float)targetRadius targetOnScreen:(BOOL)targetOnScreen;
+-(NSString *)toString;
 @end

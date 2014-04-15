@@ -21,9 +21,11 @@ NSString *gameName;
 {
     if (self = [super initWithSize:size])
     {
+        self.targetsHit = targetsHit;
+        self.totalTargets = totalTargets;
         gameName = nil;
         [self addBackground];
-        [self addMessage:targetsHit totalTargets:totalTargets];
+        [self addMessage];
         [self addPlayAgainButton];
         [self addBackToTargetGameMenuButton];
         [self addBackToMainMenuButton];
@@ -183,11 +185,11 @@ NSString *gameName;
     [self addChild:bgImage];
 }
 
--(void)addMessage:(int)targetsHit totalTargets:(int)totalTargets
+-(void)addMessage
 {
     self.userData = [NSMutableDictionary dictionary];
     self.backgroundColor = [SKColor grayColor];
-    NSString * messageText = [NSString stringWithFormat:@"You hit %d of %d targets!", targetsHit, totalTargets];
+    NSString * messageText = [NSString stringWithFormat:@"You hit %d of %d targets!", self.targetsHit, self.totalTargets];
     SKLabelNode * message = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     message.text = messageText;
     message.fontSize = 30;
@@ -282,8 +284,6 @@ NSString *gameName;
     SKScene *scene = [self.view scene];
     NSMutableArray *log = [scene.userData objectForKey:@"touchLog"];
     
-    NSString * output = [[NSString alloc] init];
-    output = [output stringByAppendingString:@"Type,Time,Touch Location X, Touch Location Y, Target Location X, Target Location Y, Target Radius\n"];
     NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"logs"];
     // make the folder if it doesn't already exist
     NSError *error = nil;
@@ -292,35 +292,45 @@ NSString *gameName;
     [[NSFileManager defaultManager] createFileAtPath:folderPath contents:nil attributes:nil];
     
     // make a file name from the player name and the current date/time (dd/mm/yy hh:mm:ss timezone)
-    NSString *nameString = [NSString stringWithFormat:@"%@_%@_",[[NSUserDefaults standardUserDefaults] stringForKey:@"firstName"] , [[NSUserDefaults standardUserDefaults] stringForKey:@"lastName"]];
-    NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
-                                                          dateStyle:NSDateFormatterMediumStyle
-                                                          timeStyle:NSDateFormatterMediumStyle];
-    // take out spaces
-    dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
-    // replace colons with hyphens
-    dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@"-"];
-    // replace slashes with hyphens
-    dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    NSString *firstName = [[defaults objectForKey:@"firstName"] stringByAppendingString:@" "];
+    NSString *lastName = [defaults objectForKey:@"lastName"];
+    NSString *nameString = [NSString stringWithFormat:@"%@_%@_",firstName , lastName];
+    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+    [DateFormatter setDateFormat:@"MM-dd-yyyy_HH-mm-ss"];
+    NSString *currentDate = [DateFormatter stringFromDate:[NSDate date]];
+//    NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
+//                                                          dateStyle:NSDateFormatterMediumStyle
+//                                                          timeStyle:NSDateFormatterMediumStyle];
+//    // take out spaces
+//    dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    // replace colons with hyphens
+//    dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@"-"];
+//    // replace slashes with hyphens
+//    dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
     NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
-    NSString *fileName = [NSString stringWithFormat:@"%@/%@%@-%@.csv", folderPath, nameString, dateString, gameModeString];
+    NSString *fileName = [NSString stringWithFormat:@"%@/%@%@-%@.csv", folderPath, nameString, currentDate, gameModeString];
     NSLog(@"file name is %@", fileName);
     //NSLog(@"%@", output);
     
-    NSLog(@"log count is %d", log.count);
+    
+    NSString *output = @"Player,Date,Game,Targets Hit, Total Targets\n";
+    output = [output stringByAppendingString:[NSString stringWithFormat:@"%@ %@,%@,%@,%d,%d\n\n",firstName,lastName,currentDate,[self.userData objectForKey:@"gameMode"],self.targetsHit,self.totalTargets]];
+    output = [output stringByAppendingString:@"Type,Anchor Pressed,Targets Hit,Time,Distance From Target Center,Touch Location X, Touch Location Y, Target Is On Screen, Target Location X, Target Location Y, Target Radius\n"];
     for (int i=0;i<log.count;i++)
     {
         LogEntry *entry = log[i];
         //NSLog(@"%d,%f,%f", entry.type, entry.targetLocation.x,entry.targetLocation.y);
         //NSString * type = typeArray[entry.type];
         //NSString * type = @"a";
-        output = [output stringByAppendingString:[NSString stringWithFormat:@"%@,%f,%f,%f,%f,%f,%f\n", entry.type, entry.time, entry.touchLocation.x, entry.touchLocation.y, entry.targetLocation.x, entry.targetLocation.y, entry.targetRadius]];
+        output = [output stringByAppendingString:[entry toString]];
+//        output = [output stringByAppendingString:[NSString stringWithFormat:@"%@,%@,%f,%f,%f,%f,%f,%f\n", entry.type, entry.anchorPressed, entry.time, entry.touchLocation.x, entry.touchLocation.y, entry.targetLocation.x, entry.targetLocation.y, entry.targetRadius]];
         // get the documents directory
         //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         //        NSString *documentsDirectory = [paths objectAtIndex:0];
-        
-        [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];
     }
+    [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];
 }
 
 #pragma mark - Table view data source

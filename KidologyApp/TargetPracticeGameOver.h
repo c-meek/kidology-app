@@ -19,4 +19,7 @@
 @property (nonatomic) SKLabelNode *returnMessage;
 @property (nonatomic) NSMutableArray *gameArray;
 @property (nonatomic) UITableView *tbv;
+@property (nonatomic) int targetsHit;
+@property (nonatomic) int totalTargets;
+
 @end
