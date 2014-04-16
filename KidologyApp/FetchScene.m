@@ -5,6 +5,11 @@
 //  Created by klimczak, andrew edward on 2/13/14.
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
+//  Sounds for this app were obtained at soundbible.com
+//
+//      License information for sounds in this file:
+//          dog bark -- non-commercial use only (http://soundbible.com/393-Puppy-Dog-Barking.html)
+//
 
 #import "FetchScene.h"
 #import "MainMenuScene.h"

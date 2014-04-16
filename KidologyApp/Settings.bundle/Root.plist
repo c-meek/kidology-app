@@ -155,10 +155,10 @@
 			</array>
 			<key>Values</key>
 			<array>
-				<real>0.15</real>
-				<string>0.30</string>
+				<string>0.15</string>
+				<string>0.3</string>
 				<string>0.45</string>
-				<string>0.60</string>
+				<string>0.6</string>
 				<string>0.75</string>
 			</array>
 		</dict>

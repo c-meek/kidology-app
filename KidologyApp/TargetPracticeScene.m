@@ -5,6 +5,12 @@
 //  Created by meek, christopher glenn on 2/9/14.
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
+//  Sounds for this app were obtained at soundbible.com
+//
+//      License information for sounds in this file:
+//          target "popping" noise -- Creative Commons Attribution 3.0 (http://soundbible.com/533-Pop-Cork.html)
+//
+
 
 #import "TargetPracticeScene.h"
 #import "TargetPracticeGameOver.h"
@@ -285,6 +291,12 @@ NSMutableArray *touchLog;
             //currentTouch.type = TARGET;
             //make a "delete" target action
             SKAction *deleteTarget = [SKAction runBlock:^{
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+                if (enableSound)
+                {
+                    [self runAction:[SKAction playSoundFileNamed:@"pop.mp3" waitForCompletion:NO]];
+                }
                 self.target.position = CGPointMake(-100,-100);
             }];
   
