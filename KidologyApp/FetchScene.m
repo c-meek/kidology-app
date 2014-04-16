@@ -152,8 +152,10 @@
     [self moveBallOffScreen:positions[0] withYPosition:positions[1]];
     //move dog offscreen
     [self moveDogOffScreen:positions[0] withYPosition:positions[1]];
+    
     //move both onscreen
     [self moveBackDogAndBall];
+    
 }
 
 // generate random direction to move the dog and ball along
@@ -207,7 +209,7 @@
 
 -(void)dogTouch
 {
-    //TODO play dog sound
+    
 }
 
 -(void)moveBallOffScreen: (CGFloat)x_pos withYPosition:(CGFloat) y_pos
@@ -235,13 +237,24 @@
     
     SKAction * seq = [SKAction sequence:@[wait, move]];
     [_dog runAction:seq];
-    NSLog(@"about to play sounds");
-   
+    
+    //the dog barks as it chases the ball
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+    
+    SKAction * bark = [SKAction playSoundFileNamed:@"dog_bark.mp3" waitForCompletion:NO];
+    SKAction * barkSeq = [SKAction sequence:@[wait, bark]];
+    
+    if (enableSound)
+    {
+        [self runAction:barkSeq];
+    }
 
 }
 
 -(void)moveBackDogAndBall
 {
+    
     //bring back dog
     //wait a bit
     SKAction * wait = [SKAction waitForDuration:2.0];
