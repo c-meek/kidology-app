@@ -13,7 +13,7 @@
 #import "LogEntry.h"
 #import "SetupViewController.h"
 
-@implementation GestureTargetPracticeScene
+// @implementation GestureTargetPracticeScene
 //
 //  TargetPracticeScene.m
 //  KidologyApp
@@ -25,15 +25,15 @@
 
 
 
-NSMutableArray *touchLog;
--(id)initWithSize:(CGSize)size numberOfTargets:(int)numberOfTargets;
-{
-    if (self = [super initWithSize:size])
-    {
-    }
-    return self;
-}
-@end
+//NSMutableArray *touchLog;
+//-(id)initWithSize:(CGSize)size numberOfTargets:(int)numberOfTargets;
+//{
+//    if (self = [super initWithSize:size])
+//    {
+//    }
+//    return self;
+//}
+//@end
 //        // initialize variables
 //        _numOfRotations = 0;
 //        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

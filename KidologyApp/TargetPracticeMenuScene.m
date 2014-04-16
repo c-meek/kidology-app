@@ -11,6 +11,7 @@
 #import "MainMenuScene.h"
 #import "CustomTargetPracticeScene.h"
 #import "GestureTargetPracticeScene.h"
+#import "NewGestureTargetScence.h"
 #import "UtilityClass.h"
 
 NSString *gameName;
@@ -124,8 +125,8 @@ NSString *gameName;
     else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
              [node.name isEqualToString:@"gestureModeButton"])
     {
-        // Create and configure the random "target practice" scene.
-        SKScene *gesturePractice = [[GestureTargetPracticeScene alloc] initWithSize:self.size numberOfTargets:3];
+//        // Create and configure the random "target practice" scene.
+        SKScene *gesturePractice = [[NewGestureTargetScence alloc] initWithSize:CGSizeMake(1024,768)];
         gesturePractice.scaleMode = SKSceneScaleModeAspectFill;
         [_tbv removeFromSuperview];
         // Present the scene
