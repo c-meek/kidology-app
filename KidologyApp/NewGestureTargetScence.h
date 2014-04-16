@@ -52,6 +52,7 @@ typedef enum {
 @property (nonatomic) Direction gestureDirection;
 @property (nonatomic) SKSpriteNode *rotateTarget;
 @property (nonatomic) SKSpriteNode *updatedTarget;
+@property (nonatomic) SKLabelNode *tapScreenLabel;
 @property (nonatomic) SKSpriteNode *arrow;
 @property (nonatomic) SKAction *gestureMoveDone;
 @property (nonatomic) CGPoint *lastupdated;

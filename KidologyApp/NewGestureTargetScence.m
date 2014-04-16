@@ -31,7 +31,6 @@
         NSLog(@"total targets is %d", self.totalTargets);
         NSLog(@"delay between is %d", self.delayBetweenTargets);
         
-//        touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         self.correctTouches = 0;
         // initialize the anchor to "not being touched" state
         self.time = 0;
@@ -40,7 +39,7 @@
         [self addBackground];
         
         // STUFF FOR GESTURES
-        
+        [self setupTabTouchScreenLabel];
         _gestureMoveDone =[SKAction removeFromParent];
         
         //And the rotation gesture will detect a two + finger rotation
@@ -59,6 +58,7 @@
             NSLog(@"Panning starting!(1)");
             _currentGesture = DRAG;
         }
+        _isGestureDone = true;
         [self displayTargets];
     }
     return self;
@@ -66,19 +66,17 @@
 
 -(void)displayTargets
 {
-        int rand = arc4random_uniform(2);
-        if (rand == 0)
-        {
-            NSLog(@"Rotation starting!");
-            _currentGesture = ROTATE;
-        }
-        else if (rand == 1)
-        {
-            NSLog(@"Panning starting!");
-            _currentGesture = DRAG;
-        }
-        
-    
+    int rand = arc4random_uniform(2);
+    if (rand == 0)
+    {
+        NSLog(@"Rotation starting!");
+        _currentGesture = ROTATE;
+    }
+    else if (rand == 1)
+    {
+        NSLog(@"Panning starting!");
+        _currentGesture = DRAG;
+    }
     
     NSLog(@"Target is being displayed");
 
@@ -86,7 +84,7 @@
     _target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     _target.xScale = .75;
     _target.yScale = .75;
-    [self addChild:self.target];
+    [self addChild:_target];
     
     if (_currentGesture == ROTATE)
     {
@@ -95,7 +93,8 @@
         _rotateTarget.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
         _rotateTarget.xScale = .75;
         _rotateTarget.yScale = .75;
-        [self addChild:self.rotateTarget];
+        [self addChild: _rotateTarget];
+
     }
     
     if (_currentGesture == DRAG)
@@ -108,13 +107,21 @@
         [self addChild: _updatedTarget];
     }
     
+    if(_correctTouches < 0)
+    {
+        _isGestureDone = false;
+    }
+    [self setupTabTouchScreenLabel];
+    [self addChild:_tapScreenLabel];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     NSLog(@"touched!");
- //   if (true)//_isGestureDone == true )
+    if (_isGestureDone == true)
     {
+        [_tapScreenLabel runAction:_gestureMoveDone];
+
         if (_currentGesture == ROTATE)
         {
             [self.view addGestureRecognizer:rotationGR];
@@ -123,9 +130,8 @@
         {
             [self.view.superview addGestureRecognizer:panGR];
         }
- //       [self displayTargets];
-//        _isGestureDone = false;
     }
+
 }
 
 -(void) handlePanning: (UIPanGestureRecognizer *) recognizer
@@ -134,19 +140,21 @@
     
     CGPoint changeInPosition = [recognizer translationInView:self.view];
     
-    NSLog(@"MAX: %f x %f position: (%f , %f)",self.frame.size.width, self.frame.size.height, changeInPosition.x, changeInPosition.y);
-//    CGPoint temp = [self.scene convertPoint:changeInPosition fromScene:nil];
-    //convertPoint:(CGPoint)point fromScene:(SKScene *)scene
+//    NSLog(@"MAX: %f x %f position: (%f , %f)",self.frame.size.width, self.frame.size.height, changeInPosition.x, changeInPosition.y);
     CGPoint newPosition = CGPointMake(_target.position.x +(.9* changeInPosition.x),_target.position.y - (.9*changeInPosition.y));
         SKAction *moveAction = [SKAction moveTo:newPosition duration:.05];
     [_updatedTarget runAction:moveAction];
     
     if ( recognizer.state == UIGestureRecognizerStateEnded )
     {
-        [self.view removeGestureRecognizer: panGR];
-        [self displayTargets];
-        _isGestureDone = true;
-        [_updatedTarget runAction:_gestureMoveDone];
+        if(_updatedTarget.position.x != _target.position.x && _updatedTarget.position.y != _target.position.y)
+        {
+            [self.view removeGestureRecognizer: panGR];
+            [_updatedTarget runAction:_gestureMoveDone];
+            _isGestureDone = true;
+            _correctTouches++;
+            [self displayTargets];
+        }
     }
 
 }
@@ -199,9 +207,10 @@
     if ( recognizer.state == UIGestureRecognizerStateEnded )
     {
         [self.view removeGestureRecognizer: rotationGR];
-        [self displayTargets];
-        _isGestureDone = true;
         [_rotateTarget runAction:_gestureMoveDone];
+        _isGestureDone = true;
+        _correctTouches++;
+        [self displayTargets];
     }
 }
 
@@ -227,6 +236,17 @@
     bgImage.xScale = .5;
     bgImage.yScale = .5;
     [self addChild:bgImage];
+}
+
+-(void)setupTabTouchScreenLabel
+{
+    _tapScreenLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+
+    _tapScreenLabel.fontSize = 50;
+    NSString * labelText = @"Please tap screen for action";
+    _tapScreenLabel.text = labelText;
+    _tapScreenLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+    _tapScreenLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
 }
 
 @end
