@@ -291,12 +291,14 @@ NSMutableArray *touchLog;
             //currentTouch.type = TARGET;
             //make a "delete" target action
             SKAction *deleteTarget = [SKAction runBlock:^{
+                // play a popping noise as the target is dismissed
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
                 if (enableSound)
                 {
                     [self runAction:[SKAction playSoundFileNamed:@"pop.mp3" waitForCompletion:NO]];
                 }
+                // dismiss the target
                 self.target.position = CGPointMake(-100,-100);
             }];
   

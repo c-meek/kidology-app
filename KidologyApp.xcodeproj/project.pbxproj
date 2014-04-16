@@ -121,6 +121,7 @@
 		FD6B78E018ED19240035CA95 /* kidologyspotlight-legacy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FD6B78D818ED19240035CA95 /* kidologyspotlight-legacy@2x.png */; };
 		FD7E779A18FE356B0031A417 /* pop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD7E779918FE356B0031A417 /* pop.mp3 */; };
 		FD7E779C18FE3AF30031A417 /* DefaultPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD7E779B18FE3AF30031A417 /* DefaultPreferences.plist */; };
+		FD7E779E18FE3CAE0031A417 /* tada.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD7E779D18FE3CAE0031A417 /* tada.mp3 */; };
 		FDB9D7B818F45899006329EB /* launchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB9D7B618F45899006329EB /* launchScreen.png */; };
 		FDB9D7B918F45899006329EB /* launchScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FDB9D7B718F45899006329EB /* launchScreen@2x.png */; };
 		FDE1C3A118F468560025811F /* launchScreenLegacy.png in Resources */ = {isa = PBXBuildFile; fileRef = FDE1C39F18F468560025811F /* launchScreenLegacy.png */; };
@@ -279,6 +280,7 @@
 		FD6B78D818ED19240035CA95 /* kidologyspotlight-legacy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kidologyspotlight-legacy@2x.png"; sourceTree = "<group>"; };
 		FD7E779918FE356B0031A417 /* pop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pop.mp3; sourceTree = "<group>"; };
 		FD7E779B18FE3AF30031A417 /* DefaultPreferences.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DefaultPreferences.plist; sourceTree = "<group>"; };
+		FD7E779D18FE3CAE0031A417 /* tada.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tada.mp3; sourceTree = "<group>"; };
 		FDB9D7B618F45899006329EB /* launchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launchScreen.png; sourceTree = "<group>"; };
 		FDB9D7B718F45899006329EB /* launchScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchScreen@2x.png"; sourceTree = "<group>"; };
 		FDE1C39F18F468560025811F /* launchScreenLegacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launchScreenLegacy.png; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 		7CB23C4F18C00284007F409F /* TargetGame */ = {
 			isa = PBXGroup;
 			children = (
+				FD7E779D18FE3CAE0031A417 /* tada.mp3 */,
 				FD7E779918FE356B0031A417 /* pop.mp3 */,
 				7C9E74D318FB105100E2723B /* green_target_w_outward_arrows.png */,
 				7C9E74D918FB10D000E2723B /* green_target_w_inward_arrows.png */,
@@ -699,6 +702,7 @@
 				0F423CAB18AD5D2200EE5F4E /* dog.png in Resources */,
 				0F3AC2C218F6EEA1007CE27C /* Back_Button.png in Resources */,
 				E8DF544118F58AC000B9D1D1 /* fetchGameButton.png in Resources */,
+				FD7E779E18FE3CAE0031A417 /* tada.mp3 in Resources */,
 				B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */,
 				FD7E779C18FE3AF30031A417 /* DefaultPreferences.plist in Resources */,
 				FDE1C3A218F468560025811F /* launchScreenLegacy@2x.png in Resources */,

@@ -5,6 +5,11 @@
 //  Created by meek, christopher glenn on 2/10/14.
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
+//  Sounds for this app were obtained at soundbible.com
+//
+//      License information for sounds in this file:
+//          "tada" noise -- Creative Commons Attribution 3.0 (http://soundbible.com/1003-Ta-Da.html)
+//
 
 #import "TargetPracticeGameOver.h"
 #import "TargetPracticeScene.h"
@@ -29,6 +34,14 @@ NSString *gameName;
         [self addPlayAgainButton];
         [self addBackToTargetGameMenuButton];
         [self addBackToMainMenuButton];
+        // play a "tada" noise to indicate success in the game
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+        if (enableSound)
+        {
+            [self runAction:[SKAction playSoundFileNamed:@"tada.mp3" waitForCompletion:NO]];
+        }
+
     }
     return self;
 }
