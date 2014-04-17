@@ -8,8 +8,11 @@
 //  Sounds for this app were obtained at soundbible.com
 //
 //      License information for sounds in this file:
-//          target "popping" noise -- Creative Commons Attribution 3.0 (http://soundbible.com/533-Pop-Cork.html)
-//
+//          target "popping" noise -- Creative Commons Attribution 3.0 (http://soundbible.com/533-Pop-Cork.html )
+//          dog bark -- non-commercial use only (http://soundbible.com/393-Puppy-Dog-Barking.html )
+//          rooster -- Creative Commons Attribution 3.0 (http://soundbible.com/2040-Rooster-Crowing-2.html )
+//          horse -- Creative Commons Attribution 3.0 (http://soundbible.com/1296-Horse-Neigh.html )
+//          bubbles -- Creative Commons Attribution 3.0 (http://soundbible.com/1137-Bubbles.html )
 
 
 #import "BabyTargetPracticeScene.h"
@@ -165,10 +168,36 @@
         SKAction *addTarget = [SKAction runBlock:^{
             [self displayTarget];
         }];
-
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+        
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
         _totalTouches++;
+        
+        if (enableSound)
+        {
+            //select a random number [0...4] to choose a random sound to play
+            int r = arc4random() % 4;
+            switch (r) {
+                case 0:
+                    [self runAction:[SKAction playSoundFileNamed:@"dog_bark.mp3" waitForCompletion:NO]];
+                    break;
+                case 1:
+                    [self runAction:[SKAction playSoundFileNamed:@"rooster.mp3" waitForCompletion:NO]];
+                    break;
+                case 2:
+                    [self runAction:[SKAction playSoundFileNamed:@"horse.mp3" waitForCompletion:NO]];
+                    break;
+                case 3:
+                    [self runAction:[SKAction playSoundFileNamed:@"bubbles.mp3" waitForCompletion:NO]];
+                    break;
+                default:
+                    [self runAction:[SKAction playSoundFileNamed:@"horse.mp3" waitForCompletion:NO]];
+                    break;
+            }
+        }
         
 //        if (_totalTouches > 5) {
 //            SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];

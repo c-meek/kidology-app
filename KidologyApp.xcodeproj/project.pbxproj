@@ -18,6 +18,9 @@
 		0F9462D518C0296A00E9E3BD /* anchor_green_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D118C0296A00E9E3BD /* anchor_green_right.png */; };
 		0F9462D618C0296A00E9E3BD /* anchor_green_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D218C0296A00E9E3BD /* anchor_green_left.png */; };
 		0F9462D718C0296A00E9E3BD /* anchor_red_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D318C0296A00E9E3BD /* anchor_red_right.png */; };
+		0FAA3122190056BA008C76C2 /* rooster.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0FAA3121190056B9008C76C2 /* rooster.mp3 */; };
+		0FAA31241900578D008C76C2 /* horse.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0FAA31231900578D008C76C2 /* horse.mp3 */; };
+		0FAA3126190057E2008C76C2 /* bubbles.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0FAA3125190057E2008C76C2 /* bubbles.mp3 */; };
 		0FDEFA3318FAFE1600D458F9 /* Center.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA2D18FAFE1600D458F9 /* Center.png */; };
 		0FDEFA3418FAFE1600D458F9 /* Center_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA2E18FAFE1600D458F9 /* Center_Pressed.png */; };
 		0FDEFA3518FAFE1600D458F9 /* Custom.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA2F18FAFE1600D458F9 /* Custom.png */; };
@@ -155,6 +158,9 @@
 		0F9462D118C0296A00E9E3BD /* anchor_green_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor_green_right.png; sourceTree = "<group>"; };
 		0F9462D218C0296A00E9E3BD /* anchor_green_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor_green_left.png; sourceTree = "<group>"; };
 		0F9462D318C0296A00E9E3BD /* anchor_red_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anchor_red_right.png; sourceTree = "<group>"; };
+		0FAA3121190056B9008C76C2 /* rooster.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = rooster.mp3; sourceTree = "<group>"; };
+		0FAA31231900578D008C76C2 /* horse.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = horse.mp3; sourceTree = "<group>"; };
+		0FAA3125190057E2008C76C2 /* bubbles.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bubbles.mp3; sourceTree = "<group>"; };
 		0FDEFA2D18FAFE1600D458F9 /* Center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Center.png; sourceTree = "<group>"; };
 		0FDEFA2E18FAFE1600D458F9 /* Center_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Center_Pressed.png; sourceTree = "<group>"; };
 		0FDEFA2F18FAFE1600D458F9 /* Custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Custom.png; sourceTree = "<group>"; };
@@ -531,6 +537,9 @@
 			isa = PBXGroup;
 			children = (
 				E8E5752318FC352E00B2AF1C /* dog_bark.mp3 */,
+				0FAA3121190056B9008C76C2 /* rooster.mp3 */,
+				0FAA31231900578D008C76C2 /* horse.mp3 */,
+				0FAA3125190057E2008C76C2 /* bubbles.mp3 */,
 			);
 			name = Sounds;
 			path = KidologyApp;
@@ -702,7 +711,9 @@
 				E842B6CE18FC8AF7000610A0 /* Quit_Button.png in Resources */,
 				FD6B78E018ED19240035CA95 /* kidologyspotlight-legacy@2x.png in Resources */,
 				E8DF544D18F58B8F00B9D1D1 /* therapistMenuButtonPressed.png in Resources */,
+				0FAA31241900578D008C76C2 /* horse.mp3 in Resources */,
 				E8DF544318F58B7800B9D1D1 /* mainMenuBackground.png in Resources */,
+				0FAA3126190057E2008C76C2 /* bubbles.mp3 in Resources */,
 				FDE1C3A118F468560025811F /* launchScreenLegacy.png in Resources */,
 				7CB23C4118C0020D007F409F /* Blue.png in Resources */,
 				FD6B78DB18ED19240035CA95 /* kidologyapp-legacy.png in Resources */,
