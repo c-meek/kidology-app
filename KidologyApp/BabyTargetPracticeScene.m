@@ -201,7 +201,6 @@
                     [self runAction:[SKAction playSoundFileNamed:@"horse.mp3" waitForCompletion:NO]];
                     break;
             }
-          
         }
         
 //        if (_totalTouches > 5) {
