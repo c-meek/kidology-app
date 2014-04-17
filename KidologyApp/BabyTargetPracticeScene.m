@@ -5,6 +5,12 @@
 //  Created by ngo, tien dong on 2/27/14.
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
+//  Sounds for this app were obtained at soundbible.com
+//
+//      License information for sounds in this file:
+//          target "popping" noise -- Creative Commons Attribution 3.0 (http://soundbible.com/533-Pop-Cork.html)
+//
+
 
 #import "BabyTargetPracticeScene.h"
 #import "MainMenuScene.h"
@@ -144,6 +150,14 @@
     {
         self.targetsHit ++;
         SKAction *deleteTarget = [SKAction runBlock:^{
+            // play a popping noise as the target is dismissed
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+            if (enableSound)
+            {
+                [self runAction:[SKAction playSoundFileNamed:@"pop.mp3" waitForCompletion:NO]];
+            }
+            // dismiss the target
             [self hideTarget];
         }];
         //make a wait action
