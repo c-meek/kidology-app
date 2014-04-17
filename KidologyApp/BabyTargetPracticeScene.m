@@ -171,10 +171,6 @@
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
-        if (enableSound)
-        {
-            [self runAction:[SKAction playSoundFileNamed:@"dog_bark.mp3" waitForCompletion:NO]];
-        }
         
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
