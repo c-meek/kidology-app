@@ -29,6 +29,9 @@
 		0FDEFA4218FB2E1700D458F9 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA4118FB2E1700D458F9 /* logo.png */; };
 		0FDF3AA318DA56A400FBEC85 /* CustomTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */; };
 		0FF78FC318EDD59100BD200D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FF78FC218EDD59100BD200D /* Settings.bundle */; };
+		7C1865B019005E5400C6933B /* dragTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C1865AF19005E5400C6933B /* dragTarget.png */; };
+		7C1865B21900782200C6933B /* rotate_green_target_clockwise.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C1865B11900782200C6933B /* rotate_green_target_clockwise.png */; };
+		7C1865B4190087B200C6933B /* outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C1865B3190087B200C6933B /* outline.png */; };
 		7C5523F218EDB7D30042DEAB /* rotate_green_targetII.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */; };
 		7C9E74D418FB105100E2723B /* green_target_w_outward_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9E74D318FB105100E2723B /* green_target_w_outward_arrows.png */; };
 		7C9E74D618FB106300E2723B /* green_target_w_inward_arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9E74D518FB106300E2723B /* green_target_w_inward_arrows.png */; };
@@ -77,7 +80,7 @@
 		B9D70C8618C62ED8000C12F1 /* targetPracticeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462C818BFFFC500E9E3BD /* targetPracticeBackground.png */; };
 		B9D70C8C18C639FB000C12F1 /* SetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D70C8B18C639FB000C12F1 /* SetupViewController.m */; };
 		B9D70C8F18C64587000C12F1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9D70C8E18C64587000C12F1 /* MenuViewController.m */; };
-		B9E5BE2E18F700010065B26D /* rotate_green_target.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2D18F700010065B26D /* rotate_green_target.png */; };
+		B9E5BE2E18F700010065B26D /* rotate_green_target_counterclockwise.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2D18F700010065B26D /* rotate_green_target_counterclockwise.png */; };
 		B9E5BE3018F700930065B26D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2F18F700930065B26D /* arrow.png */; };
 		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
 		E842B6CE18FC8AF7000610A0 /* Quit_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = E842B6CD18FC8AF7000610A0 /* Quit_Button.png */; };
@@ -164,6 +167,9 @@
 		0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTargetPracticeScene.h; sourceTree = "<group>"; };
 		0FDF3AA218DA56A400FBEC85 /* CustomTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTargetPracticeScene.m; sourceTree = "<group>"; };
 		0FF78FC218EDD59100BD200D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		7C1865AF19005E5400C6933B /* dragTarget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dragTarget.png; sourceTree = "<group>"; };
+		7C1865B11900782200C6933B /* rotate_green_target_clockwise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate_green_target_clockwise.png; sourceTree = "<group>"; };
+		7C1865B3190087B200C6933B /* outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outline.png; sourceTree = "<group>"; };
 		7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate_green_targetII.png; sourceTree = "<group>"; };
 		7C9E74D318FB105100E2723B /* green_target_w_outward_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target_w_outward_arrows.png; sourceTree = "<group>"; };
 		7C9E74D518FB106300E2723B /* green_target_w_inward_arrows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_target_w_inward_arrows.png; sourceTree = "<group>"; };
@@ -225,7 +231,7 @@
 		B9D70C8B18C639FB000C12F1 /* SetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupViewController.m; sourceTree = "<group>"; };
 		B9D70C8D18C64587000C12F1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		B9D70C8E18C64587000C12F1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
-		B9E5BE2D18F700010065B26D /* rotate_green_target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate_green_target.png; sourceTree = "<group>"; };
+		B9E5BE2D18F700010065B26D /* rotate_green_target_counterclockwise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate_green_target_counterclockwise.png; sourceTree = "<group>"; };
 		B9E5BE2F18F700930065B26D /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		B9FC0CFE18E4994D006F2AEF /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogEntry.h; sourceTree = "<group>"; };
 		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
@@ -366,8 +372,11 @@
 				7C9E74D918FB10D000E2723B /* green_target_w_inward_arrows.png */,
 				7C9E74D718FB10CA00E2723B /* green_target_w_outward_arrows.png */,
 				7C9E74D518FB106300E2723B /* green_target_w_inward_arrows.png */,
+				B9E5BE2D18F700010065B26D /* rotate_green_target_counterclockwise.png */,
+				7C1865B11900782200C6933B /* rotate_green_target_clockwise.png */,
+				7C1865B3190087B200C6933B /* outline.png */,
+				7C1865AF19005E5400C6933B /* dragTarget.png */,
 				B9E5BE2F18F700930065B26D /* arrow.png */,
-				B9E5BE2D18F700010065B26D /* rotate_green_target.png */,
 				7C5523F118EDB7D30042DEAB /* rotate_green_targetII.png */,
 				0F9462C818BFFFC500E9E3BD /* targetPracticeBackground.png */,
 				B96CAAE118A81D6B00D5C20C /* green_target.png */,
@@ -683,7 +692,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8DF544A18F58B8F00B9D1D1 /* settingsMenuButton.png in Resources */,
-				B9E5BE2E18F700010065B26D /* rotate_green_target.png in Resources */,
+				B9E5BE2E18F700010065B26D /* rotate_green_target_counterclockwise.png in Resources */,
 				FD6B78DA18ED19240035CA95 /* kidology-settings@2x.png in Resources */,
 				0FDEFA3518FAFE1600D458F9 /* Custom.png in Resources */,
 				7CB23C4618C0020D007F409F /* Lime.png in Resources */,
@@ -717,6 +726,7 @@
 				7CB23C4B18C0020D007F409F /* Red.png in Resources */,
 				E8DF543C18F58AB700B9D1D1 /* babyGameButtonPressed.png in Resources */,
 				0F3AC2C318F6EEA1007CE27C /* Back_Button_Pressed.png in Resources */,
+				7C1865B21900782200C6933B /* rotate_green_target_clockwise.png in Resources */,
 				7CB23C4D18C0020D007F409F /* Yellow.png in Resources */,
 				0F9462D418C0296A00E9E3BD /* anchor_red_left.png in Resources */,
 				0F3AC2C518F6F9D4007CE27C /* smaller&longer.csv in Resources */,
@@ -748,6 +758,7 @@
 				E8DF544B18F58B8F00B9D1D1 /* targetGameButtonPressed.png in Resources */,
 				0F9462D718C0296A00E9E3BD /* anchor_red_right.png in Resources */,
 				7CB23C4018C0020D007F409F /* Black.png in Resources */,
+				7C1865B019005E5400C6933B /* dragTarget.png in Resources */,
 				FD6B78DC18ED19240035CA95 /* kidologyapp-legacy@2x.png in Resources */,
 				7CB23C4318C0020D007F409F /* Cyan.png in Resources */,
 				FD6B78D918ED19240035CA95 /* kidology-settings.png in Resources */,
@@ -758,6 +769,7 @@
 				0FDEFA3C18FB080600D458F9 /* Actions_Pressed.png in Resources */,
 				7CB23C4418C0020D007F409F /* Gray.png in Resources */,
 				FD6B78DD18ED19240035CA95 /* kidologyspotlight-icon.png in Resources */,
+				7C1865B4190087B200C6933B /* outline.png in Resources */,
 				E8E5752418FC352E00B2AF1C /* dog_bark.mp3 in Resources */,
 				FD6B78DF18ED19240035CA95 /* kidologyspotlight-legacy.png in Resources */,
 				7CB23C4C18C0020D007F409F /* White.png in Resources */,
