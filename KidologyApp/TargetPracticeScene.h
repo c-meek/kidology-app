@@ -34,6 +34,7 @@ typedef enum {
     @property (nonatomic) int delayBetweenTargets;
     @property (nonatomic) NSString *affectedHand;
     @property (nonatomic) float targetSize;
+    @property (nonatomic) BOOL enableSound;
     @property (nonatomic) float time;
     @property (nonatomic) float time_not_anchored;
     @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;

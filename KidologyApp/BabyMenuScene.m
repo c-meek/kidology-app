@@ -17,6 +17,7 @@
 {
     if (self = [super initWithSize:size]) {        
         [self addBackground];
+        _enableSound = [[[NSUserDefaults standardUserDefaults] objectForKey:@"enableSound"] boolValue];
 
         float width = self.frame.size.width;
         float column = width / 5;
@@ -93,6 +94,9 @@
             //go back to main menu
             SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
             mainMenu.scaleMode = SKSceneScaleModeAspectFill;
+            
+            if (_enableSound)
+                [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
             [self.view presentScene:mainMenu transition:reveal];
         }
         else

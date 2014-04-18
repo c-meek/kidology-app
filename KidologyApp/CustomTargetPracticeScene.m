@@ -11,6 +11,7 @@
 #import "TargetPracticeMenuScene.h"
 #import "LogEntry.h"
 #import "SetupViewController.h"
+#import "UtilityClass.h"
 
 extern NSString *gameName;
 extern NSUserDefaults *defaults;
@@ -39,6 +40,10 @@ NSMutableArray *touchLog;
         [self initializeAnchor];
         [self addQuitButton];
         _time = 0;
+        
+        if (_enableSound)
+            [self runAction:[SKAction playSoundFileNamed:@"dingding.mp3" waitForCompletion:NO]];
+
     }
     return self;
 }
@@ -256,6 +261,8 @@ NSMutableArray *touchLog;
                                              targetRadius:radius
                                            targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
             [touchLog addObject:currentTouch]; // log the touch
+            [self displayTargetHit];
+
             //currentTouch.type = TARGET;
             //make a "delete" target action
             SKAction *deleteTarget = [SKAction runBlock:^{
@@ -332,7 +339,7 @@ NSMutableArray *touchLog;
     trackerLabel.fontSize = 20;
     NSString * text = [NSString stringWithFormat:@"%d/%d", _correctTouches, _totalTargets];
     trackerLabel.text = text;
-    trackerLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    trackerLabel.fontColor = [SKColor yellowColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
     trackerLabel.horizontalAlignmentMode = 0; // text is center-aligned
     trackerLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
     [self addChild:trackerLabel];
@@ -350,7 +357,7 @@ NSMutableArray *touchLog;
     }
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     timeLabel.fontSize = 20;
-    timeLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    timeLabel.fontColor = [SKColor yellowColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
     timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
@@ -374,6 +381,8 @@ NSMutableArray *touchLog;
     //get handedness from the user defaults
     defaults = [NSUserDefaults standardUserDefaults];
     NSString *affectedHand = [defaults objectForKey:@"affectedHand"];
+    _enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
     _pressedAnchor.xScale = .3;
@@ -405,6 +414,27 @@ NSMutableArray *touchLog;
     [self addChild:_anchor];
 }
 
+-(void)displayTargetHit
+{
+    if (_enableSound)
+    {
+        NSString *soundFile = [UtilityClass getSoundFile];
+        [self runAction:[SKAction playSoundFileNamed:soundFile waitForCompletion:NO]];
+    }
+    
+    NSString * text2 = [NSString stringWithFormat:@"Target Hit! %d More!", self.totalTargets - self.correctTouches];
+    SKLabelNode * targetHitLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    targetHitLabel.name = @"instructionLabel2";
+    targetHitLabel.text = text2;
+    targetHitLabel.fontSize = 24;
+    targetHitLabel.fontColor = [SKColor yellowColor];
+    targetHitLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + 100);
+    [self addChild:targetHitLabel];
+    CGPoint dest = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
+    SKAction *fadeAway = [SKAction moveTo:dest duration:1.5];
+    SKAction * remove = [SKAction removeFromParent];
+    [targetHitLabel runAction:[SKAction sequence:@[fadeAway, remove]]];
+}
 
 -(void)endGame:(int)targetsHit totalTargets:(int)totalTargets
 {

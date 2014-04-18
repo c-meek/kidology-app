@@ -52,4 +52,39 @@
     return  missingField;
 }
 
++(NSString *)getSoundFile
+{
+    NSString *soundFile = @"";
+    int r = arc4random_uniform(5);
+    switch (r) {
+        case 0:
+            soundFile = @"metal_clang.mp3";
+            break;
+        case 1:
+            soundFile = @"pop.mp3";
+            break;
+        case 2:
+            soundFile = @"fire.mp3";
+            break;
+        case 3:
+            soundFile = @"pling.mp3";
+            break;
+        case 4:
+            soundFile = @"pop2.mp3";
+            break;
+        case 5:
+            soundFile = @"pop3.mp3";
+            break;
+        case 6:
+            soundFile = @"whip.mp3";
+            break;
+        default:
+            soundFile = @"pew.mp3";
+            break;
+    }
+    
+    return soundFile;
+}
+
+
 @end

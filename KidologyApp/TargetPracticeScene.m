@@ -18,6 +18,7 @@
 #import "math.h"
 #import "LogEntry.h"
 #import "SetupViewController.h"
+#import "UtilityClass.h"
 
 @implementation TargetPracticeScene
 
@@ -33,7 +34,12 @@ NSMutableArray *touchLog;
         self.delayBetweenTargets = [[defaults objectForKey:@"delayBetweenTargets"] integerValue];
         _affectedHand = [defaults objectForKey:@"affectedHand"];
         _targetSize = [[defaults objectForKey:@"defaultTargetSize"] floatValue];
+        _enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+
         NSLog(@"target size is %f", _targetSize);
+        
+        if (_enableSound)
+            [self runAction:[SKAction playSoundFileNamed:@"dingding.mp3" waitForCompletion:NO]];
 
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         self.correctTouches = 0;
@@ -288,16 +294,10 @@ NSMutableArray *touchLog;
                                              targetRadius:radius
                                            targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
             [touchLog addObject:currentTouch]; // log the touch
+            [self displayTargetHit];
             //currentTouch.type = TARGET;
             //make a "delete" target action
             SKAction *deleteTarget = [SKAction runBlock:^{
-                // play a popping noise as the target is dismissed
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
-                if (enableSound)
-                {
-                    [self runAction:[SKAction playSoundFileNamed:@"pop.mp3" waitForCompletion:NO]];
-                }
                 // dismiss the target
                 self.target.position = CGPointMake(-100,-100);
             }];
@@ -372,7 +372,7 @@ NSMutableArray *touchLog;
     trackerLabel.fontSize = 20;
     NSString * text = [NSString stringWithFormat:@"%d/%d", _correctTouches, _totalTargets];
     trackerLabel.text = text;
-    trackerLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    trackerLabel.fontColor = [SKColor yellowColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
     trackerLabel.horizontalAlignmentMode = 0; // text is center-aligned
     trackerLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
     [self addChild:trackerLabel];
@@ -390,7 +390,7 @@ NSMutableArray *touchLog;
     }
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     timeLabel.fontSize = 20;
-    timeLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    timeLabel.fontColor =  [SKColor yellowColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
     timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
@@ -503,6 +503,27 @@ NSMutableArray *touchLog;
         gameMode = @"random";
     }
     return gameMode;
+}
+
+-(void)displayTargetHit
+{
+    if (_enableSound)
+    {
+        NSString *soundFile = [UtilityClass getSoundFile];
+        [self runAction:[SKAction playSoundFileNamed:soundFile waitForCompletion:NO]];
+    }
+    NSString * text2 = [NSString stringWithFormat:@"Target Hit! %d More!", self.totalTargets - self.correctTouches];
+    SKLabelNode * targetHitLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    targetHitLabel.name = @"instructionLabel2";
+    targetHitLabel.text = text2;
+    targetHitLabel.fontSize = 24;
+    targetHitLabel.fontColor = [SKColor yellowColor];
+    targetHitLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + 100);
+    [self addChild:targetHitLabel];
+    CGPoint dest = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
+    SKAction *fadeAway = [SKAction moveTo:dest duration:1.5];
+    SKAction * remove = [SKAction removeFromParent];
+    [targetHitLabel runAction:[SKAction sequence:@[fadeAway, remove]]];
 }
 
 @end

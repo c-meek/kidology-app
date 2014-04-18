@@ -18,6 +18,7 @@
 @property (nonatomic) int totalTouches;
 @property (nonatomic) int correctTouches;
 @property (nonatomic) int totalTargets;
+@property (nonatomic) BOOL enableSound;
 @property (nonatomic) float delayDuration;
 @property (nonatomic) int targetIterator;
 @property (nonatomic) float time;

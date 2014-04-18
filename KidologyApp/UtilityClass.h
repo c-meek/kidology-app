@@ -10,4 +10,5 @@
 
 @interface UtilityClass : NSObject
 +(BOOL)checkSettings;
++(NSString *)getSoundFile;
 @end

@@ -17,6 +17,9 @@
 #import "MainMenuScene.h"
 #import "TargetPracticeMenuScene.h"
 #import "CustomTargetPracticeScene.h"
+#import "NewGestureTargetScence.h"
+#import "FetchScene.h"
+#import "BabyMenuScene.h"
 
 @implementation TargetPracticeGameOver
 
@@ -36,12 +39,18 @@ NSString *gameName;
         [self addBackToMainMenuButton];
         // play a "tada" noise to indicate success in the game
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
-        if (enableSound)
+        _enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+        if (_enableSound)
         {
-            [self runAction:[SKAction playSoundFileNamed:@"tada.mp3" waitForCompletion:NO]];
+            if (targetsHit == totalTargets)
+            {
+                [self runAction:[SKAction playSoundFileNamed:@"tada.mp3" waitForCompletion:NO]];
+            }
+            else
+            {
+                [self runAction:[SKAction playSoundFileNamed:@"sad_trombone.mp3" waitForCompletion:NO]];
+            }
         }
-
     }
     return self;
 }
@@ -83,37 +92,26 @@ NSString *gameName;
     {
         // Create and configure the "main menu" scene.
         NSString *gameMode = [self.userData objectForKey:@"gameMode"];
-        int mode = 0;
+        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         NSLog(@"game mode is %@", gameMode);
-        if ([gameMode isEqualToString: @"center"])
+        if ([gameMode isEqualToString: @"center"] ||
+            [gameMode isEqualToString: @"random"])
         {
-            mode = 0;
-        }
-        else if ([gameMode isEqualToString: @"random"])
-        {
-            mode = 1;
-        }
-        else if ([gameMode isEqualToString: @"gesture"])
-        {
-            mode = 2;
-        }
-        else if ([gameMode isEqualToString: @"custom"])
-        {
-            mode = 3;
-        }
-        NSLog(@"mode is %d",mode);
-        
-        if (mode != 3)
-        {
+            int mode = 0;
+            if ([gameMode isEqualToString: @"random"])
+                mode = 1;
             SKScene * targetPracticeScene = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:mode];
             targetPracticeScene.scaleMode = SKSceneScaleModeAspectFill;
             
             // Present the scene.
-            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+            if (_enableSound)
+                [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
+
             [self.view presentScene:targetPracticeScene transition:reveal];
         }
-        else // if (mode == 3)
+        else if ([gameMode isEqualToString: @"custom"])
         {
+            // custom game mode
             if(nil == gameName && [_tbv superview] == nil)
             {
                 [self addGameFilesToArray];
@@ -126,13 +124,36 @@ NSString *gameName;
             {
                 [_tbv removeFromSuperview];
             }
-//            SKScene * customTargetPracticeScene = [[CustomTargetPracticeScene alloc] initWithSize:self.size];
-//            customTargetPracticeScene.scaleMode = SKSceneScaleModeAspectFill;
-//            
-//            // Present the scene.
-//            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-//            [self.view presentScene:customTargetPracticeScene transition:reveal];
         }
+        else if ([gameMode isEqualToString:@"gesture"])
+        {
+            SKScene * newGestureScene = [[NewGestureTargetScence alloc] initWithSize:self.size];
+            newGestureScene.scaleMode = SKSceneScaleModeAspectFill;
+            
+            // Present the scene.
+            if (_enableSound)
+                [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
+            [self.view presentScene:newGestureScene transition:reveal];
+        }
+        else if ([gameMode isEqualToString:@"fetch"])
+        {
+            SKScene * fetchScene = [[FetchScene alloc] initWithSize:self.size];
+            fetchScene.scaleMode = SKSceneScaleModeAspectFill;
+            
+            // Present the scene.
+            [self.view presentScene:fetchScene transition:reveal];
+        }
+        else if ([gameMode isEqualToString:@"baby"])
+        {
+            SKScene * babyMenuScene = [[BabyMenuScene alloc] initWithSize:self.size];
+            babyMenuScene.scaleMode = SKSceneScaleModeAspectFill;
+            
+            // Present the scene.
+            if (_enableSound)
+                [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
+            [self.view presentScene:babyMenuScene transition:reveal];
+        }
+ 
     }
     else if ([node.name isEqualToString:@"backToTargetGameMenuButton"] ||
              [node.name isEqualToString:@"backToTargetGameMenuLabel"])
@@ -144,6 +165,8 @@ NSString *gameName;
         targetPraticeMenuScene.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
+        if (_enableSound)
+            [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         [self.view presentScene:targetPraticeMenuScene transition:reveal];
     }
@@ -155,6 +178,8 @@ NSString *gameName;
         mainMenuScene.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
+        if (_enableSound)
+            [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
         SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         [self.view presentScene:mainMenuScene transition:reveal];
     }
@@ -294,6 +319,12 @@ NSString *gameName;
 -(void)doLogging
 {
     NSLog(@"in do logging");
+    NSString *gameMode = [self.userData objectForKey:@"gameMode"];
+    if ([gameMode isEqualToString:@"gesture"])
+    {
+        // not logging gestures yet
+        return;
+    }
     SKScene *scene = [self.view scene];
     NSMutableArray *log = [scene.userData objectForKey:@"touchLog"];
     

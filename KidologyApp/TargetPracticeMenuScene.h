@@ -23,4 +23,5 @@
 @property (nonatomic) SKSpriteNode *customModeButtonPressed;
 @property (nonatomic) NSMutableArray *gameArray;
 @property (nonatomic) UITableView *tbv;
+@property (nonatomic) BOOL enableSound;
 @end

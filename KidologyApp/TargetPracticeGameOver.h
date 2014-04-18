@@ -21,5 +21,6 @@
 @property (nonatomic) UITableView *tbv;
 @property (nonatomic) int targetsHit;
 @property (nonatomic) int totalTargets;
+@property (nonatomic) BOOL enableSound;
 
 @end

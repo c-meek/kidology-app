@@ -10,7 +10,8 @@
 
 @interface BabyTargetPracticeScene : SKScene
 @property (nonatomic) SKSpriteNode * target;
-@property (nonatomic) int totalTouches;
+@property (nonatomic) int totalTargets;
+@property (nonatomic) BOOL enableSound;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 @property (nonatomic) float time;

@@ -14,8 +14,11 @@
 #import "math.h"
 #import "LogEntry.h"
 #import "SetupViewController.h"
+#import "UtilityClass.h"
 
 @implementation NewGestureTargetScence
+
+NSMutableArray *touchLog;
 
 -(id)initWithSize:(CGSize)size
 {
@@ -23,20 +26,24 @@
     {
         // initialize variables
         _numOfRotations = 0;
+        self.correctTouches = 0;
+        self.time = 0;
+        // get user preferences from settings app
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults synchronize];
         self.totalTargets = [[defaults objectForKey:@"numberOfTargets"] integerValue];
         self.delayBetweenTargets = [[defaults objectForKey:@"delayBetweenTargets"] integerValue];
         _affectedHand = [defaults objectForKey:@"affectedHand"];
-        NSLog(@"total targets is %d", self.totalTargets);
-        NSLog(@"delay between is %d", self.delayBetweenTargets);
+        _targetSize = [[defaults objectForKey:@"defaultTargetSize"] floatValue];
+        _enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+        touchLog = [[NSMutableArray alloc] init];
         
-        self.correctTouches = 0;
-        // initialize the anchor to "not being touched" state
-        self.time = 0;
+        if (_enableSound)
+            [self runAction:[SKAction playSoundFileNamed:@"dingding.mp3" waitForCompletion:NO]];
         
         // add images
         [self addBackground];
+        [self addQuitButton];
         
         // STUFF FOR GESTURES
         [self setupTabTouchScreenLabel];
@@ -50,39 +57,39 @@
         //The zoom gesture will support 2 finger pinches
         pinchGR = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
         
-        int rand = arc4random_uniform(3);
-        if (rand == 0)
-        {
-            NSLog(@"Rotation starting!(1)");
-            _currentGesture = ROTATE;
-            int tempCounterForRotation = arc4random_uniform(2);
-            if (tempCounterForRotation == 0)
-            {
-                _gestureDirection = COUNTER_CLOCKWISE;
-            }
-            else
-            {
-                _gestureDirection = CLOCKWISE;
-            }
-        }
-        else if (rand == 1)
-        {
-            NSLog(@"Panning starting!(1)");
-            _currentGesture = DRAG;
-        }
-        else if (rand == 2)
-        {
-            _currentGesture = ZOOM;
-            int tempCounterForZoom = arc4random_uniform(2);
-            if (tempCounterForZoom == 0)
-            {
-                _gestureDirection = IN;
-            }
-            else
-            {
-                _gestureDirection = OUT;
-            }
-        }
+//        int rand = arc4random_uniform(3);
+//        if (rand == 0)
+//        {
+//            NSLog(@"Rotation starting!(1)");
+//            _currentGesture = ROTATE;
+//            int tempCounterForRotation = arc4random_uniform(2);
+//            if (tempCounterForRotation == 0)
+//            {
+//                _gestureDirection = COUNTER_CLOCKWISE;
+//            }
+//            else
+//            {
+//                _gestureDirection = CLOCKWISE;
+//            }
+//        }
+//        else if (rand == 1)
+//        {
+//            NSLog(@"Panning starting!(1)");
+//            _currentGesture = DRAG;
+//        }
+//        else if (rand == 2)
+//        {
+//            _currentGesture = ZOOM;
+//            int tempCounterForZoom = arc4random_uniform(2);
+//            if (tempCounterForZoom == 0)
+//            {
+//                _gestureDirection = IN;
+//            }
+//            else
+//            {
+//                _gestureDirection = OUT;
+//            }
+//        }
         
         _isGestureDone = true;
         [self displayTargets];
@@ -92,7 +99,6 @@
 
 -(void)displayTargets
 {
-    
     int rand = arc4random_uniform(3);
     if (rand == 0)
     {
@@ -129,11 +135,14 @@
 
     
     NSLog(@"Target is being displayed");
-
+    
     self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
     _target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     _target.xScale = .75;
     _target.yScale = .75;
+//    SKAction * showTarget = [SKAction runBlock:^{ [self addChild:self.target]; }];
+//
+//    [self runAction:[SKAction sequence:@[wait, showTarget]]];
     [self addChild:_target];
     
     if (_currentGesture == ROTATE)
@@ -230,7 +239,16 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     NSLog(@"touched!");
-    if (_isGestureDone == true)
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:location];
+    if ([node.name isEqualToString:@"quitButton"] ||
+        [node.name isEqualToString:@"quitButtonPressed"])
+    {
+        _quitButton.hidden = true;
+        _quitButtonPressed.hidden = false;
+    }
+    else if (_isGestureDone == true)
     {
         [_tapScreenLabel runAction:_gestureMoveDone];
 
@@ -248,6 +266,50 @@
         }
     }
 }
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch ends */
+    for (UITouch *touch in [touches allObjects]) {
+        CGPoint positionInScene = [touch locationInNode:self];
+        
+        SKNode *node = [self nodeAtPoint:positionInScene];
+        if ([node.name isEqualToString:@"quitButton"] ||
+            [node.name isEqualToString:@"quitButtonPressed"])
+        {
+            _quitButton.hidden = false;
+            _quitButtonPressed.hidden = true;
+            [self endGame:self.correctTouches totalTargets:self.totalTargets];
+        }
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    for (UITouch *touch in [touches allObjects]) {
+    	CGPoint currentLocation  = [touch locationInNode:self];
+        CGPoint previousLocation = [touch previousLocationInNode:self];
+        SKNode *currentNode = [self nodeAtPoint:currentLocation];
+        SKNode *previousNode = [self nodeAtPoint:previousLocation];
+        
+        // If a touch was off the back button but has moved onto it
+        if (!([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
+            ([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
+        {
+            _quitButtonPressed.hidden = false;
+            _quitButton.hidden = true;
+        }
+        else if (([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
+                 !([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
+        {
+            // touch was on quit button but moved off
+            _quitButtonPressed.hidden = true;
+            _quitButton.hidden = false;
+        }
+    }
+}
+
 
 -(void) handlePinch: (UIPinchGestureRecognizer *) recognizer
 {
@@ -279,12 +341,17 @@
         {
             if (_zoomTarget.xScale < _target.xScale)
             {
+                _correctTouches++;
+                [self displayTargetHit];
                 NSLog(@"zoom was correct!");
                 [self.view removeGestureRecognizer: pinchGR];
                 [_zoomTarget runAction:_gestureMoveDone];
                 [_outline runAction:_gestureMoveDone];
                 _isGestureDone = true;
-                _correctTouches++;
+                if (self.correctTouches == self.totalTargets)
+                    [self endGame:self.correctTouches totalTargets:self.totalTargets];
+                SKAction * wait = [SKAction waitForDuration:2.0];
+                [self runAction:wait];
                 [self displayTargets];
             }
         }
@@ -292,12 +359,17 @@
         {
             if(_zoomTarget.xScale > _target.xScale)
             {
+                _correctTouches++;
+                [self displayTargetHit];
                 NSLog(@"zoom was correct!");
                 [self.view removeGestureRecognizer: pinchGR];
                 [_zoomTarget runAction:_gestureMoveDone];
                 [_outline runAction:_gestureMoveDone];
                 _isGestureDone = true;
-                _correctTouches++;
+                if (self.correctTouches == self.totalTargets)
+                    [self endGame:self.correctTouches totalTargets:self.totalTargets];
+                SKAction * wait = [SKAction waitForDuration:2.0];
+                [self runAction:wait];
                 [self displayTargets];
             }
         }
@@ -335,12 +407,17 @@
         NSLog(@"panning ended!");
         if( [self isInDragTarget:_updatedTarget.position] )
         {
+            _correctTouches++;
+            [self displayTargetHit];
             NSLog(@"pan was correct!");
             [self.view removeGestureRecognizer: panGR];
             [_updatedTarget runAction:_gestureMoveDone];
             [_dragTarget runAction: _gestureMoveDone];
             _isGestureDone = true;
-            _correctTouches++;
+            if (self.correctTouches == self.totalTargets)
+                [self endGame:self.correctTouches totalTargets:self.totalTargets];
+            SKAction * wait = [SKAction waitForDuration:2.0];
+            [self runAction:wait];
             [self displayTargets];
         }
         else
@@ -397,12 +474,17 @@
     {
         if (_hasRotated > 0)      // THIS IS WHEN THE ROTATION IS CORRECT! (that means they has successfully spun the target for a little bit...
         {
+            _correctTouches++;
+            [self displayTargetHit];
             _numOfRotations ++;
             [self.view removeGestureRecognizer:rotationGR ];
             [_rotateTarget runAction:_gestureMoveDone];
             NSLog(@"correct rotation!\n");
             _isGestureDone = true;
-            _correctTouches++;
+            if (self.correctTouches == self.totalTargets)
+                [self endGame:self.correctTouches totalTargets:self.totalTargets];
+            SKAction * wait = [SKAction waitForDuration:2.0];
+            [self runAction:wait];
             [self displayTargets];
         }
         allTouchedTarget = true;
@@ -451,15 +533,119 @@
     [self addChild:bgImage];
 }
 
+-(void)addQuitButton
+{
+    _quitButton = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button"];
+    _quitButton.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButton.name = @"quitButton";
+    _quitButton.xScale = .5;
+    _quitButton.yScale = .5;
+    [self addChild:_quitButton];
+    
+    _quitButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button_Pressed"];
+    _quitButtonPressed.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButtonPressed.name = @"quitButtonPressed";
+    _quitButtonPressed.hidden = true;
+    _quitButtonPressed.xScale = .5;
+    _quitButtonPressed.yScale = .5;
+    [self addChild:_quitButtonPressed];
+}
+
+-(void)endGame:(int)targetsHit totalTargets:(int)totalTargets
+{
+    SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
+    SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targetsHit:targetsHit totalTargets:totalTargets];
+    // pass the game type and touch log to "game over" scene
+    NSLog(@"end game has touch log count %d", touchLog.count);
+    [gameOverScene.userData setObject:@"gesture" forKey:@"gameMode"];
+    [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
+    [self.view presentScene:gameOverScene transition:reveal];
+}
+
 -(void)setupTabTouchScreenLabel
 {
     _tapScreenLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
 
-    _tapScreenLabel.fontSize = 50;
-    NSString * labelText = @"Please tap screen for action";
+    _tapScreenLabel.fontSize = 20;
+    NSString * labelText = @"Tap screen to begin action!";
     _tapScreenLabel.text = labelText;
     _tapScreenLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-    _tapScreenLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    _tapScreenLabel.fontColor = [SKColor yellowColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+}
+
+
+-(void)update:(CFTimeInterval)currentTime {
+    /* Called before each frame is rendered */
+    CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
+    self.lastUpdateTimeInterval = currentTime;
+    [self updateWithTimeSinceLastUpdate:timeSinceLast];
+    //    NSLog(@"%@", touchLog);
+    
+}
+
+-(void)trackerLabel
+{
+    SKLabelNode * trackerLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    trackerLabel.fontSize = 20;
+    NSString * text = [NSString stringWithFormat:@"%d/%d", _correctTouches, _totalTargets];
+    trackerLabel.text = text;
+    trackerLabel.fontColor = [SKColor yellowColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    trackerLabel.horizontalAlignmentMode = 0; // text is center-aligned
+    trackerLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
+    [self addChild:trackerLabel];
+    SKAction * actionMoveDone = [SKAction removeFromParent];
+    SKAction * actionMoveTime = [SKAction moveTo:trackerLabel.position duration:.0075];
+    [trackerLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
+}
+
+- (void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
+    
+    self.lastSpawnTimeInterval += timeSinceLast;
+    if (self.lastSpawnTimeInterval > .1) {
+        self.lastSpawnTimeInterval = 0;
+        self.time +=.1;
+    }
+    SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    timeLabel.fontSize = 20;
+    timeLabel.fontColor =  [SKColor yellowColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    timeLabel.verticalAlignmentMode = 2;
+    timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
+    timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
+    
+    //label for ratio of touched/total targets
+    [self trackerLabel];
+    
+    
+    float r_time = roundf(self.time *100)/100.0;
+    NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
+    timeLabel.text = s_time;
+    [self addChild: timeLabel];
+    
+    //    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
+    SKAction * actionMoveDone = [SKAction removeFromParent];
+    SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.0075];
+    [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
+}
+
+-(void)displayTargetHit
+{
+    if (_enableSound)
+    {
+        NSString *soundFile = [UtilityClass getSoundFile];
+        [self runAction:[SKAction playSoundFileNamed:soundFile waitForCompletion:NO]];
+    }
+    NSString * text2 = [NSString stringWithFormat:@"Gesture Complete! %d More!", self.totalTargets - self.correctTouches];
+    SKLabelNode * targetHitLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    targetHitLabel.name = @"instructionLabel2";
+    targetHitLabel.text = text2;
+    targetHitLabel.fontSize = 24;
+    targetHitLabel.fontColor = [SKColor yellowColor];
+    targetHitLabel.position = CGPointMake(self.frame.size.width/2,self.frame.size.height/2 + 220);
+    [self addChild:targetHitLabel];
+    CGPoint dest = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
+    SKAction *fadeAway = [SKAction moveTo:dest duration:1.5];
+    SKAction * remove = [SKAction removeFromParent];
+    [targetHitLabel runAction:[SKAction sequence:@[fadeAway, remove]]];
 }
 
 @end

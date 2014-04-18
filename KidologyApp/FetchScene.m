@@ -13,17 +13,22 @@
 
 #import "FetchScene.h"
 #import "MainMenuScene.h"
+#import "LogEntry.h"
+#import "TargetPracticeGameOver.h"
 
 @implementation FetchScene
+
+NSMutableArray *touchLog;
 -(id)initWithSize:(CGSize)size
 {
     if(self = [super initWithSize:size])
     {
-        NSLog(@"Size: %@", NSStringFromCGSize(size));
-        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults synchronize];
+        self.totalTargets = [[defaults objectForKey:@"numberOfTargets"] integerValue];
+        self.targetsHit = 0;
         //setup scene
         [self addBackground];
-        
         self.ball = [SKSpriteNode spriteNodeWithImageNamed:@"tennis"];
         self.dog = [SKSpriteNode spriteNodeWithImageNamed:@"dog"];
         [self displayDog];
@@ -32,9 +37,127 @@
         [self addChild:self.ball];
         [self addInstruction];
         [self addQuitButton];
+        touchLog = [[NSMutableArray alloc] initWithCapacity:1];
+
         // [self addToNotificationCenter];
     }
     return self;
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for(UITouch *touch in touches)
+    {
+        CGPoint location = [touch locationInNode:self];
+        SKNode *node = [self nodeAtPoint:location];
+        if([node.name isEqualToString:@"quitButton"] ||
+           [node.name isEqualToString:@"pressedQuitButton"])
+        {
+            _quitButton.hidden = true;
+            _quitButtonPressed.hidden = false;
+        }
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch * touch in touches)
+    {
+        //get a specific touch
+        CGPoint location = [touch locationInNode:self];
+        //find the node that is touched
+        SKSpriteNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:location];
+        //handle the situations of which nodes are touched
+        if([_quitButton isEqual:touchedNode] || [_quitButtonPressed isEqual:touchedNode])
+        {
+            // reset button
+            _quitButtonPressed.hidden = true;
+            _quitButton.hidden = false;
+            
+            [self endGame:self.targetsHit totalTargets:self.totalTargets];
+        }
+        else
+        {
+            double xDifference = location.x - self.ball.position.x;
+            double yDifference = location.y - self.ball.position.y;
+            double radius = self.ball.size.width / 2;
+            double distanceFromCenter = sqrt(pow(xDifference, 2) + pow(yDifference, 2));
+            
+            if([_ball isEqual:touchedNode])
+            {
+
+                self.targetsHit++;
+                LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Ball"
+                                                         time:self.time
+                                                anchorPressed:NO
+                                                   targetsHit:self.targetsHit
+                                           distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
+                                                touchLocation:CGPointMake(location.x, location.y)
+                                               targetLocation:CGPointMake(self.ball.position.x, self.ball.position.y)
+                                                 targetRadius:radius
+                                               targetOnScreen:((self.ball.position.x == self.frame.size.width/2) &&
+                                                               (self.ball.position.y == self.frame.size.height/2))];
+                [touchLog addObject:currentTouch]; // log the touch
+                [self displayTargetHit];
+                [self ballTouch];
+            }
+            else if([_dog isEqual:touchedNode])
+            {
+                LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Dog"
+                                                                   time:self.time
+                                                          anchorPressed:NO
+                                                             targetsHit:self.targetsHit
+                                                     distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
+                                                          touchLocation:CGPointMake(location.x, location.y)
+                                                         targetLocation:CGPointMake(self.ball.position.x, self.ball.position.y)
+                                                           targetRadius:radius
+                                                         targetOnScreen:((self.ball.position.x == self.frame.size.width/2) &&
+                                                                         (self.ball.position.y == self.frame.size.height/2))];
+                [touchLog addObject:currentTouch]; // log the touch
+                [self dogTouch];
+            }
+            else
+            {
+                LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Off Target"
+                                                                   time:self.time
+                                                          anchorPressed:NO
+                                                             targetsHit:self.targetsHit
+                                                     distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
+                                                          touchLocation:CGPointMake(location.x, location.y)
+                                                         targetLocation:CGPointMake(self.ball.position.x, self.ball.position.y)
+                                                           targetRadius:radius
+                                                         targetOnScreen:((self.ball.position.x == self.frame.size.width/2) &&
+                                                                         (self.ball.position.y == self.frame.size.height/2))];
+                [touchLog addObject:currentTouch]; // log the touch
+            }
+        }
+    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    /* Called when a touch moves/slides */
+    for (UITouch *touch in [touches allObjects]) {
+    	CGPoint currentLocation  = [touch locationInNode:self];
+        CGPoint previousLocation = [touch previousLocationInNode:self];
+        SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
+        SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
+        
+        // If a touch was off the back button but has moved onto it
+        if (!([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
+            ([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
+        {
+            _quitButtonPressed.hidden = false;
+            _quitButton.hidden = true;
+        }
+        else if (([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
+                 !([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
+        {
+            // touch was on quit button but moved off
+            _quitButtonPressed.hidden = true;
+            _quitButton.hidden = false;
+        }
+    }
 }
 
 //-(void)willMoveFromView:(SKView *)view
@@ -73,80 +196,6 @@
 }
 
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    for(UITouch *touch in touches)
-    {
-        CGPoint location = [touch locationInNode:self];
-        SKNode *node = [self nodeAtPoint:location];
-        if([node.name isEqualToString:@"quitButton"] ||
-           [node.name isEqualToString:@"pressedQuitButton"])
-        {
-            _quitButton.hidden = true;
-            _quitButtonPressed.hidden = false;
-        }
-    }
-}
-
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    for (UITouch * touch in touches)
-    {
-        //get a specific touch
-        CGPoint location = [touch locationInNode:self];
-        //find the node that is touched
-        SKSpriteNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:location];
-        //handle the situations of which nodes are touched
-        if([_ball isEqual:touchedNode])
-        {
-            [self ballTouch];
-        }
-        else if([_dog isEqual:touchedNode])
-        {
-            [self dogTouch];
-        }
-        else if([_quitButton isEqual:touchedNode] || [_quitButtonPressed isEqual:touchedNode])
-        {
-            // reset button
-            _quitButtonPressed.hidden = true;
-            _quitButton.hidden = false;
-            // go back to the main menu
-            [self goToMainScreen];
-        }
-        else
-        {
-            _quitButtonPressed.hidden = true;
-            _quitButton.hidden = false;
-        }
-    }
-}
-
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    /* Called when a touch moves/slides */
-    for (UITouch *touch in [touches allObjects]) {
-    	CGPoint currentLocation  = [touch locationInNode:self];
-        CGPoint previousLocation = [touch previousLocationInNode:self];
-        SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
-        SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
-        
-        // If a touch was off the back button but has moved onto it
-        if (!([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
-            ([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
-        {
-            _quitButtonPressed.hidden = false;
-            _quitButton.hidden = true;
-        }
-        else if (([_quitButton isEqual:previousNode] || [_quitButtonPressed isEqual:previousNode]) &&
-                 !([_quitButton isEqual:currentNode] || [_quitButtonPressed isEqual:currentNode]))
-        {
-            // touch was on quit button but moved off
-            _quitButtonPressed.hidden = true;
-            _quitButton.hidden = false;
-        }
-    }
-}
-
 -(void)ballTouch
 {
     // generate pseudo-random x and y positions to move towards
@@ -157,6 +206,8 @@
     [self moveBallOffScreen:positions[0] withYPosition:positions[1]];
     //move dog offscreen
     [self moveDogOffScreen:positions[0] withYPosition:positions[1]];
+    if (self.targetsHit == self.totalTargets)
+        [self endGame:self.targetsHit totalTargets:self.totalTargets];
     
     //move both onscreen
     [self moveBackDogAndBall];
@@ -233,15 +284,9 @@
 
 -(void)moveDogOffScreen: (CGFloat)x_pos withYPosition:(CGFloat) y_pos
 {
-    //wait for ball to move offscreen
-    SKAction *wait = [SKAction waitForDuration:1.5];
-    //TODO play dog sound
-    //move dog offscreen
-    // SKAction *move = [SKAction moveTo:CGPointMake(-500, _dog.size.height) duration:.5];
-     SKAction *move = [SKAction moveTo:CGPointMake(x_pos, y_pos) duration:1.5];
     
-    SKAction * seq = [SKAction sequence:@[wait, move]];
-    [_dog runAction:seq];
+    //wait for ball to move offscreen
+    SKAction *wait = [SKAction waitForDuration:1.0];
     
     //the dog barks as it chases the ball
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -254,6 +299,16 @@
     {
         [self runAction:barkSeq];
     }
+    
+    //TODO play dog sound
+    //move dog offscreen
+    // SKAction *move = [SKAction moveTo:CGPointMake(-500, _dog.size.height) duration:.5];
+     SKAction *move = [SKAction moveTo:CGPointMake(x_pos, y_pos) duration:1.5];
+    
+    SKAction * seq = [SKAction sequence:@[wait, move]];
+    [_dog runAction:seq];
+    
+
 
 }
 
@@ -316,6 +371,84 @@
     _quitButtonPressed.xScale = .5;
     _quitButtonPressed.yScale = .5;
     [self addChild:_quitButtonPressed];
+}
+
+-(void)update:(CFTimeInterval)currentTime {
+    /* Called before each frame is rendered */
+    CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
+    self.lastUpdateTimeInterval = currentTime;
+    [self updateWithTimeSinceLastUpdate:timeSinceLast];
+    //    NSLog(@"%@", touchLog);
+}
+
+- (void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
+    
+    self.lastSpawnTimeInterval += timeSinceLast;
+    if (self.lastSpawnTimeInterval > .1) {
+        self.lastSpawnTimeInterval = 0;
+        self.time +=.1;
+    }
+    SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    timeLabel.fontSize = 20;
+    timeLabel.fontColor = [SKColor whiteColor]; //[SKColor colorWithRed:0.96 green:0.79 blue:0.39 alpha:1];
+    timeLabel.verticalAlignmentMode = 2;
+    timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
+    timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
+    
+    //label for ratio of touched/total targets
+    [self trackerLabel];
+    
+    float r_time = roundf(self.time *100)/100.0;
+    NSString *s_time = [NSString stringWithFormat: @"%.1f", r_time];
+    timeLabel.text = s_time;
+    [self addChild: timeLabel];
+    
+    //    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
+    SKAction * actionMoveDone = [SKAction removeFromParent];
+    SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.0075];
+    [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
+}
+
+-(void)trackerLabel
+{
+    SKLabelNode * trackerLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    trackerLabel.fontSize = 20;
+    NSString * text = [NSString stringWithFormat:@"%d/%d", _targetsHit, _totalTargets];
+    trackerLabel.text = text;
+    trackerLabel.fontColor =  [SKColor whiteColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    trackerLabel.horizontalAlignmentMode = 0; // text is center-aligned
+    trackerLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
+    [self addChild:trackerLabel];
+    SKAction * actionMoveDone = [SKAction removeFromParent];
+    SKAction * actionMoveTime = [SKAction moveTo:trackerLabel.position duration:.0075];
+    [trackerLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
+}
+
+-(void)endGame:(int)targetsHit totalTargets:(int)totalTargets
+{
+    SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
+    SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targetsHit:targetsHit totalTargets:totalTargets];
+    // pass the game type and touch log to "game over" scene
+    NSLog(@"end game has touch log count %d", touchLog.count);
+    [gameOverScene.userData setObject:@"fetch" forKey:@"gameMode"];
+    [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
+    [self.view presentScene:gameOverScene transition:reveal];
+}
+
+-(void)displayTargetHit
+{
+    NSString * text2 = [NSString stringWithFormat:@"Hit! %d More!", self.totalTargets - self.targetsHit];
+    SKLabelNode * targetHitLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    targetHitLabel.name = @"instructionLabel2";
+    targetHitLabel.text = text2;
+    targetHitLabel.fontSize = 24;
+    targetHitLabel.fontColor = [SKColor whiteColor];
+    targetHitLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + 100);
+    [self addChild:targetHitLabel];
+    CGPoint dest = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
+    SKAction *fadeAway = [SKAction moveTo:dest duration:1.5];
+    SKAction * remove = [SKAction removeFromParent];
+    [targetHitLabel runAction:[SKAction sequence:@[fadeAway, remove]]];
 }
 
 //-(void)addToNotificationCenter

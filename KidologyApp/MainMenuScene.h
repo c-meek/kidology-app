@@ -24,6 +24,7 @@
 @property (nonatomic) NSMutableArray *logFiles;
 @property (nonatomic) NSMutableArray *zipFilesArray;
 @property (nonatomic) UITableView *tbv;
+@property (nonatomic) BOOL enableSound;
 
 
 

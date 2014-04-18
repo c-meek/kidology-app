@@ -101,11 +101,13 @@
         if ([UtilityClass checkSettings])
             return;
 
-        // Create and configure the baby game menu scene.
+        // Create and configure the baby game menu scene
         SKScene * babyGame = [[BabyMenuScene alloc] initWithSize:self.size];
         babyGame.scaleMode = SKSceneScaleModeAspectFill;
         
-        // Present the scene.
+        // Present the scene
+        if (_enableSound)
+            [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
         [self.view presentScene:babyGame transition:reveal];
     }
     else if ([node.name isEqualToString:@"targetGameButton"] ||
@@ -127,6 +129,8 @@
         targetGame.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
+        if (_enableSound)
+            [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
         [self.view presentScene:targetGame transition:reveal];
     }
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
@@ -164,6 +168,8 @@
         if ([UtilityClass checkSettings])
             return;
 
+        if (_enableSound)
+            [self runAction:[SKAction playSoundFileNamed:@"jump.mp3" waitForCompletion:NO]];
         // display a popup that requests user action (see method comments below)
         [self displayAlertView];
     }
@@ -396,6 +402,7 @@
     _firstName = [defaults objectForKey:@"firstName"];
     _lastName = [defaults objectForKey:@"lastName"];
     _therapistEmail = [defaults objectForKey:@"therapistEmail"];
+    _enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------
@@ -620,7 +627,7 @@
     NSArray *recipients = @[_therapistEmail];
     [composer setToRecipients:recipients];
     [composer setSubject:@"re: My game logs from KidologyApp"];
-    NSString *messageBody = [NSString stringWithFormat:@"Hello,\n Attached are %d of my game log files", [_logFiles count]];
+    NSString *messageBody = @"Hello,\n Here are my game log files from today.";
     [composer setMessageBody:messageBody isHTML:NO];
     // attach zip file to message
     NSData *zipData = [NSData dataWithContentsOfFile:zipFilePath];

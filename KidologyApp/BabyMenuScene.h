@@ -12,4 +12,5 @@
 @property (nonatomic) SKSpriteNode *backButton;
 @property (nonatomic) SKSpriteNode *pressedBackButton;
 @property (nonatomic) SKLabelNode * backButtonLabel;
+@property (nonatomic) BOOL enableSound;
 @end

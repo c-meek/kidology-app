@@ -12,6 +12,8 @@
 @property (nonatomic) SKSpriteNode * ball;
 @property (nonatomic) SKSpriteNode * dog;
 @property (nonatomic) int totalTargets;
+@property (nonatomic) int targetsHit;
+@property (nonatomic) float time;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 @property (nonatomic) SKSpriteNode *quitButton;
