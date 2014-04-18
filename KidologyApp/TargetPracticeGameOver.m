@@ -15,7 +15,6 @@
 #import "TargetPracticeScene.h"
 #import "LogEntry.h"
 #import "MainMenuScene.h"
-#import "TargetPracticeMenuScene.h"
 #import "CustomTargetPracticeScene.h"
 #import "NewGestureTargetScence.h"
 #import "FetchScene.h"
@@ -35,7 +34,6 @@ NSString *gameName;
         [self addBackground];
         [self addMessage];
         [self addPlayAgainButton];
-        [self addBackToTargetGameMenuButton];
         [self addBackToMainMenuButton];
         // play a "tada" noise to indicate success in the game
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -68,11 +66,6 @@ NSString *gameName;
     if ([node.name isEqualToString:@"playAgainButton"] || [node.name isEqualToString:@"playAgainLabel"])
     {
         _playAgainButton.color = [SKColor yellowColor];
-    }
-    else if ([node.name isEqualToString:@"backToTargetGameMenuButton"] ||
-             [node.name isEqualToString:@"backToTargetGameMenuLabel"])
-    {
-        _backToTargetGameMenuButton.color = [SKColor yellowColor];
     }
     else if ([node.name isEqualToString:@"backToMainMenuButton"] ||
              [node.name isEqualToString:@"backToMainMenuLabel"])
@@ -155,21 +148,6 @@ NSString *gameName;
         }
  
     }
-    else if ([node.name isEqualToString:@"backToTargetGameMenuButton"] ||
-             [node.name isEqualToString:@"backToTargetGameMenuLabel"])
-    {
-        _backToTargetGameMenuButton.color = [SKColor blackColor];
-        NSLog(@"going back to target game menu");
-        // Create and configure the "main menu" scene.
-        SKScene * targetPraticeMenuScene = [[TargetPracticeMenuScene alloc] initWithSize:self.size];
-        targetPraticeMenuScene.scaleMode = SKSceneScaleModeAspectFill;
-        
-        // Present the scene.
-        if (_enableSound)
-            [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
-        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-        [self.view presentScene:targetPraticeMenuScene transition:reveal];
-    }
     else if ([node.name isEqualToString:@"backToMainMenuButton"] ||
              [node.name isEqualToString:@"backToMainMenuLabel"])
     {
@@ -239,7 +217,7 @@ NSString *gameName;
 -(void)addPlayAgainButton
 {
     _playAgainButton = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(400, 40)];
-    _playAgainButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
+    _playAgainButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 100);
     _playAgainButton.name = @"playAgainButton";
     [self addChild:_playAgainButton];
     
@@ -249,27 +227,8 @@ NSString *gameName;
     playAgainLabel.name = @"playAgainLabel";
     playAgainLabel.fontSize = 20;
     playAgainLabel.fontColor = [SKColor whiteColor];
-    playAgainLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
+    playAgainLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 100);
     [self addChild:playAgainLabel];
-}
-
--(void)addBackToTargetGameMenuButton
-{
-    _backToTargetGameMenuButton = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(400, 40)];
-    _backToTargetGameMenuButton.position = CGPointMake(CGRectGetMidX(self.frame),
-                                                      CGRectGetMidY(self.frame) - 150);
-    _backToTargetGameMenuButton.name = @"backToTargetGameMenuButton";
-    [self addChild:_backToTargetGameMenuButton];
-    
-    NSString *backToTargetGameMenuText = [NSString stringWithFormat:@"Back To Target Game Menu"];
-    SKLabelNode *backToTargetGameMenuLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    backToTargetGameMenuLabel.text = backToTargetGameMenuText;
-    backToTargetGameMenuLabel.name = @"backToTargetGameMenuLabel";
-    backToTargetGameMenuLabel.fontSize = 20;
-    backToTargetGameMenuLabel.fontColor = [SKColor whiteColor];
-    backToTargetGameMenuLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                                     CGRectGetMidY(self.frame) - 150);
-    [self addChild:backToTargetGameMenuLabel];
 }
 
 -(void)addBackToMainMenuButton

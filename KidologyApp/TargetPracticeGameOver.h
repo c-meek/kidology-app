@@ -12,8 +12,6 @@
 -(id)initWithSize:(CGSize)size targetsHit:(int)targetsHit totalTargets:(int)totalTargets;
 @property (nonatomic) SKSpriteNode *playAgainButton;
 @property (nonatomic) SKSpriteNode *playAgainButtonPressed;
-@property (nonatomic) SKSpriteNode *backToTargetGameMenuButton;
-@property (nonatomic) SKSpriteNode *backToTargetGameMenuButtonPressed;
 @property (nonatomic) SKSpriteNode *backToMainMenuButton;
 @property (nonatomic) SKSpriteNode *backToMainMenuButtonPressed;
 @property (nonatomic) SKLabelNode *returnMessage;
