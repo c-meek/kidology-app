@@ -127,8 +127,8 @@ NSString *gameName;
              [node.name isEqualToString:@"gestureModeButton"])
     {
         // Create and configure the random "target practice" scene.
-//        SKScene *gesturePractice = [[NewGestureTargetScence alloc] initWithSize:CGSizeMake(1024,768)];
-        SKScene *gesturePractice = [[NewGestureTargetScence alloc] initWithSize:self.size];
+        SKScene *gesturePractice = [[NewGestureTargetScence alloc] initWithSize:CGSizeMake(1024,768)];
+//        SKScene *gesturePractice = [[NewGestureTargetScence alloc] initWithSize:self.size];
         gesturePractice.scaleMode = SKSceneScaleModeAspectFill;
         // remove the custom game table view browser if present
         [_tbv removeFromSuperview];
