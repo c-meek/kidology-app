@@ -446,10 +446,19 @@
             //[popup release];
 
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
-                                                            message:@"No recent game files.\n Maybe they were already added to Older Games?"
+                                                            message:@"No recent game files.\n Maybe they were already moved to Older Games?"
                                                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
             [alert release];
+        }
+        else if (zipFile.length == 0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
+                                                            message:@"An error occured while compressing recent games"
+                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+            [alert release];
+
         }
         else
         {
@@ -497,66 +506,90 @@
         [previousNodeName isEqualToString:@"settingsMenuButtonPressed"];
 }
 
--(NSString *)zipFilesAtPath:(NSString *)path
+-(NSString *)zipFilesAtPath:(NSString *)directoryPath
 {
     // clear array of log files
     [_logFiles removeAllObjects];
+    _logFiles = [[NSMutableArray alloc] init];
+    // format the zip file name
     NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
     [DateFormatter setDateFormat:@"MM-dd-yyyy_HH-mm"];
     NSString *currentDate = [DateFormatter stringFromDate:[NSDate date]];
-    NSString *zipFileName = [[[[[_firstName stringByAppendingString:@"_"]
-                                stringByAppendingString:_lastName]
-                               stringByAppendingString:@"_"]
-                              stringByAppendingString:currentDate]
-                             stringByAppendingString:@".zip"];
+    NSString *zipFileName = [NSString stringWithFormat:@"%@_%@_%@.zip", _firstName, _lastName, currentDate];
+//    [[[[[_firstName stringByAppendingString:@"_"]
+//                                stringByAppendingString:_lastName]
+//                               stringByAppendingString:@"_"]
+//                              stringByAppendingString:currentDate]
+//                             stringByAppendingString:@".zip"];
     NSLog(@"zip Filename is %@", zipFileName);
     
+    // get all the files currently in this directory
     BOOL isDir = NO;
-    NSArray *subpaths;
+    BOOL noFilesToCompress = false;
+    NSArray *fileNames;
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if([fileManager fileExistsAtPath:path isDirectory:&isDir] && isDir)
+    if([fileManager fileExistsAtPath:directoryPath isDirectory:&isDir] && isDir)
     {
-        subpaths = [fileManager subpathsAtPath:path];
+        // get the names of all the files in this directory (.csv and .zip)
+        fileNames = [fileManager subpathsAtPath:directoryPath];
+        // add all log files (.csv) to logFiles array
+        for (NSString *fileName in fileNames)
+        {
+            NSArray *nameAndExtension = [fileName componentsSeparatedByString:@"."];
+            NSString *extension = nameAndExtension[[nameAndExtension count]-1];
+            NSLog(@"extension is %@", extension);
+            NSString *fullPath = [directoryPath stringByAppendingPathComponent:fileName];
+            if (![extension isEqualToString:@"csv"])
+            {
+                NSLog(@"ignoring zip file %@", fileName);
+                continue;
+            }
+            if([fileManager fileExistsAtPath:fullPath isDirectory:&isDir] && !isDir)
+            {
+                [_logFiles addObject:fileName];
+            }
+        }
     }
-    NSString *archivePath = [[path stringByAppendingString:@"/" ]
-                             stringByAppendingString:zipFileName ];
+    else
+    {
+        noFilesToCompress = true;
+    }
+
+    if (noFilesToCompress || [_logFiles count] == 0)
+    {
+        // alert that there are no log files (calling method shows the alert)
+        return @"No files to compress";
+    }
+    NSLog(@"found %d log files", [_logFiles count]);
+    NSString *archivePath = [NSString stringWithFormat:@"%@/%@", directoryPath, zipFileName];
+//                             [directoryPath stringByAppendingString:@"/" ]
+//                             stringByAppendingString:zipFileName ];
     NSLog(@"achive path is %@", archivePath);
     ZipArchive *archiver = [[ZipArchive alloc] init];
     [archiver CreateZipFile2:archivePath];
-    NSLog(@"num paths found is %d", [subpaths count]);
+    NSLog(@"num paths found is %d", [fileNames count]);
     int i = 0;
-    _logFiles = [[NSMutableArray alloc] initWithCapacity:[subpaths count]];
-    for(NSString *subpath in subpaths)
+    for(NSString *fileName in _logFiles)
     {
-        NSLog(@"subpath %d is %@", i, subpath);
+        NSLog(@"subpath %d is %@", i, fileName);
         i++;
-        // ignore previously zipped files
-        NSArray *nameAndExtension = [subpath componentsSeparatedByString:@"."];
-        NSString *extension = nameAndExtension[[nameAndExtension count]-1];
-        NSLog(@"extension is %@", extension);
-        NSString *longPath = [path stringByAppendingPathComponent:subpath];
-        if ([extension isEqualToString:@"zip"])
-        {
-            NSLog(@"ignoring zip file %@", subpath);
-            continue;
-        }
-        if([fileManager fileExistsAtPath:longPath isDirectory:&isDir] && !isDir)
-        {
-            [_logFiles addObject:longPath];
-            [archiver addFileToZip:longPath newname:subpath];
-        }
+
+        NSString *longPath = [directoryPath stringByAppendingPathComponent:fileName];
+        [archiver addFileToZip:longPath newname:fileName];
     }
     NSLog(@"compressing...");
     BOOL successCompressing = [archiver CloseZipFile2];
-    if ([_logFiles count] == 0)
-    {
-        NSError *error;
-        BOOL success = [fileManager removeItemAtPath:archivePath error:&error];
-        archivePath = @"No files to compress";
-    }
+//    if ([_logFiles count] == 0)
+//    {
+//        NSError *error;
+//        BOOL success = [fileManager removeItemAtPath:archivePath error:&error];
+//        NSLog(@"No files to compress");
+//        archivePath = @"No files to compress";
+//    }
     if (successCompressing)
     {
         NSLog(@"successful compression! ");
+        [self deleteLogFiles:directoryPath];
         return archivePath;
     }
     else
@@ -583,7 +616,8 @@
     // populate the fields
     [composer setToRecipients:recipients];
     [composer setSubject:@"re: My game logs from KidologyApp"];
-    [composer setMessageBody:@"Hello,\n Attached are my game log files from today" isHTML:NO];
+    NSString *messageBody = [NSString stringWithFormat:@"Hello,\n Attached are %d of my game log files", [_logFiles count]];
+    [composer setMessageBody:messageBody isHTML:NO];
     NSData *zipData = [NSData dataWithContentsOfFile:zipFilePath];
     [composer addAttachmentData:zipData mimeType:@"application/zip" fileName:zipFile];
     composer.navigationBar.barStyle = UIBarStyleBlack;
@@ -595,64 +629,41 @@
 // Proceeds to update the message field with the result of the operation
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
+    NSString *message = @"";
+    BOOL deleteLogFiles = true;
     // Notifies users about errors associated with the interface
     switch (result)
     {
         case MFMailComposeResultCancelled:
+        {
+            message = @"Log files zipped and moved to Older Games";
             break;
+        }
         case MFMailComposeResultSaved:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email"
-                                                            message:@"Email Succesfully Saved To Drafts!\n Please send it soon!"
-                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-            [alert release];
-            
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            for (NSString *file in _logFiles)
-            {
-                NSError *error;
-                BOOL success = [fileManager removeItemAtPath:file error:&error];
-                if(!success)
-                    NSLog(@"unable to delete file %@ because %@", file, [error description]);
-                else
-                    NSLog(@"sucessfully deleted file %@", file);
-            }
+            message = @"Email Succesfully Saved To Drafts!\n Please send it soon!";
             break;
         }
         case MFMailComposeResultSent:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email"
-                                                            message:@"Email Succesfully Sent To Outbox!\n Go to Mail to make sure it sends!"
-                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-            [alert release];
-            
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            for (NSString *file in _logFiles)
-            {
-                NSError *error;
-                BOOL success = [fileManager removeItemAtPath:file error:&error];
-                if(!success)
-                    NSLog(@"unable to delete file %@ because %@", file, [error description]);
-                else
-                    NSLog(@"sucessfully deleted file %@", file);
-            }
-            
-            break;
+            message = @"Email Succesfully Sent To Outbox!\n Go to Mail to make sure it sends!";
         }
         case MFMailComposeResultFailed:
             break;
             
         default:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email" message:@"Sending Failed - Unknown Error :-("
-                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-            [alert release];
-        }
+            deleteLogFiles = false;
+            message = @"Sending Failed - Unknown Error :-(  Log Files zipped and moved to Older Games";
             break;
+        }
     }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email"
+                                                    message:message
+                                                   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
+    [alert release];
+    
     [self.view.window.rootViewController dismissModalViewControllerAnimated:YES];
 }
 
@@ -713,6 +724,22 @@
             [_zipFilesArray addObject:file];
         }
     }
+}
+
+-(void)deleteLogFiles:(NSString *)logDirectoryPath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    for (NSString *file in _logFiles)
+    {
+        NSError *error;
+        NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", logDirectoryPath, file];
+        BOOL success = [fileManager removeItemAtPath:fullFilePath error:&error];
+        if(!success)
+            NSLog(@"unable to delete file %@ because %@", fullFilePath, [error description]);
+        else
+            NSLog(@"sucessfully deleted file %@", fullFilePath);
+    }
+    [_logFiles removeAllObjects];
 }
 
 #pragma mark - Table view data source
