@@ -10,18 +10,17 @@
 #import "TargetPracticeScene.h"
 #import "MainMenuScene.h"
 #import "CustomTargetPracticeScene.h"
-#import "GestureTargetPracticeScene.h"
 #import "NewGestureTargetScence.h"
 #import "UtilityClass.h"
 
 NSString *gameName;
 @implementation TargetPracticeMenuScene
 
+// initialize the scene by adding in the background and buttons
 -(id)initWithSize:(CGSize)size
 {
     if (self = [super initWithSize:size]) {
         gameName = nil;
-        
         [self addBackground];
         [self addSelectModeLabel];
         [self addBackButton];
@@ -29,27 +28,25 @@ NSString *gameName;
         [self addRandomModeButton];
         [self addCustomModeButton];
         [self addGestureModeButton];
-//        [self addInstructionLabel];
-//        [self addTarget];
-//        [self addHandAnimation];
         [self addLogo];
         [self addToNotificationCenter];
     }
     return self;
 }
 
--(void)willMoveFromView:(SKView *)view
-{
-    [self removeFromNotificationCenter];
-}
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Touch Handling Logic
+//-------------------------------------------------------------------------------------------------------------------------------------
 
+// called when a touch begins
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    // get the current touch
     UITouch *touch = [touches anyObject];
     CGPoint position = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:position];
     
-    
+    // figure out which button (if any) was pressed and update its image to pressed
     if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
     {
         _backButton.hidden = true;
@@ -75,49 +72,50 @@ NSString *gameName;
         _gestureModeButton.hidden = true;
         _gestureModeButtonPressed.hidden = false;
     }
-
 }
 
+// called when a touch ends
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
     UITouch *touch = [touches anyObject];
     CGPoint position = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:position];
     SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
 
-    if ([node.name isEqualToString:@"backButton"] || [node.name isEqualToString:@"backButtonPressed"])
+    // figure out which button was released (if any), change its image to released and present that scene
+    if ([node.name isEqualToString:@"backButton"] ||
+        [node.name isEqualToString:@"backButtonPressed"])
         {
-            // reset button
+            // reset button icon
             _backButtonPressed.hidden = true;
             _backButton.hidden = false;
             
-            // go back to the main menu
+            // Create and configure the main menu scene
             SKScene *backToMain = [[MainMenuScene alloc] initWithSize:self.size];
             backToMain.scaleMode = SKSceneScaleModeAspectFill;
+            // remove the custom game table view browser if present
             [_tbv removeFromSuperview];
-            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+            // Present the scene.
             [self.view presentScene:backToMain transition:reveal];
         }
-    //Added another variable for Target Practice call.
     else if ([node.name isEqualToString:@"centerButtonPressed"] ||
              [node.name isEqualToString:@"centerButton"])
     {
-        NSLog(@"hit center button");
-        // Create and configure the center "target practice" scene.
+        // Create and configure the center target practice scene
         SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:0];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
-        // Present the scene.
+        // remove the custom game table view browser if present
         [_tbv removeFromSuperview];
+        // Present the scene.
         [self.view presentScene:targetPractice transition:reveal];
     }
     
     else if ([node.name isEqualToString:@"randomButtonPressed"] ||
         [node.name isEqualToString:@"randomButton"])
     {
-        NSLog(@"making random game");
         // Create and configure the random "target practice" scene.
         SKScene * targetPractice = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:1];
         targetPractice.scaleMode = SKSceneScaleModeAspectFill;
+        // remove the custom game table view browser if present
         [_tbv removeFromSuperview];
         // Present the scene.
         [self.view presentScene:targetPractice transition:reveal];
@@ -125,21 +123,22 @@ NSString *gameName;
     else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
              [node.name isEqualToString:@"gestureModeButton"])
     {
-//        // Create and configure the random "target practice" scene.
+        // Create and configure the random "target practice" scene.
         SKScene *gesturePractice = [[NewGestureTargetScence alloc] initWithSize:CGSizeMake(1024,768)];
         gesturePractice.scaleMode = SKSceneScaleModeAspectFill;
+        // remove the custom game table view browser if present
         [_tbv removeFromSuperview];
         // Present the scene
         [self.view presentScene:gesturePractice transition:reveal];
     }
 
-    else if ([node.name isEqualToString:@"customModeButtonPressed"] || [node.name isEqualToString:@"customModeButton"])
+    else if ([node.name isEqualToString:@"customModeButtonPressed"] ||
+             [node.name isEqualToString:@"customModeButton"])
     {
+        // check if the custom game table view browser is already displayed
         if(nil == gameName && [_tbv superview] == nil)
         {
-//            UIViewController *vc = self.view.window.rootViewController;
-//            [vc performSegueWithIdentifier:@"toGameList" sender:self];
-//            _customModeButton.color = [SKColor greenColor];
+            // if not, read in the game files to the game files array and display the table view
             [self addGameFilesToArray];
             _tbv = [[UITableView alloc] initWithFrame:CGRectMake(250, 200, self.frame.size.height/2, self.frame.size.width/2)];
             _tbv.delegate = self;
@@ -150,6 +149,7 @@ NSString *gameName;
         }
         else
         {
+            // if it is already displayed, then remove it from the view
             _customModeButton.hidden = false;
             _customModeButtonPressed.hidden = true;
             [_tbv removeFromSuperview];
@@ -157,6 +157,8 @@ NSString *gameName;
     }
     else
     {
+        // if touch ended somewhere not on any button
+        // reset all the buttons to untouched state (for touches moved)
         _backButton.hidden = false;
         _backButtonPressed.hidden = true;
         _centerModeButton.hidden = false;
@@ -165,22 +167,24 @@ NSString *gameName;
         _randomModeButtonPressed.hidden = true;
         _customModeButton.hidden = false;
         _customModeButtonPressed.hidden = true;
-//        _gestureModeButton.hidden = false;
-//        _gestureModeButtonPressed.hidden = true;
+        _gestureModeButton.hidden = false;
+        _gestureModeButtonPressed.hidden = true;
         [_tbv removeFromSuperview];
     }
 }
 
+// called when a touch moves/slides
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    /* Called when a touch moves/slides */
+    // iterate over all moved touches
     for (UITouch *touch in [touches allObjects]) {
     	CGPoint currentLocation  = [touch locationInNode:self];
         CGPoint previousLocation = [touch previousLocationInNode:self];
         SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
         SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
         
-        // If a touch was off the back button but has moved onto it
+        // update how each button is presented (pressed vs unpressed) according to where
+        // current touch is and where previous touch was
         if (!([_backButton isEqual:previousNode] || [_backButtonPressed isEqual:previousNode]) &&
             ([_backButton isEqual:currentNode] || [_backButtonPressed isEqual:currentNode]))
         {
@@ -235,16 +239,12 @@ NSString *gameName;
             _gestureModeButtonPressed.hidden = false;
             _gestureModeButton.hidden = true;
         }
-//        else if (([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
-//                 !([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed  isEqual:currentNode]))
-//        {
-//            _gestureModeButtonPressed .hidden = true;
-//            _gestureModeButton.hidden = false;
-//        }
-
-
     }
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Add Buttons and Background to Scene
+//-------------------------------------------------------------------------------------------------------------------------------------
 
 -(void)addBackground
 {
@@ -260,8 +260,6 @@ NSString *gameName;
     SKLabelNode *selectModeLabel= [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     selectModeLabel.fontSize = 35;
     selectModeLabel.fontColor = [SKColor darkTextColor];
-
-//    selectModeLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
     selectModeLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 210);
     selectModeLabel.text = @"Select Your Game Mode:";
     [self addChild:selectModeLabel];
@@ -276,23 +274,6 @@ NSString *gameName;
     [self addChild:logo];
     
 }
-//-(void)addInstructionLabel
-//{
-//    SKLabelNode *instructionLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-//    instructionLabel.fontSize = 40;
-//    instructionLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
-//    instructionLabel.position = CGPointMake(CGRectGetMidX(self.frame)-150, CGRectGetMidY(self.frame)+150);
-//    instructionLabel.text = @"Instructions:";
-//    [self addChild:instructionLabel];
-//    
-//    SKLabelNode *instructionContentLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-//    instructionContentLabel.fontSize = 20;
-//    instructionContentLabel.fontColor = [SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
-//    instructionContentLabel.position = CGPointMake(CGRectGetMidX(self.frame)-200, CGRectGetMidY(self.frame)+110);
-//    instructionContentLabel.horizontalAlignmentMode = 1;
-//    instructionContentLabel.text = @"Touch the center of the target when it appears.";
-//    [self addChild:instructionContentLabel];
-//}
 
 -(void)addBackButton
 {
@@ -384,71 +365,69 @@ NSString *gameName;
     [self addChild:_gestureModeButtonPressed];
 }
 
--(void)addTarget
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Application Lifecycle Stuff (entering and leaving background)
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// called when this scene is about to be removed (transition to another scene)
+-(void)willMoveFromView:(SKView *)view
 {
-    
-    _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
-    _target.position = (CGPointMake(self.frame.size.width/2-50, self.frame.size.height/2-82));
-    _target.xScale = .4;
-    _target.yScale = .15;
-    [self addChild:_target];
+    // remove this scene from the notification center (needed to fix memory management and notification bug)
+    [self removeFromNotificationCenter];
 }
 
--(void)addHandAnimation
-{
-    _hand = [SKSpriteNode spriteNodeWithImageNamed:@"hand"];
-    _hand.position = (CGPointMake(self.frame.size.width/2+150+(self.hand.size.width/2), self.frame.size.height/2-62+(self.hand.size.height/2)));
-    [self addChild:_hand];
-    SKAction * moveHandOver = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-50+(self.hand.size.width/2), self.frame.size.height/2-72+(self.hand.size.height/2))) duration:2];
-    SKAction * pressButton = [SKAction moveTo:(CGPointMake(self.frame.size.width/2-50+(self.hand.size.width/2), self.frame.size.height/2-82+(self.hand.size.height/2))) duration:.5];
-    SKAction *wait = [SKAction waitForDuration:3];
-    SKAction * actionMoveDone = [SKAction removeFromParent];
-    
-    [_hand runAction: [SKAction sequence:@[moveHandOver, pressButton, wait, actionMoveDone]]];
-}
-
+// add this scene to the notification center to be notified when app enters background
 -(void)addToNotificationCenter
 {
-    NSLog(@"adding  target menu to notification center");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appMovedtoBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
 }
 
+// remove this scene from the notification center (bug fix: app was crashing on leaving background when tableview present)
 -(void)removeFromNotificationCenter
 {
-    NSLog(@"removing target menu from notification center");
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidEnterBackgroundNotification
                                                   object:nil];
 }
 
+// method called when app enters background while this scene is present
+-(void)appMovedtoBackground:(NSNotification *)notification
+{
+    // remove the tableview if present
+    if (_tbv != nil)
+    {
+        [_tbv removeFromSuperview];
+    }
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                            UITableView Stuff (for listing custom game files)
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// procedure to read in game files from the Inbox directory (where files loaded from email are stored) into an array
 -(void)addGameFilesToArray
 {
     _gameArray = [[NSMutableArray alloc]init];
     NSString *extension = @"csv";
-    //NSString *resPath = [[NSBundle mainBundle] resourcePath];
-    
     NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"Inbox"];
+    
     // make the folder if it doesn't already exist
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
         [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
     
-    
-    
-    NSString *file;
+    // iterate over all the .csv files in the Inbox directory and add them to the array
     NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:&error];
-    for(file in files)
+    for(NSString *file in files)
     {
         if([[file pathExtension] isEqualToString:extension])
         {
             [_gameArray addObject:file];
         }
     }
-    
 }
 
 #pragma mark - Table view data source
@@ -458,12 +437,14 @@ NSString *gameName;
     return 1;
 }
 
+// tells the table view how many rows to init with
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _gameArray.count;
     
 }
 
+// populates the table view rows
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -478,6 +459,7 @@ NSString *gameName;
     return cell;
 }
 
+// called when user selects a row in the table view
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     gameName = [self.gameArray objectAtIndex:indexPath.row];
@@ -488,19 +470,10 @@ NSString *gameName;
     [self.view presentScene:customTarget transition:reveal];
 }
 
+// creates a title for the table view
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-
 {
     return @"SELECT A GAME";
 }
 
--(void)appMovedtoBackground:(NSNotification *)notification
-{
-    NSLog(@"app moved to background");
-    if (_tbv != nil)
-    {
-        NSLog(@"removing tbv");
-        [_tbv removeFromSuperview];
-    }
-}
 @end

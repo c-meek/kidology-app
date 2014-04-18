@@ -6,13 +6,15 @@
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
+// this class is the main menu scene (view)
+// it contains buttons to link to the various games
+// as well as to email game logs to the therapist
+
 #import "MainMenuScene.h"
 #import "BabyMenuScene.h"
 #import "TargetPracticeMenuScene.h"
 #import "FetchScene.h"
-#import "TherapistMenuScene.h"
 #import "UtilityClass.h"
-
 #import "ZipArchive.h"
 #import <MessageUI/MFMailComposeViewController.h>
 
@@ -21,7 +23,7 @@
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
-        // add game and menu buttons to screen
+        // add background and buttons to screen
         [self addBackground];
         [self addBabyGameButton];
         [self addTargetGameButton];
@@ -31,33 +33,25 @@
         [self loadSettingsInfo];
         // check user name and add user name label to corner
         [self addUserInfo];
+        // add this class to the notification center (see method comments below)
         [self addToNotificationCenter];
-
     }
     return self;
 }
 
-// check user name and therapist email before allowing to play a game
-- (void)didMoveToView:(SKView *)view
-{
-    NSLog(@"moved to main menu view");
-    [self loadSettingsInfo];
-    [UtilityClass checkSettings];
-}
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Touch Handling Logic
+//-------------------------------------------------------------------------------------------------------------------------------------
 
--(void)willMoveFromView:(SKView *)view
-{
-    [self removeFromNotificationCenter];
-}
-
+// called when a touch begins
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    /* Called when a touch begins */
+    // get the current touch
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
     
-    // if one of the buttons is pressed, change its color
+    // figure out which button (if any) was pressed and update its image to pressed
     if ([node.name isEqualToString:@"babyGameButton"] ||
         [node.name isEqualToString:@"babyGameButtonPressed"])
     {
@@ -84,42 +78,40 @@
     }
 }
 
+// called when a touch ends
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch ends */
+    // get the current touch
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
     SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
 
-    // Check if one of the buttons was pressed and load that scene
+    // figure out which button was released (if any), change its image to released and present that scene
     if ([node.name isEqualToString:@"babyGameButton"] ||
         [node.name isEqualToString:@"babyGameButtonPressed"])
     {
+        // remove the older games table view browser if present
         [_tbv removeFromSuperview];
 
         // reset the button
         _babyGameButton.hidden = false;
         _babyGameButtonPressed.hidden = true;
         
-        NSLog(@"checking settings");
         // check if any required settings are missing
         if ([UtilityClass checkSettings])
-        {
-            NSLog(@"missing a setting");
             return;
-        }
 
-        // Create and configure the "baby game" scene.
+        // Create and configure the baby game menu scene.
         SKScene * babyGame = [[BabyMenuScene alloc] initWithSize:self.size];
         babyGame.scaleMode = SKSceneScaleModeAspectFill;
         
         // Present the scene.
         [self.view presentScene:babyGame transition:reveal];
-
     }
     else if ([node.name isEqualToString:@"targetGameButton"] ||
              [node.name isEqualToString:@"targetGameButtonPressed"])
     {
+        // remove the older games table view browser if present
         [_tbv removeFromSuperview];
 
         // reset the button
@@ -130,7 +122,7 @@
         if ([UtilityClass checkSettings])
             return;
 
-        // Create and configure the "game menu" scene.
+        // Create and configure the target game menu scene.
         SKScene * targetGame = [[TargetPracticeMenuScene alloc] initWithSize:self.size];
         targetGame.scaleMode = SKSceneScaleModeAspectFill;
         
@@ -140,6 +132,7 @@
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
              [node.name isEqualToString:@"fetchGameButtonPressed"])
     {
+        // remove the older games table view browser if present
         [_tbv removeFromSuperview];
 
         // reset the button
@@ -160,6 +153,7 @@
     else if ([node.name isEqualToString:@"therapistMenuButton"] ||
              [node.name isEqualToString:@"therapistMenuButtonPressed"])
     {
+        // remove the older games table view browser if present
         [_tbv removeFromSuperview];
 
         // reset the button
@@ -170,12 +164,17 @@
         if ([UtilityClass checkSettings])
             return;
 
+        // display a popup that requests user action (see method comments below)
         [self displayAlertView];
     }
     else
     {
+        // if touch ended somewhere not on any button
+        
+        // remove the older games table view browser if present
         [_tbv removeFromSuperview];
 
+        // reset all the buttons to untouched state (for touches moved)
         _targetGameButton.hidden = false;
         _targetGameButtonPressed.hidden = true;
         _babyGameButton.hidden = false;
@@ -187,9 +186,9 @@
     }
 }
 
+// called when a touch moves/slides
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    /* Called when a touch moves/slides */
     UITouch *touch = [touches anyObject];
     CGPoint currentLocation = [touch locationInNode:self];
     CGPoint previousLocation = [touch previousLocationInNode:self];
@@ -199,7 +198,7 @@
     // Check if one of the buttons was being pressed but isn't any more
     if (currentNode.name == NULL && [self nodeIsButton:previousNode.name])
     {
-        NSLog(@"moved off a button");
+        // reset all the buttons to untouched state
         _targetGameButton.hidden = false;
         _targetGameButtonPressed.hidden = true;
         _babyGameButton.hidden = false;
@@ -211,9 +210,9 @@
     }
     else if ([self nodeIsButton:currentNode.name] && previousNode.name == NULL)
     {
-        NSLog(@"moved onto button %@", currentNode.name);
         // for when wasn't touching a button but moved/swiped onto one
-        // figure out which button is pressed and change its color
+        
+        // figure out which button is now pressed and update its image
         if ([currentNode.name isEqualToString:@"babyGameButton"] ||
             [currentNode.name isEqualToString:@"babyGameButtonPressed"])
         {
@@ -241,10 +240,9 @@
     }
 }
 
-
-// ------------------------------------------------------------------------------------
-//                             ADD BACKGROUND AND BUTTONS
-// ------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Add Buttons, Labels and Background to Scene
+//-------------------------------------------------------------------------------------------------------------------------------------
 
 -(void)addBackground
 {
@@ -257,7 +255,7 @@
 
 -(void)addBabyGameButton
 {
-    // baby game button icon
+    // unpressed baby game button icon
     _babyGameButton = [[SKSpriteNode alloc] initWithImageNamed:@"babyGameButton.png"];
     _babyGameButton.position = CGPointMake(CGRectGetMidX(self.frame) - 200,
                                            CGRectGetMidY(self.frame) + 185);
@@ -280,6 +278,7 @@
 
 -(void)addTargetGameButton
 {
+    // unpressed target game button icon
     _targetGameButton = [[SKSpriteNode alloc] initWithImageNamed:@"targetGameButton.png"];
     _targetGameButton.position = CGPointMake(CGRectGetMidX(self.frame) - 190,
                                              CGRectGetMidY(self.frame) + 105);
@@ -301,6 +300,7 @@
 
 -(void)addFetchGameButton
 {
+    // unpressed fetch game button icon
     _fetchGameButton = [[SKSpriteNode alloc] initWithImageNamed:@"fetchGameButton.png"];
     _fetchGameButton.position = CGPointMake(CGRectGetMidX(self.frame) - 200,
                                             CGRectGetMidY(self.frame) + 20);
@@ -322,7 +322,7 @@
 
 -(void)addTherapistMenuButton
 {
-    // therapist button
+    // unpressed therapist button
     _therapistMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"therapistMenuButton.png"];
     _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
                                                 CGRectGetMidY(self.frame) - 180);
@@ -342,37 +342,10 @@
     [self addChild:_therapistMenuButtonPressed];
 }
 
-//-(void)addSettingsMenuButton
-//{
-//    // settings menu button
-//    _settingsMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"settingsMenuButton.png"];
-//    _settingsMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
-//                                                CGRectGetMidY(self.frame) - 180);
-//    _settingsMenuButton.xScale = .38;
-//    _settingsMenuButton.yScale = .38;
-//    _settingsMenuButton.name = @"settingsMenuButton";
-//    [self addChild:_settingsMenuButton];
-//    
-//    // pressed settings menu button icon
-//    _settingsMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"settingsMenuButtonPressed.png"];
-//    _settingsMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
-//                                                       CGRectGetMidY(self.frame) - 180);
-//    _settingsMenuButtonPressed.xScale = .38;
-//    _settingsMenuButtonPressed.yScale = .38;
-//    _settingsMenuButtonPressed.name = @"settingsMenuButtonPressed";
-//    _settingsMenuButtonPressed.hidden = true;
-//    [self addChild:_settingsMenuButtonPressed];
-//}
-
-//-(void)update:(CFTimeInterval)currentTime {
-//    /* Called before each frame is rendered */
-//}
-
-
-
+// adds user first name and first letter of last name to top of scene (e.g. Brutus B. for Brutus Buckeye)
 -(void)addUserInfo
 {
-    // get user's first and last names + therapist email from settings bundle
+    // first name and last name have already been initialized by loadSettingsInfo (see method comments below)
     NSString *lastInitial = @"";
     if (_lastName.length > 0)
     {
@@ -381,6 +354,8 @@
     }
     NSString *wholeName = [[_firstName stringByAppendingString:@" "]
                            stringByAppendingString:lastInitial];
+    
+    // create a label node for the first name and last name initial and add it to the scene
     NSString *usernameLabelText = [[@"Playing as " stringByAppendingString:@" "]
                                    stringByAppendingString:wholeName];
     SKLabelNode *usernameLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -393,58 +368,116 @@
     [self addChild:usernameLabel];
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                              Simple Utility Functions
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// checks if the given node name is one of the buttons
+-(bool)nodeIsButton:(NSString *)previousNodeName
+{
+    return [previousNodeName isEqualToString:@"babyGameButton"] ||
+    [previousNodeName isEqualToString:@"babyGameButtonPressed"] ||
+    [previousNodeName isEqualToString:@"targetGameButton"] ||
+    [previousNodeName isEqualToString:@"targetGameButtonPressed"] ||
+    [previousNodeName isEqualToString:@"fetchGameButton"] ||
+    [previousNodeName isEqualToString:@"fetchGameButtonPressed"] ||
+    [previousNodeName isEqualToString:@"therapistMenuButton"] ||
+    [previousNodeName isEqualToString:@"therapistMenuButtonPressed"];
+}
+
+// reads in the first name, last name, and therapist email fields from the settings app
+// and updates class variables accordingly
+-(void)loadSettingsInfo
+{
+    //get user's settings from the app settings
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    // update class variables
+    _firstName = [defaults objectForKey:@"firstName"];
+    _lastName = [defaults objectForKey:@"lastName"];
+    _therapistEmail = [defaults objectForKey:@"therapistEmail"];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Application Lifecycle Stuff (becoming active/inactive)
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// add this scene to the notification center to be notified when app becomes active
 -(void)addToNotificationCenter
 {
-    NSLog(@"adding main menu to notification center");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appBecameActive:)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
 }
 
+// remove this scene from the notification center for app becoming active notifications
+// (this is a bug fix for app crashing issue)
 -(void)removeFromNotificationCenter
 {
-    NSLog(@"removing main menu from notification center");
-
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidBecomeActiveNotification
                                                   object:nil];
 }
 
-// ------------------------------------------------------------------------------------
-//                             DATA CHECKING LOGIC
-// ------------------------------------------------------------------------------------
+// called when this view is presented
+- (void)didMoveToView:(SKView *)view
+{
+    // check user name and therapist email before allowing to play a game
+    [self loadSettingsInfo];
+    [UtilityClass checkSettings];
+}
 
+// called when about to navigate away from this view
+-(void)willMoveFromView:(SKView *)view
+{
+    // remove this class from the notification center
+    [self removeFromNotificationCenter];
+}
+
+// called when the app becomes active again
+-(void)appBecameActive:(NSNotification *)notification
+{
+    // remove the current text label showing first name and last name initial
+    [[self childNodeWithName:@"usernameLabel"] removeFromParent];
+    // create a new text label with the updated first name and last name initial
+    [self loadSettingsInfo];
+    [self addUserInfo];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                           Email Therapist Logic and Popups
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// display a popup with options to zip + send recent game log files or send previously zipped game log files
 -(void)displayAlertView
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Send Log Files To Therapist" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
     [actionSheet addButtonWithTitle:@"Send Recent Games"];
     [actionSheet addButtonWithTitle:@"Send Older Games"];
-//    [actionSheet addButtonWithTitle:@"Cancel"];
-//    [actionSheet setCancelButtonIndex:2];
-//    NSLog(@"cancel button  is %@",[actionSheet buttonTitleAtIndex:2]);
-
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Send Log Files"
-//                                                    message:@"Send Recent Games or Older Game Files?"
-//                                                   delegate:self
-//                                          cancelButtonTitle:@"Recent Games"
-//                                          otherButtonTitles:  @"Older Game Files", nil];
-//    [alert show];
-//    [alert release];
     [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
 }
 
+// called when one of the two buttons in the UIActionSheet ("Send Recent Games" or "Send Older Games")
+// is clicked and performs the appropriate actions
 - (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
     
+    // figure out which button was clicked ("Send Recent Games" = 0 and "Send Older Games" = 1)
     if (buttonIndex == 0)
     {
+        // user wants to send recent games
+        
+        // get the log files directory path
         NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]   stringByAppendingPathComponent:@"logs"];
-        //        [self listFileAtPath:folderPath];
+        // try to zip the log files there
         NSString *zipFile = [self zipFilesAtPath:folderPath];
+        //   zipFile = "No files to compress" when no log files to zip
+        //           = "" if there was an error when zipping the files
+        //           = zip file name otherwise
+        
+        // if there are no files to compress, then alert the user and don't open up email
         if ([zipFile isEqualToString:@"No files to compress"])
         {
-            //[popup release];
-
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
                                                             message:@"No recent game files.\n Maybe they were already moved to Older Games?"
                                                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -453,185 +486,158 @@
         }
         else if (zipFile.length == 0)
         {
+            // if there was an error during compression, then alert the user and don't open up email
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR"
                                                             message:@"An error occured while compressing recent games"
                                                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
             [alert release];
-
         }
         else
         {
+            // open up email and attach the zip file
             [self emailZipFile:zipFile];
         }
     }
     else if (buttonIndex == 1)
     {
+        // user wants to send already zipped games
+        
+        // check if the zipped games table view browser is already displayed
         if ([_tbv superview] == nil)
         {
+            // add in all zip files in the logs directory to the zip files array
             [self addZipFilesToArray];
+            
+            // add a table view listing all of these files to the view
             _tbv = [[UITableView alloc] initWithFrame:CGRectMake(250, 200, self.frame.size.height/2, self.frame.size.width/2)];
             _tbv.delegate = self;
             _tbv.dataSource = self;
             [self.view addSubview:_tbv];
         }
         else
-            NSLog(@"tbv is not nil");
+        {
+            // don't really need to do anything, don't think this case is possible but w/e
+        }
     }
-//    else // buttonIndex == 2
-//    {
-//        [popup removeFromSuperview];
-//    }
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(buttonIndex == 0)
-    {
-    }
-    
-}
-
--(bool)nodeIsButton:(NSString *)previousNodeName
-{
-    return [previousNodeName isEqualToString:@"babyGameButton"] ||
-        [previousNodeName isEqualToString:@"babyGameButtonPressed"] ||
-        [previousNodeName isEqualToString:@"targetGameButton"] ||
-        [previousNodeName isEqualToString:@"targetGameButtonPressed"] ||
-        [previousNodeName isEqualToString:@"fetchGameButton"] ||
-        [previousNodeName isEqualToString:@"fetchGameButtonPressed"] ||
-        [previousNodeName isEqualToString:@"therapistMenuButton"] ||
-        [previousNodeName isEqualToString:@"therapistMenuButtonPressed"] ||
-        [previousNodeName isEqualToString:@"settingsMenuButton"] ||
-        [previousNodeName isEqualToString:@"settingsMenuButtonPressed"];
-}
-
+// zips all .csv files in the logs directory (if any) into one zip file
 -(NSString *)zipFilesAtPath:(NSString *)directoryPath
 {
-    // clear array of log files
+    // clear array of log files (if any) and reinitialize
     [_logFiles removeAllObjects];
     _logFiles = [[NSMutableArray alloc] init];
+    
     // format the zip file name
     NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
     [DateFormatter setDateFormat:@"MM-dd-yyyy_HH-mm"];
     NSString *currentDate = [DateFormatter stringFromDate:[NSDate date]];
     NSString *zipFileName = [NSString stringWithFormat:@"%@_%@_%@.zip", _firstName, _lastName, currentDate];
-//    [[[[[_firstName stringByAppendingString:@"_"]
-//                                stringByAppendingString:_lastName]
-//                               stringByAppendingString:@"_"]
-//                              stringByAppendingString:currentDate]
-//                             stringByAppendingString:@".zip"];
-    NSLog(@"zip Filename is %@", zipFileName);
     
-    // get all the files currently in this directory
+    // prepare to open up logs directory
     BOOL isDir = NO;
     BOOL noFilesToCompress = false;
     NSArray *fileNames;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if([fileManager fileExistsAtPath:directoryPath isDirectory:&isDir] && isDir)
     {
-        // get the names of all the files in this directory (.csv and .zip)
+        // get the names of all the files in the logs directory (.csv and .zip)
         fileNames = [fileManager subpathsAtPath:directoryPath];
+        
         // add all log files (.csv) to logFiles array
         for (NSString *fileName in fileNames)
         {
             NSArray *nameAndExtension = [fileName componentsSeparatedByString:@"."];
             NSString *extension = nameAndExtension[[nameAndExtension count]-1];
-            NSLog(@"extension is %@", extension);
             NSString *fullPath = [directoryPath stringByAppendingPathComponent:fileName];
             if (![extension isEqualToString:@"csv"])
             {
-                NSLog(@"ignoring zip file %@", fileName);
+                // ignore non .csv files (e.g. already zipped files .zip)
                 continue;
             }
             if([fileManager fileExistsAtPath:fullPath isDirectory:&isDir] && !isDir)
             {
+                // add .csv file names to the log files array
                 [_logFiles addObject:fileName];
             }
         }
     }
     else
     {
+        // if the logs directory hasn't been created yet (e.g. no logs have been made yet)
         noFilesToCompress = true;
     }
 
+    // alert if there are no log files and return early (calling method shows the alert)
     if (noFilesToCompress || [_logFiles count] == 0)
     {
-        // alert that there are no log files (calling method shows the alert)
         return @"No files to compress";
     }
-    NSLog(@"found %d log files", [_logFiles count]);
+    
+    // get the full path to the zip file
     NSString *archivePath = [NSString stringWithFormat:@"%@/%@", directoryPath, zipFileName];
-//                             [directoryPath stringByAppendingString:@"/" ]
-//                             stringByAppendingString:zipFileName ];
-    NSLog(@"achive path is %@", archivePath);
+
+    // create the utility to zip the files together
     ZipArchive *archiver = [[ZipArchive alloc] init];
+    // create an empty zip file
     [archiver CreateZipFile2:archivePath];
-    NSLog(@"num paths found is %d", [fileNames count]);
-    int i = 0;
     for(NSString *fileName in _logFiles)
     {
-        NSLog(@"subpath %d is %@", i, fileName);
-        i++;
-
+        // get the full file path and add it to the zip file
         NSString *longPath = [directoryPath stringByAppendingPathComponent:fileName];
         [archiver addFileToZip:longPath newname:fileName];
     }
-    NSLog(@"compressing...");
+    // compress the zip file and check its exit flag
     BOOL successCompressing = [archiver CloseZipFile2];
-//    if ([_logFiles count] == 0)
-//    {
-//        NSError *error;
-//        BOOL success = [fileManager removeItemAtPath:archivePath error:&error];
-//        NSLog(@"No files to compress");
-//        archivePath = @"No files to compress";
-//    }
     if (successCompressing)
     {
-        NSLog(@"successful compression! ");
+        // files successfully compressed, delete old .csv logs
         [self deleteLogFiles:directoryPath];
+        // return the full path to the zip file
         return archivePath;
     }
     else
     {
-        NSLog(@"UNSUCCESSFUL compression! ");
+        // compression failed for some reason...
         return @"";
     }
 }
 
+// open up a mail compose view with the given zip file attached and text fields autopopulated
 -(void)emailZipFile:(NSString *)zipFilePath
 {
-    NSLog(@"zip file path is %@", zipFilePath);
+    // extract the zip file name from the full path
     NSArray *parts = [zipFilePath componentsSeparatedByString:@"/"];
     NSString *zipFile = parts[[parts count]-1];
-    NSLog(@"NOW zip file name is %@", zipFile);
-    
-    NSArray *recipients = @[_therapistEmail];
-    
+
+    // create a mail compose view and autopopulate fields
     MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
     composer.mailComposeDelegate = self;
-    // want to be able to use
-    // if ([composer canSendMail]) ... to check if user has e-mail account setup yet
-    
+    // usually can use if ([composer canSendMail]) to check if user has e-mail account setup yet
+    // but for w/e reason I am getting errors with this (no longer supported in iOS7?)
     // populate the fields
+    NSArray *recipients = @[_therapistEmail];
     [composer setToRecipients:recipients];
     [composer setSubject:@"re: My game logs from KidologyApp"];
     NSString *messageBody = [NSString stringWithFormat:@"Hello,\n Attached are %d of my game log files", [_logFiles count]];
     [composer setMessageBody:messageBody isHTML:NO];
+    // attach zip file to message
     NSData *zipData = [NSData dataWithContentsOfFile:zipFilePath];
     [composer addAttachmentData:zipData mimeType:@"application/zip" fileName:zipFile];
     composer.navigationBar.barStyle = UIBarStyleBlack;
+    // present the compose mail view
     [self.view.window.rootViewController presentModalViewController:composer animated:YES];
     [composer release];
 }
 
 // Dismisses the email composition interface when users tap Cancel or Send
-// Proceeds to update the message field with the result of the operation
+// Proceeds to create a popup to inform the user of the success (or failure) of the operation
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
+    // Notifies users about errors associated with sending the email (e.g. sending cancelled)
     NSString *message = @"";
-    BOOL deleteLogFiles = true;
-    // Notifies users about errors associated with the interface
+    
     switch (result)
     {
         case MFMailComposeResultCancelled:
@@ -653,72 +659,44 @@
             
         default:
         {
-            deleteLogFiles = false;
             message = @"Sending Failed - Unknown Error :-(  Log Files zipped and moved to Older Games";
             break;
         }
     }
+    
+    // display a popup saying what happened (good or bad)
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Email"
                                                     message:message
                                                    delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alert show];
     [alert release];
-    
     [self.view.window.rootViewController dismissModalViewControllerAnimated:YES];
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                            UITableView Stuff (for listing zipped game files)
+//-------------------------------------------------------------------------------------------------------------------------------------
 
-//-(NSArray *)listFileAtPath:(NSString *)path
-//{
-//    //-----> LIST ALL FILES <-----//
-//    NSLog(@"LISTING ALL FILES FOUND");
-//    
-//    int count;
-//    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
-//    for (count = 0; count < (int)[directoryContent count]; count++)
-//    {
-//        NSString *file = [directoryContent objectAtIndex:count];
-//        NSLog(@"File %d: %@", (count + 1), file);
-//    }
-//    NSLog(@"found %d files", count);
-//    
-//    return directoryContent;
-//}
-
--(void)loadSettingsInfo
-{
-    //get user's settings from the app settings
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
-    _firstName = [defaults objectForKey:@"firstName"];
-    _lastName = [defaults objectForKey:@"lastName"];
-    _therapistEmail = [defaults objectForKey:@"therapistEmail"];
-}
-
--(void)appBecameActive:(NSNotification *)notification
-{
-    NSLog(@"updating settings info on activate");
-    [[self childNodeWithName:@"usernameLabel"] removeFromParent];
-    [self loadSettingsInfo];
-    [self addUserInfo];
-}
-
+// add all .zip files in the logs directory to the zip files array
 -(void)addZipFilesToArray
 {
+    // initialize the zip files array
     _zipFilesArray = [[NSMutableArray alloc]init];
-    NSString *extension = @"zip";
-    //NSString *resPath = [[NSBundle mainBundle] resourcePath];
     
+    // find the logs directory path (if it exists)
     NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"logs"];
-    // make the folder if it doesn't already exist
+    
+    // make the logs directory if it doesn't already exist
     NSError *error = nil;
     if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
         [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
     
-    NSString *file;
     NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:&error];
-    for(file in files)
+    NSString *extension = @"zip";
+    // iterate over all the files in the logs directory
+    for(NSString *file in files)
     {
+        // only add files with .zip extension to zip files array
         if([[file pathExtension] isEqualToString:extension])
         {
             [_zipFilesArray addObject:file];
@@ -726,11 +704,14 @@
     }
 }
 
+// delete all .csv log files in the logs directory
 -(void)deleteLogFiles:(NSString *)logDirectoryPath
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    // iterate over all files in the log files array
     for (NSString *file in _logFiles)
     {
+        // remove each file in log files from the logs directory
         NSError *error;
         NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", logDirectoryPath, file];
         BOOL success = [fileManager removeItemAtPath:fullFilePath error:&error];
@@ -739,6 +720,7 @@
         else
             NSLog(@"sucessfully deleted file %@", fullFilePath);
     }
+    // clear the log files array
     [_logFiles removeAllObjects];
 }
 
@@ -749,12 +731,14 @@
     return 1;
 }
 
+// tells the table view how many rows to init with
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _zipFilesArray.count;
     
 }
 
+// populates the table view rows
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -769,13 +753,18 @@
     return cell;
 }
 
+// called when user selects a row in the table view
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *zipFileName = [self.zipFilesArray objectAtIndex:indexPath.row];
     [_tbv removeFromSuperview];
-    [self emailZipFile:zipFileName];
+    // get the log files directory path
+    NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]   stringByAppendingPathComponent:@"logs"];
+    NSString *fullPathToZipFile = [NSString stringWithFormat:@"%@/%@", folderPath, zipFileName];
+    [self emailZipFile:fullPathToZipFile];
 }
 
+// creates a title for the table view
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 
 {

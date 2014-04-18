@@ -18,7 +18,6 @@
 		0F9462D518C0296A00E9E3BD /* anchor_green_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D118C0296A00E9E3BD /* anchor_green_right.png */; };
 		0F9462D618C0296A00E9E3BD /* anchor_green_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D218C0296A00E9E3BD /* anchor_green_left.png */; };
 		0F9462D718C0296A00E9E3BD /* anchor_red_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9462D318C0296A00E9E3BD /* anchor_red_right.png */; };
-		0FAA3122190056BA008C76C2 /* rooster.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0FAA3121190056B9008C76C2 /* rooster.mp3 */; };
 		0FAA31241900578D008C76C2 /* horse.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0FAA31231900578D008C76C2 /* horse.mp3 */; };
 		0FAA3126190057E2008C76C2 /* bubbles.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0FAA3125190057E2008C76C2 /* bubbles.mp3 */; };
 		0FDEFA3318FAFE1600D458F9 /* Center.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FDEFA2D18FAFE1600D458F9 /* Center.png */; };
@@ -69,7 +68,6 @@
 		B96CAAAA18A7ED7700D5C20C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAA918A7ED7700D5C20C /* main.m */; };
 		B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAAD18A7ED7700D5C20C /* AppDelegate.m */; };
 		B96CAAB118A7ED7700D5C20C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B96CAAAF18A7ED7700D5C20C /* Main.storyboard */; };
-		B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB318A7ED7700D5C20C /* ViewController.m */; };
 		B96CAAB718A7ED7700D5C20C /* MainMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B96CAABB18A7ED7700D5C20C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B96CAABA18A7ED7700D5C20C /* Images.xcassets */; };
 		B96CAAC218A7ED7700D5C20C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B96CAAC118A7ED7700D5C20C /* XCTest.framework */; };
@@ -88,13 +86,12 @@
 		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
 		E842B6CE18FC8AF7000610A0 /* Quit_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = E842B6CD18FC8AF7000610A0 /* Quit_Button.png */; };
 		E842B6D018FC8AFB000610A0 /* Quit_Button_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E842B6CF18FC8AFB000610A0 /* Quit_Button_Pressed.png */; };
-		E842B6D318FC9587000610A0 /* GestureTargetPracticeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E842B6D218FC9587000610A0 /* GestureTargetPracticeScene.m */; };
 		E89BFA8518F71564006C1959 /* settingsScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8118F71564006C1959 /* settingsScreen.png */; };
 		E89BFA8618F71564006C1959 /* settingsScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8218F71564006C1959 /* settingsScreen@2x.png */; };
 		E89BFA8718F71564006C1959 /* settingsScreenLegacy.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8318F71564006C1959 /* settingsScreenLegacy.png */; };
 		E89BFA8818F71564006C1959 /* settingsScreenLegacy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8418F71564006C1959 /* settingsScreenLegacy@2x.png */; };
-		E8A34CEA18F276AD006F6D1B /* TherapistMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A34CE918F276AD006F6D1B /* TherapistMenuScene.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E8A3D73218FB8BCB0088B300 /* UtilityClass.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A3D73118FB8BCB0088B300 /* UtilityClass.m */; };
+		E8D46C5B1900F41900C3DD2E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D46C5A1900F41900C3DD2E /* ViewController.m */; };
 		E8DF543C18F58AB700B9D1D1 /* babyGameButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E8DF543A18F58AB700B9D1D1 /* babyGameButtonPressed.png */; };
 		E8DF543D18F58AB700B9D1D1 /* babyGameButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E8DF543B18F58AB700B9D1D1 /* babyGameButton.png */; };
 		E8DF544018F58AC000B9D1D1 /* fetchGameButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E8DF543E18F58AC000B9D1D1 /* fetchGameButtonPressed.png */; };
@@ -218,8 +215,6 @@
 		B96CAAAC18A7ED7700D5C20C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B96CAAAD18A7ED7700D5C20C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B96CAAB018A7ED7700D5C20C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B96CAAB218A7ED7700D5C20C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B96CAAB318A7ED7700D5C20C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B96CAAB518A7ED7700D5C20C /* MainMenuScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainMenuScene.h; sourceTree = "<group>"; };
 		B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainMenuScene.m; sourceTree = "<group>"; };
 		B96CAABA18A7ED7700D5C20C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -243,16 +238,14 @@
 		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
 		E842B6CD18FC8AF7000610A0 /* Quit_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quit_Button.png; sourceTree = "<group>"; };
 		E842B6CF18FC8AFB000610A0 /* Quit_Button_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quit_Button_Pressed.png; sourceTree = "<group>"; };
-		E842B6D118FC9587000610A0 /* GestureTargetPracticeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureTargetPracticeScene.h; sourceTree = "<group>"; };
-		E842B6D218FC9587000610A0 /* GestureTargetPracticeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureTargetPracticeScene.m; sourceTree = "<group>"; };
 		E89BFA8118F71564006C1959 /* settingsScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsScreen.png; sourceTree = "<group>"; };
 		E89BFA8218F71564006C1959 /* settingsScreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsScreen@2x.png"; sourceTree = "<group>"; };
 		E89BFA8318F71564006C1959 /* settingsScreenLegacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsScreenLegacy.png; sourceTree = "<group>"; };
 		E89BFA8418F71564006C1959 /* settingsScreenLegacy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsScreenLegacy@2x.png"; sourceTree = "<group>"; };
-		E8A34CE818F276AD006F6D1B /* TherapistMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TherapistMenuScene.h; sourceTree = "<group>"; };
-		E8A34CE918F276AD006F6D1B /* TherapistMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TherapistMenuScene.m; sourceTree = "<group>"; };
 		E8A3D73018FB8BCB0088B300 /* UtilityClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilityClass.h; sourceTree = "<group>"; };
 		E8A3D73118FB8BCB0088B300 /* UtilityClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UtilityClass.m; sourceTree = "<group>"; };
+		E8D46C591900F40D00C3DD2E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E8D46C5A1900F41900C3DD2E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E8DF543A18F58AB700B9D1D1 /* babyGameButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = babyGameButtonPressed.png; sourceTree = "<group>"; };
 		E8DF543B18F58AB700B9D1D1 /* babyGameButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = babyGameButton.png; sourceTree = "<group>"; };
 		E8DF543E18F58AC000B9D1D1 /* fetchGameButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fetchGameButtonPressed.png; sourceTree = "<group>"; };
@@ -457,15 +450,13 @@
 				B9D70C8B18C639FB000C12F1 /* SetupViewController.m */,
 				B9D70C8D18C64587000C12F1 /* MenuViewController.h */,
 				B9D70C8E18C64587000C12F1 /* MenuViewController.m */,
-				B96CAAB218A7ED7700D5C20C /* ViewController.h */,
-				B96CAAB318A7ED7700D5C20C /* ViewController.m */,
+				E8D46C591900F40D00C3DD2E /* ViewController.h */,
+				E8D46C5A1900F41900C3DD2E /* ViewController.m */,
 				B96CAAAF18A7ED7700D5C20C /* Main.storyboard */,
 				FD7E779B18FE3AF30031A417 /* DefaultPreferences.plist */,
 				0FF78FC218EDD59100BD200D /* Settings.bundle */,
 				B96CAAB518A7ED7700D5C20C /* MainMenuScene.h */,
 				B96CAAB618A7ED7700D5C20C /* MainMenuScene.m */,
-				E8A34CE818F276AD006F6D1B /* TherapistMenuScene.h */,
-				E8A34CE918F276AD006F6D1B /* TherapistMenuScene.m */,
 				B94A54AF18C00DC100E92932 /* BabyMenuScene.h */,
 				B94A54B018C00DC100E92932 /* BabyMenuScene.m */,
 				7CB23C2F18BFFEB4007F409F /* BabyTargetPracticeScene.h */,
@@ -474,8 +465,6 @@
 				7CB76CC418B66C190003A622 /* TargetPracticeMenuScene.m */,
 				B96CAADE18A80B0300D5C20C /* TargetPracticeScene.h */,
 				B96CAADF18A80B0300D5C20C /* TargetPracticeScene.m */,
-				E842B6D118FC9587000610A0 /* GestureTargetPracticeScene.h */,
-				E842B6D218FC9587000610A0 /* GestureTargetPracticeScene.m */,
 				7CC9C49418FDD6D1007A5B7C /* NewGestureTargetScence.h */,
 				7CC9C49518FDD6F1007A5B7C /* NewGestureTargetScence.m */,
 				0FDF3AA118DA56A400FBEC85 /* CustomTargetPracticeScene.h */,
@@ -822,17 +811,15 @@
 				E8F0BC2918F6289C0021BB55 /* ioapi.c in Sources */,
 				B94A54B118C00DC100E92932 /* BabyMenuScene.m in Sources */,
 				B96CAAE018A80B0300D5C20C /* TargetPracticeScene.m in Sources */,
-				B96CAAB418A7ED7700D5C20C /* ViewController.m in Sources */,
 				B9938EBF18A9A5C40004890B /* TargetPracticeGameOver.m in Sources */,
 				E8F0BC2D18F6289C0021BB55 /* ZipArchive.mm in Sources */,
 				7CB23C3118BFFEB4007F409F /* BabyTargetPracticeScene.m in Sources */,
 				B9D70C8F18C64587000C12F1 /* MenuViewController.m in Sources */,
+				E8D46C5B1900F41900C3DD2E /* ViewController.m in Sources */,
 				0FDF3AA318DA56A400FBEC85 /* CustomTargetPracticeScene.m in Sources */,
 				B96CAAAE18A7ED7700D5C20C /* AppDelegate.m in Sources */,
 				E8F0BC2C18F6289C0021BB55 /* zip.c in Sources */,
 				B96CAAAA18A7ED7700D5C20C /* main.m in Sources */,
-				E842B6D318FC9587000610A0 /* GestureTargetPracticeScene.m in Sources */,
-				E8A34CEA18F276AD006F6D1B /* TherapistMenuScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

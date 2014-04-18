@@ -6,6 +6,10 @@
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
+// this class is our root view controller in storyboard
+// AFAIK, it's just a parent class for our other view controllers
+// everything that follows in this class is just auto-generated
+
 #import "ViewController.h"
 
 @implementation ViewController
