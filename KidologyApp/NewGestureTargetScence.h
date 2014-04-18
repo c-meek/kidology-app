@@ -5,20 +5,17 @@
 //  Created by ngo, tien dong on 4/15/14.
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
+
 #import <SpriteKit/SpriteKit.h>
 
 typedef enum {
-    SWIPE,
+    SWIPE, //Not implemented...
     ROTATE,
     ZOOM,
-    DRAG //Not implemented yet
+    DRAG
 } ActionType;
 
 typedef enum {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
     CLOCKWISE,
     COUNTER_CLOCKWISE,
     IN,
@@ -29,6 +26,7 @@ typedef enum {
 {
     UIRotationGestureRecognizer* rotationGR;
     UIPanGestureRecognizer* panGR;
+    UIPinchGestureRecognizer* pinchGR;
 }
 
 @property (nonatomic) SKSpriteNode *target;
@@ -46,17 +44,24 @@ typedef enum {
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 //@property (nonatomic) AnchorStatus anchored;
 
-@property (nonatomic) int counter;
-@property (nonatomic) int numOfRotations;
+//.... Specific gesture stuff hrere...
 @property (nonatomic) ActionType currentGesture;
 @property (nonatomic) Direction gestureDirection;
 @property (nonatomic) SKSpriteNode *rotateTarget;
+//This is the object that moves in DRAG (or pan)
 @property (nonatomic) SKSpriteNode *updatedTarget;
-@property (nonatomic) SKSpriteNode *arrow;
+//This is the actual target that the object (above) is drag to
+@property (nonatomic) SKSpriteNode *dragTarget;
+@property (nonatomic) SKSpriteNode *zoomTarget;
+@property (nonatomic) SKSpriteNode *outline;
+@property (nonatomic) SKLabelNode *tapScreenLabel;
 @property (nonatomic) SKAction *gestureMoveDone;
 @property (nonatomic) CGPoint *lastupdated;
 
 //....just global varibles to keep track of stuff for certain procedures...
+@property (nonatomic) int counter;
+@property (nonatomic) int hasStartedInCenter;;
+@property (nonatomic) int numOfRotations;
 @property (nonatomic) Boolean isGestureDone;
 @property (nonatomic) int hasRotated;
 @property (nonatomic) Boolean swipedOutside;

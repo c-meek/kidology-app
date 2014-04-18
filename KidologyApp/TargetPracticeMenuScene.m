@@ -28,7 +28,7 @@ NSString *gameName;
         [self addCenterModeButton];
         [self addRandomModeButton];
         [self addCustomModeButton];
-//        [self addGestureModeButton];
+        [self addGestureModeButton];
 //        [self addInstructionLabel];
 //        [self addTarget];
 //        [self addHandAnimation];
@@ -229,12 +229,12 @@ NSString *gameName;
             _customModeButtonPressed.hidden = true;
             _customModeButton.hidden = false;
         }
-//        else if (!([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
-//                 ([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed isEqual:currentNode]))
-//        {
-//            _gestureModeButtonPressed.hidden = false;
-//            _gestureModeButton.hidden = true;
-//        }
+        else if (!([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
+                 ([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed isEqual:currentNode]))
+        {
+            _gestureModeButtonPressed.hidden = false;
+            _gestureModeButton.hidden = true;
+        }
 //        else if (([_gestureModeButton isEqual:previousNode] || [_gestureModeButtonPressed isEqual:previousNode]) &&
 //                 !([_gestureModeButton isEqual:currentNode] || [_gestureModeButtonPressed  isEqual:currentNode]))
 //        {
