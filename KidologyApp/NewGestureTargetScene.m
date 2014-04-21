@@ -1,5 +1,5 @@
 //
-//  NewGestureTargetScence.m
+//  NewGestureTargetScene.m
 //  KidologyApp
 //
 //  Created by ngo, tien dong on 4/15/14.
@@ -9,7 +9,7 @@
 // this is the gesture practice scene
 
 #import <Foundation/Foundation.h>
-#import "NewGestureTargetScence.h"
+#import "NewGestureTargetScene.h"
 #import "TargetPracticeScene.h"
 #import "TargetPracticeGameOver.h"
 #import "MainMenuScene.h"
@@ -18,7 +18,7 @@
 #import "SetupViewController.h"
 #import "UtilityClass.h"
 
-@implementation NewGestureTargetScence
+@implementation NewGestureTargetScene
 
 NSMutableArray *touchLog;
 
@@ -577,6 +577,11 @@ NSMutableArray *touchLog;
         {
             x_pos = self.frame.size.width/2 - x_pos;
         }
+        // move the target right if it's behind the quit button
+        if (x_pos < _quitButton.position.x + _quitButton.size.width*0.5 + _updatedTarget.size.width*0.5)
+        {
+            x_pos = _quitButton.position.x + _quitButton.size.width*0.5 + _updatedTarget.size.width*0.5;
+        }
         int y_pos = (.4 * (arc4random_uniform((int)self.frame.size.height)/2)) +_dragTarget.size.height/2 + 15;
         pos_neg = arc4random_uniform(2);
         if (pos_neg == 0)
@@ -586,6 +591,11 @@ NSMutableArray *touchLog;
         else
         {
             y_pos = self.frame.size.height/2 - y_pos;
+        }
+        // move the target down if it's behind the quit button
+        if (y_pos > _quitButton.position.x - _quitButton.size.height*0.5 - _updatedTarget.size.height*0.5)
+        {
+            y_pos = _quitButton.position.x - _quitButton.size.height*0.5 - _updatedTarget.size.height*0.5;
         }
         _dragTarget.position = CGPointMake(x_pos, y_pos);
         [self addChild: _dragTarget];

@@ -1,5 +1,5 @@
 //
-//  NewGestureTargetScence.h
+//  NewGestureTargetScene.h
 //  KidologyApp
 //
 //  Created by ngo, tien dong on 4/15/14.
@@ -23,7 +23,7 @@ typedef enum {
     OUT
 } Direction;
 
-@interface NewGestureTargetScence: SKScene <UIGestureRecognizerDelegate>
+@interface NewGestureTargetScene: SKScene <UIGestureRecognizerDelegate>
 {
     UIRotationGestureRecognizer* rotationGR;
     UIPanGestureRecognizer* panGR;
