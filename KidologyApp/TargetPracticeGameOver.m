@@ -239,8 +239,8 @@ NSString *gameName;
 {
     SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
     bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
-    bgImage.xScale = .4;
-    bgImage.yScale = .7;
+    bgImage.xScale = .5;
+    bgImage.yScale = .5;
     [self addChild:bgImage];
 }
 
@@ -248,8 +248,8 @@ NSString *gameName;
 {
     SKSpriteNode *sign = [SKSpriteNode spriteNodeWithImageNamed:@"Signpost"];
     sign.position = CGPointMake(self.size.width/2, self.size.height/2);
-    sign.xScale = 0.75;
-    sign.yScale = 0.90;
+    sign.xScale = 0.85;
+    sign.yScale = 0.75;
     [self addChild:sign];
 }
 
@@ -259,7 +259,7 @@ NSString *gameName;
     NSString * messageText = [NSString stringWithFormat:@"You hit %d of %d targets!", self.targetsHit, self.totalTargets];
     SKLabelNode * message = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     message.text = messageText;
-    message.fontSize = 24;
+    message.fontSize = 28;
     message.fontColor =  [SKColor colorWithRed:102/255.0 green:58/255.0 blue:28/255.0 alpha:1];
     message.position = CGPointMake(self.size.width/2, self.size.height/2 + 60);
     [self addChild:message];
