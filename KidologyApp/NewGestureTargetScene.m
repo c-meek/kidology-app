@@ -501,7 +501,8 @@ NSMutableArray *touchLog;
 // this method displays one of several kinds of targets depending on which gesture is randomly chosen
 -(void)displayTargets
 {
-    int rand = arc4random_uniform(3);
+    int rand = arc4random_uniform(3); // random number generator
+    // "rotate" type target
     if (rand == 0)
     {
         _currentGesture = ROTATE;
@@ -515,10 +516,12 @@ NSMutableArray *touchLog;
             _gestureDirection = CLOCKWISE;
         }
     }
+    // "drag to destination" type target
     else if (rand == 1)
     {
         _currentGesture = DRAG;
     }
+    // "pinch in" or "pinch out" type target
     else if (rand == 2)
     {
         _currentGesture = ZOOM;

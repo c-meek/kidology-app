@@ -209,35 +209,35 @@ NSMutableArray *touchLog;
     int y_pos;
     switch (direction)
     {
-        case 0:
+        case 0: // left
             x_pos = -5000;
             y_pos = self.frame.size.height/2;
             break;
-        case 1:
+        case 1: // up
             x_pos = self.frame.size.width/2;
             y_pos = 5000;
             break;
-        case 2:
+        case 2: // right
             x_pos = 5000;
             y_pos = self.frame.size.height/2;
             break;
-        case 3:
+        case 3: // down
             x_pos = self.frame.size.width/2;
             y_pos = -5000;
             break;
-        case 4:
+        case 4: // upper-left
             x_pos = -5000;
             y_pos = 5000;
             break;
-        case 5:
+        case 5: // upper-right
             x_pos = 5000;
             y_pos = 5000;
             break;
-        case 6:
+        case 6: // lower-right
             x_pos = 5000;
             y_pos = -5000;
             break;
-        default: // case 7:
+        default: // case 7: lower-left
             x_pos = -5000;
             y_pos = -5000;
             break;
@@ -248,7 +248,7 @@ NSMutableArray *touchLog;
 
 -(void)dogTouch
 {
-    // for later: maybe make new noise when dog is tapped
+    // for later: maybe make new noise when dog is tapped, has the potential for extreme noise-making by children
 }
 
 // move the ball off the screen to the given coordinates

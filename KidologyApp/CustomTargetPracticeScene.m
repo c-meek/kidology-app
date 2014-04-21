@@ -439,7 +439,7 @@ NSMutableArray *touchLog;
     
     if(error)
     {
-        NSLog(@"erorr %@", error.localizedDescription);
+        NSLog(@"error %@", error.localizedDescription);
     }
     
     fileContents = [fileContents stringByReplacingOccurrencesOfString:@"\n" withString:@";"];
