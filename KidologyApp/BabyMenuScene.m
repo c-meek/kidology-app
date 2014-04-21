@@ -27,9 +27,9 @@
         float width = self.frame.size.width;
         float column = width / 5;
         float height = self.frame.size.height;
-        float row1 = 1*(height/8);
-        float row2 = 3*(height/8);
-        float row3 = 5*(height/8);
+        float row1 = 1*(height/8) + 25;
+        float row2 = 3*(height/8) + 25;
+        float row3 = 5*(height/8) + 25;
         
         //add the buttons
         [self addButton:@"Orange" withPosition: CGPointMake(1*column, row1)];

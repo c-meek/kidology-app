@@ -318,12 +318,12 @@ NSMutableArray *touchLog;
 -(void)trackerLabel
 {
     SKLabelNode * trackerLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    trackerLabel.fontSize = 20;
+    trackerLabel.fontSize = 28;
     NSString * text = [NSString stringWithFormat:@"%d/%d", _correctTouches, _totalTargets];
     trackerLabel.text = text;
     trackerLabel.fontColor = [SKColor yellowColor];
     trackerLabel.horizontalAlignmentMode = 0; // text is center-aligned
-    trackerLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
+    trackerLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height - 90);
     [self addChild:trackerLabel];
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:trackerLabel.position duration:.0075];
@@ -339,11 +339,11 @@ NSMutableArray *touchLog;
         self.time +=.1;
     }
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    timeLabel.fontSize = 20;
+    timeLabel.fontSize = 28;
     timeLabel.fontColor =  [SKColor yellowColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
-    timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
+    timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height - 30);
 
     //label for ratio of touched/total targets
     [self trackerLabel];
@@ -363,8 +363,8 @@ NSMutableArray *touchLog;
 {
     SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
     bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
-    bgImage.xScale = .4;
-    bgImage.yScale = .4;
+    bgImage.xScale = .5;
+    bgImage.yScale = .5;
     [self addChild:bgImage];
 }
 
@@ -377,14 +377,14 @@ NSMutableArray *touchLog;
 -(void)addQuitButton
 {
     _quitButton = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button"];
-    _quitButton.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButton.position = CGPointMake(120, self.frame.size.height - 80);
     _quitButton.name = @"quitButton";
     _quitButton.xScale = .5;
     _quitButton.yScale = .5;
     [self addChild:_quitButton];
     
     _quitButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button_Pressed"];
-    _quitButtonPressed.position = CGPointMake(100, self.frame.size.height/2+235);
+    _quitButtonPressed.position = CGPointMake(120, self.frame.size.height - 80);
     _quitButtonPressed.name = @"quitButtonPressed";
     _quitButtonPressed.hidden = true;
     _quitButtonPressed.xScale = .5;
@@ -491,9 +491,9 @@ NSMutableArray *touchLog;
     targetHitLabel.text = text2;
     targetHitLabel.fontSize = 24;
     targetHitLabel.fontColor = [SKColor yellowColor];
-    targetHitLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + 100);
+    targetHitLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + 150);
     [self addChild:targetHitLabel];
-    CGPoint dest = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
+    CGPoint dest = CGPointMake(self.frame.size.width - 50, self.frame.size.height - 90);
     SKAction *fadeAway = [SKAction moveTo:dest duration:1.5];
     SKAction * remove = [SKAction removeFromParent];
     [targetHitLabel runAction:[SKAction sequence:@[fadeAway, remove]]];

@@ -322,8 +322,8 @@ NSMutableArray *touchLog;
     float targetSize = [[defaults objectForKey:@"defaultTargetSize"] floatValue];
 
     self.ball.position = CGPointMake(self.frame.size.width/2,self.frame.size.height/2);
-    self.ball.xScale = targetSize;
-    self.ball.yScale = targetSize;
+    self.ball.xScale = targetSize/3;
+    self.ball.yScale = targetSize/3;
 }
 
 -(void)displayDog
@@ -348,7 +348,7 @@ NSMutableArray *touchLog;
     instructionLabel2.text = text2;
     instructionLabel2.fontSize = 36;
     instructionLabel2.fontColor = [SKColor whiteColor];
-    instructionLabel2.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2+150);
+    instructionLabel2.position = CGPointMake(self.frame.size.width/2, self.frame.size.height - 150);
     [self addChild:instructionLabel2];
     
     SKAction *fadeAway = [SKAction fadeOutWithDuration:4];
