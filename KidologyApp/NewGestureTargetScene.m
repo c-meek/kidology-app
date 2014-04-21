@@ -515,8 +515,9 @@ NSMutableArray *touchLog;
 // this method displays one of several kinds of targets depending on which gesture is randomly chosen
 -(void)displayTargets
 {
-    int rand = arc4random_uniform(3); // random number generator
-    // "rotate" type target
+    
+// This is used to randomize the next target
+    int rand = arc4random_uniform(3);
     if (rand == 0)
     {
         _currentGesture = ROTATE;
