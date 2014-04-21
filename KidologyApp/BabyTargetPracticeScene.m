@@ -65,13 +65,16 @@ NSMutableArray *touchLog;
         // get the current touch and see if it is on the quit button
         CGPoint position = [touch locationInNode:self];
         SKNode *node = [self nodeAtPoint:position];
-        [self targetTouch:position];
         if ([node.name isEqualToString:@"quitButton"] ||
             [node.name isEqualToString:@"quitButtonPressed"])
         {
             // update the quit button image
             _quitButton.hidden = true;
             _quitButtonPressed.hidden = false;
+        }
+        else
+        {
+            [self targetTouch:position];
         }
     }
 }

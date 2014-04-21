@@ -34,6 +34,7 @@ NSString *gameName;
         self.totalTargets = totalTargets;
         gameName = nil;
         [self addBackground];
+        [self addSignBoard];
         [self addMessage];
         [self addPlayAgainButton];
         [self addBackToMainMenuButton];
@@ -76,14 +77,16 @@ NSString *gameName;
     
     // see which button was pressed and update its images
     if ([node.name isEqualToString:@"playAgainButton"] ||
-        [node.name isEqualToString:@"playAgainLabel"])
+        [node.name isEqualToString:@"playAgainButtonPressed"])
     {
-        _playAgainButton.color = [SKColor yellowColor];
+        _playAgainButton.hidden = true;
+        _playAgainButtonPressed.hidden = false;
     }
     else if ([node.name isEqualToString:@"backToMainMenuButton"] ||
-             [node.name isEqualToString:@"backToMainMenuLabel"])
+             [node.name isEqualToString:@"backToMainMenuButtonPressed"])
     {
-        _backToMainMenuButton.color = [SKColor yellowColor];
+        _backToMainMenuButton.hidden = true;
+        _backToMainMenuButtonPressed.hidden = false;
     }
 }
 
@@ -95,10 +98,11 @@ NSString *gameName;
     SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
     // Check which button was pressed (if any)
     if ([node.name isEqualToString:@"playAgainButton"] ||
-        [node.name isEqualToString:@"playAgainLabel"])
+        [node.name isEqualToString:@"playAgainButtonPressed"])
     {
         // reset the button
-        _playAgainButton.color = [SKColor blackColor];
+        _playAgainButton.hidden = false;
+        _playAgainButtonPressed.hidden = true;
         
         // Create and configure the target practice scene
         NSString *gameMode = [self.userData objectForKey:@"gameMode"];
@@ -165,11 +169,12 @@ NSString *gameName;
  
     }
     else if ([node.name isEqualToString:@"backToMainMenuButton"] ||
-             [node.name isEqualToString:@"backToMainMenuLabel"])
+             [node.name isEqualToString:@"backToMainMenuButtonPressed"])
     {
         // reset the button
-        _backToMainMenuButton.color = [SKColor blackColor];
-
+        _backToMainMenuButton.hidden = false;
+        _backToMainMenuButtonPressed.hidden = true;
+        
         // Create and configure the "main menu" scene.
         SKScene * mainMenuScene = [[MainMenuScene alloc] initWithSize:self.size];
         mainMenuScene.scaleMode = SKSceneScaleModeAspectFill;
@@ -194,19 +199,34 @@ NSString *gameName;
         SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
         SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
         
-//        // If a touch was off the back button but has moved onto it
-//        if (!([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
-//            ([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
-//        {
-//            _pressedBackButton.hidden = false;
-//            _backButton.hidden = true;
-//        }
-//        else if (([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
-//                 !([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
-//        {
-//            _pressedBackButton.hidden = true;
-//            _backButton.hidden = false;
-//        }
+        // If a touch was off the back to main menu button but has moved onto it
+        if (!([_backToMainMenuButton isEqual:previousNode] || [_backToMainMenuButtonPressed isEqual:previousNode]) &&
+            ([_backToMainMenuButton isEqual:currentNode] || [_backToMainMenuButtonPressed isEqual:currentNode]))
+        {
+            _backToMainMenuButtonPressed.hidden = false;
+            _backToMainMenuButton.hidden = true;
+        }
+        else if (([_backToMainMenuButton isEqual:previousNode] || [_backToMainMenuButtonPressed isEqual:previousNode]) &&
+                 !([_backToMainMenuButton isEqual:currentNode] || [_backToMainMenuButtonPressed isEqual:currentNode]))
+        {
+            // if a touch was on the back to main menu button but moved off it
+            _backToMainMenuButtonPressed.hidden = false;
+            _backToMainMenuButton.hidden = true;
+        }
+        else if (!([_playAgainButton isEqual:previousNode] || [_playAgainButtonPressed isEqual:previousNode]) &&
+            ([_playAgainButton isEqual:currentNode] || [_playAgainButtonPressed isEqual:currentNode]))
+        {
+            // if a touch was off the play again button but moved onto it
+            _playAgainButtonPressed.hidden = false;
+            _playAgainButton.hidden = true;
+        }
+        else if (([_playAgainButton isEqual:previousNode] || [_playAgainButtonPressed isEqual:previousNode]) &&
+                 !([_playAgainButton isEqual:currentNode] || [_playAgainButtonPressed isEqual:currentNode]))
+        {
+            // if a touch was on the play again button but moved off it
+            _playAgainButtonPressed.hidden = false;
+            _playAgainButton.hidden = true;
+        }
     }
 }
 
@@ -221,6 +241,15 @@ NSString *gameName;
     bgImage.xScale = .4;
     bgImage.yScale = .7;
     [self addChild:bgImage];
+}
+
+-(void)addSignBoard
+{
+    SKSpriteNode *sign = [SKSpriteNode spriteNodeWithImageNamed:@"Signpost"];
+    sign.position = CGPointMake(self.size.width/2, self.size.height/2);
+    sign.xScale = 1.0;
+    sign.yScale = 1.0;
+    [self addChild:sign];
 }
 
 -(void)addMessage
@@ -238,38 +267,38 @@ NSString *gameName;
 
 -(void)addPlayAgainButton
 {
-    _playAgainButton = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(400, 40)];
-    _playAgainButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 100);
+    _playAgainButton = [[SKSpriteNode alloc] initWithImageNamed:@"Play_Again!"];
+    _playAgainButton.position = CGPointMake(self.size.width/2, self.size.height/2);
     _playAgainButton.name = @"playAgainButton";
+    _playAgainButton.xScale = .25;
+    _playAgainButton.yScale = .3;
     [self addChild:_playAgainButton];
     
-    NSString *playAgainText = [NSString stringWithFormat:@"Play Again"];
-    SKLabelNode *playAgainLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    playAgainLabel.text = playAgainText;
-    playAgainLabel.name = @"playAgainLabel";
-    playAgainLabel.fontSize = 20;
-    playAgainLabel.fontColor = [SKColor whiteColor];
-    playAgainLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 100);
-    [self addChild:playAgainLabel];
+    _playAgainButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Play_Again!_Pressed"];
+    _playAgainButtonPressed.position = CGPointMake(self.size.width/2, self.size.height/2);
+    _playAgainButtonPressed.name = @"playAgainButtonPressed";
+    _playAgainButtonPressed.hidden = true;
+    _playAgainButtonPressed.xScale = .25;
+    _playAgainButtonPressed.yScale = .3;
+    [self addChild:_playAgainButtonPressed];
 }
 
 -(void)addBackToMainMenuButton
 {
-    _backToMainMenuButton = [[SKSpriteNode alloc] initWithColor:[SKColor blackColor] size:CGSizeMake(400, 40)];
-    _backToMainMenuButton.position = CGPointMake(CGRectGetMidX(self.frame),
-                                                 CGRectGetMidY(self.frame) - 250);
+    _backToMainMenuButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_to_Main_Menu.png"];
+    _backToMainMenuButton.position = CGPointMake(self.size.width/2, self.size.height/2 + 50);
     _backToMainMenuButton.name = @"backToMainMenuButton";
+    _backToMainMenuButton.xScale = .25;
+    _backToMainMenuButton.yScale = .3;
     [self addChild:_backToMainMenuButton];
     
-    NSString *backToMainMenuText = [NSString stringWithFormat:@"Back To Main Game Menu"];
-    SKLabelNode *backToMainMenuLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    backToMainMenuLabel.text = backToMainMenuText;
-    backToMainMenuLabel.name = @"backToMainMenuLabel";
-    backToMainMenuLabel.fontSize = 20;
-    backToMainMenuLabel.fontColor = [SKColor whiteColor];
-    backToMainMenuLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                               CGRectGetMidY(self.frame) - 250);
-    [self addChild:backToMainMenuLabel];
+    _backToMainMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Back_to_Main_Menu_Pressed.png"];
+    _backToMainMenuButtonPressed.position = CGPointMake(self.size.width/2, self.size.height/2 - 50);
+    _backToMainMenuButtonPressed.name = @"backToMainMenuButtonPressed";
+    _backToMainMenuButtonPressed.hidden = true;
+    _backToMainMenuButtonPressed.xScale = .25;
+    _backToMainMenuButtonPressed.yScale = .3;
+    [self addChild:_backToMainMenuButtonPressed];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------

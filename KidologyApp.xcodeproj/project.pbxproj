@@ -84,6 +84,11 @@
 		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
 		E836A10519054F5900E9AEA9 /* gong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E836A10419054F5900E9AEA9 /* gong.mp3 */; };
 		E836A1091905533000E9AEA9 /* birds.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E836A1081905533000E9AEA9 /* birds.mp3 */; };
+		E836A10E1905843A00E9AEA9 /* Back_to_Main_Menu_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E836A10A1905843A00E9AEA9 /* Back_to_Main_Menu_Pressed.png */; };
+		E836A10F1905843A00E9AEA9 /* Back_to_Main_Menu.png in Resources */ = {isa = PBXBuildFile; fileRef = E836A10B1905843A00E9AEA9 /* Back_to_Main_Menu.png */; };
+		E836A1101905843A00E9AEA9 /* Play_Again!_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E836A10C1905843A00E9AEA9 /* Play_Again!_Pressed.png */; };
+		E836A1111905843A00E9AEA9 /* Play_Again!.png in Resources */ = {isa = PBXBuildFile; fileRef = E836A10D1905843A00E9AEA9 /* Play_Again!.png */; };
+		E836A11919058ED000E9AEA9 /* Signpost.png in Resources */ = {isa = PBXBuildFile; fileRef = E836A11819058ED000E9AEA9 /* Signpost.png */; };
 		E842B6CE18FC8AF7000610A0 /* Quit_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = E842B6CD18FC8AF7000610A0 /* Quit_Button.png */; };
 		E842B6D018FC8AFB000610A0 /* Quit_Button_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E842B6CF18FC8AFB000610A0 /* Quit_Button_Pressed.png */; };
 		E89BFA8518F71564006C1959 /* settingsScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = E89BFA8118F71564006C1959 /* settingsScreen.png */; };
@@ -246,6 +251,11 @@
 		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
 		E836A10419054F5900E9AEA9 /* gong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gong.mp3; sourceTree = "<group>"; };
 		E836A1081905533000E9AEA9 /* birds.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = birds.mp3; sourceTree = "<group>"; };
+		E836A10A1905843A00E9AEA9 /* Back_to_Main_Menu_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_to_Main_Menu_Pressed.png; sourceTree = "<group>"; };
+		E836A10B1905843A00E9AEA9 /* Back_to_Main_Menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_to_Main_Menu.png; sourceTree = "<group>"; };
+		E836A10C1905843A00E9AEA9 /* Play_Again!_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Play_Again!_Pressed.png"; sourceTree = "<group>"; };
+		E836A10D1905843A00E9AEA9 /* Play_Again!.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Play_Again!.png"; sourceTree = "<group>"; };
+		E836A11819058ED000E9AEA9 /* Signpost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Signpost.png; sourceTree = "<group>"; };
 		E842B6CD18FC8AF7000610A0 /* Quit_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quit_Button.png; sourceTree = "<group>"; };
 		E842B6CF18FC8AFB000610A0 /* Quit_Button_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quit_Button_Pressed.png; sourceTree = "<group>"; };
 		E89BFA8118F71564006C1959 /* settingsScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsScreen.png; sourceTree = "<group>"; };
@@ -355,6 +365,7 @@
 		0FF78FC418EDE3DC00BD200D /* Menu Screens */ = {
 			isa = PBXGroup;
 			children = (
+				E836A11819058ED000E9AEA9 /* Signpost.png */,
 				E8DF544218F58B7800B9D1D1 /* mainMenuBackground.png */,
 			);
 			name = "Menu Screens";
@@ -592,6 +603,10 @@
 		E8DF543918F58AA100B9D1D1 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				E836A10A1905843A00E9AEA9 /* Back_to_Main_Menu_Pressed.png */,
+				E836A10B1905843A00E9AEA9 /* Back_to_Main_Menu.png */,
+				E836A10C1905843A00E9AEA9 /* Play_Again!_Pressed.png */,
+				E836A10D1905843A00E9AEA9 /* Play_Again!.png */,
 				E8DF544418F58B8F00B9D1D1 /* settingsMenuButtonPressed.png */,
 				E8DF544518F58B8F00B9D1D1 /* settingsMenuButton.png */,
 				E8DF544618F58B8F00B9D1D1 /* targetGameButtonPressed.png */,
@@ -744,6 +759,7 @@
 				E8DF544D18F58B8F00B9D1D1 /* therapistMenuButtonPressed.png in Resources */,
 				E8D46C7C190145CB00C3DD2E /* slip.mp3 in Resources */,
 				E8DF544318F58B7800B9D1D1 /* mainMenuBackground.png in Resources */,
+				E836A10F1905843A00E9AEA9 /* Back_to_Main_Menu.png in Resources */,
 				E8D46C6219013C1F00C3DD2E /* pling.mp3 in Resources */,
 				FDE1C3A118F468560025811F /* launchScreenLegacy.png in Resources */,
 				7CB23C4118C0020D007F409F /* Blue.png in Resources */,
@@ -757,6 +773,7 @@
 				E836A1091905533000E9AEA9 /* birds.mp3 in Resources */,
 				B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */,
 				FD7E779C18FE3AF30031A417 /* DefaultPreferences.plist in Resources */,
+				E836A10E1905843A00E9AEA9 /* Back_to_Main_Menu_Pressed.png in Resources */,
 				FDE1C3A218F468560025811F /* launchScreenLegacy@2x.png in Resources */,
 				E8DF544F18F58B9400B9D1D1 /* therapistMenuButton.png in Resources */,
 				E8D46C6619013D4300C3DD2E /* vroom.mp3 in Resources */,
@@ -775,6 +792,7 @@
 				0F3AC2C318F6EEA1007CE27C /* Back_Button_Pressed.png in Resources */,
 				7C1865B21900782200C6933B /* rotate_green_target_clockwise.png in Resources */,
 				7CB23C4D18C0020D007F409F /* Yellow.png in Resources */,
+				E836A11919058ED000E9AEA9 /* Signpost.png in Resources */,
 				0F9462D418C0296A00E9E3BD /* anchor_red_left.png in Resources */,
 				0F3AC2C518F6F9D4007CE27C /* smaller&longer.csv in Resources */,
 				0FDEFA3818FAFE1600D458F9 /* Random_Pressed.png in Resources */,
@@ -803,11 +821,13 @@
 				E8D46C781901446700C3DD2E /* dingding.mp3 in Resources */,
 				E89BFA8618F71564006C1959 /* settingsScreen@2x.png in Resources */,
 				7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */,
+				E836A1101905843A00E9AEA9 /* Play_Again!_Pressed.png in Resources */,
 				0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */,
 				E89BFA8518F71564006C1959 /* settingsScreen.png in Resources */,
 				E8DF544B18F58B8F00B9D1D1 /* targetGameButtonPressed.png in Resources */,
 				E8D46C6419013C3F00C3DD2E /* pew.mp3 in Resources */,
 				0F9462D718C0296A00E9E3BD /* anchor_red_right.png in Resources */,
+				E836A1111905843A00E9AEA9 /* Play_Again!.png in Resources */,
 				7CB23C4018C0020D007F409F /* Black.png in Resources */,
 				7C1865B019005E5400C6933B /* dragTarget.png in Resources */,
 				FD6B78DC18ED19240035CA95 /* kidologyapp-legacy@2x.png in Resources */,
