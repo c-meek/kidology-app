@@ -18,7 +18,7 @@
 #import "LogEntry.h"
 #import "MainMenuScene.h"
 #import "CustomTargetPracticeScene.h"
-#import "NewGestureTargetScence.h"
+#import "NewGestureTargetScene.h"
 #import "FetchScene.h"
 #import "BabyMenuScene.h"
 
@@ -137,7 +137,7 @@ NSString *gameName;
         else if ([gameMode isEqualToString:@"gesture"])
         {
             // create and present the gesture practice scene
-            SKScene *gesturePractice = [[NewGestureTargetScence alloc] initWithSize:CGSizeMake(1024,768)];
+            SKScene *gesturePractice = [[NewGestureTargetScene alloc] initWithSize:CGSizeMake(1024,768)];
             gesturePractice.scaleMode = SKSceneScaleModeAspectFill;
             
             // play a transition sound and present the target practice scene

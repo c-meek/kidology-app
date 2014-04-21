@@ -1,5 +1,5 @@
 //
-//  NewGestureTargetScence.m
+//  NewGestureTargetScene.m
 //  KidologyApp
 //
 //  Created by ngo, tien dong on 4/15/14.
@@ -9,7 +9,7 @@
 // this is the gesture practice scene
 
 #import <Foundation/Foundation.h>
-#import "NewGestureTargetScence.h"
+#import "NewGestureTargetScene.h"
 #import "TargetPracticeScene.h"
 #import "TargetPracticeGameOver.h"
 #import "MainMenuScene.h"
@@ -18,7 +18,7 @@
 #import "SetupViewController.h"
 #import "UtilityClass.h"
 
-@implementation NewGestureTargetScence
+@implementation NewGestureTargetScene
 
 NSMutableArray *touchLog;
 
