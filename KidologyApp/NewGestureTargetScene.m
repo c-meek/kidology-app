@@ -577,6 +577,11 @@ NSMutableArray *touchLog;
         {
             x_pos = self.frame.size.width/2 - x_pos;
         }
+        // move the target right if it's behind the quit button
+        if (x_pos < 537)
+        {
+            x_pos = 537;
+        }
         int y_pos = (.4 * (arc4random_uniform((int)self.frame.size.height)/2)) +_dragTarget.size.height/2 + 15;
         pos_neg = arc4random_uniform(2);
         if (pos_neg == 0)
@@ -586,6 +591,11 @@ NSMutableArray *touchLog;
         else
         {
             y_pos = self.frame.size.height/2 - y_pos;
+        }
+        // move the target down if it's behind the quit button
+        if (y_pos > self.frame.size.height - 403)
+        {
+            y_pos = self.frame.size.height - 403;
         }
         _dragTarget.position = CGPointMake(x_pos, y_pos);
         [self addChild: _dragTarget];
