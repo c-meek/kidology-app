@@ -142,7 +142,7 @@ NSString *gameName;
         else if ([gameMode isEqualToString:@"gesture"])
         {
             // create and present the gesture practice scene
-            SKScene *gesturePractice = [[NewGestureTargetScene alloc] initWithSize:CGSizeMake(1024,768)];
+            SKScene *gesturePractice = [[NewGestureTargetScene alloc] initWithSize:self.size];
             gesturePractice.scaleMode = SKSceneScaleModeAspectFill;
             
             // play a transition sound and present the target practice scene

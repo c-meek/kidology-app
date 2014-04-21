@@ -499,7 +499,7 @@ NSMutableArray *touchLog;
 -(void)endGame:(int)targetsHit totalTargets:(int)totalTargets
 {
     SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
-    SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:CGSizeMake(768,1024)
+    SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size
                                                                 targetsHit:targetsHit
                                                               totalTargets:totalTargets];
     // pass the game type and touch log to "game over" scene
@@ -680,8 +680,8 @@ NSMutableArray *touchLog;
     _quitButton = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button"];
     _quitButton.position = CGPointMake(120, self.frame.size.height-80);
     _quitButton.name = @"quitButton";
-    _quitButton.xScale = .7;
-    _quitButton.yScale = .7;
+    _quitButton.xScale = .5;
+    _quitButton.yScale = .5;
     [self addChild:_quitButton];
     
     // pressed quit button
@@ -689,8 +689,8 @@ NSMutableArray *touchLog;
     _quitButtonPressed.position = CGPointMake(120, self.frame.size.height-80);
     _quitButtonPressed.name = @"quitButtonPressed";
     _quitButtonPressed.hidden = true;
-    _quitButtonPressed.xScale = .7;
-    _quitButtonPressed.yScale = .7;
+    _quitButtonPressed.xScale = .5;
+    _quitButtonPressed.yScale = .5;
     [self addChild:_quitButtonPressed];
 }
 
@@ -699,7 +699,7 @@ NSMutableArray *touchLog;
 {
     _tapScreenLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
 
-    _tapScreenLabel.fontSize = 20;
+    _tapScreenLabel.fontSize = 28;
     NSString * labelText = @"Tap screen to begin action!";
     _tapScreenLabel.text = labelText;
     _tapScreenLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
@@ -725,7 +725,7 @@ NSMutableArray *touchLog;
     trackerLabel.text = text;
     trackerLabel.fontColor = [SKColor yellowColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
     trackerLabel.horizontalAlignmentMode = 0; // text is center-aligned
-    trackerLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height-80);
+    trackerLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height-90);
     [self addChild:trackerLabel];
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:trackerLabel.position duration:.0075];
@@ -745,7 +745,7 @@ NSMutableArray *touchLog;
     timeLabel.fontColor =  [SKColor yellowColor];
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
-    timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height-80);
+    timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height-30);
     
     //label for ratio of touched/total targets
     [self trackerLabel];

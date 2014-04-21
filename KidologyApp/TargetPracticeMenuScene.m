@@ -130,7 +130,7 @@ NSString *gameName;
     {
         // Create and configure the gesture practice scene
         // (note the size var must be different for this scene so gestures work correctly)
-        SKScene *gesturePractice = [[NewGestureTargetScene alloc] initWithSize:CGSizeMake(1024,768)];
+        SKScene *gesturePractice = [[NewGestureTargetScene alloc] initWithSize:self.size];
         gesturePractice.scaleMode = SKSceneScaleModeAspectFill;
         
         // remove the custom game table view browser if present
