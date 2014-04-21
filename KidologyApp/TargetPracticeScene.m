@@ -406,42 +406,32 @@ NSMutableArray *touchLog;
     else if (_gameMode == RANDOM)
     {
         // set the target to appear at random locations and in random sizes
-        int min = 7;
-        int max = 50;
-        float randomScale = ((min + arc4random() % (max-min))) * .01;
+        int min = 10;
+        int max = 60;
+        float randomScale =  0.01 * (arc4random_uniform(max-min) + min); // ((min + arc4random() % (max-min))) * .01;
         _target.xScale = randomScale;
         _target.yScale = randomScale;
-        int x_pos = (.75 * (arc4random_uniform((int)self.size.width)/2) )-(_target.size.width/2);
-        int pos_neg = arc4random_uniform(2);
-        if (pos_neg == 0)
+        int random_x = arc4random_uniform(self.frame.size.width);
+        int random_y = arc4random_uniform(self.frame.size.height);
+
+        // move the target if it's behind the quit button or behind the anchor
+        if ((_quitButton.position.x - _quitButton.size.width/2) <= random_x &&
+            (_quitButton.position.x + _quitButton.size.width/2) >= random_x &&
+            (_quitButton.position.y - _quitButton.size.height/2) <= random_y &&
+            (_quitButton.position.y + _quitButton.size.height/2) >= random_y)
         {
-            x_pos = self.frame.size.width/2 + x_pos;
+            random_x += _quitButton.size.width;
+            random_y -= _quitButton.size.height;
         }
-        else
+        else if ((_anchor.position.x - _anchor.size.width/2) <= random_x &&
+                 (_anchor.position.x + _anchor.size.width/2) >= random_x &&
+                 (_anchor.position.y - _anchor.size.height/2) <= random_y &&
+                 (_anchor.position.y + _anchor.size.height/2) >= random_y)
         {
-            x_pos = self.frame.size.width/2 - x_pos;
+            random_y += _anchor.size.height;
         }
-        // move the target right if it's behind the quit button
-        if (x_pos < _quitButton.position.x + _quitButton.size.width*0.5 + _target.size.width*0.5)
-        {
-            x_pos = _quitButton.position.x + _quitButton.size.width*0.5 + _target.size.width*0.5;
-        }
-        int y_pos = (.75 * (arc4random_uniform((int)self.size.height)/2) )-(_target.size.height/2);
-        pos_neg = arc4random_uniform(2);
-        if (pos_neg == 0)
-        {
-            y_pos = self.frame.size.height/2 + y_pos;
-        }
-        else
-        {
-            y_pos = self.frame.size.height/2 - y_pos;
-        }
-        // move the target down if it's behind the quit button
-        if (y_pos > _quitButton.position.x - _quitButton.size.height*0.5 - _target.size.height*0.5)
-        {
-            y_pos = _quitButton.position.x - _quitButton.size.height*0.5 - _target.size.height*0.5;
-        }
-        self.target.position = CGPointMake(x_pos, y_pos);
+        
+        self.target.position = CGPointMake(random_x, random_y);
     }
 }
 
