@@ -772,7 +772,7 @@ NSMutableArray *touchLog;
     SKLabelNode * targetHitLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     targetHitLabel.name = @"instructionLabel2";
     targetHitLabel.text = text2;
-    targetHitLabel.fontSize = 24;
+    targetHitLabel.fontSize = 28;
     targetHitLabel.fontColor = [SKColor yellowColor];
     targetHitLabel.position = CGPointMake(self.frame.size.width/2,self.frame.size.height/2 + 220);
     [self addChild:targetHitLabel];
@@ -797,16 +797,14 @@ NSMutableArray *touchLog;
     
     if([_affectedHand isEqualToString:@"right"]) //if right hand affected
     {
-        _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
-        
-        _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
+        _pressedAnchor.position = CGPointMake(100, self.frame.size.height/2-175);
+        _anchor.position = CGPointMake(100, self.frame.size.height/2-175);
         
     }
     else    // _affectedHand == "left"
     {
-        _pressedAnchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
-        
-        _anchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
+        _pressedAnchor.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2-175);
+        _anchor.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2-175);
     }
     _pressedAnchor.name =@"pressedAnchor";
     [self addChild:_pressedAnchor];

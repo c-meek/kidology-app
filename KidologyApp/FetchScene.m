@@ -317,17 +317,21 @@ NSMutableArray *touchLog;
 
 -(void)displayBall
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    float targetSize = [[defaults objectForKey:@"defaultTargetSize"] floatValue];
+
     self.ball.position = CGPointMake(self.frame.size.width/2,self.frame.size.height/2);
-    self.ball.xScale = .1;
-    self.ball.yScale = .1;
+    self.ball.xScale = targetSize;
+    self.ball.yScale = targetSize;
 }
 
 -(void)displayDog
 {
     self.dog.zRotation = M_PI/6.0f;
-    self.dog.xScale = -.13;
-    self.dog.yScale = .13;
-    self.dog.position = CGPointMake(self.frame.size.width/2-170, self.dog.size.height/2-30);
+    self.dog.xScale = -.15;
+    self.dog.yScale = .15;
+    self.dog.position = CGPointMake(200, self.dog.size.height/2-40);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
     if (enableSound)
@@ -427,11 +431,11 @@ NSMutableArray *touchLog;
     SKLabelNode * targetHitLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     targetHitLabel.name = @"instructionLabel2";
     targetHitLabel.text = text2;
-    targetHitLabel.fontSize = 24;
+    targetHitLabel.fontSize = 28;
     targetHitLabel.fontColor = [SKColor whiteColor];
-    targetHitLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + 150);
+    targetHitLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + 175);
     [self addChild:targetHitLabel];
-    CGPoint dest = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
+    CGPoint dest = CGPointMake(self.frame.size.width - 50, self.frame.size.height - 90);
     SKAction *fadeAway = [SKAction moveTo:dest duration:1.5];
     SKAction * remove = [SKAction removeFromParent];
     [targetHitLabel runAction:[SKAction sequence:@[fadeAway, remove]]];
