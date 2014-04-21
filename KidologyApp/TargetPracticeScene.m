@@ -449,27 +449,27 @@ NSMutableArray *touchLog;
 {
     //initialize green anchor
     _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
-    _pressedAnchor.xScale = .3;
-    _pressedAnchor.yScale = .3;
+    _pressedAnchor.xScale = .4;
+    _pressedAnchor.yScale = .4;
     _pressedAnchor.hidden = TRUE;
     
     //initialize red anchor
     _anchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_red_left"];
-    _anchor.xScale = .3;
-    _anchor.yScale = .3;
+    _anchor.xScale = .4;
+    _anchor.yScale = .4;
 
     if([_affectedHand isEqualToString:@"right"]) //if right hand affected
     {
-        _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
+        _pressedAnchor.position = CGPointMake(100, self.frame.size.height/2-175);
         
-        _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
+        _anchor.position = CGPointMake(100, self.frame.size.height/2-175);
         
     }
     else    // _affectedHand == "left"
     {
-        _pressedAnchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
+        _pressedAnchor.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2-175);
         
-        _anchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
+        _anchor.position = CGPointMake(self.frame.size.width - 100, self.frame.size.height/2-175);
     }
     _pressedAnchor.name =@"pressedAnchor";
     [self addChild:_pressedAnchor];
