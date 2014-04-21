@@ -258,8 +258,8 @@ NSString *gameName;
 {
     SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
     bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
-    bgImage.xScale = .4;
-    bgImage.yScale = .4;
+    bgImage.xScale = .5;
+    bgImage.yScale = .5;
     [self addChild:bgImage];
 }
 
@@ -268,7 +268,7 @@ NSString *gameName;
     SKLabelNode *selectModeLabel= [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     selectModeLabel.fontSize = 35;
     selectModeLabel.fontColor = [SKColor darkTextColor];
-    selectModeLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 210);
+    selectModeLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 270);
     selectModeLabel.text = @"Select Your Game Mode:";
     [self addChild:selectModeLabel];
 }
@@ -276,8 +276,8 @@ NSString *gameName;
 -(void)addLogo
 {
     SKSpriteNode *logo = [SKSpriteNode spriteNodeWithImageNamed:@"logo"];
-    logo.xScale = .5*.8;
-    logo.yScale = .5*.8;
+    logo.xScale = .6;
+    logo.yScale = .55;
     logo.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     [self addChild:logo];
     
@@ -286,14 +286,14 @@ NSString *gameName;
 -(void)addBackButton
 {
     _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
-    _backButton.position = CGPointMake(100, self.frame.size.height/2+235);
+    _backButton.position = CGPointMake(120, self.frame.size.height-80);
     _backButton.name = @"backButton";
     _backButton.xScale = .5;
     _backButton.yScale = .5;
     [self addChild:_backButton];
     
     _backButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
-    _backButtonPressed.position = CGPointMake(100, self.frame.size.height/2+235);
+    _backButtonPressed.position = CGPointMake(120, self.frame.size.height-80);
     _backButtonPressed.name = @"backButtonPressed";
     _backButtonPressed.hidden = true;
     _backButtonPressed.xScale = .5;
@@ -304,17 +304,17 @@ NSString *gameName;
 -(void)addCenterModeButton
 {
     _centerModeButton = [[SKSpriteNode alloc] initWithImageNamed:@"Center"];
-    _centerModeButton.position = CGPointMake(self.frame.size.width/8, self.frame.size.height/2-250);
+    _centerModeButton.position = CGPointMake(self.frame.size.width/8, self.frame.size.height/2-325);
     _centerModeButton.name = @"centerButton";
-    _centerModeButton.xScale = .4;
-    _centerModeButton.yScale = .4;
+    _centerModeButton.xScale = .5;
+    _centerModeButton.yScale = .5;
     [self addChild:_centerModeButton];
     
     _centerModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Center_Pressed"];
-    _centerModeButtonPressed.position = CGPointMake(self.frame.size.width/8, self.frame.size.height/2-250);
+    _centerModeButtonPressed.position = CGPointMake(self.frame.size.width/8, self.frame.size.height/2-325);
     _centerModeButtonPressed.name = @"centerButtonPressed";
-    _centerModeButtonPressed.xScale = .4;
-    _centerModeButtonPressed.yScale = .4;
+    _centerModeButtonPressed.xScale = .5;
+    _centerModeButtonPressed.yScale = .5;
     _centerModeButtonPressed.hidden = true;
     [self addChild:_centerModeButtonPressed];
 }
@@ -322,17 +322,17 @@ NSString *gameName;
 -(void)addRandomModeButton
 {
     _randomModeButton = [[SKSpriteNode alloc] initWithImageNamed:@"Random"];
-    _randomModeButton.position = CGPointMake(self.frame.size.width/8*3, self.frame.size.height/2-250);
+    _randomModeButton.position = CGPointMake(self.frame.size.width/8*3, self.frame.size.height/2-325);
     _randomModeButton.name = @"randomButton";
-    _randomModeButton.xScale = .4;
-    _randomModeButton.yScale = .4;
+    _randomModeButton.xScale = .5;
+    _randomModeButton.yScale = .5;
     [self addChild:_randomModeButton];
     
     _randomModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Random_Pressed"];
-    _randomModeButtonPressed.position = CGPointMake(self.frame.size.width/8*3, self.frame.size.height/2-250);
+    _randomModeButtonPressed.position = CGPointMake(self.frame.size.width/8*3, self.frame.size.height/2-325);
     _randomModeButtonPressed.name = @"randomButtonPressed";
-    _randomModeButtonPressed.xScale = .4;
-    _randomModeButtonPressed.yScale = .4;
+    _randomModeButtonPressed.xScale = .5;
+    _randomModeButtonPressed.yScale = .5;
     _randomModeButtonPressed.hidden = true;
     [self addChild:_randomModeButtonPressed];
 }
@@ -340,17 +340,17 @@ NSString *gameName;
 -(void)addCustomModeButton
 {
     _customModeButton = [[SKSpriteNode alloc] initWithImageNamed:@"Custom"];
-    _customModeButton.position = CGPointMake(self.frame.size.width/8*5, self.frame.size.height/2 - 250);
+    _customModeButton.position = CGPointMake(self.frame.size.width/8*5, self.frame.size.height/2 - 325);
     _customModeButton.name = @"customModeButton";
-    _customModeButton.xScale = .42;
-    _customModeButton.yScale = .42;
+    _customModeButton.xScale = .5;
+    _customModeButton.yScale = .5;
     [self addChild:_customModeButton];
     
     _customModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Custom_Pressed"];
-    _customModeButtonPressed.position = CGPointMake(self.frame.size.width/8*5, self.frame.size.height/2 - 250);
+    _customModeButtonPressed.position = CGPointMake(self.frame.size.width/8*5, self.frame.size.height/2 - 325);
     _customModeButtonPressed.name = @"customModeButtonPressed";
-    _customModeButtonPressed.xScale = .42;
-    _customModeButtonPressed.yScale = .42;
+    _customModeButtonPressed.xScale = .5;
+    _customModeButtonPressed.yScale = .5;
     _customModeButtonPressed.hidden = true;
     [self addChild:_customModeButtonPressed];
 }
@@ -358,17 +358,17 @@ NSString *gameName;
 -(void)addGestureModeButton
 {
     _gestureModeButton = [[SKSpriteNode alloc] initWithImageNamed:@"Actions"];
-    _gestureModeButton.position = CGPointMake(self.frame.size.width/8*7, self.frame.size.height/2-250);
+    _gestureModeButton.position = CGPointMake(self.frame.size.width/8*7, self.frame.size.height/2-325);
     _gestureModeButton.name = @"gestureModeButton";
-    _gestureModeButton.xScale = .4;
-    _gestureModeButton.yScale = .4;
+    _gestureModeButton.xScale = .5;
+    _gestureModeButton.yScale = .5;
     [self addChild:_gestureModeButton];
     
     _gestureModeButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"Actions_Pressed"];
-    _gestureModeButtonPressed.position = CGPointMake(self.frame.size.width/8*7, self.frame.size.height/2-250);
+    _gestureModeButtonPressed.position = CGPointMake(self.frame.size.width/8*7, self.frame.size.height/2-325);
     _gestureModeButtonPressed.name = @"gestureModeButton";
-    _gestureModeButtonPressed.xScale = .4;
-    _gestureModeButtonPressed.yScale = .4;
+    _gestureModeButtonPressed.xScale = .5;
+    _gestureModeButtonPressed.yScale = .5;
     _gestureModeButtonPressed.hidden = true;
     [self addChild:_gestureModeButtonPressed];
 }
