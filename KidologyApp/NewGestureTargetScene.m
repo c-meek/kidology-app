@@ -245,6 +245,7 @@ NSMutableArray *touchLog;
         x++;
     }
     
+//Checks if the the current gesture starts in the target
     if(_hasStartedInCenter > 0)
     {
         CGFloat rawChangeInScale = [recognizer scale];
@@ -252,6 +253,7 @@ NSMutableArray *touchLog;
         _zoomTarget.yScale = 0.65 * rawChangeInScale;
     }
     
+//End of the gestures checks
     if ( recognizer.state == UIGestureRecognizerStateEnded )
     {
         if (_gestureDirection == IN)
@@ -312,7 +314,8 @@ NSMutableArray *touchLog;
         }
         x++;
     }
-    
+
+//Checks if the the current gesture starts in the target
     if(_hasStartedInCenter > 0)
     {
         CGPoint changeInPosition = [recognizer translationInView:self.view];
@@ -320,7 +323,8 @@ NSMutableArray *touchLog;
         SKAction *moveAction = [SKAction moveTo:newPosition duration:.05];
         [_updatedTarget runAction:moveAction];
     }
-    
+
+//End of the gestures checks
     if ( recognizer.state == UIGestureRecognizerStateEnded )
     {
         if( [self isInDragTarget:_updatedTarget.position] )
@@ -350,7 +354,7 @@ NSMutableArray *touchLog;
 // this method is the selector for the rotation gesture recognizer
 -(void) handleRotation: (UIRotationGestureRecognizer *) recognizer
 {
-    // first check if the anchor is being touched
+// first check if the anchor is being touched
     if (_anchored != TOUCHING)
         return;
     
@@ -374,6 +378,7 @@ NSMutableArray *touchLog;
         }
     }
     
+//Checks to see if the touches is on the target (cycles through touches)
     if (allTouchedTarget)
     {
         CGFloat rotation = recognizer.rotation;
@@ -497,6 +502,8 @@ NSMutableArray *touchLog;
 // this method displays one of several kinds of targets depending on which gesture is randomly chosen
 -(void)displayTargets
 {
+    
+// This is used to randomize the next target
     int rand = arc4random_uniform(3);
     if (rand == 0)
     {
@@ -529,12 +536,14 @@ NSMutableArray *touchLog;
         }
     }
     
+//added the normal target for reference
     self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
     _target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     _target.xScale = .75;
     _target.yScale = .75;
     [self addChild:_target];
     
+//handles the initialization of rotate gesture
     if (_currentGesture == ROTATE)
     {
         _hasRotated = 0;
@@ -555,6 +564,7 @@ NSMutableArray *touchLog;
         [self addChild: _rotateTarget];
     }
     
+//handles the intialization of drag gesture
     if (_currentGesture == DRAG)
     {
         _hasStartedInCenter = 0;
@@ -602,6 +612,7 @@ NSMutableArray *touchLog;
         [self addChild: _updatedTarget];
     }
     
+//handles the initialization of the zoom gesture
     if (_currentGesture == ZOOM)
     {
         if(_gestureDirection == OUT)
@@ -615,6 +626,7 @@ NSMutableArray *touchLog;
         
         _hasStartedInCenter = 0;
         _zoomTarget.position = CGPointMake(self.frame.size.width/2,self.frame.size.height/2);
+        //used the target as the baseline
         _target.hidden = true;
         _target.xScale = .65;
         _target.yScale = .65;
