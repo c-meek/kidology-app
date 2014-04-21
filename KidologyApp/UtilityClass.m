@@ -5,6 +5,11 @@
 //  Created by Mike's MacBook on Apr/13/2014.
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
+//
+//      License information for sounds in this file:
+//          sounds/noises taken from soundbible.com
+//
+
 
 // this class is a simple utitlity class (as the name implies) and is used by other
 // classes to perform repeated tasks like check if all required settings fields have

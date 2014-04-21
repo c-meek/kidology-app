@@ -67,7 +67,6 @@ typedef enum {
 // global varibles to keep track of stuff for certain procedures
 @property (nonatomic) int counter;
 @property (nonatomic) int hasStartedInCenter;;
-@property (nonatomic) int numOfRotations;
 @property (nonatomic) Boolean isGestureDone;
 @property (nonatomic) int hasRotated;
 @property (nonatomic) Boolean swipedOutside;
