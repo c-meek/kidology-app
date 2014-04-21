@@ -43,6 +43,9 @@ NSMutableArray *touchLog;
         // initialize the touch log array
         touchLog = [[NSMutableArray alloc] init];
         
+        // initialize the anchor to "not being touched" state
+        self.anchored = NOT_TOUCHING;
+
         // play a sound to start the round
         if (_enableSound)
             [self runAction:[SKAction playSoundFileNamed:@"dingding.mp3" waitForCompletion:NO]];
@@ -50,6 +53,7 @@ NSMutableArray *touchLog;
         // add images
         [self addBackground];
         [self addQuitButton];
+        [self initializeAnchor];
         
         // setup stuff for gesture recognition
         [self setupTabTouchScreenLabel];
@@ -57,12 +61,15 @@ NSMutableArray *touchLog;
         
         //The rotation gesture will detect a two + finger rotation
         rotationGR = [[ UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(handleRotation:)];
+        rotationGR.delegate = self; // needed to ignore anchor touches
         //The pan gesture will detech  1+ finger pan
         panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanning:)];
         panGR.minimumNumberOfTouches = 1;
+        panGR.delegate = self;      // needed to ignore anchor touches
         //The zoom gesture will support 2 finger pinches
         pinchGR = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
-    
+        pinchGR.delegate = self;    // needed to ignore anchor touches
+        
         _isGestureDone = true;
         [self displayTargets];
     }
@@ -86,6 +93,23 @@ NSMutableArray *touchLog;
     {
         _quitButton.hidden = true;
         _quitButtonPressed.hidden = false;
+    }
+    else if ([self isAnchorTouch:location])
+    {
+        _anchored = TOUCHING;
+        _anchor.hidden = TRUE;
+        _pressedAnchor.hidden = FALSE;
+        // log when anchor is first pressed (rather than every frame where anchor is held)
+//        LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Anchor Press"
+//                                                           time:self.time
+//                                                  anchorPressed:YES
+//                                                     targetsHit:self.correctTouches
+//                                             distanceFromCenter:@"NA"
+//                                                  touchLocation:CGPointMake(location.x,  location.y)
+//                                                 targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
+//                                                   targetRadius:(self.target.size.width / 2)
+//                                                 targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
+//         [touchLog addObject:currentTouch];
     }
     else if (_isGestureDone)
     {
@@ -125,6 +149,32 @@ NSMutableArray *touchLog;
             // transition to the game over scene
             [self endGame:self.correctTouches totalTargets:self.totalTargets];
         }
+        else if ([self isAnchorTouch:positionInScene])
+        {
+            // or if the touch was on the anchor
+            _anchored = NOT_TOUCHING;
+            _anchor.hidden = FALSE;
+            _pressedAnchor.hidden = TRUE;
+            // log when anchor was released
+//            LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Anchor Release"
+//                                                               time:self.time
+//                                                      anchorPressed:NO
+//                                                         targetsHit:self.correctTouches
+//                                                 distanceFromCenter:@"NA"
+//                                                      touchLocation:CGPointMake(positionInScene.x,  positionInScene.y)
+//                                                     targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
+//                                                       targetRadius:(self.target.size.width / 2)
+//                                                     targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
+//            [touchLog addObject:currentTouch];
+        }
+        else if ([[event allTouches] count] == 0)
+        {
+            // if there are no touches, make sure anchor is off
+            _anchored = NOT_TOUCHING;
+            _anchor.hidden = FALSE;
+            _pressedAnchor.hidden = TRUE;
+
+        }
     }
 }
 
@@ -152,6 +202,22 @@ NSMutableArray *touchLog;
             _quitButtonPressed.hidden = true;
             _quitButton.hidden = false;
         }
+        else if ([self isAnchorTouch:previousLocation] &&
+                 ![self isAnchorTouch:currentLocation])
+        {
+            // if a touch was on the anchor but has moved off
+            _anchored = NOT_TOUCHING;       // update _achored
+            _anchor.hidden = FALSE;         // display red anchor image
+            _pressedAnchor.hidden = TRUE;   // hide green anchor image
+        }
+        else if (![self isAnchorTouch:previousLocation] &&
+                 [self isAnchorTouch:currentLocation])
+        {
+            // it wasn't an anchor touch but now it has moved onto the anchor
+            _anchored = TOUCHING;           // update _anchored
+            _anchor.hidden = TRUE;          // hide red anchor image
+            _pressedAnchor.hidden = FALSE;  // display green anchor image
+        }
     }
 }
 
@@ -162,6 +228,10 @@ NSMutableArray *touchLog;
 // this method is the selector for the pinch gesture recognizer
 -(void) handlePinch: (UIPinchGestureRecognizer *) recognizer
 {
+    // first check if the anchor is being touched
+    if (_anchored != TOUCHING)
+        return;
+        
     _isGestureDone = false;
     NSUInteger numOfTouches = [recognizer numberOfTouches];
     int x = 0; // <-just a counter!
@@ -226,6 +296,10 @@ NSMutableArray *touchLog;
 // this method is the selector for the pan gesture recognizer
 -(void) handlePanning: (UIPanGestureRecognizer *) recognizer
 {
+    // first check if the anchor is being touched
+    if (_anchored != TOUCHING)
+        return;
+    
     _isGestureDone = false;
     NSUInteger numOfTouches = [recognizer numberOfTouches];
     int x = 0; // <-just a counter!
@@ -276,6 +350,10 @@ NSMutableArray *touchLog;
 // this method is the selector for the rotation gesture recognizer
 -(void) handleRotation: (UIRotationGestureRecognizer *) recognizer
 {
+    // first check if the anchor is being touched
+    if (_anchored != TOUCHING)
+        return;
+    
     _isGestureDone = false;
     NSUInteger num_of_touches = [recognizer numberOfTouches];
 
@@ -334,9 +412,37 @@ NSMutableArray *touchLog;
     }
 }
 
+// delegate for a gesture recognizer telling it to ignore anchor touches from the gesture
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    CGPoint touchPosition = [touch locationInNode:self];
+    // Disallow recognition of tap gestures in the button.
+    if ([self isAnchorTouch:touchPosition]) {
+        return NO;
+    }
+    return YES;
+}
+
 //-------------------------------------------------------------------------------------------------------------------------------------
 //                                    Simple Utility Methods
 //-------------------------------------------------------------------------------------------------------------------------------------
+
+// determines if a touch was on the anchor button
+-(Boolean)isAnchorTouch:(CGPoint)touchLocation
+{
+    Boolean result;
+    SKNode *node = [self nodeAtPoint:touchLocation];
+    
+    if ([node.name isEqualToString:@"pressedAnchor"] || [node.name isEqualToString:@"anchor"])
+    {
+        result = true;
+    }
+    else
+    {
+        result = false;
+    }
+    return result;
+}
 
 // this method determines whether a touch is on the target
 -(bool)isTargetTouched:(CGPoint)touchLocation
@@ -637,6 +743,39 @@ NSMutableArray *touchLog;
     SKAction *fadeAway = [SKAction moveTo:dest duration:1.5];
     SKAction * remove = [SKAction removeFromParent];
     [targetHitLabel runAction:[SKAction sequence:@[fadeAway, remove]]];
+}
+
+-(void)initializeAnchor
+{
+    //initialize green anchor
+    _pressedAnchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_green_left"];
+    _pressedAnchor.xScale = .4;
+    _pressedAnchor.yScale = .4;
+    _pressedAnchor.hidden = TRUE;
+    
+    //initialize red anchor
+    _anchor = [SKSpriteNode spriteNodeWithImageNamed:@"anchor_red_left"];
+    _anchor.xScale = .4;
+    _anchor.yScale = .4;
+    
+    if([_affectedHand isEqualToString:@"right"]) //if right hand affected
+    {
+        _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
+        
+        _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
+        
+    }
+    else    // _affectedHand == "left"
+    {
+        _pressedAnchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
+        
+        _anchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
+    }
+    _pressedAnchor.name =@"pressedAnchor";
+    [self addChild:_pressedAnchor];
+    
+    _anchor.name = @"anchor";
+    [self addChild:_anchor];
 }
 
 @end

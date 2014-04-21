@@ -7,9 +7,10 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "TargetPracticeScene.h"
 
 typedef enum {
-    SWIPE, //Not implemented...
+    SWIPE, // not implemented yet
     ROTATE,
     ZOOM,
     DRAG
@@ -44,23 +45,26 @@ typedef enum {
 @property (nonatomic) float time;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
-//@property (nonatomic) AnchorStatus anchored;
+@property (nonatomic) AnchorStatus anchored;
 
 //.... Specific gesture stuff hrere...
 @property (nonatomic) ActionType currentGesture;
 @property (nonatomic) Direction gestureDirection;
 @property (nonatomic) SKSpriteNode *rotateTarget;
+
 //This is the object that moves in DRAG (or pan)
 @property (nonatomic) SKSpriteNode *updatedTarget;
+
 //This is the actual target that the object (above) is drag to
 @property (nonatomic) SKSpriteNode *dragTarget;
+
 @property (nonatomic) SKSpriteNode *zoomTarget;
 @property (nonatomic) SKSpriteNode *outline;
 @property (nonatomic) SKLabelNode *tapScreenLabel;
 @property (nonatomic) SKAction *gestureMoveDone;
 @property (nonatomic) CGPoint *lastupdated;
 
-//....just global varibles to keep track of stuff for certain procedures...
+// global varibles to keep track of stuff for certain procedures
 @property (nonatomic) int counter;
 @property (nonatomic) int hasStartedInCenter;;
 @property (nonatomic) int numOfRotations;
