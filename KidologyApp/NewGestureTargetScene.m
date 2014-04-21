@@ -531,10 +531,12 @@ NSMutableArray *touchLog;
             _gestureDirection = CLOCKWISE;
         }
     }
+    // "drag to destination" type target
     else if (rand == 1)
     {
         _currentGesture = DRAG;
     }
+    // "pinch in" or "pinch out" type target
     else if (rand == 2)
     {
         _currentGesture = ZOOM;

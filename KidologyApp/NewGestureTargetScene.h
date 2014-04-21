@@ -47,7 +47,7 @@ typedef enum {
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 @property (nonatomic) AnchorStatus anchored;
 
-//.... Specific gesture stuff hrere...
+//.... Specific gesture stuff here...
 @property (nonatomic) ActionType currentGesture;
 @property (nonatomic) Direction gestureDirection;
 @property (nonatomic) SKSpriteNode *rotateTarget;
