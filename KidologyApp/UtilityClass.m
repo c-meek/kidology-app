@@ -6,10 +6,17 @@
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
+// this class is a simple utitlity class (as the name implies) and is used by other
+// classes to perform repeated tasks like check if all required settings fields have
+// been provided or to pick a sound to play from the list of sounds
+
+
 #import "UtilityClass.h"
 
 @implementation UtilityClass
 
+// read in the settings from the settings app and determine if all required fields
+// (e.g. first name, last name, and therapist email) have been entered
 +(BOOL)checkSettings
 {
     bool missingField = false;
@@ -52,10 +59,11 @@
     return  missingField;
 }
 
+// randomly choose a sound to play from the list of sound files
 +(NSString *)getSoundFile
 {
     NSString *soundFile = @"";
-    int r = arc4random_uniform(5);
+    int r = arc4random_uniform(8);
     switch (r) {
         case 0:
             soundFile = @"metal_clang.mp3";
@@ -78,7 +86,7 @@
         case 6:
             soundFile = @"whip.mp3";
             break;
-        default:
+        default: // case 7:
             soundFile = @"pew.mp3";
             break;
     }

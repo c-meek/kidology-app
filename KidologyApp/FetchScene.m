@@ -11,6 +11,8 @@
 //          dog bark -- non-commercial use only (http://soundbible.com/393-Puppy-Dog-Barking.html)
 //
 
+// this class is the scene for playing the dog fetch game
+
 #import "FetchScene.h"
 #import "MainMenuScene.h"
 #import "LogEntry.h"
@@ -39,45 +41,53 @@ NSMutableArray *touchLog;
         [self addQuitButton];
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
 
-        // [self addToNotificationCenter];
     }
     return self;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Touch Handling Logic
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// called when a touch begins
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     for(UITouch *touch in touches)
     {
         CGPoint location = [touch locationInNode:self];
         SKNode *node = [self nodeAtPoint:location];
+        // if the quit button was pressed
         if([node.name isEqualToString:@"quitButton"] ||
            [node.name isEqualToString:@"pressedQuitButton"])
         {
+            // update its image
             _quitButton.hidden = true;
             _quitButtonPressed.hidden = false;
         }
     }
 }
 
+// called when a touch ends
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     for (UITouch * touch in touches)
     {
-        //get a specific touch
         CGPoint location = [touch locationInNode:self];
         //find the node that is touched
         SKSpriteNode *touchedNode = (SKSpriteNode *)[self nodeAtPoint:location];
-        //handle the situations of which nodes are touched
+        // determine which button was pressed (if any)
         if([_quitButton isEqual:touchedNode] || [_quitButtonPressed isEqual:touchedNode])
         {
             // reset button
             _quitButtonPressed.hidden = true;
             _quitButton.hidden = false;
             
+            // transition to game over scene
             [self endGame:self.targetsHit totalTargets:self.totalTargets];
         }
         else
         {
+            // might have been a "hit" (tap on the baseball)
             double xDifference = location.x - self.ball.position.x;
             double yDifference = location.y - self.ball.position.y;
             double radius = self.ball.size.width / 2;
@@ -85,8 +95,9 @@ NSMutableArray *touchLog;
             
             if([_ball isEqual:touchedNode])
             {
-
+                // it is a "hit"
                 self.targetsHit++;
+                // add it to the log
                 LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Ball"
                                                          time:self.time
                                                 anchorPressed:NO
@@ -97,12 +108,14 @@ NSMutableArray *touchLog;
                                                  targetRadius:radius
                                                targetOnScreen:((self.ball.position.x == self.frame.size.width/2) &&
                                                                (self.ball.position.y == self.frame.size.height/2))];
-                [touchLog addObject:currentTouch]; // log the touch
+                [touchLog addObject:currentTouch];
+                // animate the ball and dog moving off screen and then back again
                 [self displayTargetHit];
                 [self ballTouch];
             }
             else if([_dog isEqual:touchedNode])
             {
+                // touch was on the dog, make a log of it (maybe the kid just likes tapping the dog... idk?)
                 LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Dog"
                                                                    time:self.time
                                                           anchorPressed:NO
@@ -113,11 +126,13 @@ NSMutableArray *touchLog;
                                                            targetRadius:radius
                                                          targetOnScreen:((self.ball.position.x == self.frame.size.width/2) &&
                                                                          (self.ball.position.y == self.frame.size.height/2))];
-                [touchLog addObject:currentTouch]; // log the touch
+                [touchLog addObject:currentTouch];
                 [self dogTouch];
             }
             else
             {
+                // touch was neither on the ball nor on the dog
+                // log the miss
                 LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Off Target"
                                                                    time:self.time
                                                           anchorPressed:NO
@@ -128,15 +143,15 @@ NSMutableArray *touchLog;
                                                            targetRadius:radius
                                                          targetOnScreen:((self.ball.position.x == self.frame.size.width/2) &&
                                                                          (self.ball.position.y == self.frame.size.height/2))];
-                [touchLog addObject:currentTouch]; // log the touch
+                [touchLog addObject:currentTouch];
             }
         }
     }
 }
 
+// called when a touch moves/slides
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    /* Called when a touch moves/slides */
     for (UITouch *touch in [touches allObjects]) {
     	CGPoint currentLocation  = [touch locationInNode:self];
         CGPoint previousLocation = [touch previousLocationInNode:self];
@@ -160,58 +175,27 @@ NSMutableArray *touchLog;
     }
 }
 
-//-(void)willMoveFromView:(SKView *)view
-//{
-//    [self removeFromNotificationCenter];
-//}
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Dog and Ball Animations
+//-------------------------------------------------------------------------------------------------------------------------------------
 
--(void)addBackground
-{
-    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"fetch_background.png"];
-    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
-    bgImage.xScale = .4;
-    bgImage.yScale = .4;
-    [self addChild:bgImage];
-}
-
--(void)displayBall
-{
-    self.ball.position = CGPointMake(self.frame.size.width/2,self.frame.size.height/2);
-    self.ball.xScale = .1;
-    self.ball.yScale = .1;
-}
-
--(void)displayDog
-{
-    self.dog.zRotation = M_PI/6.0f;
-    self.dog.xScale = -.13;
-    self.dog.yScale = .13;
-    self.dog.position = CGPointMake(self.frame.size.width/2 - 200, self.frame.size.height/2-170);
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
-    if (enableSound)
-    {
-        [self runAction:[SKAction playSoundFileNamed:@"dog_bark.mp3" waitForCompletion:NO]];
-    }
-}
-
-
+// move the ball to a random position and have the dog follow
 -(void)ballTouch
 {
     // generate pseudo-random x and y positions to move towards
     int positions[2] = {0,0};
     [self getRandomMovement:positions];
     
-    //move ball offscreen
+    // move ball offscreen
     [self moveBallOffScreen:positions[0] withYPosition:positions[1]];
-    //move dog offscreen
+    // move dog offscreen
     [self moveDogOffScreen:positions[0] withYPosition:positions[1]];
+    // if they have hit all the required targets, transition to game over scene
     if (self.targetsHit == self.totalTargets)
         [self endGame:self.targetsHit totalTargets:self.totalTargets];
     
-    //move both onscreen
+    // move both onscreen
     [self moveBackDogAndBall];
-    
 }
 
 // generate random direction to move the dog and ball along
@@ -219,8 +203,7 @@ NSMutableArray *touchLog;
 {
     // (0 = left, 1 = up, 2 = right, 3 = down, 4 = upper-left
     //  5 = upper-right, 6 = lower-right, 7 = lower-left)
-    // NOTE: will edit this to be a bit more dynamic e.g. can move in all 360 degrees
-    int direction = rand() % 8;
+    int direction = arc4random_uniform(8);
     
     int x_pos;
     int y_pos;
@@ -265,26 +248,24 @@ NSMutableArray *touchLog;
 
 -(void)dogTouch
 {
-    
+    // for later: maybe make new noise when dog is tapped
 }
 
+// move the ball off the screen to the given coordinates
 -(void)moveBallOffScreen: (CGFloat)x_pos withYPosition:(CGFloat) y_pos
 {
-    //TODO play ball sound
     //scale ball to smaller size
     SKAction * scale = [SKAction scaleBy:.005 duration:1.25];
     //move ball offscreen
-    //SKAction * actionMove = [SKAction moveTo:CGPointMake(-200, self.frame.size.height/2+100) duration:1];
     SKAction * actionMove = [SKAction moveTo:CGPointMake(x_pos, y_pos) duration:1];
-    
     SKAction * moveSequence = [SKAction sequence:@[actionMove]];
     [_ball runAction:scale];
     [_ball runAction:moveSequence];
 }
 
+// move the dog offscreen to the given coordinates
 -(void)moveDogOffScreen: (CGFloat)x_pos withYPosition:(CGFloat) y_pos
 {
-    
     //wait for ball to move offscreen
     SKAction *wait = [SKAction waitForDuration:1.0];
     
@@ -297,26 +278,20 @@ NSMutableArray *touchLog;
     
     if (enableSound)
     {
+        // play the barking sound
         [self runAction:barkSeq];
     }
     
-    //TODO play dog sound
     //move dog offscreen
-    // SKAction *move = [SKAction moveTo:CGPointMake(-500, _dog.size.height) duration:.5];
      SKAction *move = [SKAction moveTo:CGPointMake(x_pos, y_pos) duration:1.5];
-    
     SKAction * seq = [SKAction sequence:@[wait, move]];
     [_dog runAction:seq];
-    
-
-
 }
 
+// move the dog and ball back onto the screen
 -(void)moveBackDogAndBall
 {
-    
-    //bring back dog
-    //wait a bit
+    // create some wait sequences to intersperse between the dog and ball movements
     SKAction * wait = [SKAction waitForDuration:2.0];
     SKAction * wait2 = [SKAction waitForDuration:1.0];
     //move back dog
@@ -327,17 +302,38 @@ NSMutableArray *touchLog;
     [_dog runAction:sequ];
 }
 
--(void)goToMainScreen
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Add Buttons, Labels and Background to Scene
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+-(void)addBackground
 {
-    //weak self to deallocate the scene
-    __weak typeof(self) weakSelf = self;
-    //create the scene
-    SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:weakSelf.size];
-    //transition
-    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-    mainMenu.scaleMode = SKSceneScaleModeAspectFill;
-    //present the scene
-    [weakSelf.view presentScene:mainMenu transition:reveal];
+    SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"fetch_background.png"];
+    bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
+    bgImage.xScale = .4;
+    bgImage.yScale = .4;
+    [self addChild:bgImage];
+}
+
+-(void)displayBall
+{
+    self.ball.position = CGPointMake(self.frame.size.width/2,self.frame.size.height/2);
+    self.ball.xScale = .1;
+    self.ball.yScale = .1;
+}
+
+-(void)displayDog
+{
+    self.dog.zRotation = M_PI/6.0f;
+    self.dog.xScale = -.13;
+    self.dog.yScale = .13;
+    self.dog.position = CGPointMake(self.frame.size.width/2 - 200, self.frame.size.height/2-170);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+    if (enableSound)
+    {
+        [self runAction:[SKAction playSoundFileNamed:@"dog_bark.mp3" waitForCompletion:NO]];
+    }
 }
 
 -(void)addInstruction
@@ -373,14 +369,14 @@ NSMutableArray *touchLog;
     [self addChild:_quitButtonPressed];
 }
 
+// called before each frame is rendered
 -(void)update:(CFTimeInterval)currentTime {
-    /* Called before each frame is rendered */
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     [self updateWithTimeSinceLastUpdate:timeSinceLast];
-    //    NSLog(@"%@", touchLog);
 }
 
+// add a label to the top right corner saying how much time has elapsed
 - (void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
     
     self.lastSpawnTimeInterval += timeSinceLast;
@@ -390,7 +386,7 @@ NSMutableArray *touchLog;
     }
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     timeLabel.fontSize = 20;
-    timeLabel.fontColor = [SKColor whiteColor]; //[SKColor colorWithRed:0.96 green:0.79 blue:0.39 alpha:1];
+    timeLabel.fontColor = [SKColor whiteColor];
     timeLabel.verticalAlignmentMode = 2;
     timeLabel.horizontalAlignmentMode = 0; // text is center-aligned
     timeLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+265);
@@ -403,19 +399,19 @@ NSMutableArray *touchLog;
     timeLabel.text = s_time;
     [self addChild: timeLabel];
     
-    //    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.0075];
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
 }
 
+// add a label to the top right corner saying how many correct hits and how many total targets to hit
 -(void)trackerLabel
 {
     SKLabelNode * trackerLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     trackerLabel.fontSize = 20;
     NSString * text = [NSString stringWithFormat:@"%d/%d", _targetsHit, _totalTargets];
     trackerLabel.text = text;
-    trackerLabel.fontColor =  [SKColor whiteColor]; //[SKColor colorWithRed:1 green:.6 blue:0 alpha:1];
+    trackerLabel.fontColor =  [SKColor whiteColor];
     trackerLabel.horizontalAlignmentMode = 0; // text is center-aligned
     trackerLabel.position = CGPointMake(self.frame.size.width - 50, self.frame.size.height/2+220);
     [self addChild:trackerLabel];
@@ -424,17 +420,7 @@ NSMutableArray *touchLog;
     [trackerLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
 }
 
--(void)endGame:(int)targetsHit totalTargets:(int)totalTargets
-{
-    SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
-    SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targetsHit:targetsHit totalTargets:totalTargets];
-    // pass the game type and touch log to "game over" scene
-    NSLog(@"end game has touch log count %d", touchLog.count);
-    [gameOverScene.userData setObject:@"fetch" forKey:@"gameMode"];
-    [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
-    [self.view presentScene:gameOverScene transition:reveal];
-}
-
+// display a message saying "Target Hit!" and play a sound
 -(void)displayTargetHit
 {
     NSString * text2 = [NSString stringWithFormat:@"Hit! %d More!", self.totalTargets - self.targetsHit];
@@ -451,27 +437,19 @@ NSMutableArray *touchLog;
     [targetHitLabel runAction:[SKAction sequence:@[fadeAway, remove]]];
 }
 
-//-(void)addToNotificationCenter
-//{
-//    NSLog(@"adding fetch scene to notification center");
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(appMovedBackground:)
-//                                                 name:UIApplicationDidEnterBackgroundNotification
-//                                               object:nil];
-//}
-//
-//-(void)removeFromNotificationCenter
-//{
-//    NSLog(@"removing fetch scene from notification center");
-//    
-//    [[NSNotificationCenter defaultCenter] removeObserver:self
-//                                                    name:UIApplicationDidEnterBackgroundNotification
-//                                                  object:nil];
-//}
-//
-//-(void)appMovedBackground:(NSNotification *)notification
-//{
-//    [self goToMainScreen];
-//}
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Simple Utility Methods
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// transition to the game over scene
+-(void)endGame:(int)targetsHit totalTargets:(int)totalTargets
+{
+    SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
+    SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targetsHit:targetsHit totalTargets:totalTargets];
+    // pass the game type and touch log to "game over" scene
+    [gameOverScene.userData setObject:@"fetch" forKey:@"gameMode"];
+    [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
+    [self.view presentScene:gameOverScene transition:reveal];
+}
 
 @end

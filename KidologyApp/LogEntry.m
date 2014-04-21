@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
+// this class is another utility class to aid in the logging process
+// a log entry instatiation captures all of the information pertaining to a single touch
+
 #import "LogEntry.h"
 
 @implementation LogEntry
@@ -25,8 +28,7 @@
     return self;
 }
 
-
-
+// a to string method to writing a log entry to the log file
 -(NSString*)toString
 {
     NSString *anchorStatus = @"NO";
@@ -37,6 +39,6 @@
         targetStatus = @"YES";
     return [NSString stringWithFormat:@"%@,%@,%d,%f,%@,%f,%f,%@,%f,%f,%f\n", _type, anchorStatus, _targetsHit,
              _time,_distanceFromCenter, _touchLocation.x, _touchLocation.y, targetStatus, _targetLocation.x, _targetLocation.y, _targetRadius];
-
 }
+
 @end
