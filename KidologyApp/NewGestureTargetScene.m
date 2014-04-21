@@ -99,7 +99,8 @@ NSMutableArray *touchLog;
         _anchored = TOUCHING;
         _anchor.hidden = TRUE;
         _pressedAnchor.hidden = FALSE;
-        // log when anchor is first pressed (rather than every frame where anchor is held)
+// ----- Logging should go here when implemented: -----
+//        log when anchor is first pressed (rather than every frame where anchor is held)
 //        LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Anchor Press"
 //                                                           time:self.time
 //                                                  anchorPressed:YES
@@ -110,6 +111,7 @@ NSMutableArray *touchLog;
 //                                                   targetRadius:(self.target.size.width / 2)
 //                                                 targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
 //         [touchLog addObject:currentTouch];
+// -------------
     }
     else if (_isGestureDone)
     {
@@ -155,6 +157,7 @@ NSMutableArray *touchLog;
             _anchored = NOT_TOUCHING;
             _anchor.hidden = FALSE;
             _pressedAnchor.hidden = TRUE;
+// ----- Logging should go here when implemented: -----
             // log when anchor was released
 //            LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Anchor Release"
 //                                                               time:self.time
@@ -166,6 +169,7 @@ NSMutableArray *touchLog;
 //                                                       targetRadius:(self.target.size.width / 2)
 //                                                     targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
 //            [touchLog addObject:currentTouch];
+// -------------
         }
         else if ([[event allTouches] count] == 0)
         {
