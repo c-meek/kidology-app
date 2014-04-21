@@ -5,6 +5,10 @@
 //  Created by meek, christopher glenn on 2/9/14.
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
+//  Sounds for this app were obtained at soundbible.com
+//
+//      License information for sounds in this file:
+//          "background" noise -- Creative Commons Attribution 0 http://www.freesound.org/people/swiftoid/sounds/182500/
 
 // this class is the main menu scene (view)
 // it contains buttons to link to the various games
