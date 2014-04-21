@@ -260,7 +260,7 @@ NSString *gameName;
     SKLabelNode * message = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     message.text = messageText;
     message.fontSize = 24;
-    message.fontColor =  [SKColor colorWithRed:102/255.0 green:51/255.0 blue:0/255.0 alpha:1];
+    message.fontColor =  [SKColor colorWithRed:102/255.0 green:58/255.0 blue:28/255.0 alpha:1];
     message.position = CGPointMake(self.size.width/2, self.size.height/2 + 60);
     [self addChild:message];
 }
