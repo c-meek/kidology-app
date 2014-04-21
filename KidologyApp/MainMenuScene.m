@@ -289,7 +289,7 @@
     // unpressed baby game button icon
     _babyGameButton = [[SKSpriteNode alloc] initWithImageNamed:@"babyGameButton.png"];
     _babyGameButton.position = CGPointMake(CGRectGetMidX(self.frame) - 250,
-                                           CGRectGetMidY(self.frame) + 250);
+                                           CGRectGetMidY(self.frame) + 230);
     _babyGameButton.xScale = .5;
     _babyGameButton.yScale = .5;
     _babyGameButton.name = @"babyGameButton";
@@ -298,7 +298,7 @@
     // pressed baby game button icon
     _babyGameButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"babyGameButtonPressed.png"];
     _babyGameButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) - 250,
-                                                  CGRectGetMidY(self.frame) + 250);
+                                                  CGRectGetMidY(self.frame) + 230);
     _babyGameButtonPressed.xScale = .5;
     _babyGameButtonPressed.yScale = .5;
     _babyGameButtonPressed.name = @"babyGameButtonPressed";
@@ -311,8 +311,8 @@
 {
     // unpressed target game button icon
     _targetGameButton = [[SKSpriteNode alloc] initWithImageNamed:@"targetGameButton.png"];
-    _targetGameButton.position = CGPointMake(CGRectGetMidX(self.frame) - 190,
-                                             CGRectGetMidY(self.frame) + 105);
+    _targetGameButton.position = CGPointMake(CGRectGetMidX(self.frame) - 250,
+                                             CGRectGetMidY(self.frame) + 125);
     _targetGameButton.xScale = .5;
     _targetGameButton.yScale = .5;
     _targetGameButton.name = @"targetGameButton";
@@ -320,8 +320,8 @@
     
     // pressed target game button icon
     _targetGameButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"targetGameButtonPressed.png"];
-    _targetGameButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) - 190,
-                                                    CGRectGetMidY(self.frame) + 105);
+    _targetGameButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) - 250,
+                                                    CGRectGetMidY(self.frame) + 125);
     _targetGameButtonPressed.xScale = .5;
     _targetGameButtonPressed.yScale = .5;
     _targetGameButtonPressed.name = @"targetGameButtonPressed";
@@ -333,8 +333,8 @@
 {
     // unpressed fetch game button icon
     _fetchGameButton = [[SKSpriteNode alloc] initWithImageNamed:@"fetchGameButton.png"];
-    _fetchGameButton.position = CGPointMake(CGRectGetMidX(self.frame) - 200,
-                                            CGRectGetMidY(self.frame) + 20);
+    _fetchGameButton.position = CGPointMake(CGRectGetMidX(self.frame) - 250,
+                                            CGRectGetMidY(self.frame) + 25);
     _fetchGameButton.xScale = .5;
     _fetchGameButton.yScale = .5;
     _fetchGameButton.name = @"fetchGameButton";
@@ -342,8 +342,8 @@
     
     // pressed fetch game button icon
     _fetchGameButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"fetchGameButtonPressed.png"];
-    _fetchGameButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) - 200,
-                                                   CGRectGetMidY(self.frame) + 20);
+    _fetchGameButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) - 250,
+                                                   CGRectGetMidY(self.frame) + 25);
     _fetchGameButtonPressed.xScale = .5;
     _fetchGameButtonPressed.yScale = .5;
     _fetchGameButtonPressed.name = @"fetchGameButtonPressed";
@@ -355,8 +355,8 @@
 {
     // unpressed therapist button
     _therapistMenuButton = [[SKSpriteNode alloc]  initWithImageNamed:@"therapistMenuButton.png"];
-    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
-                                                CGRectGetMidY(self.frame) - 180);
+    _therapistMenuButton.position = CGPointMake(CGRectGetMidX(self.frame) + 350,
+                                                CGRectGetMidY(self.frame) - 250);
     _therapistMenuButton.xScale = .5;
     _therapistMenuButton.yScale = .5;
     _therapistMenuButton.name = @"therapistMenuButton";
@@ -364,8 +364,8 @@
     
     // pressed therapist menu button icon
     _therapistMenuButtonPressed = [[SKSpriteNode alloc] initWithImageNamed:@"therapistMenuButtonPressed.png"];
-    _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 275,
-                                                       CGRectGetMidY(self.frame) - 180);
+    _therapistMenuButtonPressed.position = CGPointMake(CGRectGetMidX(self.frame) + 350,
+                                                       CGRectGetMidY(self.frame) - 250);
     _therapistMenuButtonPressed.xScale = .5;
     _therapistMenuButtonPressed.yScale = .5;
     _therapistMenuButtonPressed.name = @"therapistMenuButtonPressed";
@@ -392,10 +392,10 @@
     SKLabelNode *usernameLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     usernameLabel.name = @"usernameLabel";
     usernameLabel.text = usernameLabelText;
-    usernameLabel.fontSize = 20;
+    usernameLabel.fontSize = 28;
     usernameLabel.fontColor = [SKColor blackColor];
-    usernameLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 200,
-                                         CGRectGetMidY(self.frame)+ 250);
+    usernameLabel.position = CGPointMake(self.frame.size.width  - 200,
+                                         self.frame.size.height - 50);
     [self addChild:usernameLabel];
 }
 
