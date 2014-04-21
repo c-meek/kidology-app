@@ -27,7 +27,6 @@ NSMutableArray *touchLog;
     if (self = [super initWithSize:size])
     {
         // initialize variables
-        _numOfRotations = 0;
         self.correctTouches = 0;
         self.time = 0;
         
@@ -99,19 +98,7 @@ NSMutableArray *touchLog;
         _anchored = TOUCHING;
         _anchor.hidden = TRUE;
         _pressedAnchor.hidden = FALSE;
-// ----- Logging should go here when implemented: -----
-//        log when anchor is first pressed (rather than every frame where anchor is held)
-//        LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Anchor Press"
-//                                                           time:self.time
-//                                                  anchorPressed:YES
-//                                                     targetsHit:self.correctTouches
-//                                             distanceFromCenter:@"NA"
-//                                                  touchLocation:CGPointMake(location.x,  location.y)
-//                                                 targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
-//                                                   targetRadius:(self.target.size.width / 2)
-//                                                 targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
-//         [touchLog addObject:currentTouch];
-// -------------
+        // log anchor touch (TODO)
     }
     else if (_isGestureDone)
     {
@@ -157,19 +144,7 @@ NSMutableArray *touchLog;
             _anchored = NOT_TOUCHING;
             _anchor.hidden = FALSE;
             _pressedAnchor.hidden = TRUE;
-// ----- Logging should go here when implemented: -----
-            // log when anchor was released
-//            LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Anchor Release"
-//                                                               time:self.time
-//                                                      anchorPressed:NO
-//                                                         targetsHit:self.correctTouches
-//                                                 distanceFromCenter:@"NA"
-//                                                      touchLocation:CGPointMake(positionInScene.x,  positionInScene.y)
-//                                                     targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
-//                                                       targetRadius:(self.target.size.width / 2)
-//                                                     targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
-//            [touchLog addObject:currentTouch];
-// -------------
+            // log when anchor is released (TODO)
         }
         else if ([[event allTouches] count] == 0)
         {
@@ -177,7 +152,6 @@ NSMutableArray *touchLog;
             _anchored = NOT_TOUCHING;
             _anchor.hidden = FALSE;
             _pressedAnchor.hidden = TRUE;
-
         }
     }
 }
@@ -249,7 +223,7 @@ NSMutableArray *touchLog;
         x++;
     }
     
-//Checks if the the current gesture starts in the target
+    // checks if the the current gesture starts in the target
     if(_hasStartedInCenter > 0)
     {
         CGFloat rawChangeInScale = [recognizer scale];
@@ -257,22 +231,30 @@ NSMutableArray *touchLog;
         _zoomTarget.yScale = 0.65 * rawChangeInScale;
     }
     
-//End of the gestures checks
+    // check if the gesture has completed (touches ended)
     if ( recognizer.state == UIGestureRecognizerStateEnded )
     {
         if (_gestureDirection == IN)
         {
+            // pinch in
             if (_zoomTarget.xScale < _target.xScale)
             {
+                // increment correct touches
                 _correctTouches++;
+                // show a message saying "Target Hit!" and play a sound
                 [self displayTargetHit];
-                NSLog(@"zoom was correct!");
+                // remove the pinch gesture recognizer from the view
                 [self.view removeGestureRecognizer: pinchGR];
+                // remove the target and outline from the screen
                 [_zoomTarget runAction:_gestureMoveDone];
                 [_outline runAction:_gestureMoveDone];
                 _isGestureDone = true;
+                
+                // see if all the targets have been hit
                 if (self.correctTouches == self.totalTargets)
                     [self endGame:self.correctTouches totalTargets:self.totalTargets];
+                
+                // create a sequence to display another target
                 SKAction * wait = [SKAction waitForDuration:2.0];
                 [self runAction:wait];
                 [self displayTargets];
@@ -280,17 +262,25 @@ NSMutableArray *touchLog;
         }
         else if (_gestureDirection == OUT)
         {
+            // pinch out
             if(_zoomTarget.xScale > _target.xScale)
             {
+                // increment correct touches
                 _correctTouches++;
+                // show a message saying "Target Hit!" and play a sound
                 [self displayTargetHit];
-                NSLog(@"zoom was correct!");
+                // remove the pinch gesture recognizer from the view
                 [self.view removeGestureRecognizer: pinchGR];
+                // remove the target and outline from the view
                 [_zoomTarget runAction:_gestureMoveDone];
                 [_outline runAction:_gestureMoveDone];
                 _isGestureDone = true;
+                
+                // see if all the targets have been hit
                 if (self.correctTouches == self.totalTargets)
                     [self endGame:self.correctTouches totalTargets:self.totalTargets];
+                
+                // create a sequence to display another target
                 SKAction * wait = [SKAction waitForDuration:2.0];
                 [self runAction:wait];
                 [self displayTargets];
@@ -319,7 +309,7 @@ NSMutableArray *touchLog;
         x++;
     }
 
-//Checks if the the current gesture starts in the target
+    // checks if the the current gesture starts in the target
     if(_hasStartedInCenter > 0)
     {
         CGPoint changeInPosition = [recognizer translationInView:self.view];
@@ -328,26 +318,35 @@ NSMutableArray *touchLog;
         [_updatedTarget runAction:moveAction];
     }
 
-//End of the gestures checks
+    // check if the gesture is over (touches ended)
     if ( recognizer.state == UIGestureRecognizerStateEnded )
     {
+        // see if the target has been dragged into the target area
         if( [self isInDragTarget:_updatedTarget.position] )
         {
+            // increment the number of correct touches
             _correctTouches++;
+            // show a message saying "Target Hit!" and play a sound
             [self displayTargetHit];
+            // remove the pan gesture recognizer from the view
             [self.view removeGestureRecognizer: panGR];
+            // remove the target and drag target from the scene
             [_updatedTarget runAction:_gestureMoveDone];
             [_dragTarget runAction: _gestureMoveDone];
             _isGestureDone = true;
+            
+            // see if all the targets have been hit
             if (self.correctTouches == self.totalTargets)
                 [self endGame:self.correctTouches totalTargets:self.totalTargets];
             
+            // create a sequence to display another target
             SKAction * wait = [SKAction waitForDuration:2.0];
             [self runAction:wait];
             [self displayTargets];
         }
         else
         {
+            // target was not dragged to target area, move it back to center of screen
             SKAction *moveAction2 = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2) duration:.05];
             [_updatedTarget runAction:moveAction2];
         }
@@ -358,7 +357,7 @@ NSMutableArray *touchLog;
 // this method is the selector for the rotation gesture recognizer
 -(void) handleRotation: (UIRotationGestureRecognizer *) recognizer
 {
-// first check if the anchor is being touched
+    // first check if the anchor is being touched
     if (_anchored != TOUCHING)
         return;
     
@@ -382,7 +381,7 @@ NSMutableArray *touchLog;
         }
     }
     
-//Checks to see if the touches is on the target (cycles through touches)
+    // checks to see if all of the current touches are on the target (cycles through touches)
     if (allTouchedTarget)
     {
         CGFloat rotation = recognizer.rotation;
@@ -400,19 +399,29 @@ NSMutableArray *touchLog;
         }
     }
     
+    // check if the gesture is over
     if ( recognizer.state == UIGestureRecognizerStateEnded )
     {
+        // check if the image has been rotated
         if (_hasRotated > 0)
         {
-            // THIS IS WHEN THE ROTATION IS CORRECT! (that means they has successfully spun the target for a little bit...
+            // the target has been spun at least a little bit
+            // increment the number of correct touches
             _correctTouches++;
+            
+            // show a message saying "Target Hit!" and play a sound
             [self displayTargetHit];
-            _numOfRotations ++;
+            // remove the rotation gesture recognizer from the view
             [self.view removeGestureRecognizer:rotationGR ];
+            // remove the rotation target from the scene
             [_rotateTarget runAction:_gestureMoveDone];
             _isGestureDone = true;
+            
+            // see if all of the targets have been hit
             if (self.correctTouches == self.totalTargets)
                 [self endGame:self.correctTouches totalTargets:self.totalTargets];
+            
+            // create a sequence to display another target
             SKAction * wait = [SKAction waitForDuration:2.0];
             [self runAction:wait];
             [self displayTargets];
@@ -540,14 +549,14 @@ NSMutableArray *touchLog;
         }
     }
     
-//added the normal target for reference
+    //added the normal target for reference
     self.target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
     _target.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     _target.xScale = .75;
     _target.yScale = .75;
     [self addChild:_target];
     
-//handles the initialization of rotate gesture
+    //handles the initialization of rotate gesture
     if (_currentGesture == ROTATE)
     {
         _hasRotated = 0;
@@ -568,7 +577,7 @@ NSMutableArray *touchLog;
         [self addChild: _rotateTarget];
     }
     
-//handles the intialization of drag gesture
+    //handles the intialization of drag gesture
     if (_currentGesture == DRAG)
     {
         _hasStartedInCenter = 0;
@@ -616,7 +625,7 @@ NSMutableArray *touchLog;
         [self addChild: _updatedTarget];
     }
     
-//handles the initialization of the zoom gesture
+    //handles the initialization of the zoom gesture
     if (_currentGesture == ZOOM)
     {
         if(_gestureDirection == OUT)
