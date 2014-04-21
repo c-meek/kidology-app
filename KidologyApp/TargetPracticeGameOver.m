@@ -9,7 +9,9 @@
 //
 //      License information for sounds in this file:
 //          "tada" noise -- Creative Commons Attribution 3.0 (http://soundbible.com/1003-Ta-Da.html)
-//
+//          "gong" noise -- Creative Commons Attribution 0 (http://www.freesound.org/people/SaftJesus/sounds/151532/)
+
+// this class is the scene displayed after a game is over (for all current game types)
 
 #import "TargetPracticeGameOver.h"
 #import "TargetPracticeScene.h"
@@ -35,7 +37,8 @@ NSString *gameName;
         [self addMessage];
         [self addPlayAgainButton];
         [self addBackToMainMenuButton];
-        // play a "tada" noise to indicate success in the game
+        
+        // play a sound depending on how many of the targets were hit
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         _enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
         if (_enableSound)
@@ -46,24 +49,34 @@ NSString *gameName;
             }
             else
             {
-                [self runAction:[SKAction playSoundFileNamed:@"sad_trombone.mp3" waitForCompletion:NO]];
+                [self runAction:[SKAction playSoundFileNamed:@"gong.mp3" waitForCompletion:NO]];
             }
         }
     }
     return self;
 }
 
+// called when the view is first displayed
 -(void)didMoveToView:(SKView *)view
 {
+    // write to the log file
     [self doLogging];
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Touch Handling Logic
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// called when a touch begins
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
-    if ([node.name isEqualToString:@"playAgainButton"] || [node.name isEqualToString:@"playAgainLabel"])
+    
+    // see which button was pressed and update its images
+    if ([node.name isEqualToString:@"playAgainButton"] ||
+        [node.name isEqualToString:@"playAgainLabel"])
     {
         _playAgainButton.color = [SKColor yellowColor];
     }
@@ -74,19 +87,23 @@ NSString *gameName;
     }
 }
 
+// called when a touch ends
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
-    // Check which button was pressed
+    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
+    // Check which button was pressed (if any)
     if ([node.name isEqualToString:@"playAgainButton"] ||
         [node.name isEqualToString:@"playAgainLabel"])
     {
-        // Create and configure the "main menu" scene.
+        // reset the button
+        _playAgainButton.color = [SKColor blackColor];
+        
+        // Create and configure the target practice scene
         NSString *gameMode = [self.userData objectForKey:@"gameMode"];
-        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-        NSLog(@"game mode is %@", gameMode);
+
+        // determine which game type to return to based on which game just finished
         if ([gameMode isEqualToString: @"center"] ||
             [gameMode isEqualToString: @"random"])
         {
@@ -96,15 +113,14 @@ NSString *gameName;
             SKScene * targetPracticeScene = [[TargetPracticeScene alloc] initWithSize:self.size game_mode:mode];
             targetPracticeScene.scaleMode = SKSceneScaleModeAspectFill;
             
-            // Present the scene.
+            // play a transition sound and present the target practice scene
             if (_enableSound)
                 [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
-
             [self.view presentScene:targetPracticeScene transition:reveal];
         }
         else if ([gameMode isEqualToString: @"custom"])
         {
-            // custom game mode
+            // custom game mode, display the custom game browser
             if(nil == gameName && [_tbv superview] == nil)
             {
                 [self addGameFilesToArray];
@@ -120,20 +136,20 @@ NSString *gameName;
         }
         else if ([gameMode isEqualToString:@"gesture"])
         {
-            SKScene * newGestureScene = [[NewGestureTargetScence alloc] initWithSize:self.size];
-            newGestureScene.scaleMode = SKSceneScaleModeAspectFill;
+            // create and present the gesture practice scene
+            SKScene *gesturePractice = [[NewGestureTargetScence alloc] initWithSize:CGSizeMake(1024,768)];
+            gesturePractice.scaleMode = SKSceneScaleModeAspectFill;
             
-            // Present the scene.
+            // play a transition sound and present the target practice scene
             if (_enableSound)
                 [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
-            [self.view presentScene:newGestureScene transition:reveal];
+            [self.view presentScene:gesturePractice transition:reveal];
         }
         else if ([gameMode isEqualToString:@"fetch"])
         {
+            // create and present the fetch scene
             SKScene * fetchScene = [[FetchScene alloc] initWithSize:self.size];
             fetchScene.scaleMode = SKSceneScaleModeAspectFill;
-            
-            // Present the scene.
             [self.view presentScene:fetchScene transition:reveal];
         }
         else if ([gameMode isEqualToString:@"baby"])
@@ -141,7 +157,7 @@ NSString *gameName;
             SKScene * babyMenuScene = [[BabyMenuScene alloc] initWithSize:self.size];
             babyMenuScene.scaleMode = SKSceneScaleModeAspectFill;
             
-            // Present the scene.
+            // play a transition sound and present the baby menu scene
             if (_enableSound)
                 [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
             [self.view presentScene:babyMenuScene transition:reveal];
@@ -151,14 +167,16 @@ NSString *gameName;
     else if ([node.name isEqualToString:@"backToMainMenuButton"] ||
              [node.name isEqualToString:@"backToMainMenuLabel"])
     {
+        // reset the button
+        _backToMainMenuButton.color = [SKColor blackColor];
+
         // Create and configure the "main menu" scene.
         SKScene * mainMenuScene = [[MainMenuScene alloc] initWithSize:self.size];
         mainMenuScene.scaleMode = SKSceneScaleModeAspectFill;
         
-        // Present the scene.
+        // play a transition sound and present the main menu scene
         if (_enableSound)
             [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
-        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
         [self.view presentScene:mainMenuScene transition:reveal];
     }
     else
@@ -167,9 +185,9 @@ NSString *gameName;
     }
 }
 
+// called when a touch moves/slides
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    /* Called when a touch moves/slides */
     for (UITouch *touch in [touches allObjects]) {
     	CGPoint currentLocation  = [touch locationInNode:self];
         CGPoint previousLocation = [touch previousLocationInNode:self];
@@ -191,6 +209,10 @@ NSString *gameName;
 //        }
     }
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Add Buttons, Labels and Background to Scene
+//-------------------------------------------------------------------------------------------------------------------------------------
 
 -(void)addBackground
 {
@@ -250,6 +272,11 @@ NSString *gameName;
     [self addChild:backToMainMenuLabel];
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Simple Utility Methods
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// this method reads in from the custom games files directory and adds them to the game files array
 -(void)addGameFilesToArray
 {
     _gameArray = [[NSMutableArray alloc]init];
@@ -262,8 +289,6 @@ NSString *gameName;
     if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
         [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
     
-    
-    
     NSString *file;
     NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:&error];
     for(file in files)
@@ -275,9 +300,9 @@ NSString *gameName;
     }
 }
 
+// this method writes all of the log entries from the touch log into a log file
 -(void)doLogging
 {
-    NSLog(@"in do logging");
     NSString *gameMode = [self.userData objectForKey:@"gameMode"];
     if ([gameMode isEqualToString:@"gesture"])
     {
@@ -303,20 +328,8 @@ NSString *gameName;
     NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
     [DateFormatter setDateFormat:@"MM-dd-yyyy_HH-mm-ss"];
     NSString *currentDate = [DateFormatter stringFromDate:[NSDate date]];
-//    NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
-//                                                          dateStyle:NSDateFormatterMediumStyle
-//                                                          timeStyle:NSDateFormatterMediumStyle];
-//    // take out spaces
-//    dateString = [dateString stringByReplacingOccurrencesOfString:@" " withString:@""];
-//    // replace colons with hyphens
-//    dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@"-"];
-//    // replace slashes with hyphens
-//    dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
     NSString *gameModeString = [scene.userData objectForKey: @"gameMode"];
     NSString *fileName = [NSString stringWithFormat:@"%@/%@%@-%@.csv", folderPath, nameString, currentDate, gameModeString];
-    NSLog(@"file name is %@", fileName);
-    //NSLog(@"%@", output);
-    
     
     NSString *output = @"Player,Date,Game,Targets Hit, Total Targets\n";
     output = [output stringByAppendingString:[NSString stringWithFormat:@"%@ %@,%@,%@,%d,%d\n\n",firstName,lastName,currentDate,[self.userData objectForKey:@"gameMode"],self.targetsHit,self.totalTargets]];
@@ -324,17 +337,14 @@ NSString *gameName;
     for (int i=0;i<log.count;i++)
     {
         LogEntry *entry = log[i];
-        //NSLog(@"%d,%f,%f", entry.type, entry.targetLocation.x,entry.targetLocation.y);
-        //NSString * type = typeArray[entry.type];
-        //NSString * type = @"a";
         output = [output stringByAppendingString:[entry toString]];
-//        output = [output stringByAppendingString:[NSString stringWithFormat:@"%@,%@,%f,%f,%f,%f,%f,%f\n", entry.type, entry.anchorPressed, entry.time, entry.touchLocation.x, entry.touchLocation.y, entry.targetLocation.x, entry.targetLocation.y, entry.targetRadius]];
-        // get the documents directory
-        //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        //        NSString *documentsDirectory = [paths objectAtIndex:0];
     }
     [output writeToFile:fileName atomically:NO encoding:NSStringEncodingConversionAllowLossy error:NULL];
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                            UITableView Stuff (for listing custom game files)
+//-------------------------------------------------------------------------------------------------------------------------------------
 
 #pragma mark - Table view data source
 

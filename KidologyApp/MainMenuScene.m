@@ -21,6 +21,7 @@
 
 @implementation MainMenuScene
 
+// initializer method (NOTE: size in initializer methods refers to screen size in pixels)
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         // add background and buttons to screen
@@ -35,6 +36,14 @@
         [self addUserInfo];
         // add this class to the notification center (see method comments below)
         [self addToNotificationCenter];
+        
+        // add a background music player
+        NSError *error;
+        NSURL * backgroundMusicURL = [[NSBundle mainBundle] URLForResource:@"birds" withExtension:@"mp3"];
+        self.backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:backgroundMusicURL error:&error];
+        self.backgroundMusicPlayer.numberOfLoops = -1;
+        [self.backgroundMusicPlayer prepareToPlay];
+        [self.backgroundMusicPlayer play];
     }
     return self;
 }
@@ -101,13 +110,16 @@
         if ([UtilityClass checkSettings])
             return;
 
-        // Create and configure the baby game menu scene
+        // create and configure the baby game menu scene
         SKScene * babyGame = [[BabyMenuScene alloc] initWithSize:self.size];
         babyGame.scaleMode = SKSceneScaleModeAspectFill;
         
-        // Present the scene
+        // stop the background music and play a transition sound
+        [_backgroundMusicPlayer stop];
         if (_enableSound)
             [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
+
+        // present the scene
         [self.view presentScene:babyGame transition:reveal];
     }
     else if ([node.name isEqualToString:@"targetGameButton"] ||
@@ -124,13 +136,16 @@
         if ([UtilityClass checkSettings])
             return;
 
-        // Create and configure the target game menu scene.
+        // create and configure the target game menu scene.
         SKScene * targetGame = [[TargetPracticeMenuScene alloc] initWithSize:self.size];
         targetGame.scaleMode = SKSceneScaleModeAspectFill;
         
-        // Present the scene.
+        // stop the background music and play a transition sound
+        [_backgroundMusicPlayer stop];
         if (_enableSound)
             [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
+
+        // Present the scene
         [self.view presentScene:targetGame transition:reveal];
     }
     else if ([node.name isEqualToString:@"fetchGameButton"] ||
@@ -147,11 +162,14 @@
         if ([UtilityClass checkSettings])
             return;
 
-        // Create and configure the fetch game menu scene.
+        // create and configure the fetch game menu scene
         SKScene * fetchGame = [[FetchScene alloc] initWithSize:self.size];
         fetchGame.scaleMode = SKSceneScaleModeAspectFill;
         
-        // Present the scene.
+        // stop the background music but don't play a transition sound (will overlap with dog barking)
+        [_backgroundMusicPlayer stop];
+
+        // present the scene
         [self.view presentScene:fetchGame transition:reveal];
     }
     else if ([node.name isEqualToString:@"therapistMenuButton"] ||
@@ -168,8 +186,11 @@
         if ([UtilityClass checkSettings])
             return;
 
+        // stop the background music and play a transition sound
+        [_backgroundMusicPlayer stop];
         if (_enableSound)
             [self runAction:[SKAction playSoundFileNamed:@"jump.mp3" waitForCompletion:NO]];
+        
         // display a popup that requests user action (see method comments below)
         [self displayAlertView];
     }
@@ -177,10 +198,10 @@
     {
         // if touch ended somewhere not on any button
         
-        // remove the older games table view browser if present
+        // remove the older games table view browser (if present)
         [_tbv removeFromSuperview];
 
-        // reset all the buttons to untouched state (for touches moved)
+        // reset all the buttons to untouched state (required for touchesMoved)
         _targetGameButton.hidden = false;
         _targetGameButtonPressed.hidden = true;
         _babyGameButton.hidden = false;
@@ -391,7 +412,7 @@
     [previousNodeName isEqualToString:@"therapistMenuButtonPressed"];
 }
 
-// reads in the first name, last name, and therapist email fields from the settings app
+// reads in the first name, last name, therapist email and enable sound fields from the settings app
 // and updates class variables accordingly
 -(void)loadSettingsInfo
 {
@@ -403,6 +424,53 @@
     _lastName = [defaults objectForKey:@"lastName"];
     _therapistEmail = [defaults objectForKey:@"therapistEmail"];
     _enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
+}
+
+// add all .zip files in the logs directory to the zip files array
+-(void)addZipFilesToArray
+{
+    // initialize the zip files array
+    _zipFilesArray = [[NSMutableArray alloc]init];
+    
+    // find the logs directory path (if it exists)
+    NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"logs"];
+    
+    // make the logs directory if it doesn't already exist
+    NSError *error = nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
+    
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:&error];
+    NSString *extension = @"zip";
+    // iterate over all the files in the logs directory
+    for(NSString *file in files)
+    {
+        // only add files with .zip extension to zip files array
+        if([[file pathExtension] isEqualToString:extension])
+        {
+            [_zipFilesArray addObject:file];
+        }
+    }
+}
+
+// delete all .csv log files in the logs directory
+-(void)deleteLogFiles:(NSString *)logDirectoryPath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    // iterate over all files in the log files array
+    for (NSString *file in _logFiles)
+    {
+        // remove each file in log files from the logs directory
+        NSError *error;
+        NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", logDirectoryPath, file];
+        BOOL success = [fileManager removeItemAtPath:fullFilePath error:&error];
+        if(!success)
+            NSLog(@"unable to delete file %@ because %@", fullFilePath, [error description]);
+        else
+            NSLog(@"sucessfully deleted file %@", fullFilePath);
+    }
+    // clear the log files array
+    [_logFiles removeAllObjects];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------
@@ -459,7 +527,10 @@
 // display a popup with options to zip + send recent game log files or send previously zipped game log files
 -(void)displayAlertView
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Send Log Files To Therapist" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Send Log Files To Therapist"
+                                                             delegate:self cancelButtonTitle:nil
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:nil, nil];
     [actionSheet addButtonWithTitle:@"Send Recent Games"];
     [actionSheet addButtonWithTitle:@"Send Older Games"];
     [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
@@ -476,6 +547,7 @@
         
         // get the log files directory path
         NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]   stringByAppendingPathComponent:@"logs"];
+        
         // try to zip the log files there
         NSString *zipFile = [self zipFilesAtPath:folderPath];
         //   zipFile = "No files to compress" when no log files to zip
@@ -537,7 +609,7 @@
     _logFiles = [[NSMutableArray alloc] init];
     
     // format the zip file name
-    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+    NSDateFormatter *DateFormatter = [[NSDateFormatter alloc] init];
     [DateFormatter setDateFormat:@"MM-dd-yyyy_HH-mm"];
     NSString *currentDate = [DateFormatter stringFromDate:[NSDate date]];
     NSString *zipFileName = [NSString stringWithFormat:@"%@_%@_%@.zip", _firstName, _lastName, currentDate];
@@ -587,14 +659,18 @@
 
     // create the utility to zip the files together
     ZipArchive *archiver = [[ZipArchive alloc] init];
+    
     // create an empty zip file
     [archiver CreateZipFile2:archivePath];
+    
+    // add each log file to the zip file
     for(NSString *fileName in _logFiles)
     {
         // get the full file path and add it to the zip file
         NSString *longPath = [directoryPath stringByAppendingPathComponent:fileName];
         [archiver addFileToZip:longPath newname:fileName];
     }
+    
     // compress the zip file and check its exit flag
     BOOL successCompressing = [archiver CloseZipFile2];
     if (successCompressing)
@@ -611,28 +687,31 @@
     }
 }
 
-// open up a mail compose view with the given zip file attached and text fields autopopulated
+// open up a mail composer view with the given zip file attached and text fields autopopulated
 -(void)emailZipFile:(NSString *)zipFilePath
 {
     // extract the zip file name from the full path
     NSArray *parts = [zipFilePath componentsSeparatedByString:@"/"];
     NSString *zipFile = parts[[parts count]-1];
 
-    // create a mail compose view and autopopulate fields
+    // create a mail composer view and autopopulate the fields
     MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
     composer.mailComposeDelegate = self;
-    // usually can use if ([composer canSendMail]) to check if user has e-mail account setup yet
+    // usually can use "if ([composer canSendMail])" to check if user has e-mail account setup yet
     // but for w/e reason I am getting errors with this (no longer supported in iOS7?)
+    
     // populate the fields
     NSArray *recipients = @[_therapistEmail];
     [composer setToRecipients:recipients];
     [composer setSubject:@"re: My game logs from KidologyApp"];
     NSString *messageBody = @"Hello,\n Here are my game log files from today.";
     [composer setMessageBody:messageBody isHTML:NO];
+    
     // attach zip file to message
     NSData *zipData = [NSData dataWithContentsOfFile:zipFilePath];
     [composer addAttachmentData:zipData mimeType:@"application/zip" fileName:zipFile];
     composer.navigationBar.barStyle = UIBarStyleBlack;
+    
     // present the compose mail view
     [self.view.window.rootViewController presentModalViewController:composer animated:YES];
     [composer release];
@@ -642,7 +721,7 @@
 // Proceeds to create a popup to inform the user of the success (or failure) of the operation
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
-    // Notifies users about errors associated with sending the email (e.g. sending cancelled)
+    // Notifies users about errors associated with sending the email (e.g. sending cancelled, sent to outbox, etc.)
     NSString *message = @"";
     
     switch (result)
@@ -666,7 +745,7 @@
             
         default:
         {
-            message = @"Sending Failed - Unknown Error :-(  Log Files zipped and moved to Older Games";
+            message = @"Sending Failed - Unknown Error :-(\n  Log Files zipped and moved to Older Games";
             break;
         }
     }
@@ -683,53 +762,6 @@
 //-------------------------------------------------------------------------------------------------------------------------------------
 //                                            UITableView Stuff (for listing zipped game files)
 //-------------------------------------------------------------------------------------------------------------------------------------
-
-// add all .zip files in the logs directory to the zip files array
--(void)addZipFilesToArray
-{
-    // initialize the zip files array
-    _zipFilesArray = [[NSMutableArray alloc]init];
-    
-    // find the logs directory path (if it exists)
-    NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"logs"];
-    
-    // make the logs directory if it doesn't already exist
-    NSError *error = nil;
-    if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
-        [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error];
-    
-    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:&error];
-    NSString *extension = @"zip";
-    // iterate over all the files in the logs directory
-    for(NSString *file in files)
-    {
-        // only add files with .zip extension to zip files array
-        if([[file pathExtension] isEqualToString:extension])
-        {
-            [_zipFilesArray addObject:file];
-        }
-    }
-}
-
-// delete all .csv log files in the logs directory
--(void)deleteLogFiles:(NSString *)logDirectoryPath
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    // iterate over all files in the log files array
-    for (NSString *file in _logFiles)
-    {
-        // remove each file in log files from the logs directory
-        NSError *error;
-        NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", logDirectoryPath, file];
-        BOOL success = [fileManager removeItemAtPath:fullFilePath error:&error];
-        if(!success)
-            NSLog(@"unable to delete file %@ because %@", fullFilePath, [error description]);
-        else
-            NSLog(@"sucessfully deleted file %@", fullFilePath);
-    }
-    // clear the log files array
-    [_logFiles removeAllObjects];
-}
 
 #pragma mark - Table view data source
 
@@ -765,7 +797,7 @@
 {
     NSString *zipFileName = [self.zipFilesArray objectAtIndex:indexPath.row];
     [_tbv removeFromSuperview];
-    // get the log files directory path
+    // get the log files directory path1
     NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]   stringByAppendingPathComponent:@"logs"];
     NSString *fullPathToZipFile = [NSString stringWithFormat:@"%@/%@", folderPath, zipFileName];
     [self emailZipFile:fullPathToZipFile];

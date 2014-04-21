@@ -8,6 +8,8 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import <MessageUI/MessageUI.h>
+#import <AVFoundation/AVFoundation.h>
+
 
 @interface MainMenuScene : SKScene
 @property (nonatomic) SKSpriteNode *babyGameButton;
@@ -25,7 +27,7 @@
 @property (nonatomic) NSMutableArray *zipFilesArray;
 @property (nonatomic) UITableView *tbv;
 @property (nonatomic) BOOL enableSound;
-
+@property (nonatomic) AVAudioPlayer *backgroundMusicPlayer;
 
 
 

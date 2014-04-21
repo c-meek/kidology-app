@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
+// this class reads in from a custom game file and generates a target practice scene
+
 #import "CustomTargetPracticeScene.h"
 #import "TargetPracticeGameOver.h"
 #import "TargetPracticeMenuScene.h"
@@ -21,26 +23,26 @@ NSMutableArray *touchLog;
 {
     if(self = [super initWithSize:size])
     {
-        NSLog(@"custom game file: %@", gameName);
+        // initialize variables and read in from game file
         touchLog = [[NSMutableArray alloc] initWithCapacity:1];
-        [self addBackground];
-        //read input from custom text file
         [self readInput];
         //assign total number of targets
         _totalTargets = [_commandArray count] - 1;
         //initialize targetIterator to start reading from the correct part of array
         _targetIterator = 1;
-        //initialize target with image
+        _time = 0;
+        
+        [self addBackground];
+        //initialize and display target with image
         _target = [SKSpriteNode spriteNodeWithImageNamed:@"green_target"];
-        //display the first target
         [self displayTarget];
         [self addChild:_target];
         // initialize the anchor to "not being touched" state
         self.anchored = NOT_TOUCHING;
         [self initializeAnchor];
         [self addQuitButton];
-        _time = 0;
         
+        // play a sound to start the round
         if (_enableSound)
             [self runAction:[SKAction playSoundFileNamed:@"dingding.mp3" waitForCompletion:NO]];
 
@@ -48,21 +50,28 @@ NSMutableArray *touchLog;
     return self;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Touch Handling Logic
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// called when a touch begins
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
-    //test whether the target has been touched
     for (UITouch *touch in [touches allObjects]) {
-        /* Called when a touch begins */
         CGPoint positionInScene = [touch locationInNode:self];
         //test whether the target has been touched
-        if (![self isAnchorTouch:positionInScene]) // If the touch isn't on the anchor,
+        // if the touch isn't on the anchor
+        if (![self isAnchorTouch:positionInScene])
         {
-            [self targetTouch:positionInScene]; // log it inside the targetTouch function and evaluate accordingly.
+            // log it inside the targetTouch function and evaluate accordingly
+            [self targetTouch:positionInScene];
         }
-        else{ // If it is on the anchor,
+        else
+        {
+            // if it is on the anchor
             _anchored = TOUCHING; // make note of that.
             _anchor.hidden = TRUE;
             _pressedAnchor.hidden = FALSE;
+            // log when anchor is first pressed (rather than every frame where anchor is held)
             LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Anchor Press"
                                                                time:self.time
                                                       anchorPressed:YES
@@ -77,25 +86,30 @@ NSMutableArray *touchLog;
     }
 }
 
+// called when a touch ends
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch ends */
     for (UITouch *touch in [touches allObjects]) {
         CGPoint positionInScene = [touch locationInNode:self];
         SKNode *node = [self nodeAtPoint:positionInScene];
+        // check if the quit button was pressed and released
         if ([node.name isEqualToString:@"quitButton"] ||
             [node.name isEqualToString:@"quitButtonPressed"])
         {
+            // reset the button
             _quitButton.hidden = false;
             _quitButtonPressed.hidden = true;
+            
+            // transition to the game over scene
             [self endGame:self.correctTouches totalTargets:self.totalTargets];
         }
-
-        // If a touch on the anchor is ending,
-        if ([self isAnchorTouch:positionInScene] == true)
+        else if ([self isAnchorTouch:positionInScene] == true)
         {
+            // if a touch on the anchor is ending
             _anchored = NOT_TOUCHING; // make note of that.
-            _anchor.hidden = FALSE;         // Tien was here and the next line
+            _anchor.hidden = FALSE;
             _pressedAnchor.hidden = TRUE;
+            
+            // log when anchor was released
             LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Anchor Release"
                                                                time:self.time
                                                       anchorPressed:YES
@@ -107,17 +121,12 @@ NSMutableArray *touchLog;
                                                      targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
             [touchLog addObject:currentTouch];
         }
-//        else
-//        {
-//            _anchor.hidden = TRUE;
-//            _pressedAnchor.hidden = FALSE;
-//        }
     }
 }
 
+// called when a touch moves/slides
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    /* Called when a touch moves/slides */
     for (UITouch *touch in [touches allObjects]) {
     	CGPoint currentLocation  = [touch locationInNode:self];
         CGPoint previousLocation = [touch previousLocationInNode:self];
@@ -142,6 +151,121 @@ NSMutableArray *touchLog;
     }
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Target and Anchor Logic
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// this method handles touches that are not on the anchor
+// (e.g. both target hits and misses) and logs accordingly
+-(void)targetTouch:(CGPoint)touchLocation
+{
+    _totalTouches++;
+    // do some math to see if the touch was on the target
+    double xDifference = touchLocation.x - self.target.position.x;
+    double yDifference = touchLocation.y - self.target.position.y;
+    double radius = self.target.size.width / 2;
+    double distanceFromCenter = sqrt(pow(xDifference, 2) + pow(yDifference, 2));
+    
+    LogEntry * currentTouch;
+    
+    // if the touch was on the target
+    if (distanceFromCenter <= radius)
+    {
+        // the anchor is currently being touched
+        if (_anchored == TOUCHING)
+        {
+            // this is a target hit
+            _correctTouches++;
+            // add this touch to the logs
+            currentTouch = [[LogEntry alloc] initWithType:@"On Target"
+                                                     time:self.time
+                                            anchorPressed:YES
+                                               targetsHit:self.correctTouches
+                                       distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
+                                            touchLocation:CGPointMake(touchLocation.x, touchLocation.y)
+                                           targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
+                                             targetRadius:radius
+                                           targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
+            [touchLog addObject:currentTouch];
+            
+            // display a "Target Hit!" message and play a sound
+            [self displayTargetHit];
+            
+            // create a transition sequence to remove the target and display a new one
+            SKAction *deleteTarget = [SKAction runBlock:^{
+                self.target.position = CGPointMake(-100,-100);
+            }];
+            SKAction *wait = [SKAction waitForDuration:_delayDuration];
+            SKAction *addTarget = [SKAction runBlock:^{
+                [self displayTarget];
+            }];
+            SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
+            
+            //check to see if the total number of targets have been touched
+            if(self.totalTargets <= self.correctTouches)
+            {
+                // transition to the game over scene
+                [self endGame:self.correctTouches totalTargets:self.totalTargets];
+            }
+            
+            //increment the targetIterator
+            _targetIterator = _targetIterator + 1;
+            //run the actions in sequential order
+            [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
+            
+        }
+        else
+        {
+            // the touch was on the target but the anchor was not being pressed
+            currentTouch = [[LogEntry alloc] initWithType:@"On Target"
+                                                     time:self.time
+                                            anchorPressed:NO
+                                               targetsHit:self.correctTouches
+                                       distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
+                                            touchLocation:CGPointMake(touchLocation.x, touchLocation.y)
+                                           targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
+                                             targetRadius:radius
+                                           targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
+            [touchLog addObject:currentTouch];
+        }
+    }
+    else
+    {
+        // the touch was not on the target
+        currentTouch = [[LogEntry alloc] initWithType:@"Off Target"
+                                                 time:self.time
+                                        anchorPressed:(_anchored == TOUCHING)
+                                           targetsHit:self.correctTouches
+                                   distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
+                                        touchLocation:CGPointMake(touchLocation.x, touchLocation.y)
+                                       targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
+                                         targetRadius:(self.target.size.width / 2)
+                                       targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
+        [touchLog addObject:currentTouch];
+    }
+}
+
+// this method determines if the touch was on the anchor
+-(Boolean)isAnchorTouch:(CGPoint)touchLocation
+{
+    Boolean result;
+    SKNode *node = [self nodeAtPoint:touchLocation];
+    if ([node.name isEqualToString:@"pressedAnchor"] || [node.name isEqualToString:@"anchor"])
+    {
+        result = true;
+    }
+    else
+    {
+        result = false;
+    }
+    return result;
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Add Buttons, Labels and Background to Scene
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// this method determines where and how to display the target depending on the values in the command array
 -(void)displayTarget
 {
     //get the target information
@@ -156,33 +280,6 @@ NSMutableArray *touchLog;
     {
         _delayDuration = [targetInfoArray[3] floatValue];
     }
-}
-
--(void)readInput
-{
-    NSString *shortenedGameName = [gameName substringToIndex:[gameName length] - 4];
-    //NSString *filePath = [[NSBundle mainBundle] pathForResource:shortenedGameName ofType:@"csv"];
-    NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
-    NSString *filePath = [folderPath stringByAppendingString:@"/"];
-    filePath = [filePath stringByAppendingString:shortenedGameName];// add the filename
-    filePath = [filePath stringByAppendingString:@".csv"]; // add the .csv extension
-    NSError *error;
-    NSString *fileContents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
-    
-    if(error)
-    {
-        NSLog(@"erorr %@", error.localizedDescription);
-    }
-    
-    fileContents = [fileContents stringByReplacingOccurrencesOfString:@"\n" withString:@";"];
-    fileContents = [fileContents stringByReplacingOccurrencesOfString:@"\r" withString:@";"];
-    fileContents = [fileContents stringByReplacingOccurrencesOfString:@";;" withString:@";"];
-    fileContents = [fileContents stringByReplacingOccurrencesOfString:@";;;" withString:@";"];
-    _commandArray = [fileContents componentsSeparatedByString:@";"];
-    
-    NSLog(@"%@", _commandArray);
-
-
 }
 
 -(void)addBackground
@@ -212,127 +309,15 @@ NSMutableArray *touchLog;
     [self addChild:_quitButtonPressed];
 }
 
--(Boolean)isAnchorTouch:(CGPoint)touchLocation
-{
-    Boolean result;
-    //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
-    SKNode *node = [self nodeAtPoint:touchLocation];
-    if ([node.name isEqualToString:@"pressedAnchor"] || [node.name isEqualToString:@"anchor"])
-    {
-
-        //        NSLog(@"anchor panel is being touched.");
-        result = true;
-    }
-    else
-    {
-        //        NSLog(@"anchor panel is not being touched.");
-        result = false;
-    }
-    return result;
-}
-
-
-
--(void)targetTouch:(CGPoint)touchLocation
-{
-    _totalTouches++;
-    //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
-    double xDifference = touchLocation.x - self.target.position.x;
-    double yDifference = touchLocation.y - self.target.position.y;
-    double radius = self.target.size.width / 2;
-    double distanceFromCenter = sqrt(pow(xDifference, 2) + pow(yDifference, 2));
-//    double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
-//    double rightHandSide = pow(radius, 2);
-    LogEntry * currentTouch;
-    
-//    if(leftHandSide <= rightHandSide) // If the touch is on the target
-    if (distanceFromCenter <= radius)
-    {
-        if (_anchored == TOUCHING) // the anchor is currently being touched
-        {
-            _correctTouches++;
-            currentTouch = [[LogEntry alloc] initWithType:@"On Target"
-                                                     time:self.time
-                                            anchorPressed:YES
-                                               targetsHit:self.correctTouches
-                                       distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
-                                            touchLocation:CGPointMake(touchLocation.x, touchLocation.y)
-                                           targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
-                                             targetRadius:radius
-                                           targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
-            [touchLog addObject:currentTouch]; // log the touch
-            [self displayTargetHit];
-
-            //currentTouch.type = TARGET;
-            //make a "delete" target action
-            SKAction *deleteTarget = [SKAction runBlock:^{
-                self.target.position = CGPointMake(-100,-100);
-            }];
-            //make a wait action
-            SKAction *wait = [SKAction waitForDuration:_delayDuration];
-            //make a "add" target action
-            SKAction *addTarget = [SKAction runBlock:^{
-                [self displayTarget];
-            }];
-            //check to see if the total number of targets have been touched, then show the ending screen
-            if(self.totalTargets <= self.correctTouches)
-            {
-                [self endGame:self.correctTouches totalTargets:self.totalTargets];
-//                SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
-//                SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size
-//                                                                               targetsHit:self.correctTouches
-//                                                                          totalTargets:self.totalTargets];
-//                // pass the game type and touch log to the "game over" scene
-//                NSString *mode = @"custom";
-//                [gameOverScene.userData setObject:mode forKey:@"gameMode"];
-//                [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
-//                [self.view presentScene:gameOverScene transition: reveal];
-            }
-            //combine all the actions into a sequence
-            SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
-            //increment the targetIterator
-            _targetIterator = _targetIterator + 1;
-            //run the actions in sequential order
-            [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
-
-        }
-        else // the anchor is not currently being touched
-        {
-            currentTouch = [[LogEntry alloc] initWithType:@"On Target"
-                                                     time:self.time
-                                            anchorPressed:NO
-                                               targetsHit:self.correctTouches
-                                       distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
-                                            touchLocation:CGPointMake(touchLocation.x, touchLocation.y)
-                                           targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
-                                             targetRadius:radius
-                                           targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
-            //currentTouch.type = UNANCHORED_TARGET;
-            [touchLog addObject:currentTouch]; // log the touch
-        }
-    }
-    else
-    {
-        currentTouch = [[LogEntry alloc] initWithType:@"Off Target"
-                                                 time:self.time
-                                        anchorPressed:(_anchored == TOUCHING)
-                                           targetsHit:self.correctTouches
-                                   distanceFromCenter:[NSString stringWithFormat:@"%f", distanceFromCenter]
-                                        touchLocation:CGPointMake(touchLocation.x, touchLocation.y)
-                                       targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
-                                         targetRadius:(self.target.size.width / 2)
-                                       targetOnScreen:!(_target.position.x == -100 && _target.position.y == -100)];
-        [touchLog addObject:currentTouch];
-    }
-}
-
+// called before each frame is rendered
 -(void)update:(CFTimeInterval)currentTime {
-    /* Called before each frame is rendered */
+    // update the time counter
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     [self updateWithTimeSinceLastUpdate:timeSinceLast];
 }
 
+// adds a label to the top right corner indicating correct touches and total touches
 -(void)trackerLabel
 {
     SKLabelNode * trackerLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -348,7 +333,8 @@ NSMutableArray *touchLog;
     [trackerLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
 }
 
-- (void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
+// adds a label to the top right corner indicatin time elapsed
+-(void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
     
     self.lastSpawnTimeInterval += timeSinceLast;
     if (self.lastSpawnTimeInterval > .1) {
@@ -376,6 +362,7 @@ NSMutableArray *touchLog;
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
 }
 
+// reads in where to display the anchor from the user settings
 -(void)initializeAnchor
 {
     //get handedness from the user defaults
@@ -397,14 +384,11 @@ NSMutableArray *touchLog;
     if([affectedHand isEqualToString:@"right"]) //if right hand affected
     {
         _pressedAnchor.position = CGPointMake(75, self.frame.size.height/2-150);
-        
         _anchor.position = CGPointMake(75, self.frame.size.height/2-150);
-        
     }
     else    //if right hand not affected
     {
         _pressedAnchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
-        
         _anchor.position = CGPointMake(self.frame.size.width - 75, self.frame.size.height/2-150);
     }
     _pressedAnchor.name =@"pressedAnchor";
@@ -414,6 +398,7 @@ NSMutableArray *touchLog;
     [self addChild:_anchor];
 }
 
+// displays a message saying "Target Hit!" and plays a sound
 -(void)displayTargetHit
 {
     if (_enableSound)
@@ -436,13 +421,41 @@ NSMutableArray *touchLog;
     [targetHitLabel runAction:[SKAction sequence:@[fadeAway, remove]]];
 }
 
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Simple Utility Methods
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// this method reads in from the custom game file and adds to the command array (stores the various target info)
+-(void)readInput
+{
+    NSString *shortenedGameName = [gameName substringToIndex:[gameName length] - 4];
+    NSString *folderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0] stringByAppendingPathComponent:@"Inbox"];
+    NSString *filePath = [folderPath stringByAppendingString:@"/"];
+    filePath = [filePath stringByAppendingString:shortenedGameName];// add the filename
+    filePath = [filePath stringByAppendingString:@".csv"]; // add the .csv extension
+    NSError *error;
+    NSString *fileContents = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
+    
+    if(error)
+    {
+        NSLog(@"erorr %@", error.localizedDescription);
+    }
+    
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@"\n" withString:@";"];
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@"\r" withString:@";"];
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@";;" withString:@";"];
+    fileContents = [fileContents stringByReplacingOccurrencesOfString:@";;;" withString:@";"];
+    _commandArray = [fileContents componentsSeparatedByString:@";"];
+}
+
+// this method transitions to the game over scene
 -(void)endGame:(int)targetsHit totalTargets:(int)totalTargets
 {
     SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];
     SKScene * gameOverScene = [[TargetPracticeGameOver alloc] initWithSize:self.size targetsHit:targetsHit totalTargets:totalTargets];
     // pass the game type and touch log to "game over" scene
     NSString *mode = @"custom";
-    NSLog(@"end game has touch log count %d", touchLog.count);
     [gameOverScene.userData setObject:mode forKey:@"gameMode"];
     [gameOverScene.userData setObject:touchLog forKey:@"touchLog"];
     [self.view presentScene:gameOverScene transition:reveal];

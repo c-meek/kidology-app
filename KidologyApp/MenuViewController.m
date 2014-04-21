@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
-// this class is used by the storyboard to route the user to the correct views
+// this class is used by the storyboard to route the user to the correct view(s)
 // for example, route to the setup view if the user hasn't setup their name and therapist email yet
 
 #import "MenuViewController.h"

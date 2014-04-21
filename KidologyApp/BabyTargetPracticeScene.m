@@ -6,14 +6,10 @@
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 //  Sounds for this app were obtained at soundbible.com
-//
-//      License information for sounds in this file:
-//          target "popping" noise -- Creative Commons Attribution 3.0 (http://soundbible.com/533-Pop-Cork.html )
-//          dog bark -- non-commercial use only (http://soundbible.com/393-Puppy-Dog-Barking.html )
-//          rooster -- Creative Commons Attribution 3.0 (http://soundbible.com/2040-Rooster-Crowing-2.html )
-//          horse -- Creative Commons Attribution 3.0 (http://soundbible.com/1296-Horse-Neigh.html )
-//          bubbles -- Creative Commons Attribution 3.0 (http://soundbible.com/1137-Bubbles.html )
 
+
+// this scene is the baby game scene, where a large, brightly-colored target is displayed center screen
+// against a checkerboard background
 
 #import "BabyTargetPracticeScene.h"
 #import "MainMenuScene.h"
@@ -28,22 +24,25 @@ NSMutableArray *touchLog;
 {
     if (self = [super initWithSize:size])
     {
+        // read in user defaults from the settings app
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults synchronize];
         _delayBetweenTargets = [[defaults objectForKey:@"delayBetweenTargets"] integerValue];
         _targetSize = [[defaults objectForKey:@"defaultTargetSize"] floatValue];
         _totalTargets = [[defaults objectForKey:@"numberOfTargets"] integerValue];
         _enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
-        NSLog(@"target size is %f", _targetSize);
-        touchLog = [[NSMutableArray alloc] initWithCapacity:1];
 
+        // play a sound to start the round
         if (_enableSound)
             [self runAction:[SKAction playSoundFileNamed:@"dingding.mp3" waitForCompletion:NO]];
         
+        // initialize the touchLog array and the number of targets hit counter
+        touchLog = [[NSMutableArray alloc] initWithCapacity:1];
         self.targetsHit = 0;
+        
+        // add the background, target, instruction label and quit button
         SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"Huge_Checkered_Background_[4096x3072]"];
         [self addChild:bgImage];
-        
         _target = [SKSpriteNode spriteNodeWithImageNamed:color];
         _target.xScale = _targetSize;
         _target.yScale = _targetSize;
@@ -55,44 +54,56 @@ NSMutableArray *touchLog;
     return self;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Touch Handling Logic
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// called when a touch begins
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     for(UITouch *touch in [touches allObjects])
     {
+        // get the current touch and see if it is on the quit button
         CGPoint position = [touch locationInNode:self];
         SKNode *node = [self nodeAtPoint:position];
         [self targetTouch:position];
-        if ([node.name isEqualToString:@"quitButton"] || [node.name isEqualToString:@"quitButtonPressed"])
+        if ([node.name isEqualToString:@"quitButton"] ||
+            [node.name isEqualToString:@"quitButtonPressed"])
         {
+            // update the quit button image
             _quitButton.hidden = true;
             _quitButtonPressed.hidden = false;
         }
     }
 }
 
+// called when a touch ends
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    /* Called when a touch begins */
+    // see if the quit button was pressed and then released
     UITouch *touch = [touches anyObject];
     CGPoint position = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:position];
-    SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-    
-    if ([node.name isEqualToString:@"quitButton"] || [node.name isEqualToString:@"quitButtonPressed"])
+    if ([node.name isEqualToString:@"quitButton"] ||
+        [node.name isEqualToString:@"quitButtonPressed"])
     {
         // reset button
         _quitButtonPressed.hidden = true;
         _quitButton.hidden = false;
         
+        // move to the game over scene
         [self endGame:self.targetsHit totalTargets:self.totalTargets];
     }
 }
 
+// called when a touch moves/slides
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    /* Called when a touch moves/slides */
     for (UITouch *touch in [touches allObjects]) {
+        // get the current and previous position of the touch
     	CGPoint currentLocation  = [touch locationInNode:self];
         CGPoint previousLocation = [touch previousLocationInNode:self];
+        
+        // see what nodes(if any) were at those positions
         SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
         SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
         
@@ -113,22 +124,24 @@ NSMutableArray *touchLog;
     }
 }
 
+// this method is called before each frame is rendered
 -(void)update:(CFTimeInterval)currentTime {
-    /* Called before each frame is rendered */
+    // update the scene's time counter (displayed in top right corner)
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;
     self.lastUpdateTimeInterval = currentTime;
     [self updateWithTimeSinceLastUpdate:timeSinceLast];
-    //    NSLog(@"%@", touchLog);
 }
 
-
+// this method is called by update and displays the time counter in the top right corner
 - (void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
-    
+    // update the time counter
     self.lastSpawnTimeInterval += timeSinceLast;
     if (self.lastSpawnTimeInterval > .1) {
         self.lastSpawnTimeInterval = 0;
         self.time +=.1;
     }
+    
+    // initialize the text label showing the time
     SKLabelNode *timeLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     timeLabel.fontSize = 20;
     timeLabel.fontColor = [SKColor yellowColor]; //  [SKColor colorWithRed:0.96 green:0.79 blue:0.39 alpha:1];
@@ -144,37 +157,30 @@ NSMutableArray *touchLog;
     timeLabel.text = s_time;
     [self addChild: timeLabel];
     
-    //    NSLog(@"Time: %f | string: %f", r_time, CGRectGetMidX(self.frame));
+    // sequence together the transitions to remove the current time label and add the updated one
     SKAction * actionMoveDone = [SKAction removeFromParent];
     SKAction * actionMoveTime = [SKAction moveTo:timeLabel.position duration:.0075];
     [timeLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
 }
 
+// called when a touch begins to see if it was on the target
 -(void)targetTouch:(CGPoint)touchLocation
 {
-    //    NSLog(@"touch at (%f, %f).", touchLocation.x, touchLocation.y);
     double xDifference = touchLocation.x - self.target.position.x;
     double yDifference = touchLocation.y - self.target.position.y;
     double radius = self.target.size.width / 2*.8385; //<--- The percentage of the radius that is the circle
     double distanceFromCenter = sqrt(pow(xDifference, 2) + pow(yDifference, 2));
 
-//    double leftHandSide = (pow(xDifference, 2) + pow(yDifference, 2));
-//    double rightHandSide = pow(radius, 2);
-    
-//    if(leftHandSide <= rightHandSide) // If the touch is on the target
+    // check if the touch is on the target
     if (distanceFromCenter <= radius)
     {
         self.targetsHit ++;
         SKAction *deleteTarget = [SKAction runBlock:^{
-            // play a popping noise as the target is dismissed
-//            if (_enableSound)
-//            {
-//                [self runAction:[SKAction playSoundFileNamed:@"pop.mp3" waitForCompletion:NO]];
-//            }
             // dismiss the target
             [self hideTarget];
         }];
         
+        // add this target hit touch to the logs
         LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Target"
                                                  time:self.time
                                         anchorPressed:NO
@@ -184,61 +190,29 @@ NSMutableArray *touchLog;
                                        targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
                                          targetRadius:radius
                                        targetOnScreen:true];
-        [touchLog addObject:currentTouch]; // log the touch
+        [touchLog addObject:currentTouch];
+        
+        // display "Target Hit!" and play a sound
         [self displayTargetHit];
-        // check to see if the total number of targets have been touched, then show the ending screen
+        
+        // check to see if the total number of targets have been touched
         if(self.targetsHit == self.totalTargets)
         {
+            // show the game over screen
             [self endGame:self.targetsHit totalTargets:self.totalTargets];
         }
-        //make a wait action
-                SKAction *wait = [SKAction waitForDuration:_delayBetweenTargets];
+        
+        // create a transition to display another target
+        SKAction *wait = [SKAction waitForDuration:_delayBetweenTargets];
         SKAction *addTarget = [SKAction runBlock:^{
             [self displayTarget];
         }];
-        
-//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//        BOOL enableSound = [[defaults objectForKey:@"enableSound"] boolValue];
-        
         SKAction *showAnotherTarget = [SKAction sequence:@[deleteTarget,wait,addTarget]];
         [self runAction:[SKAction repeatAction:showAnotherTarget count:1]];
-        
-//        if (enableSound)
-//        {
-//            [self runAction:[SKAction playSoundFileNamed:@"bubbles.mp3" waitForCompletion:NO]];
-            //select a random number [0...4] to choose a random sound to play
-//            int r = arc4random() % 4;
-//            switch (r) {
-//                case 0:
-//                    [self runAction:[SKAction playSoundFileNamed:@"dog_bark.mp3" waitForCompletion:NO]];
-//                    break;
-//                case 1:
-//                    [self runAction:[SKAction playSoundFileNamed:@"rooster.mp3" waitForCompletion:NO]];
-//                    break;
-//                case 2:
-//                    [self runAction:[SKAction playSoundFileNamed:@"horse.mp3" waitForCompletion:NO]];
-//                    break;
-//                case 3:
-//                    [self runAction:[SKAction playSoundFileNamed:@"bubbles.mp3" waitForCompletion:NO]];
-//                    break;
-//                default:
-//                    [self runAction:[SKAction playSoundFileNamed:@"horse.mp3" waitForCompletion:NO]];
-//                    break;
-//            }
-//        }
-        
-//        if (_totalTouches > 5) {
-//            SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
-//            mainMenu.scaleMode = SKSceneScaleModeAspectFill;
-//            
-//            // Present the scene.
-//            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-//            [self.view presentScene:mainMenu transition:reveal];
-//        }
     }
     else
     {
-        // missed the target
+        // log that a touch missed the target
         LogEntry *currentTouch = [[LogEntry alloc] initWithType:@"Off Target"
                                                            time:self.time
                                                   anchorPressed:NO
@@ -248,22 +222,27 @@ NSMutableArray *touchLog;
                                                  targetLocation:CGPointMake(self.target.position.x, self.target.position.y)
                                                    targetRadius:radius
                                                  targetOnScreen:true];
-        [touchLog addObject:currentTouch]; // log the touch
+        [touchLog addObject:currentTouch];
     }
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Add Buttons, Labels and Background to Scene
+//-------------------------------------------------------------------------------------------------------------------------------------
 
-
+// move the target button to the middle of the screen
 -(void)displayTarget
 {
     self.target.position = CGPointMake(self.size.width/2, self.size.height/2);
 }
 
+// move the target button off the screen
 -(void)hideTarget
 {
     self.target.position = CGPointMake(self.size.width/2*(-1), self.size.height/2*(-1));
 }
 
+// add the quit button to the top left corner
 -(void)addQuitButton
 {
     _quitButton = [[SKSpriteNode alloc] initWithImageNamed:@"Quit_Button"];
@@ -282,6 +261,7 @@ NSMutableArray *touchLog;
     [self addChild:_quitButtonPressed];
 }
 
+// add an instruction label that appears for a short while at the beginning of the game
 -(void)addInstruction
 {
     NSString * text2 = [NSString stringWithFormat:@"Hit %d Targets!", self.totalTargets];
@@ -297,6 +277,7 @@ NSMutableArray *touchLog;
     [instructionLabel2 runAction:fadeAway];
 }
 
+// display a label saying "Target Hit!" and play a sound after a target is hit
 -(void)displayTargetHit
 {
     if (_enableSound)
@@ -318,6 +299,7 @@ NSMutableArray *touchLog;
     [targetHitLabel runAction:[SKAction sequence:@[fadeAway, remove]]];
 }
 
+// create the label tracking the number of target hits and how many total
 -(void)trackerLabel
 {
     SKLabelNode * trackerLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -333,7 +315,7 @@ NSMutableArray *touchLog;
     [trackerLabel runAction:[SKAction sequence:@[actionMoveTime, actionMoveDone]]];
 }
 
-
+// called when ready to transition to the game over scene
 -(void)endGame:(int)targetsHit totalTargets:(int)totalTargets
 {
     SKTransition * reveal = [SKTransition flipHorizontalWithDuration:0.5];

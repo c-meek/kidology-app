@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
+// this scene displays the menu of colors to choose from for the baby target game
+
 #import "BabyMenuScene.h"
 #import "BabyTargetPracticeScene.h"
 #import "MainMenuScene.h"
@@ -15,10 +17,13 @@
 
 -(id)initWithSize:(CGSize)size
 {
-    if (self = [super initWithSize:size]) {        
+    if (self = [super initWithSize:size]) {
+        
+        // get whether or not to play sounds
         [self addBackground];
         _enableSound = [[[NSUserDefaults standardUserDefaults] objectForKey:@"enableSound"] boolValue];
 
+        // set up the rows and columns for the color palette grid
         float width = self.frame.size.width;
         float column = width / 5;
         float height = self.frame.size.height;
@@ -49,13 +54,21 @@
     return self;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Touch Handling Logic
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// called when a touch begins
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
+    // get the touch
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
-    // Check which button was pressed
-    if (!([_backButton isEqual:node] || [_pressedBackButton isEqual:node]) && node.name.length != 0)
+    
+    // Check which button was pressed (if any)
+    if (!([_backButton isEqual:node] ||
+          [_pressedBackButton isEqual:node]) &&
+        node.name.length != 0)
     {
         // Create and configure the "target practice" scene.
         SKScene *game = [[BabyTargetPracticeScene alloc] initWithSize:self.size color:node.name];
@@ -73,15 +86,16 @@
     
 }
 
+// called when a touch ends
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     for(UITouch *touch in touches)
     {
+        // get the touch location and see if it was on the back button (only button in scene)
         CGPoint loc = [touch locationInNode:self];
         SKSpriteNode * touchedNode = (SKSpriteNode *)[self nodeAtPoint:loc];
-        //transition
-        SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
-        if([_backButton isEqual:touchedNode] || [_pressedBackButton isEqual:touchedNode])
+        if([_backButton isEqual:touchedNode] ||
+           [_pressedBackButton isEqual:touchedNode])
         {
             // reset button
             _pressedBackButton.hidden = true;
@@ -91,12 +105,16 @@
             if ([UtilityClass checkSettings])
                 return;
             
-            //go back to main menu
+            // create and configure the fetch game menu scene
             SKScene * mainMenu = [[MainMenuScene alloc] initWithSize:self.size];
             mainMenu.scaleMode = SKSceneScaleModeAspectFill;
             
+            // play a transition sound
             if (_enableSound)
                 [self runAction:[SKAction playSoundFileNamed:@"vroom.mp3" waitForCompletion:NO]];
+            
+            // present the scene
+            SKTransition *reveal = [SKTransition flipHorizontalWithDuration:.5];
             [self.view presentScene:mainMenu transition:reveal];
         }
         else
@@ -107,12 +125,15 @@
     }
 }
 
+// called when a touch moves/slides
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    /* Called when a touch moves/slides */
     for (UITouch *touch in [touches allObjects]) {
+        // get the location of the current and previous touch
     	CGPoint currentLocation  = [touch locationInNode:self];
         CGPoint previousLocation = [touch previousLocationInNode:self];
+        
+        // see which nodes (if any) were at those points
         SKSpriteNode * currentNode = (SKSpriteNode *)[self nodeAtPoint:currentLocation];
         SKSpriteNode * previousNode = (SKSpriteNode *)[self nodeAtPoint:previousLocation];
 
@@ -126,12 +147,18 @@
         else if (([_backButton isEqual:previousNode] || [_pressedBackButton isEqual:previousNode]) &&
             !([_backButton isEqual:currentNode] || [_pressedBackButton isEqual:currentNode]))
         {
+            // touch was on the back button but moved off
             _pressedBackButton.hidden = true;
             _backButton.hidden = false;
         }
     }
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------
+//                                    Add Buttons, Labels and Background to Scene
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+// adds a color button to the screen (called for each color)
 -(void)addButton:(NSString *)color withPosition:(CGPoint)pos
 {
     // gameMenu game button
@@ -142,10 +169,10 @@
     [self addChild:button];
 }
 
+// add the back button to the top left corner
 -(void)addBackButton
 {
-
-    //Back Button!
+    // unpressed back button
     _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
     _backButton.position = CGPointMake(100, self.frame.size.height/2+235);
     _backButton.name = @"backButton";
@@ -153,7 +180,7 @@
     _backButton.yScale = .5;
     [self addChild:_backButton];
     
-    //Pressed Back Button!
+    // pressed back button
     _pressedBackButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
     _pressedBackButton.position = CGPointMake(100, self.frame.size.height/2+235);
     _pressedBackButton.name = @"backButton";
@@ -163,6 +190,7 @@
     [self addChild:_pressedBackButton];
 }
 
+// add an intstruction label
 -(void)addLabel
 {
     SKLabelNode *title = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -173,6 +201,7 @@
     [self addChild:title];
 }
 
+// add the background image
 -(void)addBackground
 {
     SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
@@ -180,10 +209,6 @@
     bgImage.xScale = .4;
     bgImage.yScale = .4;
     [self addChild:bgImage];
-}
-
--(void)update:(CFTimeInterval)currentTime {
-    /* Called before each frame is rendered */
 }
 
 @end

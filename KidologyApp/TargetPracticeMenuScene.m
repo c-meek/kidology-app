@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 OSU. All rights reserved.
 //
 
+// this is the target practice menu scene for choosing which type of target game to play
+
 #import "TargetPracticeMenuScene.h"
 #import "TargetPracticeScene.h"
 #import "MainMenuScene.h"
@@ -126,12 +128,14 @@ NSString *gameName;
     else if ([node.name isEqualToString:@"gestureModeButtonPressed"] ||
              [node.name isEqualToString:@"gestureModeButton"])
     {
-        // Create and configure the random "target practice" scene.
+        // Create and configure the gesture practice scene
+        // (note the size var must be different for this scene so gestures work correctly)
         SKScene *gesturePractice = [[NewGestureTargetScence alloc] initWithSize:CGSizeMake(1024,768)];
-//        SKScene *gesturePractice = [[NewGestureTargetScence alloc] initWithSize:self.size];
         gesturePractice.scaleMode = SKSceneScaleModeAspectFill;
+        
         // remove the custom game table view browser if present
         [_tbv removeFromSuperview];
+        
         // Present the scene
         [self.view presentScene:gesturePractice transition:reveal];
     }
