@@ -27,9 +27,9 @@
         float width = self.frame.size.width;
         float column = width / 5;
         float height = self.frame.size.height;
-        float row1 = 2.5*(height/8);
-        float row2 = 3.5*(height/8);
-        float row3 = 4.5*(height/8);
+        float row1 = 1*(height/8);
+        float row2 = 3*(height/8);
+        float row3 = 5*(height/8);
         
         //add the buttons
         [self addButton:@"Orange" withPosition: CGPointMake(1*column, row1)];
@@ -174,7 +174,7 @@
 {
     // unpressed back button
     _backButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button"];
-    _backButton.position = CGPointMake(100, self.frame.size.height/2+235);
+    _backButton.position = CGPointMake(100, self.frame.size.height-65);
     _backButton.name = @"backButton";
     _backButton.xScale = .5;
     _backButton.yScale = .5;
@@ -182,7 +182,7 @@
     
     // pressed back button
     _pressedBackButton = [[SKSpriteNode alloc] initWithImageNamed:@"Back_Button_Pressed"];
-    _pressedBackButton.position = CGPointMake(100, self.frame.size.height/2+235);
+    _pressedBackButton.position = CGPointMake(100, self.frame.size.height-65);
     _pressedBackButton.name = @"backButton";
     _pressedBackButton.hidden = true;
     _pressedBackButton.xScale = .5;
@@ -194,7 +194,7 @@
 -(void)addLabel
 {
     SKLabelNode *title = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    title.position = CGPointMake(self.frame.size.width/2, 5.25*(self.frame.size.height/8));
+    title.position = CGPointMake(self.frame.size.width/2, 7*(self.frame.size.height/8));
     title.text = @"Pick a color!";
     title.fontSize = 50;
     title.fontColor = [SKColor whiteColor];
