@@ -165,7 +165,7 @@
     SKSpriteNode *button = [[SKSpriteNode alloc] initWithImageNamed:color];
     button.position = pos;
     button.name = color;
-    button.scale = 0.17;
+    button.scale = 0.25;
     [self addChild:button];
 }
 
@@ -206,8 +206,8 @@
 {
     SKSpriteNode *bgImage = [SKSpriteNode spriteNodeWithImageNamed:@"targetPracticeBackground"];
     bgImage.position = CGPointMake(self.size.width/2, self.size.height/2);
-    bgImage.xScale = .4;
-    bgImage.yScale = .4;
+    bgImage.xScale = .5;
+    bgImage.yScale = .5;
     [self addChild:bgImage];
 }
 

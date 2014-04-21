@@ -74,7 +74,7 @@ bool isFirstLogin = true;
 {
     SKView * skView = (SKView *)self.view;
     // Create and configure the main menu scene
-    SKScene * mainMenu = [MainMenuScene sceneWithSize:skView.bounds.size];
+    SKScene * mainMenu = [MainMenuScene sceneWithSize: CGSizeMake(1024, 768)]; //skView.bounds.size];
     mainMenu.scaleMode = SKSceneScaleModeAspectFill;
     // Present the scene.
     [skView presentScene: mainMenu];
