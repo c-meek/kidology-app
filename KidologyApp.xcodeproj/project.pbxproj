@@ -82,6 +82,14 @@
 		B9E5BE2E18F700010065B26D /* rotate_green_target_counterclockwise.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2D18F700010065B26D /* rotate_green_target_counterclockwise.png */; };
 		B9E5BE3018F700930065B26D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B9E5BE2F18F700930065B26D /* arrow.png */; };
 		B9FC0D0018E4994D006F2AEF /* LogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B9FC0CFF18E4994D006F2AEF /* LogEntry.m */; };
+		E829D7351910021600E700F3 /* appicon.png in Resources */ = {isa = PBXBuildFile; fileRef = E829D72D1910021600E700F3 /* appicon.png */; };
+		E829D7361910021600E700F3 /* appicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E829D72E1910021600E700F3 /* appicon@2x.png */; };
+		E829D7371910021600E700F3 /* appstore.png in Resources */ = {isa = PBXBuildFile; fileRef = E829D72F1910021600E700F3 /* appstore.png */; };
+		E829D7381910021600E700F3 /* appstore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E829D7301910021600E700F3 /* appstore@2x.png */; };
+		E829D7391910021600E700F3 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E829D7311910021600E700F3 /* settings.png */; };
+		E829D73A1910021600E700F3 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E829D7321910021600E700F3 /* settings@2x.png */; };
+		E829D73B1910021600E700F3 /* spotlight.png in Resources */ = {isa = PBXBuildFile; fileRef = E829D7331910021600E700F3 /* spotlight.png */; };
+		E829D73C1910021600E700F3 /* spotlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E829D7341910021600E700F3 /* spotlight@2x.png */; };
 		E836A10519054F5900E9AEA9 /* gong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E836A10419054F5900E9AEA9 /* gong.mp3 */; };
 		E836A1091905533000E9AEA9 /* birds.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E836A1081905533000E9AEA9 /* birds.mp3 */; };
 		E836A10E1905843A00E9AEA9 /* Back_to_Main_Menu_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E836A10A1905843A00E9AEA9 /* Back_to_Main_Menu_Pressed.png */; };
@@ -249,6 +257,14 @@
 		B9E5BE2F18F700930065B26D /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		B9FC0CFE18E4994D006F2AEF /* LogEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogEntry.h; sourceTree = "<group>"; };
 		B9FC0CFF18E4994D006F2AEF /* LogEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogEntry.m; sourceTree = "<group>"; };
+		E829D72D1910021600E700F3 /* appicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appicon.png; sourceTree = "<group>"; };
+		E829D72E1910021600E700F3 /* appicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon@2x.png"; sourceTree = "<group>"; };
+		E829D72F1910021600E700F3 /* appstore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appstore.png; sourceTree = "<group>"; };
+		E829D7301910021600E700F3 /* appstore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appstore@2x.png"; sourceTree = "<group>"; };
+		E829D7311910021600E700F3 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		E829D7321910021600E700F3 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
+		E829D7331910021600E700F3 /* spotlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotlight.png; sourceTree = "<group>"; };
+		E829D7341910021600E700F3 /* spotlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spotlight@2x.png"; sourceTree = "<group>"; };
 		E836A10419054F5900E9AEA9 /* gong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gong.mp3; sourceTree = "<group>"; };
 		E836A1081905533000E9AEA9 /* birds.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = birds.mp3; sourceTree = "<group>"; };
 		E836A10A1905843A00E9AEA9 /* Back_to_Main_Menu_Pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_to_Main_Menu_Pressed.png; sourceTree = "<group>"; };
@@ -653,6 +669,14 @@
 		FD6B78D018ED19040035CA95 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				E829D72D1910021600E700F3 /* appicon.png */,
+				E829D72E1910021600E700F3 /* appicon@2x.png */,
+				E829D72F1910021600E700F3 /* appstore.png */,
+				E829D7301910021600E700F3 /* appstore@2x.png */,
+				E829D7311910021600E700F3 /* settings.png */,
+				E829D7321910021600E700F3 /* settings@2x.png */,
+				E829D7331910021600E700F3 /* spotlight.png */,
+				E829D7341910021600E700F3 /* spotlight@2x.png */,
 				FD6B78D118ED19240035CA95 /* kidology-settings.png */,
 				FD6B78D218ED19240035CA95 /* kidology-settings@2x.png */,
 				FD6B78D318ED19240035CA95 /* kidologyapp-legacy.png */,
@@ -746,6 +770,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E829D7351910021600E700F3 /* appicon.png in Resources */,
 				E8DF544A18F58B8F00B9D1D1 /* settingsMenuButton.png in Resources */,
 				B9E5BE2E18F700010065B26D /* rotate_green_target_counterclockwise.png in Resources */,
 				FD6B78DA18ED19240035CA95 /* kidology-settings@2x.png in Resources */,
@@ -770,6 +795,7 @@
 				0F3AC2C218F6EEA1007CE27C /* Back_Button.png in Resources */,
 				E8DF544118F58AC000B9D1D1 /* fetchGameButton.png in Resources */,
 				FD7E779E18FE3CAE0031A417 /* tada.mp3 in Resources */,
+				E829D7371910021600E700F3 /* appstore.png in Resources */,
 				E836A1091905533000E9AEA9 /* birds.mp3 in Resources */,
 				B96CAAE218A81D6B00D5C20C /* green_target.png in Resources */,
 				FD7E779C18FE3AF30031A417 /* DefaultPreferences.plist in Resources */,
@@ -780,12 +806,14 @@
 				FD6B78CD18ED16CB0035CA95 /* kidologyapp-icon@2x.png in Resources */,
 				0FDEFA3318FAFE1600D458F9 /* Center.png in Resources */,
 				E89BFA8718F71564006C1959 /* settingsScreenLegacy.png in Resources */,
+				E829D7391910021600E700F3 /* settings.png in Resources */,
 				FD7E779A18FE356B0031A417 /* pop.mp3 in Resources */,
 				7C9E74D618FB106300E2723B /* green_target_w_inward_arrows.png in Resources */,
 				7C9E74DA18FB10D000E2723B /* green_target_w_inward_arrows.png in Resources */,
 				0FDEFA3B18FB080600D458F9 /* Actions.png in Resources */,
 				E8D46C6819013D7300C3DD2E /* pop2.mp3 in Resources */,
 				E8D46C5E1901392500C3DD2E /* metal_clang.mp3 in Resources */,
+				E829D7381910021600E700F3 /* appstore@2x.png in Resources */,
 				E8D46C6C19013E3A00C3DD2E /* whip.mp3 in Resources */,
 				7CB23C4B18C0020D007F409F /* Red.png in Resources */,
 				E8DF543C18F58AB700B9D1D1 /* babyGameButtonPressed.png in Resources */,
@@ -820,6 +848,7 @@
 				7C9E74D818FB10CA00E2723B /* green_target_w_outward_arrows.png in Resources */,
 				E8D46C781901446700C3DD2E /* dingding.mp3 in Resources */,
 				E89BFA8618F71564006C1959 /* settingsScreen@2x.png in Resources */,
+				E829D73B1910021600E700F3 /* spotlight.png in Resources */,
 				7CB23C2E18BFFB3D007F409F /* Huge_Checkered_Background_[4096x3072].png in Resources */,
 				E836A1101905843A00E9AEA9 /* Play_Again!_Pressed.png in Resources */,
 				0F7D547B18AD4EBA00F9593D /* purple_target.png in Resources */,
@@ -836,9 +865,12 @@
 				E8D46C6019013BFA00C3DD2E /* fire.mp3 in Resources */,
 				FD6B78D918ED19240035CA95 /* kidology-settings.png in Resources */,
 				7CB23C4A18C0020D007F409F /* Purple.png in Resources */,
+				E829D73C1910021600E700F3 /* spotlight@2x.png in Resources */,
 				0F423CAF18AD61EC00EE5F4E /* tennis.png in Resources */,
 				0FF78FC318EDD59100BD200D /* Settings.bundle in Resources */,
 				0FDEFA3718FAFE1600D458F9 /* Random.png in Resources */,
+				E829D73A1910021600E700F3 /* settings@2x.png in Resources */,
+				E829D7361910021600E700F3 /* appicon@2x.png in Resources */,
 				0FDEFA3C18FB080600D458F9 /* Actions_Pressed.png in Resources */,
 				7CB23C4418C0020D007F409F /* Gray.png in Resources */,
 				FD6B78DD18ED19240035CA95 /* kidologyspotlight-icon.png in Resources */,

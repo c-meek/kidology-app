@@ -33,61 +33,61 @@
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "kidology-settings.png",
+      "filename" : "settings.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "kidology-settings@2x.png",
+      "filename" : "settings@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "kidologyspotlight-legacy.png",
+      "filename" : "spotlight.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "kidologyspotlight-legacy@2x.png",
+      "filename" : "spotlight@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "50x50",
       "idiom" : "ipad",
-      "filename" : "kidologyspotlight-icon.png",
+      "filename" : "spotlight-1.png",
       "scale" : "1x"
     },
     {
       "size" : "50x50",
       "idiom" : "ipad",
-      "filename" : "kidologyspotlight-icon@2x.png",
+      "filename" : "spotlight@2x-1.png",
       "scale" : "2x"
     },
     {
       "size" : "72x72",
       "idiom" : "ipad",
-      "filename" : "kidologyapp-legacy.png",
+      "filename" : "appicon.png",
       "scale" : "1x"
     },
     {
       "size" : "72x72",
       "idiom" : "ipad",
-      "filename" : "kidologyapp-legacy@2x.png",
+      "filename" : "appicon@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "kidologyapp-icon.png",
+      "filename" : "appstore.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "kidologyapp-icon@2x.png",
+      "filename" : "appstore@2x.png",
       "scale" : "2x"
     }
   ],
